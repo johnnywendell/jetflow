@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.views.generic import CreateView
+from django.views.generic import CreateView, UpdateView
 from .models import Area, Solicitante, Romaneio
 from .forms import RomaneioForm
 
@@ -22,6 +22,11 @@ def romaneio_add(request):
     return render(request, template_name)
 
 class RomaneioCreate(CreateView):
+    model = Romaneio
+    template_name = 'romaneio_form.html'
+    form_class = RomaneioForm
+    
+class RomaneioUpdate(UpdateView):
     model = Romaneio
     template_name = 'romaneio_form.html'
     form_class = RomaneioForm

@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+
+{% block content %} 
+<a href="{% url 'material:material_list'  %}">voltar</a>
+
+    <h1> {{ object.material }}
+        <span class="pull-right">
+            <a href="#">
+                <button type="button" class="btn btn-success">
+                    <span class="fa fa-pencil"></span> Editar
+                </button>
+            </a>
+
+        </span>
+    </h1>
+
+    <div class="col-sm-6">
+        <table class="table table-user-information">
+            <tbody>
+                <tr>
+                    <th class="text-right">Romaneio Nº:</th>
+                    <td>
+                        {{ object.n_romaneio }}
+                    </td>
+                </tr>
+                <tr>
+                    <th class="text-right">Tratamento da superfície:</th>
+                    <td>{{ object.jato }}</td>
+                </tr>
+                <tr>
+                    <th class="text-right">Tinta de Fundo (Primer):</th>
+                    <td> {{ object.tf }}</td>
+                </tr>
+                <tr>
+                    <th class="text-right">Tinta Intermediária:</th>
+                    <td>{{ object.ti }}</td>
+                </tr>
+                <tr>
+                    <th class="text-right">Tinta Acabamento:</th>
+                    <td>{{ object.ta }}</td>
+                </tr>
+                <tr>
+                    <th class="text-right">Cor:</th>
+                    <td>{{ object.cor }}</td>
+                </tr>
+                <tr>
+                    <th class="text-right">Tipo Material:</th>
+                    <td>{{ object.material }}</td>
+                </tr>
+                <tr>
+                    <th class="text-right">Descrição Material:</th>
+                    <td>{{ object.descricao }}</td>
+                </tr>
+                <tr>
+                    <th class="text-right">Polegada:</th>
+                    <td>{{ object.polegada }}</td>
+                </tr>
+                <tr>
+                    <th class="text-right">M linear / Quantidade:</th>
+                    <td>{{ object.m_quantidade }}</td>
+                </tr>
+                <tr>
+                    <th class="text-right">M²:</th>
+                    <td>{{ object.m2 }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+{% endblock content %} 

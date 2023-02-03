@@ -1,6 +1,5 @@
 from django.db import models
-
-from django.db import models
+from django.urls import reverse_lazy
 from core.models import TimeStampedModel
 from romaneio.models import Romaneio
 
@@ -47,7 +46,7 @@ MATERIAIS = (
 )
 
 class Material(TimeStampedModel):
-    n_romaneio = models.ForeignKey(Romaneio, on_delete=models.CASCADE)
+    n_romaneio = models.ForeignKey(Romaneio, on_delete=models.CASCADE, related_name='romaneios')
     jato = models.ForeignKey(Tratamento, on_delete=models.CASCADE, blank=True, null=True)
     tf = models.ForeignKey(TintaFundo, on_delete=models.CASCADE, blank=True, null=True)
     ti = models.ForeignKey(TintaIntermediaria, on_delete=models.CASCADE, blank=True, null=True)
@@ -63,3 +62,5 @@ class Material(TimeStampedModel):
         ordering = ('-created',)
     def __str__(self):
         return str(self.pk)
+    def get_absolute_url(self):
+        return reverse_lazy('material:material_detail', kwargs={'pk': self.pk})

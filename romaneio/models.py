@@ -35,5 +35,8 @@ class Romaneio(models.Model):
     def get_entrada(self):
         return self.entrada.strftime('%d/%m/%Y %H:%M Hrs')
 
+    def nf_formated(self):
+        return str(self.nf).zfill(8)
+
     def get_absolute_url(self):
         return reverse_lazy('romaneio:romaneio_detail', kwargs={'pk': self.pk})

@@ -5,7 +5,7 @@
 
     <h1>Romaneio Nº {{ object }}
         <span class="pull-right">
-            <a href="#">
+            <a href="{% url 'romaneio:romaneio_edit' object.pk %}">
                 <button type="button" class="btn btn-success">
                     <span class="fa fa-pencil"></span> Editar
                 </button>
@@ -46,5 +46,30 @@
             </tbody>
         </table>
     </div>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Tratamento</th>
+                <th>TF</th>
+                <th>TI</th>
+                <th>TA</th>
+                <th>Tipo Mat.</th>
+                <th>M²</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for obj in object.romaneios.all %}
+            <tr>
+                <td>{{ obj.jato }}</td>
+                <td>{{ obj.tf }}</td>
+                <td>{{ obj.ti }}</td>
+                <td>{{ obj.ta}}</td>
+                <td><a href="{{ obj.get_absolute_url }}">{{ obj.material }}</a></td>
+                <td>{{ obj.m2 }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    
+    </table>
 
 {% endblock content %} 
