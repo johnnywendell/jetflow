@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block content %} 
+<a href="{% url 'romaneio:romaneio_list'  %}">voltar</a>
+
+    <h1>Romaneio Nº {{ object }}
+        <span class="pull-right">
+            <a href="#">
+                <button type="button" class="btn btn-success">
+                    <span class="fa fa-pencil"></span> Editar
+                </button>
+            </a>
+
+        </span>
+    </h1>
+
+    <div class="col-sm-6">
+        <table class="table table-user-information">
+            <tbody>
+                <tr>
+                    <th class="text-right">Data Entrada:</th>
+                    <td>
+                        {{ object.entrada }}
+                    </td>
+                </tr>
+                <tr>
+                    <th class="text-right">Documento Referência</th>
+                    <td>{{ object.documento }}</td>
+                </tr>
+                <tr>
+                    <th class="text-right">Área</th>
+                    <td> {{ object.area }}</td>
+                </tr>
+                <tr>
+                    <th class="text-right">Solicitante</th>
+                    <td>{{ object.solicitante }}</td>
+                </tr>
+                <tr>
+                    <th class="text-right">Nota fiscal</th>
+                    <td>{{ object.nf }}</td>
+                </tr>
+                <tr>
+                    <th class="text-right">Observações</th>
+                    <td>{{ object.obs }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+{% endblock content %} 

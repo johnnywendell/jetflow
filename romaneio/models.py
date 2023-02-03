@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.urls import reverse_lazy
 
 class Area(models.Model):
     area = models.CharField(max_length=30, unique=True)
@@ -33,3 +34,6 @@ class Romaneio(models.Model):
 
     def get_entrada(self):
         return self.entrada.strftime('%d/%m/%Y %H:%M Hrs')
+
+    def get_absolute_url(self):
+        return reverse_lazy('romaneio:romaneio_detail', kwargs={'pk': self.pk})
