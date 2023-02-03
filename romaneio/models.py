@@ -16,7 +16,7 @@ class Solicitante(models.Model):
         return self.solicitante
 
 class Romaneio(models.Model):
-    funcionario = models.ForeignKey(User, on_delete=models.CASCADE, default=0)
+    funcionario = models.ForeignKey(User, on_delete=models.CASCADE)
     entrada = models.DateTimeField(verbose_name='Data de Entrada')
     nf = models.CharField('NF',max_length=15, blank=True, null=True)
     romaneio = models.CharField(max_length=15, unique=True)

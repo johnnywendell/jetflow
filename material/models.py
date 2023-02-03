@@ -29,14 +29,29 @@ class TintaAcabamento(models.Model):
     def __str__(self):
         return self.tinta_acabamento
 
-MATERIAIS = ()
+MATERIAIS = (
+    ('perfil_I','perfil_I'),
+    ('perfil_H','perfil_H'),
+    ('perfil_U','perfil_U'),
+    ('perfil_L','perfil_L'),
+    ('barra_chata','barra_chata'),
+    ('tubulacao','tubulacao'),
+    ('acess_T','acess_T'),
+    ('acess_FLG','acess_FLG'),
+    ('acess_RED','acess_RED'),
+    ('acess_CV90','acess_CV90'),
+    ('acess_CV45','acess_CV45'),
+    ('acess_VV','acess_VV'),
+    ('acess_VVC','acess_VVC'),
+    ('acess_CAP','acess_CAP'),
+)
 
 class Material(TimeStampedModel):
     n_romaneio = models.ForeignKey(Romaneio, on_delete=models.CASCADE)
-    jato = models.ForeignKey(Tratamento, on_delete=models.CASCADE)
-    tf = models.ForeignKey(TintaFundo, on_delete=models.CASCADE)
-    ti = models.ForeignKey(TintaIntermediaria, on_delete=models.CASCADE)
-    ta = models.ForeignKey(TintaAcabamento, on_delete=models.CASCADE)
+    jato = models.ForeignKey(Tratamento, on_delete=models.CASCADE, blank=True, null=True)
+    tf = models.ForeignKey(TintaFundo, on_delete=models.CASCADE, blank=True, null=True)
+    ti = models.ForeignKey(TintaIntermediaria, on_delete=models.CASCADE, blank=True, null=True)
+    ta = models.ForeignKey(TintaAcabamento, on_delete=models.CASCADE, blank=True, null=True)
     cor = models.CharField(max_length=15, blank=True, null=True)
     material = models.CharField(max_length=15, choices=MATERIAIS)
     descricao = models.CharField(max_length=30, blank=True, null=True)
