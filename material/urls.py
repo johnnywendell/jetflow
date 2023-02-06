@@ -7,4 +7,5 @@ app_name ='material'
 urlpatterns =[
     path('material/', v.material_list, name='material_list'),
     path('material/<int:pk>', v.material_detail, name='material_detail'),
+    path('material/add', v.material_add, name='material_add'),
 ]

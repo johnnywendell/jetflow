@@ -54,9 +54,9 @@ class Material(TimeStampedModel):
     cor = models.CharField(max_length=15, blank=True, null=True)
     material = models.CharField(max_length=15, choices=MATERIAIS)
     descricao = models.CharField(max_length=30, blank=True, null=True)
-    polegada = models.CharField('polegas separadas por ","', max_length=4)
-    m_quantidade = models.DecimalField('Metro ou Quantidade', max_digits=7, decimal_places=2)
-    m2 = models.DecimalField('Metro ou Quantidade', max_digits=7, decimal_places=3)
+    polegada = models.CharField('Pol', max_length=4)
+    m_quantidade = models.DecimalField('M/QTD', max_digits=7, decimal_places=2)
+    m2 = models.DecimalField('M²', max_digits=7, decimal_places=3)
 
     class Meta:
         ordering = ('-created',)

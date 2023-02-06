@@ -12,3 +12,7 @@ def material_detail(request, pk):
     obj = Material.objects.get(pk=pk)
     context = {'object': obj}
     return render(request, template_name, context)
+
+def material_add(request):
+    template_name = 'material_form.html'
+    return render(request, template_name)

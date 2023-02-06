@@ -22,7 +22,7 @@ class Romaneio(models.Model):
     nf = models.CharField('NF',max_length=15, blank=True, null=True)
     romaneio = models.CharField(max_length=15, unique=True)
     documento = models.CharField('documento referência', max_length=20, blank=True, null=True)
-    obs = models.TextField('Obs',blank=True, null=True)
+    obs = models.CharField('Obs',blank=True, null=True, max_length=40)
     area = models.ForeignKey(Area, on_delete=models.CASCADE)
     solicitante = models.ForeignKey(Solicitante, on_delete=models.CASCADE)
 
