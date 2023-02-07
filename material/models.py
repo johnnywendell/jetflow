@@ -54,7 +54,7 @@ class Material(TimeStampedModel):
     ta = models.ForeignKey(TintaAcabamento, on_delete=models.CASCADE, blank=True, null=True)
     cor = models.CharField(max_length=15, blank=True, null=True)
     material = models.CharField(max_length=15, choices=MATERIAIS)
-    descricao = models.CharField(max_length=30, blank=True, null=True)
+    descricao = models.CharField('Descrição',max_length=30, blank=True, null=True)
     polegada = models.CharField('Pol', max_length=4)
     m_quantidade = models.DecimalField('M/QTD', max_digits=7, decimal_places=2)
     m2 = models.DecimalField('M²', max_digits=7, decimal_places=3)

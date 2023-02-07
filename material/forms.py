@@ -1,10 +1,17 @@
 from django import forms
 from .models import Material, Tratamento, TintaFundo, TintaIntermediaria, TintaAcabamento
 
+      
+
 class MaterialForm(forms.ModelForm):
     class Meta:
         model = Material
-        fields = '__all__'
+        fields = '__all__'  
+        widgets = {
+            'concluido': forms.CheckboxInput(attrs={'class': 'special'}),
+        }
+   
+
 class TratamentoForm(forms.ModelForm):
     class Meta:
         model = Tratamento

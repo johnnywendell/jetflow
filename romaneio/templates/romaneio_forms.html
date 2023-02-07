@@ -3,16 +3,6 @@
 {% load widget_tweaks %}
 {% load bootstrap %}
 
-{% block css %}
-    <style>
-        span.required:after {
-            content: "*";
-            color: red;
-        }
-    </style>
-
-{% endblock css %}
-
 {% block content %}
 <a href="{% url 'romaneio:romaneio_list'  %}">voltar</a>
     <div class="row">

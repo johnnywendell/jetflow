@@ -18,8 +18,8 @@
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Cadastros</a>
                 <div class="dropdown-menu" aria-labelledby="dropdown01">
-                    <a class="dropdown-item" href="#">Areas</a>
-                    <a class="dropdown-item" href="#">Solicitantes</a>
+                    <a class="dropdown-item" href="{% url 'romaneio:area_add' %}">Areas</a>
+                    <a class="dropdown-item" href="{% url 'romaneio:solicitante_add' %}">Solicitantes</a>
                     <a class="dropdown-item" href="{% url 'material:tratamento_add' %}">Tratamentos</a>
                     <a class="dropdown-item" href="{% url 'material:tintafundo_add' %}">Primers</a>
                     <a class="dropdown-item" href="{% url 'material:tintaintermediaria_add' %}">Tintas intermediárias</a>

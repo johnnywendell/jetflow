@@ -3,7 +3,7 @@ from django.views.generic import CreateView, UpdateView
 from django.forms import inlineformset_factory
 from django.http import HttpResponseRedirect, JsonResponse
 from .models import Area, Solicitante, Romaneio
-from .forms import RomaneioForm
+from .forms import RomaneioForm, AreaForm, SolicitanteForm
 from material.models import Material
 from material.forms import MaterialForm
 
@@ -83,6 +83,37 @@ def json_fatores(request):
             '26':1.62,'28':1.89,'30':2.15,'32':2.37,'34':2.61,'36':2.86,'38':3.10,'40':3.34,'44':3.58,'50':3.83,'52':4.07,'54':4.31,'56':4.56,'58':4.80,'60':5.04}
             }
     return JsonResponse({'data':data})
+
+def area_add(request):
+    template_name = 'area_add.html'
+    area_form = Area()
+    objects = Area.objects.all()
+    if request.method == 'POST':
+        form=AreaForm(request.POST, instance=area_form, prefix='main')
+        if form.is_valid():
+            form=form.save()
+            url='#'
+            return HttpResponseRedirect(url)
+    else:
+        form=AreaForm(instance=area_form, prefix='main')
+    context={'form':form,'objects_list': objects}
+    return render(request, template_name, context)
+
+def solicitante_add(request):
+    template_name = 'solicitante_add.html'
+    solicitante_form = Solicitante()
+    objects = Solicitante.objects.all()
+    if request.method == 'POST':
+        form=SolicitanteForm(request.POST, instance=solicitante_form, prefix='main')
+        if form.is_valid():
+            form=form.save()
+            url='#'
+            return HttpResponseRedirect(url)
+    else:
+        form=SolicitanteForm(instance=solicitante_form, prefix='main')
+    context={'form':form,'objects_list': objects}
+    return render(request, template_name, context)
+
 
 
 

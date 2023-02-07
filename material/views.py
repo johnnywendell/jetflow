@@ -78,11 +78,11 @@ def material_detail(request, pk):
     context = {'object': obj}
     return render(request, template_name, context)
 
-class RomaneioCreate(CreateView):
+class MaterialCreate(CreateView):
     model = Material
     template_name = 'material_form.html'
     form_class = MaterialForm
-
+  
 class MaterialUpdate(UpdateView):
     model = Material
     template_name = 'material_form.html'
