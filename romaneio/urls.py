@@ -10,4 +10,6 @@ urlpatterns =[
     path('romaneios/add/', v.romaneio_add, name='romaneios_add'),
     path('add/', v.RomaneioCreate.as_view(), name='romaneio_add'),
     path('romaneios/<int:pk>/edit/', v.RomaneioUpdate.as_view(), name='romaneio_edit'),
+    path('romaneios/json/', v.json_fatores, name='json_fatores'),
+
 ]

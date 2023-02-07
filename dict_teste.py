@@ -24,10 +24,13 @@ dict_fatores = {
 '26':1.62,'28':1.89,'30':2.15,'32':2.37,'34':2.61,'36':2.86,'38':3.10,'40':3.34,'44':3.58,'50':3.83,'52':4.07,'54':4.31,'56':4.56,'58':4.80,'60':5.04}
 }
 
+
 #teste = dict_fatores['perfil_I']['3']
-perfil = str(input("digite o tipo: "))
-polegada = str(input("digite a polegada: "))
+#perfil = str(input("digite o tipo: "))
+#polegada = str(input("digite a polegada: "))
+teste = dict_list[0]
+#fator = dict_fatores[perfil][polegada]
+print(dict_list)
+#print("o fator do(a) {} de {} polegadas é {} ".format(perfil, polegada, fator))
 
-fator = dict_fatores[perfil][polegada]
 
-print("o fator do(a) {} de {} polegadas é {} ".format(perfil, polegada, fator))
