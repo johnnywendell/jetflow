@@ -8,6 +8,7 @@ class RomaneioForm(forms.ModelForm):
     class Meta:
         model = Romaneio
         fields = '__all__'
+        exclude = ('funcionario',)
         widgets = {
             'entrada':  DateInput()
         }

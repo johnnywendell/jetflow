@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, resolve_url
 from django.views.generic import CreateView, UpdateView
 from django.forms import inlineformset_factory
@@ -21,6 +22,7 @@ def romaneio_detail(request, pk):
     context = {'object': obj}
     return render(request, template_name, context)
 
+@login_required
 def romaneio_add(request):
     template_name = 'romaneio_forms.html'
     romaneio_form=Romaneio()
@@ -36,7 +38,9 @@ def romaneio_add(request):
         form=RomaneioForm(request.POST, instance=romaneio_form, prefix='main')
         formset=item_romaneio_formset(request.POST, instance=romaneio_form, prefix='romaneio' )
         if form.is_valid() and formset.is_valid():
-            form=form.save()
+            form=form.save(commit=False)
+            form.funcionario = request.user
+            form.save()
             formset.save()
             url='romaneio:romaneio_detail'
             return HttpResponseRedirect(resolve_url(url,form.pk))
@@ -46,11 +50,12 @@ def romaneio_add(request):
     context={'form':form, 'formset':formset}
     return render(request, template_name, context)
 
+
 class RomaneioCreate(CreateView):
     model = Romaneio
     template_name = 'romaneio_form.html'
     form_class = RomaneioForm
-    
+ 
 class RomaneioUpdate(UpdateView):
     model = Romaneio
     template_name = 'romaneio_form.html'
@@ -84,6 +89,7 @@ def json_fatores(request):
             }
     return JsonResponse({'data':data})
 
+@login_required
 def area_add(request):
     template_name = 'area_add.html'
     area_form = Area()
@@ -98,7 +104,8 @@ def area_add(request):
         form=AreaForm(instance=area_form, prefix='main')
     context={'form':form,'objects_list': objects}
     return render(request, template_name, context)
-
+    
+@login_required
 def solicitante_add(request):
     template_name = 'solicitante_add.html'
     solicitante_form = Solicitante()

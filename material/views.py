@@ -1,9 +1,11 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 from django.views.generic import CreateView, UpdateView
 from django.http import HttpResponseRedirect
 from .models import Tratamento, TintaFundo, TintaIntermediaria, TintaAcabamento, Material
 from .forms import MaterialForm, TratamentoForm, TintaFundoForm, TintaIntermediariaForm, TintaAcabamentoForm
 
+@login_required
 def tratamento_add(request):
     template_name = 'tratamento_add.html'
     tratamento_form = Tratamento()
@@ -18,7 +20,7 @@ def tratamento_add(request):
         form=TratamentoForm(instance=tratamento_form, prefix='main')
     context={'form':form,'objects_list': objects}
     return render(request, template_name, context)
-
+@login_required
 def tintafundo_add(request):
     template_name = 'tintafundo_add.html'
     tintaf_form = TintaFundo()
@@ -33,7 +35,7 @@ def tintafundo_add(request):
         form=TintaFundoForm(instance=tintaf_form, prefix='main')
     context={'form':form,'objects_list': objects}
     return render(request, template_name, context)
-
+@login_required
 def tintaintermediaria_add(request):
     template_name = 'tintaintermediaria_add.html'
     tintai_form = TintaIntermediaria()
@@ -48,7 +50,7 @@ def tintaintermediaria_add(request):
         form=TintaIntermediariaForm(instance=tintai_form, prefix='main')
     context={'form':form,'objects_list': objects}
     return render(request, template_name, context)
-
+@login_required
 def tintaacabamento_add(request):
     template_name = 'tintaacabamento_add.html'
     tintaa_form = TintaAcabamento()
@@ -82,7 +84,7 @@ class MaterialCreate(CreateView):
     model = Material
     template_name = 'material_form.html'
     form_class = MaterialForm
-  
+
 class MaterialUpdate(UpdateView):
     model = Material
     template_name = 'material_form.html'
