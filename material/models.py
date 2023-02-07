@@ -46,6 +46,7 @@ MATERIAIS = (
 )
 
 class Material(TimeStampedModel):
+    concluido =  models.BooleanField(default=False)
     n_romaneio = models.ForeignKey(Romaneio, on_delete=models.CASCADE, related_name='romaneios')
     jato = models.ForeignKey(Tratamento, on_delete=models.CASCADE, blank=True, null=True)
     tf = models.ForeignKey(TintaFundo, on_delete=models.CASCADE, blank=True, null=True)

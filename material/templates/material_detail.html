@@ -1,11 +1,30 @@
 {% extends "base.html" %}
 
+{% block css %}
+    <style>
+        .ok {
+        color: green;
+        }
+
+        .no {
+        color: red;
+        }
+    </style>
+{% endblock css %}
+
 {% block content %} 
 <a href="{% url 'material:material_list'  %}">voltar</a>
 
     <h1> {{ object.material }}
+        <td>
+            {% if object.concluido %}
+              <i class="fa fa-check-circle ok"></i>
+            {% else %}
+              <i class="fa fa-minus-circle no"></i>
+            {% endif %}
+        </td>
         <span class="pull-right">
-            <a href="#">
+            <a href="{% url 'material:material_edit' object.pk %}">
                 <button type="button" class="btn btn-success">
                     <span class="fa fa-pencil"></span> Editar
                 </button>

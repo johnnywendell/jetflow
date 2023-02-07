@@ -1,5 +1,17 @@
 {% extends "base.html" %}
 
+{% block css %}
+    <style>
+        .ok {
+        color: green;
+        }
+
+        .no {
+        color: red;
+        }
+    </style>
+{% endblock css %}
+
 {% block content %} 
 <a href="{% url 'romaneio:romaneio_list'  %}">voltar</a>
 
@@ -55,6 +67,7 @@
                 <th>TA</th>
                 <th>Tipo Mat.</th>
                 <th>M²</th>
+                <th>Fechado</th>
             </tr>
         </thead>
         <tbody>
@@ -66,6 +79,13 @@
                 <td>{{ obj.ta}}</td>
                 <td><a href="{{ obj.get_absolute_url }}">{{ obj.material }}</a></td>
                 <td>{{ obj.m2 }}</td>
+                <td>
+                    {% if obj.concluido %}
+                      <i class="fa fa-check-circle ok"></i>
+                    {% else %}
+                      <i class="fa fa-minus-circle no"></i>
+                    {% endif %}
+                </td>
             </tr>
             {% endfor %}
         </tbody>
