@@ -18,7 +18,7 @@ class Solicitante(models.Model):
 
 class Romaneio(models.Model):
     funcionario = models.ForeignKey(User, on_delete=models.CASCADE)
-    entrada = models.DateTimeField(verbose_name='Data de Entrada')
+    entrada = models.DateField(verbose_name='Data de Entrada')
     nf = models.CharField('NF',max_length=15, blank=True, null=True)
     romaneio = models.CharField(max_length=15, unique=True)
     documento = models.CharField('documento referência', max_length=20, blank=True, null=True)
@@ -33,7 +33,7 @@ class Romaneio(models.Model):
         return self.romaneio
 
     def get_entrada(self):
-        return self.entrada.strftime('%d/%m/%Y %H:%M Hrs')
+        return self.entrada.strftime('%d/%m/%Y')
 
     def nf_formated(self):
         return str(self.nf).zfill(8)

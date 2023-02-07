@@ -57,7 +57,7 @@ class Material(TimeStampedModel):
     descricao = models.CharField('Descrição',max_length=30, blank=True, null=True)
     polegada = models.CharField('Pol', max_length=4)
     m_quantidade = models.DecimalField('M/QTD', max_digits=7, decimal_places=2)
-    m2 = models.DecimalField('M²', max_digits=7, decimal_places=3)
+    m2 = models.DecimalField('M²', max_digits=7, decimal_places=3,blank=True)
 
     class Meta:
         ordering = ('-created',)

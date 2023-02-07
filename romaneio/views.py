@@ -31,6 +31,7 @@ def romaneio_add(request):
         Material,
         form=MaterialForm,
         extra=0,
+        can_delete=False,
         min_num=1,
         validate_min=True
     )

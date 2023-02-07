@@ -3,6 +3,9 @@ $(document).ready(function(){
     $('#id_romaneio-0-material').addClass('clMaterial')
     $('#id_romaneio-0-m_quantidade').addClass('clQuantidade')
     $('#id_romaneio-0-polegada').addClass('clPolegada')
+    //esconde o m2
+    $('#id_romaneio-0-m2').prop('type', 'hidden')
+    $('label[for="id_romaneio-0-m2"]').append('<span id="id_romaneio-0-m2-span" class="lead" style="padding: 10px;"></span>')
 
     $('#add-item').click(function(ev){
         ev.preventDefault();
@@ -13,6 +16,8 @@ $(document).ready(function(){
 
         //update form-count
         $('#id_romaneio-TOTAL_FORMS').attr('value', count + 1);
+        // esconde o m2
+        $('#id_romaneio-' + (count) + '-m2').prop('type', 'hidden')
         // some animatescroll to view form
         $('html, body').animate({
             scrollTop: $("#add-item").position().top - 200
@@ -21,6 +26,9 @@ $(document).ready(function(){
         $('#id_romaneio-' + (count) + '-material').addClass('clMaterial')
         $('#id_romaneio-' + (count) + '-m_quantidade').addClass('clQuantidade')
         $('#id_romaneio-' + (count) + '-polegada').addClass('clPolegada')
+        // cria span para mostrar saldo na tela
+        $('label[for="id_romaneio-' + (count) + '-m2"]').append('<span id="id_romaneio-' + (count) + '-m2-span" class="lead" style="padding: 10px;"></span>')
+
     });
 });
 
@@ -30,6 +38,7 @@ let fator
 let resultado
 let mat
 let mat_val
+let campo2
 
 $(document).on('change', '.clPolegada', function(){
     let url = '/romaneios/json'
@@ -51,5 +60,9 @@ $(document).on('change', '.clQuantidade', function(){
     quantidade = $(this).val()
     campo = $(this).attr('id').replace('m_quantidade','m2')
     resultado = quantidade * fator
+    $('#'+campo).prop('type', 'hidden')
     $('#'+campo).val(resultado)
+    campo2 = $(this).attr('id').replace('m_quantidade', 'm2-span')
+    $('#'+campo2).text(resultado)
+
 });
