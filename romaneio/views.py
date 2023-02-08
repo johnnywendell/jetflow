@@ -1,9 +1,13 @@
+import csv
+
+from django.urls import reverse
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, resolve_url
 from django.db.models import Q
 from django.views.generic import CreateView, UpdateView, ListView
 from django.forms import inlineformset_factory
-from django.http import HttpResponseRedirect, JsonResponse
+from django.http import HttpResponseRedirect, JsonResponse, HttpResponse
 from .models import Area, Solicitante, Romaneio
 from .forms import RomaneioForm, AreaForm, SolicitanteForm
 from material.models import Material
@@ -140,7 +144,17 @@ def solicitante_add(request):
     context={'form':form,'objects_list': objects}
     return render(request, template_name, context)
 
+################## excel csv
 
-
+def export_csv(request):
+    header = ('funcionario', 'nf', 'romaneio', 'documento','obs', 'area', 'solicitante')
+    romaneios = Romaneio.objects.all().values_list(*header)
+    with open('fix/produtos_exportados.csv', 'w') as csvfile:
+        romaneio_writer = csv.writer(csvfile)
+        romaneio_writer.writerow(header)
+        for romaneio in romaneios:
+            romaneio_writer.writerow(romaneio)
+    messages.success(request, 'Romaneios exportados com sucesso.')
+    return HttpResponseRedirect(reverse('romaneio:romaneio_list'))
 
 

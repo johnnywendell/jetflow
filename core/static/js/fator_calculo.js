@@ -36,6 +36,7 @@ let quantidade
 let campo
 let fator
 let resultado
+let resultado_2
 let mat
 let mat_val
 let campo2
@@ -60,9 +61,10 @@ $(document).on('change', '.clQuantidade', function(){
     quantidade = $(this).val()
     campo = $(this).attr('id').replace('m_quantidade','m2')
     resultado = quantidade * fator
+    resultado_2 = resultado.toFixed(3)
     $('#'+campo).prop('type', 'hidden')
-    $('#'+campo).val(resultado)
+    $('#'+campo).val(resultado_2)
     campo2 = $(this).attr('id').replace('m_quantidade', 'm2-span')
-    $('#'+campo2).text(resultado)
+    $('#'+campo2).text(resultado_2)
 
 });
