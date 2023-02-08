@@ -1,5 +1,5 @@
-import csv
-
+from datetime import datetime
+import xlwt
 from django.urls import reverse
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
@@ -144,7 +144,48 @@ def solicitante_add(request):
     context={'form':form,'objects_list': objects}
     return render(request, template_name, context)
 
-################## excel csv
+################## excel 
+
+
+def export_xlsx(model, filename, queryset, columns):
+    response = HttpResponse(content_type='application/ms-excel')
+    response['Content-Disposition'] = 'attachment; filename="%s"' % filename
+
+    wb = xlwt.Workbook(encoding='utf-8')
+    ws = wb.add_sheet(model)
+
+    row_num = 0
+
+    font_style = xlwt.XFStyle()
+    font_style.font.bold = True
+
+    for col_num in range(len(columns)):
+        ws.write(row_num, col_num, columns[col_num], font_style)
+
+    default_style = xlwt.XFStyle()
+
+    rows = queryset
+    for row, rowdata in enumerate(rows):
+        row_num += 1
+        for col, val in enumerate(rowdata):
+            ws.write(row_num, col, val, default_style)
+
+    wb.save(response)
+    return response
+
+def export_xlsx_func(request):
+    MDATA = datetime.now().strftime('%Y-%m-%d')
+    model = 'Romaneio'
+    filename = 'romaneio_exportados.xls'
+    _filename = filename.split('.')
+    filename_final = f'{_filename[0]}_{MDATA}.{_filename[1]}'
+    queryset = Romaneio.objects.all().values_list('funcionario', 'nf', 'romaneio', 
+    'documento','obs', 'area', 'solicitante')
+    columns = ('funcionario', 'nf', 'romaneio', 
+    'documento','obs', 'area', 'solicitante')
+    response = export_xlsx(model, filename_final, queryset, columns)
+    return response
+ 
 
 def export_csv(request):
     header = ('funcionario', 'nf', 'romaneio', 'documento','obs', 'area', 'solicitante')

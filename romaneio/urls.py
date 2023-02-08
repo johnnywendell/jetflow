@@ -13,5 +13,5 @@ urlpatterns =[
     path('romaneios/json/', v.json_fatores, name='json_fatores'),
     path('area/', v.area_add, name='area_add'),
     path('solicitante/', v.solicitante_add, name='solicitante_add'),
-    path('export/xlsx/', v.export_csv, name='export_csv'),
+    path('export/xlsx/', v.export_xlsx_func, name='export_xlsx_func'),
 ]
