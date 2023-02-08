@@ -1,6 +1,6 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
-from django.views.generic import CreateView, UpdateView
+from django.views.generic import CreateView, UpdateView, ListView
 from django.http import HttpResponseRedirect
 from .models import Tratamento, TintaFundo, TintaIntermediaria, TintaAcabamento, Material
 from .forms import MaterialForm, TratamentoForm, TintaFundoForm, TintaIntermediariaForm, TintaAcabamentoForm
@@ -67,12 +67,26 @@ def tintaacabamento_add(request):
     return render(request, template_name, context)
 
     
-
 def material_list(request):
     template_name = 'material_list.html'
     objects = Material.objects.all()
+    search =request.GET.get('search')
+    if search:
+        objects = objects.filter(material__icontains=search)
     context = {'objects_list': objects}
     return render(request, template_name, context)
+
+class MaterialList(ListView):
+    model = Material
+    template_name = 'material_list.html'
+    paginate_by = 20
+    context_object_name = 'objects_list'
+    def get_queryset(self):
+        queryset = super(MaterialList, self).get_queryset()
+        search = self.request.GET.get('search')
+        if search:
+            queryset = queryset.filter(material__icontains=search)
+        return queryset
 
 def material_detail(request, pk):
     template_name = 'material_detail.html'

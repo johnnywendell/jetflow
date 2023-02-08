@@ -27,10 +27,10 @@
                 </div>
             </li>
         </ul>
-        <form class="form-inline my-2 my-lg-0">
-            <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
-            <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
-        </form>
+        <form action="." method="GET" class="form-inline">
+            <input type="text" id="search" name="search" class="form-control" placeholder="Busca">
+            <input type="submit" class="btn btn-secondary" style="margin-left: 10px;" value="OK">
+          </form>
         {% if user.is_authenticated %}
             <ul class="navbar-nav px3">
                     <li class="nav-item text-nowrap">

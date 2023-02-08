@@ -1,6 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, resolve_url
-from django.views.generic import CreateView, UpdateView
+from django.db.models import Q
+from django.views.generic import CreateView, UpdateView, ListView
 from django.forms import inlineformset_factory
 from django.http import HttpResponseRedirect, JsonResponse
 from .models import Area, Solicitante, Romaneio
@@ -9,11 +10,28 @@ from material.models import Material
 from material.forms import MaterialForm
 
 
+
 def romaneio_list(request):
     template_name = 'romaneio_list.html'
     objects = Romaneio.objects.all()
+    search =request.GET.get('search')
+    if search:
+        objects = objects.filter(romaneio__icontains=search)
     context = {'objects_list': objects}
     return render(request, template_name, context)
+
+class RomaneioList(ListView):
+    model = Romaneio
+    template_name = 'romaneio_list.html'
+    paginate_by = 20
+    context_object_name = 'objects_list'
+    def get_queryset(self):
+        queryset = super(RomaneioList, self).get_queryset()
+        search = self.request.GET.get('search')
+        if search:
+            queryset = queryset.filter(romaneio__icontains=search)
+        return queryset
+
 
 
 def romaneio_detail(request, pk):

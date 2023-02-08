@@ -5,7 +5,7 @@ from material import views as v
 app_name ='material'
 
 urlpatterns =[
-    path('material/', v.material_list, name='material_list'),
+    path('material/', v.MaterialList.as_view(), name='material_list'),
     path('material/<int:pk>', v.material_detail, name='material_detail'),
     path('material/add/', v.MaterialCreate.as_view(), name='material_add'),
     path('material/<int:pk>/edit/', v.MaterialUpdate.as_view(), name='material_edit'),

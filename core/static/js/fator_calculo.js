@@ -5,7 +5,7 @@ $(document).ready(function(){
     $('#id_romaneio-0-polegada').addClass('clPolegada')
     //esconde o m2
     $('#id_romaneio-0-m2').prop('type', 'hidden')
-    $('label[for="id_romaneio-0-m2"]').append('<span id="id_romaneio-0-m2-span" class="lead" style="padding: 10px;"></span>')
+    $('label[for="id_romaneio-0-m2"]').append('<span id="id_romaneio-0-m2-span" class="lead" style="padding: 10px 40px;font-weight: bolder;"></span>')
 
     $('#add-item').click(function(ev){
         ev.preventDefault();
@@ -27,7 +27,7 @@ $(document).ready(function(){
         $('#id_romaneio-' + (count) + '-m_quantidade').addClass('clQuantidade')
         $('#id_romaneio-' + (count) + '-polegada').addClass('clPolegada')
         // cria span para mostrar saldo na tela
-        $('label[for="id_romaneio-' + (count) + '-m2"]').append('<span id="id_romaneio-' + (count) + '-m2-span" class="lead" style="padding: 10px;"></span>')
+        $('label[for="id_romaneio-' + (count) + '-m2"]').append('<span id="id_romaneio-' + (count) + '-m2-span" class="lead" style="padding: 10px 40px;font-weight: bolder;"></span>')
 
     });
 });
