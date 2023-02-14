@@ -10,7 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 import os
-import django_extensions
+#import django_extensions
 from pathlib import Path
 from decouple import config, Csv
 
@@ -42,7 +42,7 @@ INSTALLED_APPS = [
     #app terceiros
     'widget_tweaks',
     'bootstrapform',
-    "django_extensions",
+    #"django_extensions",
     #Meus apps
     'core',
     'romaneio',

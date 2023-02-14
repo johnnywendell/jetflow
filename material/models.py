@@ -76,35 +76,3 @@ class Material(TimeStampedModel):
         return str(self.pk)
     def get_absolute_url(self):
         return reverse_lazy('material:material_detail', kwargs={'pk': self.pk})
-
-
-"""
-CORROS = {}
-
-class RelatorioInspecao(TimeStampedModel):
-    rip = models.CharField(max_length=15, blank=True, null=True)
-    cliente = models.CharField(max_length=15, blank=True, null=True)
-    data = models.DateField(verbose_name='Data de Entrada')
-    rec = models.CharField(max_length=15, blank=True, null=True)
-    nota = models.CharField(max_length=15, blank=True, null=True)
-    tag = models.CharField(max_length=20, blank=True, null=True)
-    tipo_serv = models.CharField(max_length=20, blank=True, null=True)
-    unidade = models.ForeignKey(Area, on_delete=models.CASCADE, related_name='areaa')
-    setor = models.CharField(max_length=15, blank=True, null=True)
-    corrosividade = models.CharField(max_length=15, choices=CORROS)
-    esquema_pint = models.CharField(max_length=20, blank=True, null=True)
-    esp_esquema = models.CharField(max_length=20, blank=True, null=True)
-    cor_final = models.CharField(max_length=20, blank=True, null=True)
-    M2 = models.DecimalField('M²', max_digits=7, decimal_places=3)
-    fiscal = models.ForeignKey(Solicitante, on_delete=models.CASCADE, related_name='solicitantee')
-    inspetor = models.CharField(max_length=30, blank=True, null=True)
-    rnc_n = models.BooleanField(default=False)
-    aprovado = models.BooleanField(default=True)
-    obs_inst = models.TextField(blank=True, null=True)
-    obs_final = models.TextField( blank=True, null=True)
-
-    class Meta:
-        ordering = ('-created',)
-    def __str__(self):
-        return str(self.pk)
-"""
