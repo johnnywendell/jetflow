@@ -5,8 +5,8 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 from django.views.generic import CreateView, UpdateView, ListView
 from django.http import HttpResponseRedirect, HttpResponse
-from .models import Tratamento, TintaFundo, TintaIntermediaria, TintaAcabamento, Material,Equipamento
-from .forms import MaterialForm, TratamentoForm, TintaFundoForm, TintaIntermediariaForm, TintaAcabamentoForm, EquipamentoForm
+from .models import Tratamento, TintaFundo, TintaIntermediaria, TintaAcabamento, Material
+from .forms import MaterialForm, TratamentoForm, TintaFundoForm, TintaIntermediariaForm, TintaAcabamentoForm
 
 @login_required
 def tratamento_add(request):
@@ -106,30 +106,6 @@ class MaterialUpdate(UpdateView):
     model = Material
     template_name = 'material_form.html'
     form_class = MaterialForm
-
-####################  equipamento
-class EquipamentoList(ListView):
-    model = Equipamento
-    template_name = 'equipamento_list.html'
-    context_object_name = 'objects_list'
-
-def equipamento_detail(request, pk):
-    template_name = 'equipamento_detail.html'
-    obj = Equipamento.objects.get(pk=pk)
-    context = {'object': obj}
-    return render(request, template_name, context)
-
-class EquipamentoCreate(CreateView):
-    model = Equipamento
-    template_name = 'equipamento_form.html'
-    form_class = EquipamentoForm
-
-class EquipamentoUpdate(UpdateView):
-    model = Equipamento
-    template_name = 'equipamento_form.html'
-    form_class = EquipamentoForm
-
-
 
 
 ################### exportações

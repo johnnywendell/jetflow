@@ -1,5 +1,5 @@
 from django import forms
-from .models import Material, Tratamento, TintaFundo, TintaIntermediaria, TintaAcabamento, Equipamento
+from .models import Material, Tratamento, TintaFundo, TintaIntermediaria, TintaAcabamento
 
       
 
@@ -10,12 +10,6 @@ class MaterialForm(forms.ModelForm):
         widgets = {
             'concluido': forms.CheckboxInput(attrs={'class': 'special'}),
         }
-
-class EquipamentoForm(forms.ModelForm):
-    class Meta:
-        model = Equipamento
-        fields = '__all__'   
-
 class TratamentoForm(forms.ModelForm):
     class Meta:
         model = Tratamento

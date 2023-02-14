@@ -67,8 +67,8 @@ class Material(TimeStampedModel):
     raio = models.DecimalField('raio', max_digits=7, decimal_places=2, blank=True, null=True)
     largura = models.DecimalField('largura', max_digits=7, decimal_places=2, blank=True, null=True)
     altura = models.DecimalField('altura', max_digits=7, decimal_places=2, blank=True, null=True)
-    comprimento = models.DecimalField('comprimento', max_digits=7, decimal_places=2, blank=True, null=True)
-    lados = models.DecimalField('lados/QTD', max_digits=7, decimal_places=2, blank=True, null=True)
+    comprimento = models.DecimalField('comprimento/lados', max_digits=7, decimal_places=2, blank=True, null=True)
+    lados = models.DecimalField('QTD', max_digits=7, decimal_places=2, blank=True, null=True)
 
     class Meta:
         ordering = ('-created',)
@@ -77,32 +77,34 @@ class Material(TimeStampedModel):
     def get_absolute_url(self):
         return reverse_lazy('material:material_detail', kwargs={'pk': self.pk})
 
-EQUIPAMENTOS = {('boleado','boleado'),
-('carretel','carretel'),
-('cubo','cubo'),
-('cone','cone'),
-('janela','janela'),}
 
-class Equipamento(TimeStampedModel):
-    concluido =  models.BooleanField(default=False)
-    n2_romaneio = models.ForeignKey(Romaneio, on_delete=models.CASCADE, related_name='romaneioss')
-    jato = models.ForeignKey(Tratamento, on_delete=models.CASCADE, blank=True, null=True)
-    tf = models.ForeignKey(TintaFundo, on_delete=models.CASCADE, blank=True, null=True)
-    ti = models.ForeignKey(TintaIntermediaria, on_delete=models.CASCADE, blank=True, null=True)
-    ta = models.ForeignKey(TintaAcabamento, on_delete=models.CASCADE, blank=True, null=True)
-    equipamento = models.CharField(max_length=30, choices=EQUIPAMENTOS)
-    raio = models.DecimalField('raio', max_digits=7, decimal_places=2)
-    largura = models.DecimalField('largura', max_digits=7, decimal_places=2)
-    altura = models.DecimalField('altura', max_digits=7, decimal_places=2)
-    quantidade = models.DecimalField('qauntidade', max_digits=7, decimal_places=2)
-    comprimento = models.DecimalField('comprimento', max_digits=7, decimal_places=2)
-    lados = models.DecimalField('lados', max_digits=7, decimal_places=2)
-    geratriz = models.DecimalField('Geratriz', max_digits=7, decimal_places=2)
-    resultado = models.DecimalField('Resultado', max_digits=7, decimal_places=2)
+"""
+CORROS = {}
+
+class RelatorioInspecao(TimeStampedModel):
+    rip = models.CharField(max_length=15, blank=True, null=True)
+    cliente = models.CharField(max_length=15, blank=True, null=True)
+    data = models.DateField(verbose_name='Data de Entrada')
+    rec = models.CharField(max_length=15, blank=True, null=True)
+    nota = models.CharField(max_length=15, blank=True, null=True)
+    tag = models.CharField(max_length=20, blank=True, null=True)
+    tipo_serv = models.CharField(max_length=20, blank=True, null=True)
+    unidade = models.ForeignKey(Area, on_delete=models.CASCADE, related_name='areaa')
+    setor = models.CharField(max_length=15, blank=True, null=True)
+    corrosividade = models.CharField(max_length=15, choices=CORROS)
+    esquema_pint = models.CharField(max_length=20, blank=True, null=True)
+    esp_esquema = models.CharField(max_length=20, blank=True, null=True)
+    cor_final = models.CharField(max_length=20, blank=True, null=True)
+    M2 = models.DecimalField('M²', max_digits=7, decimal_places=3)
+    fiscal = models.ForeignKey(Solicitante, on_delete=models.CASCADE, related_name='solicitantee')
+    inspetor = models.CharField(max_length=30, blank=True, null=True)
+    rnc_n = models.BooleanField(default=False)
+    aprovado = models.BooleanField(default=True)
+    obs_inst = models.TextField(blank=True, null=True)
+    obs_final = models.TextField( blank=True, null=True)
 
     class Meta:
         ordering = ('-created',)
     def __str__(self):
         return str(self.pk)
-    def get_absolute_url(self):
-        return reverse_lazy('material:equipamento_detail', kwargs={'pk': self.pk})
+"""

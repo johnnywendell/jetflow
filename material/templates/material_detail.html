@@ -21,7 +21,7 @@
 
         </span>
     </h1>
-
+<div class="row">
     <div class="col-sm-6">
         <table class="table table-user-information">
             <tbody>
@@ -71,8 +71,39 @@
                     <th class="text-right">M²:</th>
                     <td>{{ object.m2 }}</td>
                 </tr>
+                <tr>
+                    <th class="text-right">Raio:</th>
+                    <td>{{ object.raio }}</td>
+                </tr>
+                <tr>
+                    <th class="text-right">Largura:</th>
+                    <td>{{ object.largura }}</td>
+                </tr>
+                <tr>
+                    <th class="text-right">Altura:</th>
+                    <td>{{ object.altura }}</td>
+                </tr>
+                <tr>
+                    <th class="text-right">Comprimento/lados:</th>
+                    <td>{{ object.comprimento }}</td>
+                </tr>
+                <tr>
+                    <th class="text-right">QTD:</th>
+                    <td>{{ object.lados }}</td>
+                </tr>
             </tbody>
         </table>
     </div>
+    <div class="col-sm-6">
+        <div class="container" style="padding: 230px 10px;background-color: aqua;">
+            <h1>Tubulações/Estruturas</h1>
+        </div>
+        <div class="container" style="padding: 100px 10px;background-color: rgb(176, 176, 182);">
+            <h1>Equipamentos</h1>
+        </div>
+        
+        
+    </div>
 
+</div>
 {% endblock content %} 
