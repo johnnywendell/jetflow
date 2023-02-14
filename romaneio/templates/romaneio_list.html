@@ -5,11 +5,18 @@
     <div class="page-header">
         <h2><i class="fa fa-user"></i> Romaneios
             <span class="pull-right">
+                <div style="display: flex;">
                 <a href="{% url 'romaneio:romaneios_add' %}">
                     <button type="button" class="btn btn-primary">
                         <span class="fa fa-plus"></span>Adicionar
+                    </button>                    
+                </a>
+                <a href="{% url 'romaneio:export_xlsx_func' %}">
+                    <button type="button" class="btn btn-info">
+                        <span class="fa fa-plus"></span>Exportar dados
                     </button>
                 </a>
+                </div>
             </span>
         </h2>
 

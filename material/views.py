@@ -1,9 +1,12 @@
+import xlwt
+from datetime import datetime
+
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 from django.views.generic import CreateView, UpdateView, ListView
-from django.http import HttpResponseRedirect
-from .models import Tratamento, TintaFundo, TintaIntermediaria, TintaAcabamento, Material
-from .forms import MaterialForm, TratamentoForm, TintaFundoForm, TintaIntermediariaForm, TintaAcabamentoForm
+from django.http import HttpResponseRedirect, HttpResponse
+from .models import Tratamento, TintaFundo, TintaIntermediaria, TintaAcabamento, Material,Equipamento
+from .forms import MaterialForm, TratamentoForm, TintaFundoForm, TintaIntermediariaForm, TintaAcabamentoForm, EquipamentoForm
 
 @login_required
 def tratamento_add(request):
@@ -103,3 +106,69 @@ class MaterialUpdate(UpdateView):
     model = Material
     template_name = 'material_form.html'
     form_class = MaterialForm
+
+####################  equipamento
+class EquipamentoList(ListView):
+    model = Equipamento
+    template_name = 'equipamento_list.html'
+    context_object_name = 'objects_list'
+
+def equipamento_detail(request, pk):
+    template_name = 'equipamento_detail.html'
+    obj = Equipamento.objects.get(pk=pk)
+    context = {'object': obj}
+    return render(request, template_name, context)
+
+class EquipamentoCreate(CreateView):
+    model = Equipamento
+    template_name = 'equipamento_form.html'
+    form_class = EquipamentoForm
+
+class EquipamentoUpdate(UpdateView):
+    model = Equipamento
+    template_name = 'equipamento_form.html'
+    form_class = EquipamentoForm
+
+
+
+
+################### exportações
+def export_xlsx(model, filename, queryset, columns):
+    response = HttpResponse(content_type='application/ms-excel')
+    response['Content-Disposition'] = 'attachment; filename="%s"' % filename
+
+    wb = xlwt.Workbook(encoding='utf-8')
+    ws = wb.add_sheet(model)
+
+    row_num = 0
+
+    font_style = xlwt.XFStyle()
+    font_style.font.bold = True
+
+    for col_num in range(len(columns)):
+        ws.write(row_num, col_num, columns[col_num], font_style)
+
+    default_style = xlwt.XFStyle()
+
+    rows = queryset
+    for row, rowdata in enumerate(rows):
+        row_num += 1
+        for col, val in enumerate(rowdata):
+            ws.write(row_num, col, val, default_style)
+
+    wb.save(response)
+    return response
+
+def export_xlsx_func_material(request):
+    MDATA = datetime.now().strftime('%Y-%m-%d')
+    model = 'Material'
+    filename = 'material_exportados.xls'
+    _filename = filename.split('.')
+    filename_final = f'{_filename[0]}_{MDATA}.{_filename[1]}'
+    queryset = Material.objects.all().values_list('concluido', 'n_romaneio__romaneio', 'jato__tratamento', 
+    'tf__tinta_fundo','ti__tinta_intermediaria', 'ta__tinta_acabamento', 'cor', 'material', 'descricao', 'polegada', 'm_quantidade', 'm2')
+
+    columns = ('concluido', 'Nº romaneio', 'Tratamento', 'Primer','TI', 
+    'TA', 'cor', 'material', 'descricao', 'polegada', 'M / Quant.', 'm2')
+    response = export_xlsx(model, filename_final, queryset, columns)
+    return response

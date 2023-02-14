@@ -4,15 +4,15 @@
 {% block content %} 
 
     <div class="page-header">
-        <h2><i class="fa fa-user"></i> Materiais
+        <h2><i class="fa fa-user"></i> Equipamento
             <span class="pull-right">
                 <div style="display: flex;">
-                <a href="{% url 'material:material_add' %}">
+                <a href="{% url 'material:equipamento_add' %}">
                     <button type="button" class="btn btn-primary">
                         <span class="fa fa-plus"></span>Adicionar
                     </button>
                 </a>
-                <a href="{% url 'material:export_xlsx_func_material' %}">
+                <a href="#">
                     <button type="button" class="btn btn-info">
                         <span class="fa fa-plus"></span>Exportar Materiais
                     </button>
@@ -28,11 +28,13 @@
                 <tr>
                     <th>Fechado</th>
                     <th>Nº Romaneio</th>
-                    <th>Tratamento</th>
-                    <th>TF</th>
-                    <th>TI</th>
-                    <th>TA</th>
-                    <th>Tipo Mat.</th>
+                    <th>Equipamento</th>
+                    <th>Raio</th>
+                    <th>Largura</th>
+                    <th>Altura</th>
+                    <th>Quantidade</th>
+                    <th>Comprimento</th>
+                    <th>Lados</th>
                     <th>M²</th>
                 </tr>
             </thead>
@@ -46,13 +48,16 @@
                           <i class="fa fa-minus-circle no"></i>
                         {% endif %}
                     </td>
-                    <td>{{ object.n_romaneio }}</td>
-                    <td>{{ object.jato }}</td>
-                    <td>{{ object.tf }}</td>
-                    <td>{{ object.ti }}</td>
-                    <td>{{ object.ta}}</td>
-                    <td><a href="{{ object.get_absolute_url }}">{{ object.material }}</a></td>
-                    <td>{{ object.m2 }}</td>
+                    <td>{{ object.n2_romaneio }}</td>
+                    <td><a href="{{ object.get_absolute_url }}">{{ object.equipamento }}</a></td>
+                    <td>{{ object.raio }}</td>
+                    <td>{{ object.largura }}</td>
+                    <td>{{ object.altura}}</td>
+                    <td>{{ object.quantidade}}</td>
+                    <td>{{ object.comprimento}}</td>
+                    <td>{{ object.lados }}</td>
+                    <td>{{ object.resultado }}</td>
+                    
                 </tr>
                  
                 {% endfor %}
@@ -62,7 +67,6 @@
         <p class="alert alert-warning">Sem Itens na Lista </p>
         {% endif %}
     </div>
-    {% include "includes/pagination.html" %}
 
         
 {% endblock content %} 

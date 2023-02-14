@@ -43,6 +43,11 @@ MATERIAIS = (
     ('acess_VV','acess_VV'),
     ('acess_VVC','acess_VVC'),
     ('acess_CAP','acess_CAP'),
+    ('boleado','boleado'),
+    ('carretel','carretel'),
+    ('cubo','cubo'),
+    ('cone','cone'),
+    ('janela','janela'),
 )
 
 class Material(TimeStampedModel):
@@ -55,9 +60,15 @@ class Material(TimeStampedModel):
     cor = models.CharField(max_length=15, blank=True, null=True)
     material = models.CharField(max_length=15, choices=MATERIAIS)
     descricao = models.CharField('Descrição',max_length=30, blank=True, null=True)
-    polegada = models.CharField('Pol', max_length=4)
-    m_quantidade = models.DecimalField('M/QTD', max_digits=7, decimal_places=2)
-    m2 = models.DecimalField('M²', max_digits=7, decimal_places=3,blank=True)
+    polegada = models.CharField('Pol', max_length=4, blank=True, null=True)
+    m_quantidade = models.DecimalField('M/QTD', max_digits=7, decimal_places=2, blank=True, null=True)
+    m2 = models.DecimalField('M²', max_digits=7, decimal_places=3)
+
+    raio = models.DecimalField('raio', max_digits=7, decimal_places=2, blank=True, null=True)
+    largura = models.DecimalField('largura', max_digits=7, decimal_places=2, blank=True, null=True)
+    altura = models.DecimalField('altura', max_digits=7, decimal_places=2, blank=True, null=True)
+    comprimento = models.DecimalField('comprimento', max_digits=7, decimal_places=2, blank=True, null=True)
+    lados = models.DecimalField('lados/QTD', max_digits=7, decimal_places=2, blank=True, null=True)
 
     class Meta:
         ordering = ('-created',)
@@ -65,3 +76,33 @@ class Material(TimeStampedModel):
         return str(self.pk)
     def get_absolute_url(self):
         return reverse_lazy('material:material_detail', kwargs={'pk': self.pk})
+
+EQUIPAMENTOS = {('boleado','boleado'),
+('carretel','carretel'),
+('cubo','cubo'),
+('cone','cone'),
+('janela','janela'),}
+
+class Equipamento(TimeStampedModel):
+    concluido =  models.BooleanField(default=False)
+    n2_romaneio = models.ForeignKey(Romaneio, on_delete=models.CASCADE, related_name='romaneioss')
+    jato = models.ForeignKey(Tratamento, on_delete=models.CASCADE, blank=True, null=True)
+    tf = models.ForeignKey(TintaFundo, on_delete=models.CASCADE, blank=True, null=True)
+    ti = models.ForeignKey(TintaIntermediaria, on_delete=models.CASCADE, blank=True, null=True)
+    ta = models.ForeignKey(TintaAcabamento, on_delete=models.CASCADE, blank=True, null=True)
+    equipamento = models.CharField(max_length=30, choices=EQUIPAMENTOS)
+    raio = models.DecimalField('raio', max_digits=7, decimal_places=2)
+    largura = models.DecimalField('largura', max_digits=7, decimal_places=2)
+    altura = models.DecimalField('altura', max_digits=7, decimal_places=2)
+    quantidade = models.DecimalField('qauntidade', max_digits=7, decimal_places=2)
+    comprimento = models.DecimalField('comprimento', max_digits=7, decimal_places=2)
+    lados = models.DecimalField('lados', max_digits=7, decimal_places=2)
+    geratriz = models.DecimalField('Geratriz', max_digits=7, decimal_places=2)
+    resultado = models.DecimalField('Resultado', max_digits=7, decimal_places=2)
+
+    class Meta:
+        ordering = ('-created',)
+    def __str__(self):
+        return str(self.pk)
+    def get_absolute_url(self):
+        return reverse_lazy('material:equipamento_detail', kwargs={'pk': self.pk})

@@ -13,5 +13,9 @@ urlpatterns =[
     path('tintaf/', v.tintafundo_add, name='tintafundo_add'),
     path('tintai/', v.tintaintermediaria_add, name='tintaintermediaria_add'),
     path('tintaa/', v.tintaacabamento_add, name='tintaacabamento_add'),
-
+    path('material/export/xlsx/', v.export_xlsx_func_material, name='export_xlsx_func_material'),
+    path('equipamento/', v.EquipamentoList.as_view(), name='equipamento_list'),
+    path('equipamento/<int:pk>', v.equipamento_detail, name='equipamento_detail'),
+    path('equipamento/add/', v.EquipamentoCreate.as_view(), name='equipamento_add'),
+    path('equipamento/<int:pk>/edit/', v.EquipamentoUpdate.as_view(), name='equipamento_edit'),
 ]

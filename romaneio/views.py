@@ -180,7 +180,7 @@ def export_xlsx_func(request):
     _filename = filename.split('.')
     filename_final = f'{_filename[0]}_{MDATA}.{_filename[1]}'
     queryset = Romaneio.objects.all().values_list('funcionario', 'nf', 'romaneio', 
-    'documento','obs', 'area', 'solicitante')
+    'documento','obs', 'area__area', 'solicitante__solicitante')
     columns = ('funcionario', 'nf', 'romaneio', 
     'documento','obs', 'area', 'solicitante')
     response = export_xlsx(model, filename_final, queryset, columns)

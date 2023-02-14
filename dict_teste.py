@@ -1,3 +1,5 @@
+import math
+
 dict_fatores = {
 'perfil_I':{'3':0.41,'4':0.50,'5':0.59,'6':0.68,'8':0.84,'10':1.03,'12':1.18,'14':1.35,'18':1.53,'20':1.76,'22':1.94,'24':2.13,'26':2.32},
 'perfil_H':{'4':0.61,'5':0.77,'6':0.92,'7':1.08,'8':1.23,'9':1.39,'10':1.54,'11':1.70,'12':1.85,'13':2.01,'14':2.16,'15':2.32,'16':2.47,'17':2.63,'18':2.78,'19':2.94,'20':3.09},
@@ -28,9 +30,26 @@ dict_fatores = {
 #teste = dict_fatores['perfil_I']['3']
 #perfil = str(input("digite o tipo: "))
 #polegada = str(input("digite a polegada: "))
-teste = dict_list[0]
+#teste = dict_list[0]
 #fator = dict_fatores[perfil][polegada]
-print(dict_list)
+#print(dict_list)
 #print("o fator do(a) {} de {} polegadas é {} ".format(perfil, polegada, fator))
 
+RAIO = float(input('raio: '))
+LARGURA = float(input('largura: '))
+ALTURA = float(input('altura: '))
+QUANTIDADE = float(input('quantidade: '))
+COMPRIMENTO = float(input('comprimento: '))
+LADOS = float(input('LADOS: '))
+PI = 3.14156
+GERATRIZ = float(math.sqrt(RAIO**2+ALTURA**2))
+
+
+BOLEADO = (PI* (RAIO ** 2/4 + ALTURA ** 2)) * QUANTIDADE # OK
+CARRETEL = 2*RAIO*PI*ALTURA*QUANTIDADE  # OK
+CUBO = (LARGURA*ALTURA*2+LARGURA*COMPRIMENTO*2+ALTURA*COMPRIMENTO*2)*QUANTIDADE # OK
+CONE = PI*RAIO**2+PI*RAIO*GERATRIZ  # OK
+JANELA = LARGURA*ALTURA*LADOS*QUANTIDADE 
+
+print(JANELA)
 
