@@ -25,6 +25,9 @@ class RelatorioInspecao(TimeStampedModel):
     aprovado = models.BooleanField(default=True)
     obs_inst = models.TextField(blank=True, null=True)
     obs_final = models.TextField( blank=True, null=True)
+
+    inicio = models.DateField(verbose_name='Inicio')
+    termino = models.DateField(verbose_name='Fim')
     temp_ambiente = models.DecimalField('Temperatura ambiente', max_digits=4, decimal_places=2)
     ura = models.DecimalField('Úmidade relativa', max_digits=4, decimal_places=2)
     po = models.DecimalField('Ponto de Orvalho', max_digits=4, decimal_places=2)
@@ -34,11 +37,9 @@ class RelatorioInspecao(TimeStampedModel):
     poeira_tam = models.CharField('Teste de poeira tamanho',max_length=10, blank=True, null=True)
     poeira_quant = models.CharField('Teste de poeira quantidade',max_length=10, blank=True, null=True)
     teor_sais = models.CharField('Teor sais soluveis na superfície',max_length=10, blank=True, null=True)
-    inicio = models.DateField(verbose_name='Inicio')
-    termino = models.DateField(verbose_name='Fim')
     ambiente_pintura = models.CharField('Ambiente pintura',max_length=30, blank=True, null=True)
-    laudo = models.BooleanField(default=True)
     rugosidade = models.DecimalField('Rugosidade', max_digits=4, decimal_places=2)
+    laudo = models.BooleanField(default=True)
 
 
 

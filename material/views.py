@@ -88,13 +88,14 @@ class MaterialList(ListView):
         queryset = super(MaterialList, self).get_queryset()
         search = self.request.GET.get('search')
         if search:
-            queryset = queryset.filter(material__icontains=search)
+            queryset = queryset.filter(n_romaneio__romaneio__icontains=search)
         return queryset
 
 def material_detail(request, pk):
     template_name = 'material_detail.html'
     obj = Material.objects.get(pk=pk)
-    context = {'object': obj}
+    link = f"www.google.com/{obj.pk}"
+    context = {'object': obj, 'link':link}
     return render(request, template_name, context)
 
 class MaterialCreate(CreateView):
@@ -142,9 +143,11 @@ def export_xlsx_func_material(request):
     _filename = filename.split('.')
     filename_final = f'{_filename[0]}_{MDATA}.{_filename[1]}'
     queryset = Material.objects.all().values_list('concluido', 'n_romaneio__romaneio', 'jato__tratamento', 
-    'tf__tinta_fundo','ti__tinta_intermediaria', 'ta__tinta_acabamento', 'cor', 'material', 'descricao', 'polegada', 'm_quantidade', 'm2')
+    'tf__tinta_fundo','ti__tinta_intermediaria', 'ta__tinta_acabamento', 'cor', 'material', 'descricao',
+     'polegada', 'm_quantidade', 'm2', 'raio', 'largura', 'altura', 'comprimento','lados')
 
     columns = ('concluido', 'Nº romaneio', 'Tratamento', 'Primer','TI', 
-    'TA', 'cor', 'material', 'descricao', 'polegada', 'M / Quant.', 'm2')
+    'TA', 'cor', 'material', 'descricao', 'polegada', 'M / Quant.', 'm2', 'Raio', 'Largura', 'Altura', 
+    'Comprimento/lados','QTD_Equip')
     response = export_xlsx(model, filename_final, queryset, columns)
     return response

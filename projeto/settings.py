@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     #app terceiros
     'widget_tweaks',
     'bootstrapform',
+    'qr_code',
     #"django_extensions",
     #Meus apps
     'core',

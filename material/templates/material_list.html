@@ -26,7 +26,7 @@
         <table class="table table-striped">
             <thead>
                 <tr>
-                    <th>Fechado</th>
+                    <th class="text-center">Fechado</th>
                     <th>Nº Romaneio</th>
                     <th>Tratamento</th>
                     <th>TF</th>
@@ -39,7 +39,7 @@
             <tbody>
                 {% for object in objects_list %}
                 <tr>
-                    <td>
+                    <td class="text-center">
                         {% if object.concluido %}
                           <i class="fa fa-check-circle ok"></i>
                         {% else %}

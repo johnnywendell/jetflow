@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-
+{% load qr_code %}
 
 {% block content %} 
 <a href="{% url 'material:material_list'  %}">voltar</a>
@@ -95,12 +95,13 @@
         </table>
     </div>
     <div class="col-sm-6">
-        <div class="container" style="padding: 230px 10px;background-color: aqua;">
-            <h1>Tubulações/Estruturas</h1>
+        <div class="d-flex justify-content-center border border-dark" >
+            <h1>QR CODE - IDPÇ </h1>
         </div>
-        <div class="container" style="padding: 100px 10px;background-color: rgb(176, 176, 182);">
-            <h1>Equipamentos</h1>
+        <div class="d-flex justify-content-center border border-dark" >
+            {% qr_from_text link size="M" %}
         </div>
+        
         
         
     </div>
