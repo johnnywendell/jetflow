@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block content %}  
+    <div class="row">
+        <div class="col-md-4 offset-md-4">
+            <h2 class="text-center" style="margin:30px;">Cadastro</h2>
+            <form method="post" action="{% url 'cadastro' %}">
+                {% csrf_token %}
+                <!-- uSERNAME input -->
+                <div class="form-outline mb-4">
+                  <input  class="form-control" name="username" />
+                  <label class="form-label" for="form2Example1">Username</label>
+                </div>
+                <!-- Email input -->
+                <div class="form-outline mb-4">
+                  <input  type="email" class="form-control" name="email" />
+                  <label class="form-label" for="form2Example1">Email address</label>
+                </div>
+              
+                <!-- Password input -->
+                <div class="form-outline mb-4">
+                  <input type="password"  class="form-control" name="password" />
+                  <label class="form-label" for="form2Example2">Password</label>
+                </div>
+            
+              
+                <!-- Submit button -->
+                <button type="submit" class="btn btn-primary btn-block mb-4">Entrar</button>
+              
+              </form>
+        </div>
+    </div>
+
+
+{% endblock content %}

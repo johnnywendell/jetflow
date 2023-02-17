@@ -10,25 +10,21 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 import os
-#import django_extensions
 from pathlib import Path
-from decouple import config, Csv
-#import django_on_heroku
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
  
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = config('SECRET_KEY')
+SECRET_KEY = 'wyrykb5fa*))8b9-+a(qz+c9l(yv2t3avo4a5yhgn%(n%sex@j'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = config('DEBUG', default=False, cast=bool)
+DEBUG = True
 
-ALLOWED_HOSTS = config('ALLOWED_HOSTS', default=[], cast=Csv())
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 
 # Application definition
 
@@ -48,6 +44,7 @@ INSTALLED_APPS = [
     'core',
     'romaneio',
     'material',
+    'usuarios',
 ]
 
 MIDDLEWARE = [
@@ -138,8 +135,5 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-LOGIN_URL = '/admin/login'
-LOGOUT_REDIRECT_URL = 'core:index'
-
-
-#django_on_heroku.settings(locals())
+LOGIN_URL = '/auth/login'
+LOGOUT_REDIRECT_URL = '/auth/login'
