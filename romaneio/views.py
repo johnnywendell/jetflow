@@ -33,7 +33,10 @@ class RomaneioList(ListView):
         queryset = super(RomaneioList, self).get_queryset()
         search = self.request.GET.get('search')
         if search:
-            queryset = queryset.filter(romaneio__icontains=search)
+            queryset = queryset.filter(
+                Q(romaneio__icontains=search) |
+                Q(solicitante__solicitante__icontains=search)
+            )
         return queryset
 
 

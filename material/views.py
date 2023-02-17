@@ -1,6 +1,6 @@
 import xlwt
 from datetime import datetime
-
+from django.db.models import Q
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 from django.views.generic import CreateView, UpdateView, ListView
@@ -88,7 +88,10 @@ class MaterialList(ListView):
         queryset = super(MaterialList, self).get_queryset()
         search = self.request.GET.get('search')
         if search:
-            queryset = queryset.filter(n_romaneio__romaneio__icontains=search)
+            queryset = queryset.filter(
+                Q(n_romaneio__romaneio__icontains=search) |
+                Q(material__icontains=search)
+            )
         return queryset
 
 def material_detail(request, pk):
