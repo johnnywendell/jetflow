@@ -6,7 +6,7 @@ $(document).ready(function(){
     $('#id_romaneio-0-lados').addClass('clLados')
     //esconde o m2
     $('#id_romaneio-0-m2').prop('type', 'hidden')
-    $('label[for="id_romaneio-0-m2"]').append('<span id="id_romaneio-0-m2-span" class="lead" style="width: 100px;font-weight: bolder;background-color: yellow;"></span>')
+    $('label[for="id_romaneio-0-m2"]').append('<span id="id_romaneio-0-m2-span" class="lead text-center" style="width: 100px;font-weight: bolder;background-color: lightgreen;"></span>')
 
     $('#add-item').click(function(ev){
         ev.preventDefault();
@@ -29,7 +29,13 @@ $(document).ready(function(){
         $('#id_romaneio-' + (count) + '-polegada').addClass('clPolegada')
         $('#id_romaneio-' + (count) + '-lados').addClass('clLados')
         // cria span para mostrar saldo na tela
-        $('label[for="id_romaneio-' + (count) + '-m2"]').append('<span id="id_romaneio-' + (count) + '-m2-span" class="lead" style="width: 100px;font-weight: bolder;background-color: yellow;"></span>')
+        $('label[for="id_romaneio-' + (count) + '-m2"]').append('<span id="id_romaneio-' + (count) + '-m2-span" class="lead text-center" style="width: 100px;font-weight: bolder;background-color: lightgreen;"></span>')
+
+    });
+    $('#scroll-left').click(function(ev){
+        $('html, body').animate({
+            scrollLeft: $("#scroll-left").position().left + 1200
+        }, 800);
 
     });
 });
