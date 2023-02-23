@@ -91,11 +91,20 @@
                 </tr>
                 <tr>
                     <th class="text-right">NC? </th>
-                    <td>{{ object.rnc_n }}</td>
+                    <td>{% if object.rnc_n %}
+                        <i class="fa fa-check-circle ok"></i>
+                      {% else %}
+                        <i class="fa fa-minus-circle no"></i>
+                      {% endif %}</td>
+                    
                 </tr>
                 <tr>
                     <th class="text-right">Aprovado?</th>
-                    <td> {{ object.aprovado }}</td>
+                    <td>{% if object.aprovado %}
+                        <i class="fa fa-check-circle ok"></i>
+                      {% else %}
+                        <i class="fa fa-minus-circle no"></i>
+                      {% endif %}</td>
                 </tr>
                 
             </tbody>
@@ -149,7 +158,11 @@
                 <td>{{ object.ambiente_pintura }}</td>
                 <td>{{ object.imtemperismo }}</td>
                 <td>{{ object.descontaminacao }}</td>
-                <td>{{ object.laudo}}</td>
+                <td>{% if object.laudo %}
+                    <i class="fa fa-check-circle ok"></i>
+                  {% else %}
+                    <i class="fa fa-minus-circle no"></i>
+                  {% endif %}</td>
                 
             </tr>
         </tbody>
@@ -282,7 +295,7 @@
             </table>
             </div>
             <div class="col-sm-6">
-                <table class="table table-user-information">
+                <table class="table table-user-information" >
                     <tbody>
             <tr>
                 <th class="text-right">Observações finais</th>
@@ -292,6 +305,26 @@
             </tbody>
             </table>
             </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-4"><div class="card" style="height: 12rem;">
+                    <div class="card-body">
+                      <h5 class="card-subtitle">Assinatura Ispeção</h5>
+                        
+                    </div>
+                  </div></div>
+                <div class="col-sm-4"><div class="card" style="height: 12rem;">
+                    <div class="card-body">
+                      <h5 class="card-subtitle">Assinatura Coordenação</h5>
+                        
+                    </div>
+                  </div></div>
+                <div class="col-sm-4"><div class="card" style="height: 12rem;">
+                    <div class="card-body">
+                      <h5 class="card-subtitle">Assinatura Fiscalização</h5>
+                        
+                    </div>
+                  </div></div>
             </div>
             
 {% endblock content %} 
