@@ -4,12 +4,12 @@
 {% load bootstrap %}
 
 {% block content %}
-<a href="{% url 'romaneio:romaneio_list'  %}">voltar</a>
+<a href="{% url 'qualidade:relatorios_list'  %}">voltar</a>
     <div class="row">
         <div class="cols">
             <form method="POST" novalidate>
                 {% csrf_token %}
-                <legend style="border-bottom: 1px solid #e5e5e5;">Romaneio</legend>
+                <legend style="border-bottom: 1px solid #e5e5e5;">Relatório</legend>
                 <div class="row">
                     <div class="col-sm-12">
                         {% for field in form.visible_fields %}
@@ -32,11 +32,11 @@
                 </div>
                 <div class="row">
                     <div class="col-sm-12">
-                        <legend style="border-bottom: 1px solid #e5e5e5;">Materiais</legend>
+                        <legend style="border-bottom: 1px solid #e5e5e5;">Etapas Pintura</legend>
                         <div id="romaneio" class="form-inline">
-                            {% for item_romaneio_form in formset %}
+                            {% for item_relatorio_form in formset %}
                             <div id="item-{{ forloop.counter0 }}" class="form-group">
-                                {{ item_romaneio_form|bootstrap }}
+                                {{ item_relatorio_form|bootstrap }}
                             </div>
                             {% endfor %}
                         </div>
@@ -54,7 +54,7 @@
                             <button class="btn btn-primary" value="Save">
                                 <i class="fa fa-floopy-o"></i>Salvar
                             </button>
-                            <a href="{% url 'romaneio:romaneio_list'  %}" class="btn btn-danger">
+                            <a href="{% url 'qualidade:relatorios_list'  %}" class="btn btn-danger">
                                 <i class="fa fa-times">Cancelar</i>
                             </a>
                         </div>
@@ -67,7 +67,31 @@
 {% endblock content %}
 {% block js %}
 
-    <script src="{% static 'js/fator_calculo.js' %}"></script>
+    <script>
+        $(document).ready(function(){
+
+            $('#add-item').click(function(ev){
+            ev.preventDefault();
+            var count = $('#romaneio').children().length;
+            var tmplMarkup = $('#item-romaneio').html();
+            var compiledTmpl = tmplMarkup.replace(/__prefix__/g, count);
+            $('div#romaneio').append(compiledTmpl);
+            
+            $('html, body').animate({
+            scrollTop: $("#add-item").position().top - 200
+            }, 800);
+
+        });
+        $('#scroll-left').click(function(ev){
+        $('html, body').animate({
+            scrollLeft: $("#scroll-left").position().left + 2000
+        }, 800);
+
+    });
+    });
+    </script>
+
+  
     <script type="text/html" id="item-romaneio">
         <div id="item-__prefix__" class="form-group" style="margin-top: 10px;">
             {{ formset.empty_form|bootstrap }}
