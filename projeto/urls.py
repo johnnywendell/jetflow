@@ -22,6 +22,8 @@ urlpatterns = [
     path('', include('core.urls')),
     path('', include('romaneio.urls')),
     path('', include('material.urls')),
+    path('', include('qualidade.urls')),
     path('logout/', LogoutView.as_view(), name='logout'),
     path('auth/', include('usuarios.urls')),
+    
 ]
