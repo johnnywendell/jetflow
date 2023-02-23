@@ -254,40 +254,19 @@
     {% endfor %}
 </div>
 <legend style="border-bottom: 1px solid #e5e5e5;">Materiais</legend>
-{% if material_list %}
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th>Nº Romaneio</th>
-            <th>Tratamento</th>
-            <th>TF</th>
-            <th>TI</th>
-            <th>TA</th>
-            <th>Tipo Mat.</th>
-            <th>M²</th>
-            <th>checkbox</th>
-        </tr>
-    </thead>
-    <tbody>
-  
-        {% for object in material_list %}
-        
-        <tr>
-            <td>{{ object.n_romaneio }}</td>
-            <td>{{ object.jato }}</td>
-            <td>{{ object.tf }}</td>
-            <td>{{ object.ti }}</td>
-            <td>{{ object.ta}}</td>
-            <td><a href="{{ object.get_absolute_url }}">{{ object.material }}</a></td>
-            <td>{{ object.m2 }}</td>
-            <td><input type="checkbox" id="selecionar-{{forloop.counter}}" value="{{ object.m2 }}"></td>
-        </tr>
-         
-        {% endfor %}
-    </tbody>
-</table>
-    {% endif %}
-
+        <div id="materiais">
+        {% if material_list %}
+            <select name="material-0" class="form-control clSelect2">  
+                {% for object in material_list %}
+                <option value="{{object.pk}}">{{ object.n_romaneio }} - {{ object.material }} - {{ object.jato }}-{{ object.tf }}-{{ object.ti }}-{{ object.ta }} - {{ object.m2 }}m²</option>
+                {% endfor %}
+            </select>
+        {% endif %}
+        </div>
+        <span id="add-item" class="btn btn-info" style="margin-top: 10px;">
+            <i class="fa fa-plus"></i>Adicionar
+        </span>
+       
 
 
             <div class="row">
@@ -316,3 +295,31 @@
             </div>
             
 {% endblock content %} 
+
+{% block js %}
+
+    <script >
+        $(document).ready(function(){
+            // Select2
+            $('.clSelect2').select2()
+                $('#add-item').click(function(ev){
+                ev.preventDefault();
+                var count = $('#materiais').children().length;
+                var tmplMarkup = $('#item-material').html();
+                var compiledTmpl = tmplMarkup.replace(/__prefix__/g, count);
+                $('div#materiais').append(compiledTmpl);
+                $('.clSelect2').select2()
+            });
+        });
+
+    </script>
+    <script type="text/html" id="item-material">
+            {% if material_list %}
+                <select id="material-__prefix__" class="form-control clSelect2">  
+                    {% for object in material_list %}
+                    <option value="{{object.pk}}">{{ object.n_romaneio }} - {{ object.material }} - {{ object.jato }}-{{ object.tf }}-{{ object.ti }}-{{ object.ta }} - {{ object.m2 }}m²</option>
+                    {% endfor %}
+                </select>
+            {% endif %}  
+    </script>
+{% endblock js %}

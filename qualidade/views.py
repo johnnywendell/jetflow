@@ -24,6 +24,5 @@ def relatorios_detail(request, pk):
     template_name = 'relatorios_detail.html'
     obj = RelatorioInspecao.objects.get(pk=pk)
     material = Material.objects.filter(concluido=True)
-    var = 0
-    context = {'object': obj, 'material_list': material, 'var':var}
+    context = {'object': obj, 'material_list': material}
     return render(request, template_name, context)
