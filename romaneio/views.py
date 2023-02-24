@@ -44,7 +44,11 @@ class RomaneioList(ListView):
 def romaneio_detail(request, pk):
     template_name = 'romaneio_detail.html'
     obj = Romaneio.objects.get(pk=pk)
-    context = {'object': obj}
+    materiais = obj.romaneios.all()
+    metro_quadrado = 0
+    for material in materiais:
+        metro_quadrado += material.m2
+    context = {'object': obj, 'metro':metro_quadrado}
     return render(request, template_name, context)
 
 @login_required

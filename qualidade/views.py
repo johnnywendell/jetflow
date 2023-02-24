@@ -29,7 +29,10 @@ def relatorios_detail(request, pk):
     relatorio = obj.rip
     material = Material.objects.filter(concluido=True, relatorio=None)
     material_relatorio = Material.objects.filter(relatorio=relatorio)
-    context = {'object': obj, 'material_list': material, 'material_relatorio':material_relatorio}
+    metro = 0
+    for item in material_relatorio:
+        metro += item.m2
+    context = {'object': obj, 'material_list': material, 'material_relatorio':material_relatorio, 'metro':metro}
     if request.method == 'POST':
         vi = request.POST.get('valores')
         vi = str(vi)
