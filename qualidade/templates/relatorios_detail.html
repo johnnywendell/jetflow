@@ -267,6 +267,10 @@
     {% endfor %}
 </div>
 <legend style="border-bottom: 1px solid #e5e5e5;">Materiais</legend>
+
+
+<form method="POST" novalidate>
+    {% csrf_token %}
         <div id="materiais">
         {% if material_list %}
             <select name="material-0" class="form-control clSelect2">  
@@ -279,10 +283,13 @@
         <span id="add-item" class="btn btn-info" style="margin-top: 10px;">
             <i class="fa fa-plus"></i>Adicionar
         </span>
-       
-
-
-            <div class="row">
+        <input type="text" name="valores" id="valores">
+        <button type="submit" class="btn btn-primary btn-block mb-4">Entrar</button>
+    </form>    
+        
+        
+        
+        <div class="row">
                 <div class="col-sm-6">
                     <table class="table table-user-information">
                         <tbody>
@@ -334,7 +341,7 @@
     <script >
         $(document).ready(function(){
             // Select2
-            $('.clSelect2').select2()
+                $('.clSelect2').select2()
                 $('#add-item').click(function(ev){
                 ev.preventDefault();
                 var count = $('#materiais').children().length;
@@ -343,7 +350,18 @@
                 $('div#materiais').append(compiledTmpl);
                 $('.clSelect2').select2()
             });
+
         });
+
+        $(document).on('change', '.clSelect2', function(){
+            var txt = "";
+            $('.clSelect2').each(function(){
+                txt += $(this).val()+"," ;
+            });
+            $('#valores').val(txt);
+        });
+
+
 
     </script>
     <script type="text/html" id="item-material">

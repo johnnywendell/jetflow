@@ -27,8 +27,17 @@ class RelatoriosList(ListView):
 def relatorios_detail(request, pk):
     template_name = 'relatorios_detail.html'
     obj = RelatorioInspecao.objects.get(pk=pk)
-    material = Material.objects.filter(concluido=True)
+    relatorio = obj.rip
+    material = Material.objects.filter(concluido=True, relatorio=None)
     context = {'object': obj, 'material_list': material}
+    if request.method == 'POST':
+        vi = request.POST.get('valores')
+        vi = str(vi)
+        present = vi.split(",")
+        present.pop()
+        for i in present:
+            Material.objects.filter(pk=i).update(relatorio=relatorio)
+        return HttpResponseRedirect('/')
     return render(request, template_name, context)
 
 def relatorios_add(request):

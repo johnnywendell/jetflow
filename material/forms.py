@@ -7,6 +7,7 @@ class MaterialForm(forms.ModelForm):
     class Meta:
         model = Material
         fields = '__all__'  
+        exclude = ('relatorio',)
         widgets = {
             'concluido': forms.CheckboxInput(attrs={'class': 'special'}),
         }

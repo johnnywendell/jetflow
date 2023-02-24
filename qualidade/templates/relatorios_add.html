@@ -33,7 +33,7 @@
                 <div class="row">
                     <div class="col-sm-12">
                         <legend style="border-bottom: 1px solid #e5e5e5;">Etapas Pintura</legend>
-                        <div id="romaneio" class="form-inline">
+                        <div id="relatorio" class="form-inline">
                             {% for item_relatorio_form in formset %}
                             <div id="item-{{ forloop.counter0 }}" class="form-group">
                                 {{ item_relatorio_form|bootstrap }}
@@ -72,11 +72,12 @@
 
             $('#add-item').click(function(ev){
             ev.preventDefault();
-            var count = $('#romaneio').children().length;
-            var tmplMarkup = $('#item-romaneio').html();
+            var count = $('#relatorio').children().length;
+            var tmplMarkup = $('#item-relatorio').html();
             var compiledTmpl = tmplMarkup.replace(/__prefix__/g, count);
-            $('div#romaneio').append(compiledTmpl);
+            $('div#relatorio').append(compiledTmpl);
             
+            $('#id_relatorio-TOTAL_FORMS').attr('value', count + 1);
             $('html, body').animate({
             scrollTop: $("#add-item").position().top - 200
             }, 800);
@@ -92,7 +93,7 @@
     </script>
 
   
-    <script type="text/html" id="item-romaneio">
+    <script type="text/html" id="item-relatorio">
         <div id="item-__prefix__" class="form-group" style="margin-top: 10px;">
             {{ formset.empty_form|bootstrap }}
         </div>

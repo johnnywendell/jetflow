@@ -69,6 +69,7 @@ class Material(TimeStampedModel):
     altura = models.DecimalField('altura', max_digits=7, decimal_places=2, blank=True, null=True)
     comprimento = models.DecimalField('comprimento/lados', max_digits=7, decimal_places=2, blank=True, null=True)
     lados = models.DecimalField('QTD', max_digits=7, decimal_places=2, blank=True, null=True)
+    relatorio = models.CharField(max_length=20, blank=True, null=True)
 
     class Meta:
         ordering = ('-created',)
