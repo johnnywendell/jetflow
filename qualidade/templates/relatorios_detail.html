@@ -267,7 +267,35 @@
     {% endfor %}
 </div>
 <legend style="border-bottom: 1px solid #e5e5e5;">Materiais</legend>
+{% if material_relatorio %}
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Nº Romaneio</th>
+            <th>Tratamento</th>
+            <th>TF</th>
+            <th>TI</th>
+            <th>TA</th>
+            <th>Tipo Mat.</th>
+            <th>M²</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for object in material_relatorio %}
+        <tr>
+            <td>{{ object.n_romaneio }}</td>
+            <td>{{ object.jato }}</td>
+            <td>{{ object.tf }}</td>
+            <td>{{ object.ti }}</td>
+            <td>{{ object.ta}}</td>
+            <td><a href="{{ object.get_absolute_url }}">{{ object.material }}</a></td>
+            <td>{{ object.m2 }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
 
+{% endif %}
 
 <form method="POST" novalidate>
     {% csrf_token %}
@@ -280,15 +308,18 @@
             </select>
         {% endif %}
         </div>
-        <span id="add-item" class="btn btn-info" style="margin-top: 10px;">
+        <span id="add-item" class="btn btn-info" style="margin: 6px;">
             <i class="fa fa-plus"></i>Adicionar
         </span>
-        <input type="text" name="valores" id="valores">
-        <button type="submit" class="btn btn-primary btn-block mb-4">Entrar</button>
-    </form>    
+        <input type="hidden" name="valores" id="valores">
+                
+        <button type="submit" class="btn btn-primary float-right" style="margin: 6px;">incluir materiais</button>
+    </form> 
+ 
         
         
         
+       
         <div class="row">
                 <div class="col-sm-6">
                     <table class="table table-user-information">
@@ -313,10 +344,21 @@
             </table>
             </div>
             </div>
+            <div>
+                <legend style="border-bottom: 1px solid #e5e5e5;">Registro fotográfico</legend>  
+                <a class="btn btn-info btn-sm" href="{% url 'qualidade:photo_create' %}"style="margin: 6px;">Adicionar Imagem</a>
+                <div class="row" style="margin-bottom: 10px;">
+                {% for item in object.relatorio.all %}
+                {% if item.photo %}
+                <img src="{{ item.photo.url }}" alt="" class="img-thumbnail" width="150px">
+                {% endif %}
+                {% endfor %}
+                </div>
+            </div>
             <div class="row">
                 <div class="col-sm-4"><div class="card" style="height: 12rem;">
                     <div class="card-body">
-                      <h5 class="card-subtitle">Assinatura Ispeção</h5>
+                      <h5 class="card-subtitle">Assinatura Inspeção</h5>
                         
                     </div>
                   </div></div>

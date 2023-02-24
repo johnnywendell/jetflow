@@ -107,3 +107,12 @@ class EtapaPintura(models.Model):
     def get_val_c(self):
         return self.val_c.strftime('%d/%m/%Y')
 
+class Photo(models.Model):
+    rip_numero = models.ForeignKey(RelatorioInspecao, on_delete=models.CASCADE, verbose_name='RIP',related_name='relatorio')
+    photo = models.ImageField('foto',upload_to='')
+    class Meta:
+        ordering =('pk',)
+        verbose_name = 'foto'
+        verbose_name_plural = 'fotos'
+    def __str__(self):
+        return str(self.rip_numero)

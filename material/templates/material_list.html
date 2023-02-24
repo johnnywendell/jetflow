@@ -34,6 +34,7 @@
                     <th>TA</th>
                     <th>Tipo Mat.</th>
                     <th>M²</th>
+                    <th>Relatório</th>
                 </tr>
             </thead>
             <tbody>
@@ -53,6 +54,7 @@
                     <td>{{ object.ta}}</td>
                     <td><a href="{{ object.get_absolute_url }}">{{ object.material }}</a></td>
                     <td>{{ object.m2 }}</td>
+                    <td>{{ object.relatorio }}</td>
                 </tr>
                  
                 {% endfor %}

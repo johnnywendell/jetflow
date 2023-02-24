@@ -1,10 +1,9 @@
-from django.shortcuts import render
 from django.views.generic import CreateView, UpdateView, ListView
 from django.forms import inlineformset_factory
 from django.http import HttpResponseRedirect
-from django.shortcuts import render, resolve_url
-from .models import RelatorioInspecao, EtapaPintura
-from .forms import EtapasForm, RelatoriosForm
+from django.shortcuts import render, resolve_url, redirect
+from .models import RelatorioInspecao, EtapaPintura, Photo
+from .forms import EtapasForm, RelatoriosForm, PhotoForm
 from material.models import Material
 
 
@@ -29,7 +28,8 @@ def relatorios_detail(request, pk):
     obj = RelatorioInspecao.objects.get(pk=pk)
     relatorio = obj.rip
     material = Material.objects.filter(concluido=True, relatorio=None)
-    context = {'object': obj, 'material_list': material}
+    material_relatorio = Material.objects.filter(relatorio=relatorio)
+    context = {'object': obj, 'material_list': material, 'material_relatorio':material_relatorio}
     if request.method == 'POST':
         vi = request.POST.get('valores')
         vi = str(vi)
@@ -37,7 +37,8 @@ def relatorios_detail(request, pk):
         present.pop()
         for i in present:
             Material.objects.filter(pk=i).update(relatorio=relatorio)
-        return HttpResponseRedirect('/')
+        url='qualidade:relatorios_detail'
+        return HttpResponseRedirect(resolve_url(url,pk))
     return render(request, template_name, context)
 
 def relatorios_add(request):
@@ -66,3 +67,20 @@ def relatorios_add(request):
         formset=item_relatorios_formset(instance=relatorios_form, prefix='relatorio' )
     context={'form':form, 'formset':formset}
     return render(request, template_name, context)
+
+def photo_create(request):
+    template_name = 'photo_form.html'
+    form = PhotoForm(request.POST or None)
+    if request.method == 'POST':
+        photo = request.FILES.get('photo')
+        if form.is_valid():
+            rip = form.save(commit=False)
+            Photo.objects.create(rip_numero=rip.rip_numero, photo=photo)
+            return redirect('qualidade:relatorios_list')
+    context ={'form':form}
+    return render(request, template_name, context)
+
+
+
+
+  

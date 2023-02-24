@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import RelatorioInspecao, EtapaPintura
+from .models import RelatorioInspecao, EtapaPintura, Photo
 
 class EtapalInline(admin.TabularInline):
     model = EtapaPintura
@@ -17,3 +17,5 @@ class RelatoriosAdmin(admin.ModelAdmin):
         'data',
         'unidade',
     )
+
+admin.site.register(Photo)
