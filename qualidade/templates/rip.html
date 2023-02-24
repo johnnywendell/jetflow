@@ -1,0 +1,225 @@
+
+           <html>
+            <head>
+                <style>
+                    @page {
+                        size: letter portrait;
+                        @frame header_frame {           /* Static frame */
+                            -pdf-frame-content: header_content;
+                            left: 50pt; width: 512pt; top: 50pt; height: 240pt;
+                        }
+                        @frame col1_frame {             /* Content frame 1 */
+                            left: 40pt; width: 170pt; top: 280pt; height: 270pt;
+                        }
+                        @frame col2_frame {             /* Content frame 2 */
+                            left: 220pt; width: 170pt; top: 280pt; height: 270pt;
+                        }
+                        @frame col2_frame {             /* Content frame 2 */
+                            left: 410pt; width: 170pt; top: 280pt; height: 270pt;
+                        }
+                        @frame footer_frame {           /* Static frame */
+                            -pdf-frame-content: footer_content;
+                            left: 50pt; width: 512pt; top: 550pt; height: 20pt;
+                        }
+                    }
+                </style>
+            </head>
+
+           <body>
+            
+            <div id="header_content">
+           <hr>
+               <table style="margin: 0px;">
+               
+                            <th class="text-right">Cliente</th>
+                            <td> {{ relatorio.cliente }}</td>
+                            <th class="text-right">Data</th>
+                            <td>{{ relatorio.get_data }}</td>
+                            <th class="text-right">Dcoumento ref.</th>
+                            <td>{{ relatorio.rec }}</td>
+                            <th class="text-right">Nota</th>
+                            <td>{{ relatorio.nota }}</td>
+                </table>
+                <hr style="margin-top: 1px;">
+                <table>
+                            <th class="text-right">Tag</th>
+                            <td>{{ relatorio.tag }}</td>
+                            <th class="text-right">Tipo de serviço</th>
+                            <td>{{ relatorio.tipo_serv }}</td>
+                            <th class="text-right">Unidade/Planta</th>
+                            <td> {{ relatorio.unidade }}</td>
+                            <th class="text-right">Setor</th>
+                            <td>{{ relatorio.setor }}</td>
+                 
+                </table>
+                <hr style="margin-top: 1px;">        
+                <table>
+ 
+                            <th class="text-right">Corrosividade</th>
+                            <td>{{ relatorio.corrosividade }}</td>
+                            <th class="text-right">Esquema de pintura</th>
+                            <td>{{ relatorio.esquema_pint }}</td>
+                            <th class="text-right">Espessura do esquema</th>
+                            <td>{{ relatorio.esp_esquema }}</td>
+                            <th class="text-right">Cor Final</th>
+                            <td>{{ relatorio.cor_final }}</td>
+                
+                </table>
+                <hr style="margin-top: 1px;">
+                <table>
+                            <th class="text-right">M2</th>
+                            <td> {{ relatorio }} m²</td>
+                            <th class="text-right">Solicitante</th>
+                            <td>{{ relatorio.fiscal }}</td>
+                            <th class="text-right">Inspetor</th>
+                            <td>{{ relatorio.inspetor }}</td>
+                            <th class="text-right">Aprovado?</th>
+                            <td>{{ relatorio.aprovado }}</td>
+                </table>
+              <br>
+            <h3 style="text-align:center">Tratamento da Superfície</h3>
+             <table>
+                <th>Inicio</th>
+                <th>Termino</th>
+                <th>Temp. amb.</th>
+                <th>U.R.A</th>
+                <th>P.O</th>
+                <th>Temp. Superfície</th>
+                <th>Rugosidade</th>
+             </table>
+             <table style="text-align:center">
+                <td>{{ relatorio.get_inicio }}</td>
+                <td>{{ relatorio.get_termino }}</td>
+                <td>{{ relatorio.temp_ambiente }}</td>
+                <td>{{ relatorio.ura}}</td>
+                <td>{{ relatorio.po }}</td>
+                <td>{{ relatorio.temp_super }}</td>
+                <td>{{ relatorio.rugosidade}}</td>
+            </table>
+
+            <hr style="margin-top: 1px;">
+            <table>
+                <th>Poeira Tam</th>
+                <th>Poeira QTD</th>
+                <th>Teor Sais</th>
+                <th>Amb pintura</th>
+                <th>Imtemperismo</th>
+                <th>Descontaminacao</th>
+                <th>Laudo</th>
+            </table>
+            <table style="text-align:center">
+                <td>{{ relatorio.poeira_tam }}</td>
+                <td>{{ relatorio.tpoeira_quant }}</td>
+                <td>{{ relatorio.teor_sais}}</td>
+                <td>{{ relatorio.ambiente_pintura }}</td>
+                <td>{{ relatorio.imtemperismo }}</td>
+                <td>{{ relatorio.descontaminacao }}</td>
+                <td>{{ relatorio.laudo }}</td>
+            </table>
+        
+            <h3 style="text-align:center;margin-bottom: 1px;">Etapas de pintura</h3>
+            <hr style="margin-top: 1px;">
+        </div>
+            
+            {% for obj in relatorio.relatorios.all %}
+                <h4 style="text-align:center;">{{ obj }}</h4>
+            <table class="table table-sm table-bordered">
+                <tr>    
+                    <th>Lote A</th>
+                    <td>{{ obj.lote_a }}</td>
+                </tr>
+                <tr>
+                    <th>Val</th>
+                    <td>{{ obj.get_val_a}}</td>
+                </tr>
+                <tr>
+                    <th>Lote B</th>
+                    <td>{{ obj.lote_b }}</td>
+                </tr>
+                <tr>
+                    <th>Val</th>
+                    <td>{{ obj.get_val_b }}</td>
+                </tr>
+                <tr>
+                    <th>Lote C</th>
+                    <td>{{ obj.lote_c }}</td>
+                </tr>
+                <tr>
+                    <th>Val</th>
+                    <td>{{ obj.get_val_c}}</td>
+                </tr>
+                <tr>
+                    <th>Cor Munsell</th>
+                    <td>{{ obj.cor_munsell }}</td>
+                </tr>
+                <tr>
+                    <th>Temp. amb.</th>
+                    <td>{{ obj.temp_amb }}</td>
+                </tr>
+                <tr>
+                    <th>U.R.A</th>
+                    <td>{{ obj.ura}}</td>
+                </tr>
+                <tr>
+                    <th>P.O.</th>
+                    <td>{{ obj.po }}</td>
+                </tr>
+                <tr>
+                    <th>Temp. Substr.</th>
+                    <td>{{ obj.temp_substrato }}</td>
+                </tr>
+                <tr>
+                    <th>Diluente</th>
+                    <td>{{ obj.diluente }}</td>
+                </tr>
+                <tr>
+                    <th>Método apl.</th>
+                    <td>{{ obj.met_aplic}}</td>
+                </tr>
+                <tr>
+                    <th>Início</th>
+                    <td>{{ obj.get_inicio }}</td>
+                </tr>
+                <tr>
+                    <th>Término</th>
+                    <td>{{ obj.get_termino }}</td>
+                </tr>
+                <tr>
+                    <th>Intervalo Repintura</th>
+                    <td>{{ obj.inter_repintura }}</td>
+                </tr>
+                <tr>
+                    <th>Espessura Película</th>
+                    <td>{{ obj.epe}}</td>
+                </tr>
+                <tr>
+                    <th>Inspeção visual</th>
+                    <td>{{ obj.insp_visual }}</td>
+                </tr>
+                <tr>
+                    <th>Aderência</th>
+                    <td>{{ obj.aderencia }}</td>
+                </tr>
+                <tr>
+                    <th>Holiday</th>
+                    <td>{{ obj.holiday }}</td>
+                </tr>
+                <tr>
+                    <th>Laudo</th>
+                    <td>{{ obj.laudo}}</td>
+                </tr>
+                <tr>
+                    <th>Data Inspeção</th>
+                    <td>{{ obj.get_data_insp}}</td>
+                </tr>
+            </table>
+            {% endfor %}
+
+
+
+        <div id="footer_content">
+            <hr style="margin-top: 1px;">
+        </div>
+        </body>
+            </html>
+          

@@ -1,11 +1,42 @@
 from django.views.generic import CreateView, UpdateView, ListView
 from django.forms import inlineformset_factory
-from django.http import HttpResponseRedirect
-from django.shortcuts import render, resolve_url, redirect
+from django.http import HttpResponseRedirect, FileResponse, HttpResponse
+from django.shortcuts import render, resolve_url, redirect, get_object_or_404
+from django.db.models import Q
 from .models import RelatorioInspecao, EtapaPintura, Photo
 from .forms import EtapasForm, RelatoriosForm, PhotoForm
 from material.models import Material
+from django.template.loader import get_template
+from xhtml2pdf import pisa
+from django.contrib.staticfiles import finders
+import os
+from django.conf import settings
+from django.views.generic import ListView
 
+
+def render_pdf_view(request, pk):
+    relatorio = get_object_or_404(RelatorioInspecao, pk=pk)
+    template_path = 'rip.html'
+    obj = relatorio.rip
+    materiais= Material.objects.filter(relatorio=obj)
+    context = {'relatorio': relatorio}
+   
+    # Create a Django response object, and specify content_type as pdf
+    response = HttpResponse(content_type='application/pdf')
+
+    #if download
+    #response['Content-Disposition'] = 'attachment; filename="report.pdf"'
+    # find the template and render it.
+    template = get_template(template_path)
+    html = template.render(context)
+
+    # create a pdf
+    pisa_status = pisa.CreatePDF(
+       html, dest=response)
+    # if error then show some funny view
+    if pisa_status.err:
+       return HttpResponse('We had some errors <pre>' + html + '</pre>')
+    return response
 
 class RelatoriosList(ListView):
     model = RelatorioInspecao
