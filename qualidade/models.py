@@ -26,7 +26,6 @@ class RelatorioInspecao(models.Model):
     esquema_pint = models.CharField('Esquema',max_length=20, blank=True, null=True)
     esp_esquema = models.CharField("Espessura",max_length=20, blank=True, null=True)
     cor_final = models.CharField(max_length=20, blank=True, null=True)
-    M2 = models.DecimalField('M²', max_digits=7, decimal_places=3, blank=True, null=True)
     fiscal = models.ForeignKey(Solicitante, on_delete=models.CASCADE, related_name='solicitantee')
     inspetor = models.CharField(max_length=20, blank=True, null=True)
     obs_inst = models.TextField('Instrumentos de medição',blank=True, null=True)

@@ -19,7 +19,7 @@ def render_pdf_view(request, pk):
     template_path = 'rip.html'
     obj = relatorio.rip
     materiais= Material.objects.filter(relatorio=obj)
-    context = {'relatorio': relatorio}
+    context = {'relatorio': relatorio, 'materiais':materiais}
    
     # Create a Django response object, and specify content_type as pdf
     response = HttpResponse(content_type='application/pdf')
@@ -101,6 +101,17 @@ def relatorios_add(request):
         formset=item_relatorios_formset(instance=relatorios_form, prefix='relatorio' )
     context={'form':form, 'formset':formset}
     return render(request, template_name, context)
+
+class RelatorioUpdate(UpdateView):
+    model = RelatorioInspecao
+    template_name = 'relatorio_form.html'
+    form_class = RelatoriosForm
+
+class EtapaUpdate(UpdateView):
+    model = EtapaPintura
+    template_name = 'relatorio_form.html'
+    form_class = EtapasForm
+
 
 def photo_create(request):
     template_name = 'photo_form.html'

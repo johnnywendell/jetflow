@@ -147,10 +147,10 @@ def export_xlsx_func_material(request):
     filename_final = f'{_filename[0]}_{MDATA}.{_filename[1]}'
     queryset = Material.objects.all().values_list('concluido', 'n_romaneio__romaneio', 'jato__tratamento', 
     'tf__tinta_fundo','ti__tinta_intermediaria', 'ta__tinta_acabamento', 'cor', 'material', 'descricao',
-     'polegada', 'm_quantidade', 'm2', 'raio', 'largura', 'altura', 'comprimento','lados')
+     'polegada', 'm_quantidade', 'm2', 'raio', 'largura', 'altura', 'comprimento','lados','relatorio')
 
     columns = ('concluido', 'Nº romaneio', 'Tratamento', 'Primer','TI', 
     'TA', 'cor', 'material', 'descricao', 'polegada', 'M / Quant.', 'm2', 'Raio', 'Largura', 'Altura', 
-    'Comprimento/lados','QTD_Equip')
+    'Comprimento/lados','QTD_Equip','Nº Relatório')
     response = export_xlsx(model, filename_final, queryset, columns)
     return response

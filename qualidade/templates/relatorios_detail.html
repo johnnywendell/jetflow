@@ -12,6 +12,14 @@
             </a>
 
         </span>
+        <span class="pull-right">
+            <a href="{% url 'qualidade:relatorios_update' object.pk %}">
+                <button type="button" class="btn btn-info">
+                    <span class="fa fa-pencil"></span> Editar
+                </button>
+            </a>
+
+        </span>
     </h2>
     <div class="row">
     <div class="col-sm-4">
@@ -172,7 +180,7 @@
 <div class="row">
     {% for obj in object.relatorios.all %}
     <div class="col-sm-4">
-    <h4 class="text-center">{{ obj }}</h4>
+    <a href="{% url 'qualidade:etapas_update' obj.pk %}"><h4 class="text-center">{{ obj }}</h4></a>
     <table class="table table-sm table-bordered">
             <tr>    
                 <th>Lote A</th>

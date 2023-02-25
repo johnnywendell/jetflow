@@ -1,22 +1,84 @@
-{% extends "base.html" %}
+<!doctype html>
+{% load static %}
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Index</title>
+    <link rel="stylesheet" href="{% static 'css/styleindex.css' %}">
+  </head>
 
-{% block content %}  
-    <div class="jumbotron">
-        <div class="container">
-            <h1>Jet Flow</h1>
-            <p>Sistema em desenvolvimento para gestão de canteiro de jateamento e pintura</p>
-            <p><a href="https://github.com/johnnywendell/jetflow">Clique aqui para acessar o projeto</a>
-            </p>
+
+<body>
+    <div id="cards">
+        <a href="{% url 'romaneio:romaneio_list' %}"><div class="card">
+          <div class="card-content">
+            <div class="card-image">
+              <i class="fa-duotone fa-apartment"></i>
+            </div>
+            <div class="card-info-wrapper">
+              <div class="card-info">
+                <i class="fa-duotone fa-apartment"></i>
+                <div class="card-info-title">
+                  <h3>Jetflow</h3>  
+                  <h4>Controle de fluxo do canteiro de jato</h4>
+                </div>    
+              </div>
+            </div>
+          </div>
+        </div></a>
+        <a href="{% url 'qualidade:relatorios_list' %}"><div class="card">
+          <div class="card-content">
+            <div class="card-image">
+              <i class="fa-duotone fa-unicorn"></i>
+            </div>
+            <div class="card-info-wrapper">
+              <div class="card-info">
+                <i class="fa-duotone fa-unicorn"></i>
+                <div class="card-info-title">
+                  <h3>Qualidade</h3>  
+                  <h4>Controle de qualidade</h4>
+                </div>    
+              </div>  
+            </div>
+          </div>
+        </div></a>
+        <div class="card">
+          <div class="card-content">
+            <div class="card-image">
+              <i class="fa-duotone fa-blender-phone"></i>
+            </div>
+            <div class="card-info-wrapper">
+              <div class="card-info">
+                <i class="fa-duotone fa-blender-phone"></i>
+                <div class="card-info-title">
+                  <h3>SSMA</h3>  
+                  <h4>Módulo de gestão de segurança</h4>
+                </div>    
+              </div>
+            </div>
+          </div>
         </div>
-    </div>
+        </div>
+      </div>
+      <a class="link" href="{% url 'romaneio:romaneio_list' %}" target="_blank">
+        <i class="fa-brands fa-youtube"></i>
+        <span>Login</span>
+      </a>
+</body>
 
 
-{% endblock content %}
-
-{% block js %}   
 <script>
-$(document).ready(function(){
-    $('body').addClass('fundo')
-});
+    document.getElementById("cards").onmousemove = e => {
+  for(const card of document.getElementsByClassName("card")) {
+    const rect = card.getBoundingClientRect(),
+          x = e.clientX - rect.left,
+          y = e.clientY - rect.top;
+
+    card.style.setProperty("--mouse-x", `${x}px`);
+    card.style.setProperty("--mouse-y", `${y}px`);
+  };
+}
+
 </script>
-{% endblock js %}
