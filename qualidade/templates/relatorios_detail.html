@@ -1,0 +1,426 @@
+{% extends "base.html" %}
+
+{% block content %} 
+
+
+    <h2>Relatorio Nº {{ object }}
+        <span class="pull-right">
+            <a href="{% url 'qualidade:render_pdf_view' object.pk %}">
+                <button type="button" class="btn btn-success">
+                    <span class="fa fa-pencil"></span> gerar PDF
+                </button>
+            </a>
+
+        </span>
+        <span class="pull-right">
+            <a href="{% url 'qualidade:relatorios_update' object.pk %}">
+                <button type="button" class="btn btn-info">
+                    <span class="fa fa-pencil"></span> Editar
+                </button>
+            </a>
+
+        </span>
+    </h2>
+    <div class="row">
+    <div class="col-sm-4">
+        <table class="table table-user-information table-sm">
+            <tbody>
+                <tr>
+                    <th class="text-right">Cliente</th>
+                    <td> {{ object.cliente }}</td>
+                </tr>
+                <tr>
+                    <th class="text-right">Data</th>
+                    <td>{{ object.data }}</td>
+                </tr>
+                <tr>
+                    <th class="text-right">Dcoumento ref.</th>
+                    <td>{{ object.rec }}</td>
+                </tr>
+                <tr>
+                    <th class="text-right">Nota</th>
+                    <td>{{ object.nota }}</td>
+                </tr>
+                <tr>
+                    <th class="text-right">Tag</th>
+                    <td>{{ object.tag }}</td>
+                </tr>
+                <tr>
+                    <th class="text-right">Tipo de serviço</th>
+                    <td>{{ object.tipo_serv }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="col-sm-4">
+        <table class="table table-user-information table-sm">
+            <tbody>
+                <tr>
+                    <th class="text-right">Unidade/Planta</th>
+                    <td> {{ object.unidade }}</td>
+                </tr>
+                <tr>
+                    <th class="text-right">Setor</th>
+                    <td>{{ object.setor }}</td>
+                </tr>
+                <tr>
+                    <th class="text-right">Corrosividade</th>
+                    <td>{{ object.corrosividade }}</td>
+                </tr>
+                <tr>
+                    <th class="text-right">Esquema de pintura</th>
+                    <td>{{ object.esquema_pint }}</td>
+                </tr>
+                <tr>
+                    <th class="text-right">Espessura do esquema</th>
+                    <td>{{ object.esp_esquema }}</td>
+                </tr>
+                <tr>
+                    <th class="text-right">Cor Final</th>
+                    <td>{{ object.cor_final }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="col-sm-4">
+        <table class="table table-user-information table-sm">
+            <tbody>
+                <tr>
+                    <th class="text-right">M2</th>
+                    <td> {{ metro }} m²</td>
+                </tr>
+                <tr>
+                    <th class="text-right">Solicitante</th>
+                    <td>{{ object.fiscal }}</td>
+                </tr>
+                <tr>
+                    <th class="text-right">Inspetor</th>
+                    <td>{{ object.inspetor }}</td>
+                </tr>
+                <tr>
+                    <th class="text-right">NC? </th>
+                    <td>{% if object.rnc_n %}
+                        <i class="fa fa-check-circle ok"></i>
+                      {% else %}
+                        <i class="fa fa-minus-circle no"></i>
+                      {% endif %}</td>
+                    
+                </tr>
+                <tr>
+                    <th class="text-right">Aprovado?</th>
+                    <td>{% if object.aprovado %}
+                        <i class="fa fa-check-circle ok"></i>
+                      {% else %}
+                        <i class="fa fa-minus-circle no"></i>
+                      {% endif %}</td>
+                </tr>
+                
+            </tbody>
+        </table>
+    </div>
+    </div>
+    <legend style="border-bottom: 1px solid #e5e5e5;">Tratamento da Superfície - {{ object.tratamento }} </legend>
+    <table class="table table-bordered table-sm">
+        <thead>
+            <tr>
+                <th>Inicio</th>
+                <th>Termino</th>
+                <th>Temp. amb.</th>
+                <th>U.R.A</th>
+                <th>P.O</th>
+                <th>Temp. Superfície</th>
+                <th>Rugosidade</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>{{ object.get_inicio }}</td>
+                <td>{{ object.get_termino }}</td>
+                <td>{{ object.temp_ambiente }}</td>
+                <td>{{ object.ura}}</td>
+                <td>{{ object.po }}</td>
+                <td>{{ object.temp_super }}</td>
+                <td>{{ object.rugosidade}}</td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-bordered table-sm">
+        <thead>
+            <tr>
+                
+                <th>Poeira Tam</th>
+                <th>Poeira QTD</th>
+                <th>Teor Sais</th>
+                <th>Amb pintura</th>
+                <th>Imtemperismo</th>
+                <th>Descontaminacao</th>
+                <th>Laudo</th>
+                
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>{{ object.poeira_tam }}</td>
+                <td>{{ object.tpoeira_quant }}</td>
+                <td>{{ object.teor_sais}}</td>
+                <td>{{ object.ambiente_pintura }}</td>
+                <td>{{ object.imtemperismo }}</td>
+                <td>{{ object.descontaminacao }}</td>
+                <td>{% if object.laudo %}
+                    <i class="fa fa-check-circle ok"></i>
+                  {% else %}
+                    <i class="fa fa-minus-circle no"></i>
+                  {% endif %}</td>
+                
+            </tr>
+        </tbody>
+    </table>
+
+    <legend style="border-bottom: 1px solid #e5e5e5;">Etapas de Pintura</legend>
+<div class="row">
+    {% for obj in object.relatorios.all %}
+    <div class="col-sm-4">
+    <a href="{% url 'qualidade:etapas_update' obj.pk %}"><h4 class="text-center">{{ obj }}</h4></a>
+    <table class="table table-sm table-bordered">
+            <tr>    
+                <th>Lote A</th>
+                <td>{{ obj.lote_a }}</td>
+            </tr>
+            <tr>
+                <th>Val</th>
+                <td>{{ obj.get_val_a}}</td>
+            </tr>
+            <tr>
+                <th>Lote B</th>
+                <td>{{ obj.lote_b }}</td>
+            </tr>
+            <tr>
+                <th>Val</th>
+                <td>{{ obj.get_val_b }}</td>
+            </tr>
+            <tr>
+                <th>Lote C</th>
+                <td>{{ obj.lote_c }}</td>
+            </tr>
+            <tr>
+                <th>Val</th>
+                <td>{{ obj.get_val_c}}</td>
+            </tr>
+            <tr>
+                <th>Cor Munsell</th>
+                <td>{{ obj.cor_munsell }}</td>
+            </tr>
+            <tr>
+                <th>Temp. amb.</th>
+                <td>{{ obj.temp_amb }}</td>
+            </tr>
+            <tr>
+                <th>U.R.A</th>
+                <td>{{ obj.ura}}</td>
+            </tr>
+            <tr>
+                <th>P.O.</th>
+                <td>{{ obj.po }}</td>
+            </tr>
+            <tr>
+                <th>Temp. Substr.</th>
+                <td>{{ obj.temp_substrato }}</td>
+            </tr>
+            <tr>
+                <th>Diluente</th>
+                <td>{{ obj.diluente }}</td>
+            </tr>
+            <tr>
+                <th>Método apl.</th>
+                <td>{{ obj.met_aplic}}</td>
+            </tr>
+            <tr>
+                <th>Início</th>
+                <td>{{ obj.get_inicio }}</td>
+            </tr>
+            <tr>
+                <th>Término</th>
+                <td>{{ obj.get_termino }}</td>
+            </tr>
+            <tr>
+                <th>Intervalo Repintura</th>
+                <td>{{ obj.inter_repintura }}</td>
+            </tr>
+            <tr>
+                <th>Espessura Película</th>
+                <td>{{ obj.epe}}</td>
+            </tr>
+            <tr>
+                <th>Inspeção visual</th>
+                <td>{{ obj.insp_visual }}</td>
+            </tr>
+            <tr>
+                <th>Aderência</th>
+                <td>{{ obj.aderencia }}</td>
+            </tr>
+            <tr>
+                <th>Holiday</th>
+                <td>{{ obj.holiday }}</td>
+            </tr>
+            <tr>
+                <th>Laudo</th>
+                <td>{{ obj.laudo}}</td>
+            </tr>
+            <tr>
+                <th>Data Inspeção</th>
+                <td>{{ obj.get_data_insp}}</td>
+            </tr>
+        </table>
+    </div>
+    {% endfor %}
+</div>
+<legend style="border-bottom: 1px solid #e5e5e5;">Materiais</legend>
+{% if material_relatorio %}
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Nº Romaneio</th>
+            <th>Tratamento</th>
+            <th>TF</th>
+            <th>TI</th>
+            <th>TA</th>
+            <th>Tipo Mat.</th>
+            <th>M²</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for object in material_relatorio %}
+        <tr>
+            <td>{{ object.n_romaneio }}</td>
+            <td>{{ object.jato }}</td>
+            <td>{{ object.tf }}</td>
+            <td>{{ object.ti }}</td>
+            <td>{{ object.ta}}</td>
+            <td><a href="{{ object.get_absolute_url }}">{{ object.material }}</a></td>
+            <td>{{ object.m2 }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endif %}
+
+<form method="POST" novalidate>
+    {% csrf_token %}
+        <div id="materiais">
+        {% if material_list %}
+            <select name="material-0" class="form-control clSelect2">  
+                {% for object in material_list %}
+                <option value="{{object.pk}}">{{ object.n_romaneio }} - {{ object.material }} - {{ object.jato }}-{{ object.tf }}-{{ object.ti }}-{{ object.ta }} - {{ object.m2 }}m²</option>
+                {% endfor %}
+            </select>
+        {% endif %}
+        </div>
+        <span id="add-item" class="btn btn-info" style="margin: 6px;">
+            <i class="fa fa-plus"></i>Adicionar
+        </span>
+        <input type="hidden" name="valores" id="valores">
+                
+        <button type="submit" class="btn btn-primary float-right" style="margin: 6px;">incluir materiais</button>
+    </form> 
+ 
+        
+        
+        
+       
+        <div class="row">
+                <div class="col-sm-6">
+                    <table class="table table-user-information">
+                        <tbody>
+                <tr>
+                    <th class="text-right">Observações instrumentos</th>
+                    <td>{{ object.obs_inst }}</td>
+
+                </tr>
+            </tbody>
+            </table>
+            </div>
+            <div class="col-sm-6">
+                <table class="table table-user-information" >
+                    <tbody>
+            <tr>
+                <th class="text-right">Observações finais</th>
+
+                <td>{{ object.obs_final }}</td>
+            </tr>
+            </tbody>
+            </table>
+            </div>
+            </div>
+            <div>
+                <legend style="border-bottom: 1px solid #e5e5e5;">Registro fotográfico</legend>  
+                <a class="btn btn-info btn-sm" href="{% url 'qualidade:photo_create' %}"style="margin: 6px;">Adicionar Imagem</a>
+                <div class="row" style="margin-bottom: 10px;">
+                {% for item in object.relatorio.all %}
+                {% if item.photo %}
+                <img src="{{ item.photo.url }}" alt="" class="img-thumbnail" width="150px">
+                {% endif %}
+                {% endfor %}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-4"><div class="card" style="height: 12rem;">
+                    <div class="card-body">
+                      <h5 class="card-subtitle">Assinatura Inspeção</h5>
+                        
+                    </div>
+                  </div></div>
+                <div class="col-sm-4"><div class="card" style="height: 12rem;">
+                    <div class="card-body">
+                      <h5 class="card-subtitle">Assinatura Coordenação</h5>
+                        
+                    </div>
+                  </div></div>
+                <div class="col-sm-4"><div class="card" style="height: 12rem;">
+                    <div class="card-body">
+                      <h5 class="card-subtitle">Assinatura Fiscalização</h5>
+                        
+                    </div>
+                  </div></div>
+            </div>
+            
+{% endblock content %} 
+
+{% block js %}
+
+    <script >
+        $(document).ready(function(){
+            // Select2
+                $('.clSelect2').select2()
+                $('#add-item').click(function(ev){
+                ev.preventDefault();
+                var count = $('#materiais').children().length;
+                var tmplMarkup = $('#item-material').html();
+                var compiledTmpl = tmplMarkup.replace(/__prefix__/g, count);
+                $('div#materiais').append(compiledTmpl);
+                $('.clSelect2').select2()
+            });
+
+        });
+
+        $(document).on('change', '.clSelect2', function(){
+            var txt = "";
+            $('.clSelect2').each(function(){
+                txt += $(this).val()+"," ;
+            });
+            $('#valores').val(txt);
+        });
+
+
+
+    </script>
+    <script type="text/html" id="item-material">
+            {% if material_list %}
+                <select id="material-__prefix__" class="form-control clSelect2">  
+                    {% for object in material_list %}
+                    <option value="{{object.pk}}">{{ object.n_romaneio }} - {{ object.material }} - {{ object.jato }}-{{ object.tf }}-{{ object.ti }}-{{ object.ta }} - {{ object.m2 }}m²</option>
+                    {% endfor %}
+                </select>
+            {% endif %}  
+    </script>
+{% endblock js %}

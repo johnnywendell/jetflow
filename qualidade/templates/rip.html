@@ -1,0 +1,348 @@
+
+           <html>
+            <head>
+                <style>
+                    @page {
+                        size: letter portrait;
+                        @frame header_frame {           /* Static frame */
+                            -pdf-frame-content: header_content;
+                            left: 50pt; width: 512pt; top: 10pt; height: 245pt;
+                        }
+                        @frame col1_frame {             /* Content frame 1 */
+                            left: 40pt; width: 170pt; top: 240pt; height: 270pt;
+                        }
+                        @frame col2_frame {             /* Content frame 2 */
+                            left: 220pt; width: 170pt; top: 240pt; height: 270pt;
+                        }
+                        @frame col3_frame {             /* Content frame 2 */
+                            left: 410pt; width: 170pt; top: 240pt; height: 270pt;
+                        }
+                        @frame footer_frame {           /* Static frame */
+                            -pdf-frame-content: footer_content;
+                            left: 50pt; width: 512pt; top: 505pt; height: 200pt;
+                        }
+                        @frame footer2_frame {           /* Static frame */
+                            -pdf-frame-content: footer_content2;
+                            left: 50pt; width: 512pt; top: 750pt; height: 100pt;
+                        }
+                    }
+
+                    @page img_template {
+                        size: letter portrait;
+                        @frame header_frame {           /* Static frame */
+                            -pdf-frame-content: header_content2;
+                            left: 50pt; width: 512pt; top: 20pt; height: 205pt;
+                        }
+                        @frame col1_frame2 {             /* Content frame 1 */
+               
+                            left: 50pt; width: 512pt; top: 180pt; height: 360pt;
+                        }
+                        @frame footer2_frame {           /* Static frame */
+                            -pdf-frame-content: footer_content2;
+                            left: 50pt; width: 512pt; top: 700pt; height: 100pt;
+                        }
+                    }
+                </style>
+            </head>
+
+           <body>
+            
+            <div id="header_content">
+                <img src="media/logo.png" alt="blah">
+           <hr>
+               <table style="margin: 0px;">
+               
+                            <th class="text-right">Cliente</th>
+                            <td> {{ relatorio.cliente }}</td>
+                            <th class="text-right">Data</th>
+                            <td>{{ relatorio.get_data }}</td>
+                            <th class="text-right">Dcoumento ref.</th>
+                            <td>{{ relatorio.rec }}</td>
+                            <th class="text-right">Nota</th>
+                            <td>{{ relatorio.nota }}</td>
+                </table>
+                <hr style="margin-top: 1px;">
+                <table>
+                            <th class="text-right">Tag</th>
+                            <td>{{ relatorio.tag }}</td>
+                            <th class="text-right">Tipo de serviço</th>
+                            <td>{{ relatorio.tipo_serv }}</td>
+                            <th class="text-right">Unidade/Planta</th>
+                            <td> {{ relatorio.unidade }}</td>
+                            <th class="text-right">Setor</th>
+                            <td>{{ relatorio.setor }}</td>
+                 
+                </table>
+                <hr style="margin-top: 1px;">        
+                <table>
+ 
+                            <th class="text-right">Corrosividade</th>
+                            <td>{{ relatorio.corrosividade }}</td>
+                            <th class="text-right">Esquema de pintura</th>
+                            <td>{{ relatorio.esquema_pint }}</td>
+                            <th class="text-right">Espessura do esquema</th>
+                            <td>{{ relatorio.esp_esquema }}</td>
+                            <th class="text-right">Cor Final</th>
+                            <td>{{ relatorio.cor_final }}</td>
+                
+                </table>
+                <hr style="margin-top: 1px;">
+                <table>
+                            <th class="text-right">N.º RIP</th>
+                            <td> {{ relatorio }} </td>
+                            <th class="text-right">Solicitante</th>
+                            <td>{{ relatorio.fiscal }}</td>
+                            <th class="text-right">Inspetor</th>
+                            <td>{{ relatorio.inspetor }}</td>
+                            <th class="text-right">Aprovado?</th>
+                            <td>{{ relatorio.aprovado }}</td>
+                </table>
+                
+            <h3 style="text-align:center;margin-bottom: 0px;">TRATAMENTO DA SUPERFICIE</h3>
+            <hr style="margin-top: 0px;">
+             <table>
+                <th>Inicio</th>
+                <th>Termino</th>
+                <th>Temp. amb.</th>
+                <th>U.R.A</th>
+                <th>P.O</th>
+                <th>Temp. Superfície</th>
+                <th>Rugosidade</th>
+             </table>
+             <table style="text-align:center">
+                <td>{{ relatorio.get_inicio }}</td>
+                <td>{{ relatorio.get_termino }}</td>
+                <td>{{ relatorio.temp_ambiente }}</td>
+                <td>{{ relatorio.ura}}</td>
+                <td>{{ relatorio.po }}</td>
+                <td>{{ relatorio.temp_super }}</td>
+                <td>{{ relatorio.rugosidade}}</td>
+            </table>
+
+           
+            <table>
+                <th>Poeira Tam</th>
+                <th>Poeira QTD</th>
+                <th>Teor Sais</th>
+                <th>Amb pintura</th>
+                <th>Imtemperismo</th>
+                <th>Descontaminacao</th>
+                <th>Laudo</th>
+            </table>
+            <table style="text-align:center">
+                <td>{{ relatorio.poeira_tam }}</td>
+                <td>{{ relatorio.tpoeira_quant }}</td>
+                <td>{{ relatorio.teor_sais}}</td>
+                <td>{{ relatorio.ambiente_pintura }}</td>
+                <td>{{ relatorio.imtemperismo }}</td>
+                <td>{{ relatorio.descontaminacao }}</td>
+                <td>{{ relatorio.laudo }}</td>
+            </table>
+        
+            <h3 style="text-align:center;margin-bottom: 0px;margin-top: 5px;">ETAPAS DE PINTURA</h3>
+            <hr style="margin-top: 0px;">
+        </div>
+            
+            {% for obj in relatorio.relatorios.all %}
+                <h4 style="text-align:center;">{{ obj }}</h4>
+            <table class="table table-sm table-bordered">
+                <tr>    
+                    <th>Lote A</th>
+                    <td>{{ obj.lote_a }}</td>
+                </tr>
+                <tr>
+                    <th>Val</th>
+                    <td>{{ obj.get_val_a}}</td>
+                </tr>
+                <tr>
+                    <th>Lote B</th>
+                    <td>{{ obj.lote_b }}</td>
+                </tr>
+                <tr>
+                    <th>Val</th>
+                    <td>{{ obj.get_val_b }}</td>
+                </tr>
+                <tr>
+                    <th>Lote C</th>
+                    <td>{{ obj.lote_c }}</td>
+                </tr>
+                <tr>
+                    <th>Val</th>
+                    <td>{{ obj.get_val_c}}</td>
+                </tr>
+                <tr>
+                    <th>Cor Munsell</th>
+                    <td>{{ obj.cor_munsell }}</td>
+                </tr>
+                <tr>
+                    <th>Temp. amb.</th>
+                    <td>{{ obj.temp_amb }}</td>
+                </tr>
+                <tr>
+                    <th>U.R.A</th>
+                    <td>{{ obj.ura}}</td>
+                </tr>
+                <tr>
+                    <th>P.O.</th>
+                    <td>{{ obj.po }}</td>
+                </tr>
+                <tr>
+                    <th>Temp. Substr.</th>
+                    <td>{{ obj.temp_substrato }}</td>
+                </tr>
+                <tr>
+                    <th>Diluente</th>
+                    <td>{{ obj.diluente }}</td>
+                </tr>
+                <tr>
+                    <th>Método apl.</th>
+                    <td>{{ obj.met_aplic}}</td>
+                </tr>
+                <tr>
+                    <th>Início</th>
+                    <td>{{ obj.get_inicio }}</td>
+                </tr>
+                <tr>
+                    <th>Término</th>
+                    <td>{{ obj.get_termino }}</td>
+                </tr>
+                <tr>
+                    <th>Intervalo Repintura</th>
+                    <td>{{ obj.inter_repintura }}</td>
+                </tr>
+                <tr>
+                    <th>Espessura Película</th>
+                    <td>{{ obj.epe}}</td>
+                </tr>
+                <tr>
+                    <th>Inspeção visual</th>
+                    <td>{{ obj.insp_visual }}</td>
+                </tr>
+                <tr>
+                    <th>Aderência</th>
+                    <td>{{ obj.aderencia }}</td>
+                </tr>
+                <tr>
+                    <th>Holiday</th>
+                    <td>{{ obj.holiday }}</td>
+                </tr>
+                <tr>
+                    <th>Laudo</th>
+                    <td>{{ obj.laudo}}</td>
+                </tr>
+                <tr>
+                    <th>Data Inspeção</th>
+                    <td>{{ obj.get_data_insp}}</td>
+                </tr>
+            </table>
+            {% endfor %}
+
+
+
+        <div id="footer_content">
+            <hr style="margin-top: 1px;">
+            <h3 style="text-align:center;margin-bottom: 0px;margin: 0%;">Materiais</h3>
+            <table>
+                <th>Nº Romaneio</th>
+                <th>Tratamento</th>
+                <th>TF</th>
+                <th>TI</th>
+                <th>TA</th>
+                <th>Tipo Mat.</th>
+                <th>M²</th>
+            </table>
+            {% for material in materiais %}
+            {% cycle '#eee' '#FFFFE0' as rowcolors silent %}
+            <table style="text-align:center; background-color:{{rowcolors}};">
+                <td style="padding-top: 3px";>{{ material.n_romaneio }}</td>
+                <td style="padding-top: 3px";>{{ material.jato }}</td>
+                <td style="padding-top: 3px";>{{ material.tf }}</td>
+                <td style="padding-top: 3px";>{{ material.ti }}</td>
+                <td style="padding-top: 3px";>{{ material.ta}}</td>
+                <td style="padding-top: 3px";>{{ material.material }}</td>
+                <td style="padding-top: 3px";>{{ material.m2 }}</td>
+            </table>
+            {% endfor %}
+        </div>
+        <div id="footer_content2">
+            <table style="margin-bottom: 0px;padding-bottom: 0px;">
+                <th>Inspeção</th>
+                <th>Coordenação</th>
+                <th>Fiscalização</th>
+                </table>
+            <hr style="margin-top: 0px;">
+            </div>
+ 
+            
+
+            <div id="header_content2">
+                <img src="media/logo.png" alt="blah">
+           <hr>
+               <table style="margin: 0px;">
+               
+                            <th class="text-right">Cliente</th>
+                            <td> {{ relatorio.cliente }}</td>
+                            <th class="text-right">Data</th>
+                            <td>{{ relatorio.get_data }}</td>
+                            <th class="text-right">Dcoumento ref.</th>
+                            <td>{{ relatorio.rec }}</td>
+                            <th class="text-right">Nota</th>
+                            <td>{{ relatorio.nota }}</td>
+                </table>
+                <hr style="margin-top: 1px;">
+                <table>
+                            <th class="text-right">Tag</th>
+                            <td>{{ relatorio.tag }}</td>
+                            <th class="text-right">Tipo de serviço</th>
+                            <td>{{ relatorio.tipo_serv }}</td>
+                            <th class="text-right">Unidade/Planta</th>
+                            <td> {{ relatorio.unidade }}</td>
+                            <th class="text-right">Setor</th>
+                            <td>{{ relatorio.setor }}</td>
+                 
+                </table>
+                <hr style="margin-top: 1px;">        
+                <table>
+ 
+                            <th class="text-right">Corrosividade</th>
+                            <td>{{ relatorio.corrosividade }}</td>
+                            <th class="text-right">Esquema de pintura</th>
+                            <td>{{ relatorio.esquema_pint }}</td>
+                            <th class="text-right">Espessura do esquema</th>
+                            <td>{{ relatorio.esp_esquema }}</td>
+                            <th class="text-right">Cor Final</th>
+                            <td>{{ relatorio.cor_final }}</td>
+                
+                </table>
+                <hr style="margin-top: 1px;">
+                <table>
+                            <th class="text-right">N.º RIP</th>
+                            <td> {{ relatorio }} </td>
+                            <th class="text-right">Solicitante</th>
+                            <td>{{ relatorio.fiscal }}</td>
+                            <th class="text-right">Inspetor</th>
+                            <td>{{ relatorio.inspetor }}</td>
+                            <th class="text-right">Aprovado?</th>
+                            <td>{{ relatorio.aprovado }}</td>
+                </table>
+                </div>
+                <!-- switch page templates -->
+            
+                 
+            <pdf:nexttemplate name="img_template" />
+            <pdf:nextpage>
+            <h1 >imagens</h1>
+            <hr>
+            
+                {% for img in relatorio.relatorio.all %}
+                {% if img.photo %}
+                {{ img.photo.url }}
+                {% endif %}
+                {% endfor %}
+                <img src="{{ img.photo.url }}" alt="" >
+      
+                
+
+        </body>
+            </html>
+          

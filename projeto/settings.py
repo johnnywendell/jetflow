@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'romaneio',
     'material',
     'usuarios',
+    'qualidade',
 ]
 
 MIDDLEWARE = [
@@ -83,12 +84,8 @@ WSGI_APPLICATION = 'projeto.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'jetflow',
-        'USER': 'postgres',
-        'PASSWORD': '02011996',
-        'HOST': 'localhost',
-        'PORT': '5432',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
 
@@ -129,6 +126,8 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+MEDIA_URL = 'media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
