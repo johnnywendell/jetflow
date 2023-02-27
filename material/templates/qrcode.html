@@ -1,0 +1,19 @@
+{% load qr_code %}
+<head>
+<style>
+    @page {
+        size: a7 portrait;
+        margin: 1cm;
+    }
+</style>
+</head>
+{% load qr_code %}
+<body>
+    <div >
+        <h1>{{ material.material }} </h1>
+        <legend>Romaneio nº{{ material.n_romaneio }}</legend>
+    </div>
+    <div >
+        {% qr_from_text link image_format="png" %}
+    </div>
+</body>
