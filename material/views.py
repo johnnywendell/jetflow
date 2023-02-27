@@ -97,7 +97,7 @@ class MaterialList(ListView):
 def material_detail(request, pk):
     template_name = 'material_detail.html'
     obj = Material.objects.get(pk=pk)
-    link = f"www.google.com/{obj.pk}"
+    link = f"http://34.151.197.232/material/{obj.pk}"
     context = {'object': obj, 'link':link}
     return render(request, template_name, context)
 
