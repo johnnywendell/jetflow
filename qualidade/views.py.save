@@ -12,24 +12,20 @@ from django.contrib.staticfiles import finders
 import os
 from django.conf import settings
 from django.views.generic import ListView
-from django.contrib.auth.decorators import login_required
-from usuarios.decorators import manager_required
 
-@login_required
+
 def render_pdf_view(request, pk):
     relatorio = get_object_or_404(RelatorioInspecao, pk=pk)
     template_path = 'rip.html'
     obj = relatorio.rip
-    teste = relatorio.relatorio.all()
     materiais= Material.objects.filter(relatorio=obj)
+    context = {'relatorio': relatorio, 'materiais':materiais}
     links = []
     for item in teste:
         if item.photo:
             link = item.photo.url
             link = link[1:]
-            links.append(link)
-    context = {'relatorio': relatorio, 'materiais':materiais, 'links':links}
-   
+            links.append(link)   
     # Create a Django response object, and specify content_type as pdf
     response = HttpResponse(content_type='application/pdf')
 
@@ -62,8 +58,7 @@ class RelatoriosList(ListView):
             )
         return queryset
 
-@login_required
-@manager_required
+
 def relatorios_detail(request, pk):
     template_name = 'relatorios_detail.html'
     obj = RelatorioInspecao.objects.get(pk=pk)
@@ -85,8 +80,6 @@ def relatorios_detail(request, pk):
         return HttpResponseRedirect(resolve_url(url,pk))
     return render(request, template_name, context)
 
-@login_required
-@manager_required
 def relatorios_add(request):
     template_name = 'relatorios_add.html'
     relatorios_form=RelatorioInspecao()
@@ -124,8 +117,7 @@ class EtapaUpdate(UpdateView):
     template_name = 'relatorio_form.html'
     form_class = EtapasForm
 
-@login_required
-@manager_required
+
 def photo_create(request):
     template_name = 'photo_form.html'
     form = PhotoForm(request.POST or None)
@@ -138,9 +130,7 @@ def photo_create(request):
     context ={'form':form}
     return render(request, template_name, context)
 
-@login_required
-@manager_required
-def delete_photo(request, pk):
-    photo = Photo.objects.get(pk=pk)
-    photo.delete()
-    return redirect('qualidade:relatorios_list')
+
+
+
+  

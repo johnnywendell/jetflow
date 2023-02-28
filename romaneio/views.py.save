@@ -14,6 +14,16 @@ from material.models import Material
 from material.forms import MaterialForm
 from usuarios.decorators import manager_required
 
+
+def romaneio_list(request):
+    template_name = 'romaneio_list.html'
+    objects = Romaneio.objects.all()
+    search =request.GET.get('search')
+    if search:
+        objects = objects.filter(romaneio__icontains=search)
+    context = {'objects_list': objects}
+    return render(request, template_name, context)
+
 class RomaneioList(ListView):
     model = Romaneio
     template_name = 'romaneio_list.html'
@@ -30,7 +40,7 @@ class RomaneioList(ListView):
         return queryset
 
 
-@login_required
+
 def romaneio_detail(request, pk):
     template_name = 'romaneio_detail.html'
     obj = Romaneio.objects.get(pk=pk)
@@ -42,7 +52,6 @@ def romaneio_detail(request, pk):
     return render(request, template_name, context)
 
 @login_required
-@manager_required
 def romaneio_add(request):
     template_name = 'romaneio_forms.html'
     romaneio_form=Romaneio()
@@ -111,7 +120,6 @@ def json_fatores(request):
     return JsonResponse({'data':data})
 
 @login_required
-@manager_required
 def area_add(request):
     template_name = 'area_add.html'
     area_form = Area()
@@ -128,7 +136,6 @@ def area_add(request):
     return render(request, template_name, context)
     
 @login_required
-@manager_required
 def solicitante_add(request):
     template_name = 'solicitante_add.html'
     solicitante_form = Solicitante()
@@ -146,7 +153,7 @@ def solicitante_add(request):
 
 ################## excel 
 
-@manager_required
+
 def export_xlsx(model, filename, queryset, columns):
     response = HttpResponse(content_type='application/ms-excel')
     response['Content-Disposition'] = 'attachment; filename="%s"' % filename
@@ -173,7 +180,6 @@ def export_xlsx(model, filename, queryset, columns):
     wb.save(response)
     return response
 
-@manager_required
 def export_xlsx_func(request):
     MDATA = datetime.now().strftime('%Y-%m-%d')
     model = 'Romaneio'
@@ -187,5 +193,16 @@ def export_xlsx_func(request):
     response = export_xlsx(model, filename_final, queryset, columns)
     return response
  
+
+def export_csv(request):
+    header = ('funcionario', 'nf', 'romaneio', 'documento','obs', 'area', 'solicitante')
+    romaneios = Romaneio.objects.all().values_list(*header)
+    with open('fix/produtos_exportados.csv', 'w') as csvfile:
+        romaneio_writer = csv.writer(csvfile)
+        romaneio_writer.writerow(header)
+        for romaneio in romaneios:
+            romaneio_writer.writerow(romaneio)
+    messages.success(request, 'Romaneios exportados com sucesso.')
+    return HttpResponseRedirect(reverse('romaneio:romaneio_list'))
 
 

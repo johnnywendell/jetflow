@@ -12,8 +12,10 @@ from xhtml2pdf import pisa
 from django.contrib.staticfiles import finders
 import os
 from django.conf import settings
+from usuarios.decorators import manager_required
 
 @login_required
+@manager_required
 def tratamento_add(request):
     template_name = 'tratamento_add.html'
     tratamento_form = Tratamento()
@@ -29,6 +31,7 @@ def tratamento_add(request):
     context={'form':form,'objects_list': objects}
     return render(request, template_name, context)
 @login_required
+@manager_required
 def tintafundo_add(request):
     template_name = 'tintafundo_add.html'
     tintaf_form = TintaFundo()
@@ -44,6 +47,7 @@ def tintafundo_add(request):
     context={'form':form,'objects_list': objects}
     return render(request, template_name, context)
 @login_required
+@manager_required
 def tintaintermediaria_add(request):
     template_name = 'tintaintermediaria_add.html'
     tintai_form = TintaIntermediaria()
@@ -59,6 +63,7 @@ def tintaintermediaria_add(request):
     context={'form':form,'objects_list': objects}
     return render(request, template_name, context)
 @login_required
+@manager_required
 def tintaacabamento_add(request):
     template_name = 'tintaacabamento_add.html'
     tintaa_form = TintaAcabamento()
@@ -74,15 +79,7 @@ def tintaacabamento_add(request):
     context={'form':form,'objects_list': objects}
     return render(request, template_name, context)
 
-    
-def material_list(request):
-    template_name = 'material_list.html'
-    objects = Material.objects.all()
-    search =request.GET.get('search')
-    if search:
-        objects = objects.filter(material__icontains=search)
-    context = {'objects_list': objects}
-    return render(request, template_name, context)
+
 
 class MaterialList(ListView):
     model = Material
@@ -99,12 +96,14 @@ class MaterialList(ListView):
             )
         return queryset
 
+@login_required
 def material_detail(request, pk):
     template_name = 'material_detail.html'
     obj = Material.objects.get(pk=pk)
     link = f"http://34.151.197.232/material/{obj.pk}"
     context = {'object': obj, 'link':link}
     return render(request, template_name, context)
+
 
 def render_pdf_view(request, pk):
     obj = get_object_or_404(Material, pk=pk)
@@ -141,6 +140,8 @@ class MaterialUpdate(UpdateView):
 
 
 ################### exportações
+@login_required
+@manager_required
 def export_xlsx(model, filename, queryset, columns):
     response = HttpResponse(content_type='application/ms-excel')
     response['Content-Disposition'] = 'attachment; filename="%s"' % filename
@@ -167,6 +168,8 @@ def export_xlsx(model, filename, queryset, columns):
     wb.save(response)
     return response
 
+@login_required
+@manager_required
 def export_xlsx_func_material(request):
     MDATA = datetime.now().strftime('%Y-%m-%d')
     model = 'Material'
