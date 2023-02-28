@@ -12,6 +12,8 @@ from django.contrib.staticfiles import finders
 import os
 from django.conf import settings
 from django.views.generic import ListView
+from usuarios.decorators import manager_required
+from django.contrib.auth.decorators import login_required
 
 
 def render_pdf_view(request, pk):
@@ -82,6 +84,8 @@ def relatorios_detail(request, pk):
         return HttpResponseRedirect(resolve_url(url,pk))
     return render(request, template_name, context)
 
+@login_required
+@manager_required
 def relatorios_add(request):
     template_name = 'relatorios_add.html'
     relatorios_form=RelatorioInspecao()
@@ -119,7 +123,8 @@ class EtapaUpdate(UpdateView):
     template_name = 'relatorio_form.html'
     form_class = EtapasForm
 
-
+@login_required
+@manager_required
 def photo_create(request):
     template_name = 'photo_form.html'
     form = PhotoForm(request.POST or None)
@@ -132,6 +137,8 @@ def photo_create(request):
     context ={'form':form}
     return render(request, template_name, context)
 
+@login_required
+@manager_required
 def delete_photo(request, pk):
     photo = Photo.objects.get(pk=pk)
     photo.delete()
