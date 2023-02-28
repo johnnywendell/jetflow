@@ -9,17 +9,17 @@
                             left: 50pt; width: 512pt; top: 10pt; height: 245pt;
                         }
                         @frame col1_frame {             /* Content frame 1 */
-                            left: 40pt; width: 170pt; top: 240pt; height: 270pt;
+                            left: 40pt; width: 170pt; top: 240pt; height: 280pt;
                         }
                         @frame col2_frame {             /* Content frame 2 */
-                            left: 220pt; width: 170pt; top: 240pt; height: 270pt;
+                            left: 220pt; width: 170pt; top: 240pt; height: 280pt;
                         }
                         @frame col3_frame {             /* Content frame 2 */
-                            left: 410pt; width: 170pt; top: 240pt; height: 270pt;
+                            left: 410pt; width: 170pt; top: 240pt; height: 280pt;
                         }
                         @frame footer_frame {           /* Static frame */
                             -pdf-frame-content: footer_content;
-                            left: 50pt; width: 512pt; top: 505pt; height: 200pt;
+                            left: 50pt; width: 512pt; top: 515pt; height: 200pt;
                         }
                         @frame footer2_frame {           /* Static frame */
                             -pdf-frame-content: footer_content2;
@@ -218,8 +218,12 @@
                     <td>{{ obj.inter_repintura }}</td>
                 </tr>
                 <tr>
-                    <th>Espessura Película</th>
+                    <th>Espessura Específicada</th>
                     <td>{{ obj.epe}}</td>
+                </tr>
+		<tr>
+                    <th>Espessura Seca</th>
+                    <td>{{ obj.seca }}</td>
                 </tr>
                 <tr>
                     <th>Inspeção visual</th>
@@ -232,6 +236,10 @@
                 <tr>
                     <th>Holiday</th>
                     <td>{{ obj.holiday }}</td>
+                </tr>
+		<tr>
+                <th>Pull off</th>
+                    <td>{{ obj.pulloff}}</td>
                 </tr>
                 <tr>
                     <th>Laudo</th>

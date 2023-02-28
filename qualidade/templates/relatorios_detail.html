@@ -247,12 +247,20 @@
                 <td>{{ obj.inter_repintura }}</td>
             </tr>
             <tr>
-                <th>Espessura Película</th>
+                <th>Espessura Específicada</th>
                 <td>{{ obj.epe}}</td>
+            </tr>
+	    <tr>
+                <th>Espessura Seca</th>
+                <td>{{ obj.eps }}</td>
             </tr>
             <tr>
                 <th>Inspeção visual</th>
-                <td>{{ obj.insp_visual }}</td>
+                <td>{% if object.insp_visual %}
+                    <i class="fa fa-check-circle ok"></i>
+                  {% else %}
+                    <i class="fa fa-minus-circle no"></i>
+                  {% endif %}</td>
             </tr>
             <tr>
                 <th>Aderência</th>
@@ -262,9 +270,17 @@
                 <th>Holiday</th>
                 <td>{{ obj.holiday }}</td>
             </tr>
+	    <tr>
+                <th>Pull off</th>
+                <td>{{ obj.pulloff }}</td>
+            </tr>	
             <tr>
                 <th>Laudo</th>
-                <td>{{ obj.laudo}}</td>
+                <td>{% if object.laudo %}
+                    <i class="fa fa-check-circle ok"></i>
+                  {% else %}
+                    <i class="fa fa-minus-circle no"></i>
+                  {% endif %}</td>
             </tr>
             <tr>
                 <th>Data Inspeção</th>
