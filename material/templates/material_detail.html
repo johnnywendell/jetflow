@@ -14,11 +14,18 @@
         </td>
         <span class="pull-right">
             <a href="{% url 'material:material_edit' object.pk %}">
-                <button type="button" class="btn btn-success">
+                <button type="button" class="btn btn-info">
                     <span class="fa fa-pencil"></span> Editar
                 </button>
             </a>
 
+        </span>
+        <span class="pull-right">
+            <a href="{% url 'material:render_pdf_view' object.pk %}">
+                <button type="button" class="btn btn-success">
+                    <span class="fa fa-pencil"></span> imprimir
+                </button>
+            </a>
         </span>
     </h1>
 <div class="row">

@@ -2,11 +2,16 @@ import xlwt
 from datetime import datetime
 from django.db.models import Q
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.views.generic import CreateView, UpdateView, ListView
 from django.http import HttpResponseRedirect, HttpResponse
 from .models import Tratamento, TintaFundo, TintaIntermediaria, TintaAcabamento, Material
 from .forms import MaterialForm, TratamentoForm, TintaFundoForm, TintaIntermediariaForm, TintaAcabamentoForm
+from django.template.loader import get_template
+from xhtml2pdf import pisa
+from django.contrib.staticfiles import finders
+import os
+from django.conf import settings
 
 @login_required
 def tratamento_add(request):
@@ -100,6 +105,29 @@ def material_detail(request, pk):
     link = f"www.google.com/{obj.pk}"
     context = {'object': obj, 'link':link}
     return render(request, template_name, context)
+
+def render_pdf_view(request, pk):
+    obj = get_object_or_404(Material, pk=pk)
+    template_path = 'qrcode.html'
+    link = f"www.google.com/{obj.pk}"
+    context = {'material': obj, 'link':link}
+   
+    # Create a Django response object, and specify content_type as pdf
+    response = HttpResponse(content_type='application/pdf')
+
+    #if download
+    #response['Content-Disposition'] = 'attachment; filename="report.pdf"'
+    # find the template and render it.
+    template = get_template(template_path)
+    html = template.render(context)
+
+    # create a pdf
+    pisa_status = pisa.CreatePDF(
+       html, dest=response)
+    # if error then show some funny view
+    if pisa_status.err:
+       return HttpResponse('We had some errors <pre>' + html + '</pre>')
+    return response
 
 class MaterialCreate(CreateView):
     model = Material
