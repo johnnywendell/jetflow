@@ -1,6 +1,8 @@
+import os
 from django.db import models
 from romaneio.models import Solicitante, Area
 from django.urls import reverse_lazy
+
 
 CORROS = (
     ('C1','C1'),
@@ -115,3 +117,6 @@ class Photo(models.Model):
         verbose_name_plural = 'fotos'
     def __str__(self):
         return str(self.rip_numero)
+    def delete(self, using=None, keep_parents=False):
+        os.remove(self.photo.path)
+        return super().delete(using, keep_parents)

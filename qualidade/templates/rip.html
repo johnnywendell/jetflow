@@ -35,7 +35,7 @@
                         }
                         @frame col1_frame2 {             /* Content frame 1 */
                
-                            left: 50pt; width: 512pt; top: 180pt; height: 360pt;
+                            left: 50pt; width: 512pt; top: 180pt; height: 495pt;
                         }
                         @frame footer2_frame {           /* Static frame */
                             -pdf-frame-content: footer_content2;
@@ -341,12 +341,13 @@
             <h1 >imagens</h1>
             <hr>
             
-                {% for img in relatorio.relatorio.all %}
-                {% if img.photo %}
-                {{ img.photo.url }}
-                {% endif %}
+                <div style="text-align: center;">
+                {% for item in links %}
+                {% cycle ' ' '<br>' as space silent %}
+                <img src="{{ item }}" alt="" width="300px" >
+                {{ space }}
                 {% endfor %}
-                <img src="{{ img.photo.url }}" alt="" >
+                </div>
       
                 
 

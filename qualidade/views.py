@@ -18,8 +18,15 @@ def render_pdf_view(request, pk):
     relatorio = get_object_or_404(RelatorioInspecao, pk=pk)
     template_path = 'rip.html'
     obj = relatorio.rip
+    teste = relatorio.relatorio.all()
     materiais= Material.objects.filter(relatorio=obj)
-    context = {'relatorio': relatorio, 'materiais':materiais}
+    links = []
+    for item in teste:
+        if item.photo:
+            link = item.photo.url
+            link = link[1:]
+            links.append(link)
+    context = {'relatorio': relatorio, 'materiais':materiais, 'links':links}
    
     # Create a Django response object, and specify content_type as pdf
     response = HttpResponse(content_type='application/pdf')
@@ -124,8 +131,7 @@ def photo_create(request):
             return redirect('qualidade:relatorios_list')
     context ={'form':form}
     return render(request, template_name, context)
-
-
-
-
-  
+def delete_photo(request, pk):
+    photo = Photo.objects.get(pk=pk)
+    photo.delete()
+    return redirect('qualidade:relatorios_list')
