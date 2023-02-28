@@ -358,7 +358,10 @@
                 <div class="row" style="margin-bottom: 10px;">
                 {% for item in object.relatorio.all %}
                 {% if item.photo %}
+                <div style="flex-direction: column;display: flex; align-items: center;">
                 <img src="{{ item.photo.url }}" alt="" class="img-thumbnail" width="150px">
+                <a href="{% url 'qualidade:photo_delete' item.pk %}" class="btn btn-danger btn-sm" style="width: 50%;">delete</a>
+                </div>
                 {% endif %}
                 {% endfor %}
                 </div>

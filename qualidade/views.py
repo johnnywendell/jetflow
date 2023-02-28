@@ -132,6 +132,12 @@ def photo_create(request):
     context ={'form':form}
     return render(request, template_name, context)
 
+def delete_photo(request, pk):
+    photo = Photo.objects.get(pk=pk)
+    photo.delete()
+    return redirect('qualidade:relatorios_list')
+
+
 
 
 

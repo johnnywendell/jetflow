@@ -12,4 +12,5 @@ urlpatterns =[
     path('qualidade/add/', v.relatorios_add, name='relatorios_add'),
     path('photo/create/', v.photo_create, name='photo_create'),
     path('pdf/<int:pk>/', v.render_pdf_view, name='render_pdf_view'),
+    path('photo/delete/<int:pk>', v.delete_photo, name='photo_delete'),
 ]
