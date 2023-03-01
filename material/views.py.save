@@ -1,7 +1,4 @@
 import xlwt
-import csv
-import io
-from django.urls import reverse
 from datetime import datetime
 from django.db.models import Q
 from django.contrib.auth.decorators import login_required
@@ -16,7 +13,7 @@ from django.contrib.staticfiles import finders
 import os
 from django.conf import settings
 from usuarios.decorators import manager_required
-from romaneio.models import Romaneio
+
 
 @login_required
 @manager_required
@@ -50,8 +47,8 @@ def tintafundo_add(request):
         form=TintaFundoForm(instance=tintaf_form, prefix='main')
     context={'form':form,'objects_list': objects}
     return render(request, template_name, context)
-@login_required
-@manager_required
+
+@manager_required@login_required
 def tintaintermediaria_add(request):
     template_name = 'tintaintermediaria_add.html'
     tintai_form = TintaIntermediaria()
@@ -67,7 +64,6 @@ def tintaintermediaria_add(request):
     context={'form':form,'objects_list': objects}
     return render(request, template_name, context)
 @login_required
-@manager_required
 def tintaacabamento_add(request):
     template_name = 'tintaacabamento_add.html'
     tintaa_form = TintaAcabamento()
@@ -83,7 +79,15 @@ def tintaacabamento_add(request):
     context={'form':form,'objects_list': objects}
     return render(request, template_name, context)
 
-
+    
+def material_list(request):
+    template_name = 'material_list.html'
+    objects = Material.objects.all()
+    search =request.GET.get('search')
+    if search:
+        objects = objects.filter(material__icontains=search)
+    context = {'objects_list': objects}
+    return render(request, template_name, context)
 
 class MaterialList(ListView):
     model = Material
@@ -100,14 +104,12 @@ class MaterialList(ListView):
             )
         return queryset
 
-@login_required
 def material_detail(request, pk):
     template_name = 'material_detail.html'
     obj = Material.objects.get(pk=pk)
     link = f"http://34.151.197.232/material/{obj.pk}"
     context = {'object': obj, 'link':link}
     return render(request, template_name, context)
-
 
 def render_pdf_view(request, pk):
     obj = get_object_or_404(Material, pk=pk)
@@ -144,8 +146,6 @@ class MaterialUpdate(UpdateView):
 
 
 ################### exportações
-@login_required
-@manager_required
 def export_xlsx(model, filename, queryset, columns):
     response = HttpResponse(content_type='application/ms-excel')
     response['Content-Disposition'] = 'attachment; filename="%s"' % filename
@@ -172,8 +172,6 @@ def export_xlsx(model, filename, queryset, columns):
     wb.save(response)
     return response
 
-@login_required
-@manager_required
 def export_xlsx_func_material(request):
     MDATA = datetime.now().strftime('%Y-%m-%d')
     model = 'Material'
@@ -189,64 +187,3 @@ def export_xlsx_func_material(request):
     'Comprimento/lados','QTD_Equip','Nº Relatório')
     response = export_xlsx(model, filename_final, queryset, columns)
     return response
-def save_data(data):
-    '''
-    Salva os dados no banco.
-    '''
-    aux = []
-    for item in data:
-        concluido = True if item.get('concluido') == 'True' else False
-        n_romaneio = item.get('n_romaneio') # foreignkey
-        jato = int(item.get('jato')) # foreignkey
-        tf = int(item.get('tf')) # foreignkey
-        ti = int(item.get('ti')) # foreignkey
-        ta = int(item.get('ta')) # foreignkey
-        cor = item.get('cor')
-        material = item.get('material')
-        descricao = item.get('descricao')
-        polegada = item.get('polegada')
-        m_quantidade =  0.00 if item.get('m_quantidade') == "" else float(item.get('m_quantidade'))
-        m2 = float(item.get('m2'))
-        raio = 0.00 if item.get('raio') == "" else float(item.get('raio'))
-        largura = 0.00 if item.get('largura') == "" else float(item.get('largura'))
-        altura = 0.00 if item.get('altura') == "" else float(item.get('altura'))
-        lados = 0.00 if item.get('lados') == "" else float(item.get('lados'))
-        relatorio = item.get('relatorio')
-
-        obj = Material(
-                concluido = concluido,
-                n_romaneio = Romaneio.objects.get(pk=n_romaneio),
-                jato = Tratamento.objects.get(pk=jato),
-                tf = TintaFundo.objects.get(pk=tf),
-                ti = TintaIntermediaria.objects.get(pk=ti),
-                ta = TintaAcabamento.objects.get(pk=ta),
-                cor = cor,
-                material = material,
-                descricao = descricao,
-                polegada = polegada,
-                m_quantidade = m_quantidade,
-                m2 = m2,
-                raio = raio,
-                largura = largura,
-                altura = altura,
-                lados = lados,
-                relatorio = relatorio,
-        )
-        aux.append(obj)
-    Material.objects.bulk_create(aux)
-
-@login_required
-@manager_required
-def import_csv(request):
-    if request.method == 'POST' and request.FILES['myfile']:
-        myfile = request.FILES['myfile']
-        # Lendo arquivo InMemoryUploadedFile
-        file = myfile.read().decode('utf-8')
-        reader = csv.DictReader(io.StringIO(file))
-        # Gerando uma list comprehension
-        data = [line for line in reader]
-        save_data(data)
-        return HttpResponseRedirect(reverse('material:material_list'))
-
-    template_name = 'material_import.html'
-    return render(request, template_name)

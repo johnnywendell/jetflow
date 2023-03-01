@@ -1,0 +1,54 @@
+
+{% extends "base.html" %}
+
+
+{% block content %} 
+
+    <div class="page-header">
+        <h2><i class="<i class="fa-sharp fa-regular fa-file-chart-pie"></i>"></i> Relatorios
+            <span class="pull-right">
+                <div style="display: flex;">
+                <a href="{% url 'qualidade:relatorios_add' %}">
+                    <button type="button" class="btn btn-primary">
+                        <span class="fa fa-plus"></span>Adicionar
+                    </button>                    
+                </a>
+                </div>
+            </span>
+        </h2>
+
+        {% if objects_list %}
+
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Nº Rip</th>
+                    <th>Cliente</th>
+                    <th>Rec/PJ/OM</th>
+                    <th>Unidade/Planta</th>
+                    <th class="text-center">Fiscal</th>
+                    <th>Plot</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for object in objects_list %}
+                <tr>
+                    <td><a href="{{ object.get_absolute_url }}">{{ object.rip }}</a></td>
+                    <td>{{ object.cliente }}</td>
+                    <td>{{ object.rec }}</td>
+                    <td>{{ object.unidade }}</td>
+                    <td class="text-center">{{ object.fiscal }}</td>
+               	    <td><a href="{% url 'qualidade:render_pdf_view' object.pk %}"><i class="fa fa-thin fa-print"></i></a></td>
+                </tr>
+                 
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <p class="alert alert-warning">Sem Itens na Lista </p>
+        {% endif %}
+    </div>
+
+    {% include "includes/pagination.html" %}
+
+{% endblock content %} 

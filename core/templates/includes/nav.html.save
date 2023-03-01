@@ -24,9 +24,8 @@
                     <a class="dropdown-item" href="{% url 'material:tintafundo_add' %}">Primers</a>
                     <a class="dropdown-item" href="{% url 'material:tintaintermediaria_add' %}">Tintas intermediárias</a>
                     <a class="dropdown-item" href="{% url 'material:tintaacabamento_add' %}">Tintas acabamentos</a>
-                    <a class="dropdown-item" href="{% url 'romaneio:import_csv' %}">Import romaneio CSV(adm)</a>
-                    <a class="dropdown-item" href="{% url 'material:import_csv_material' %}">Import material CSV(adm)</a>
-                </div>
+               
+ </div>
             </li>
         </ul>
         <form action="." method="GET" class="form-inline">
