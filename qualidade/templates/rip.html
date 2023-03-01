@@ -167,7 +167,11 @@
                 </tr>
                 <tr>
                     <th>Val</th>
-                    <td>{{ obj.get_val_b }}</td>
+                    <td>{% if obj.val_b %}
+                    {{ obj.get_val_b ]]
+                  {% else %}
+                   {{ "none" }}
+                  {% endif %}</td>
                 </tr>
                 <tr>
                     <th>Lote C</th>
@@ -175,7 +179,11 @@
                 </tr>
                 <tr>
                     <th>Val</th>
-                    <td>{{ obj.get_val_b}}</td>
+                    <td>{% if obj.val_c %}
+                    {{ obj.get_val_c }}
+                  {% else %}
+                   {{ "none" }}
+                  {% endif %}</td>
                 </tr>
                 <tr>
                     <th>Cor Munsell</th>

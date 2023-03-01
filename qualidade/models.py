@@ -94,7 +94,7 @@ class EtapaPintura(models.Model):
     data_insp = models.DateField(verbose_name='Data inspeção')
 
     class Meta:
-        ordering = ('tinta',)
+        ordering = ('eps',)
     def __str__(self):
         return str(self.tinta)
     def get_data_insp(self):
@@ -109,6 +109,8 @@ class EtapaPintura(models.Model):
         return self.val_b.strftime('%d/%m/%Y')
     def get_val_c(self):
         return self.val_c.strftime('%d/%m/%Y')
+    def get_absolute_url(self):
+        return reverse_lazy('qualidade:relatorios_list')
 
 class Photo(models.Model):
     rip_numero = models.ForeignKey(RelatorioInspecao, on_delete=models.CASCADE, verbose_name='RIP',related_name='relatorio')

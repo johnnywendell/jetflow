@@ -196,15 +196,25 @@
             </tr>
             <tr>
                 <th>Val</th>
-                <td>{{ obj.get_val_b }}</td>
-            </tr>
+			
+                <td>{% if obj.val_b %}
+			{{ obj.get_val_b }}
+			{% else %}
+			{{ "none" }} {% endif %}
+			</td>
+            		
+		</tr>
             <tr>
                 <th>Lote C</th>
                 <td>{{ obj.lote_c }}</td>
             </tr>
             <tr>
                 <th>Val</th>
-                <td>{{ obj.get_val_b}}</td>
+                <td>{% if obj.val_c %}
+			{{ obj.get_val_c}}
+			{% else  %}
+			{{ "none" }} {% endif %}
+			</td>
             </tr>
             <tr>
                 <th>Cor Munsell</th>
@@ -256,7 +266,7 @@
             </tr>
             <tr>
                 <th>Inspeção visual</th>
-                <td>{% if object.insp_visual %}
+                <td>{% if obj.insp_visual %}
                     <i class="fa fa-check-circle ok"></i>
                   {% else %}
                     <i class="fa fa-minus-circle no"></i>
@@ -276,7 +286,7 @@
             </tr>	
             <tr>
                 <th>Laudo</th>
-                <td>{% if object.laudo %}
+                <td>{% if obj.laudo %}
                     <i class="fa fa-check-circle ok"></i>
                   {% else %}
                     <i class="fa fa-minus-circle no"></i>
