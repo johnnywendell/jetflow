@@ -7,7 +7,7 @@ from django.db.models import Q
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404
 from django.views.generic import CreateView, UpdateView, ListView
-from django.http import HttpResponseRedirect, HttpResponse
+from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
 from .models import Tratamento, TintaFundo, TintaIntermediaria, TintaAcabamento, Material
 from .forms import MaterialForm, TratamentoForm, TintaFundoForm, TintaIntermediariaForm, TintaAcabamentoForm
 from django.template.loader import get_template
@@ -108,6 +108,7 @@ def material_detail(request, pk):
     context = {'object': obj, 'link':link}
     return render(request, template_name, context)
 
+################### pdf view
 
 def render_pdf_view(request, pk):
     obj = get_object_or_404(Material, pk=pk)
@@ -142,6 +143,27 @@ class MaterialUpdate(UpdateView):
     template_name = 'material_form.html'
     form_class = MaterialForm
 
+################## gráficos
+@login_required
+def json_material(request):
+    data = list(Material.objects.values())
+    return JsonResponse({'data':data})
+@login_required
+def json_tf(request):
+    data = list(TintaFundo.objects.values())
+    return JsonResponse({'data':data})
+@login_required
+def json_ti(request):
+    data = list(TintaIntermediaria.objects.values())
+    return JsonResponse({'data':data})
+@login_required
+def json_ta(request):
+    data = list(TintaAcabamento.objects.values())
+    return JsonResponse({'data':data})
+@login_required
+def json_tratamento(request):
+    data = list(Tratamento.objects.values())
+    return JsonResponse({'data':data})
 
 ################### exportações
 @login_required

@@ -114,6 +114,20 @@ def json_fatores(request):
     return JsonResponse({'data':data})
 
 @login_required
+def json_romaneios(request):
+    data = list(Romaneio.objects.values())
+    return JsonResponse({'data':data})
+@login_required
+def json_area(request):
+    data = list(Area.objects.values())
+    return JsonResponse({'data':data})
+@login_required
+def json_solicitante(request):
+    data = list(Solicitante.objects.values())
+    return JsonResponse({'data':data})
+
+
+@login_required
 @manager_required
 def area_add(request):
     template_name = 'area_add.html'
