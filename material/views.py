@@ -144,23 +144,22 @@ class MaterialUpdate(UpdateView):
     form_class = MaterialForm
 
 ################## gráficos
-@login_required
 def json_material(request):
     data = list(Material.objects.values())
     return JsonResponse({'data':data})
-@login_required
+
 def json_tf(request):
     data = list(TintaFundo.objects.values())
     return JsonResponse({'data':data})
-@login_required
+
 def json_ti(request):
     data = list(TintaIntermediaria.objects.values())
     return JsonResponse({'data':data})
-@login_required
+
 def json_ta(request):
     data = list(TintaAcabamento.objects.values())
     return JsonResponse({'data':data})
-@login_required
+
 def json_tratamento(request):
     data = list(Tratamento.objects.values())
     return JsonResponse({'data':data})

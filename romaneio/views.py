@@ -85,6 +85,7 @@ class RomaneioUpdate(UpdateView):
     template_name = 'romaneio_form.html'
     form_class = RomaneioForm
 
+###########json modelos
 def json_fatores(request):
     data = {
             'perfil_I':{'3':0.41,'4':0.50,'5':0.59,'6':0.68,'8':0.84,'10':1.03,'12':1.18,'14':1.35,'18':1.53,'20':1.76,'22':1.94,'24':2.13,'26':2.32},
@@ -113,19 +114,19 @@ def json_fatores(request):
             }
     return JsonResponse({'data':data})
 
-@login_required
+
 def json_romaneios(request):
     data = list(Romaneio.objects.values())
     return JsonResponse({'data':data})
-@login_required
+
 def json_area(request):
     data = list(Area.objects.values())
     return JsonResponse({'data':data})
-@login_required
+
 def json_solicitante(request):
     data = list(Solicitante.objects.values())
     return JsonResponse({'data':data})
-
+###############################################
 
 @login_required
 @manager_required
