@@ -13,4 +13,5 @@ urlpatterns =[
     path('area/', v.area_add, name='area_add'),
     path('solicitante/', v.solicitante_add, name='solicitante_add'),
     path('export/xlsx/', v.export_xlsx_func, name='export_xlsx_func'),
+    path('import/csv/', v.import_csv, name='import_csv'),
 ]
