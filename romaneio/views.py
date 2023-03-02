@@ -1,4 +1,6 @@
 from datetime import datetime
+import csv
+import io
 import xlwt
 from django.urls import reverse
 from django.contrib import messages
@@ -12,6 +14,7 @@ from .models import Area, Solicitante, Romaneio
 from .forms import RomaneioForm, AreaForm, SolicitanteForm
 from material.models import Material
 from material.forms import MaterialForm
+from django.contrib.auth.models import User
 
 
 
@@ -194,15 +197,45 @@ def export_xlsx_func(request):
     return response
  
 
-def export_csv(request):
-    header = ('funcionario', 'nf', 'romaneio', 'documento','obs', 'area', 'solicitante')
-    romaneios = Romaneio.objects.all().values_list(*header)
-    with open('fix/produtos_exportados.csv', 'w') as csvfile:
-        romaneio_writer = csv.writer(csvfile)
-        romaneio_writer.writerow(header)
-        for romaneio in romaneios:
-            romaneio_writer.writerow(romaneio)
-    messages.success(request, 'Romaneios exportados com sucesso.')
-    return HttpResponseRedirect(reverse('romaneio:romaneio_list'))
+def save_data(data):
+    '''
+    Salva os dados no banco.
+    '''
+    aux = []
+    for item in data:
+        funcionario = int(item.get('funcionario')) #foreignkey
+        entrada = item.get('entrada')
+        nf = str(item.get('nf'))
+        romaneio = item.get('romaneio')
+        documento = str(item.get('documento'))
+        obs = item.get('obs')
+        area = int(item.get('area')) #foreignkey
+        solicitante = int(item.get('solicitante')) #foreignkey
+        obj = Romaneio(
+                funcionario = User.objects.get(pk=funcionario),
+                entrada = datetime.strptime(entrada, '%d/%m/%Y').date(),
+                nf = nf,
+                romaneio = romaneio,
+                documento = documento,
+                obs = obs,
+                area = Area.objects.get(pk=area),
+                solicitante = Solicitante.objects.get(pk=solicitante),
+        )
+        aux.append(obj)
+    Romaneio.objects.bulk_create(aux)
+    
+def import_csv(request):
+    if request.method == 'POST' and request.FILES['myfile']:
+        myfile = request.FILES['myfile']
+        # Lendo arquivo InMemoryUploadedFile
+        file = myfile.read().decode('utf-8')
+        reader = csv.DictReader(io.StringIO(file))
+        # Gerando uma list comprehension
+        data = [line for line in reader]
+        save_data(data)
+        return HttpResponseRedirect(reverse('romaneio:romaneio_list'))
+
+    template_name = 'romaneio_import.html'
+    return render(request, template_name)
 
 

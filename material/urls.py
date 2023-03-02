@@ -15,4 +15,5 @@ urlpatterns =[
     path('tintaa/', v.tintaacabamento_add, name='tintaacabamento_add'),
     path('material/export/xlsx/', v.export_xlsx_func_material, name='export_xlsx_func_material'),
     path('material/pdf/<int:pk>/', v.render_pdf_view, name='render_pdf_view'),
+    path('material/import_csv/', v.import_csv, name='import_csv_material'),
 ]
