@@ -100,11 +100,11 @@ class MaterialList(ListView):
             )
         return queryset
 
-@login_required
+
 def material_detail(request, pk):
     template_name = 'material_detail.html'
     obj = Material.objects.get(pk=pk)
-    link = f"http://34.151.197.232/material/{obj.pk}"
+    link = f"http://34.151.253.92/material/{obj.pk}"
     context = {'object': obj, 'link':link}
     return render(request, template_name, context)
 
@@ -165,8 +165,6 @@ def json_tratamento(request):
     return JsonResponse({'data':data})
 
 ################### exportações
-@login_required
-@manager_required
 def export_xlsx(model, filename, queryset, columns):
     response = HttpResponse(content_type='application/ms-excel')
     response['Content-Disposition'] = 'attachment; filename="%s"' % filename

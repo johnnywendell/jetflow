@@ -164,7 +164,6 @@ def solicitante_add(request):
 
 ################## excel 
 
-@manager_required
 def export_xlsx(model, filename, queryset, columns):
     response = HttpResponse(content_type='application/ms-excel')
     response['Content-Disposition'] = 'attachment; filename="%s"' % filename
@@ -191,6 +190,7 @@ def export_xlsx(model, filename, queryset, columns):
     wb.save(response)
     return response
 
+@login_required
 @manager_required
 def export_xlsx_func(request):
     MDATA = datetime.now().strftime('%Y-%m-%d')
