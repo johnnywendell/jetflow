@@ -3,7 +3,7 @@
 {% load widget_tweaks %}
 
 {% block content %}
-
+{% include "includes/nav_jetflow.html" %} 
 <form method="POST" novalidate>
     {% csrf_token %}
     {% for field in form.visible_fields %}

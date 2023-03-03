@@ -2,6 +2,7 @@
 {% load qr_code %}
 
 {% block content %} 
+{% include "includes/nav_jetflow.html" %} 
 <a href="{% url 'material:material_list'  %}">voltar</a>
 
     <h1> {{ object.material }}
