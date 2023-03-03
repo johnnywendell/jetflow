@@ -9,21 +9,21 @@
                             left: 50pt; width: 512pt; top: 10pt; height: 245pt;
                         }
                         @frame col1_frame {             /* Content frame 1 */
-                            left: 40pt; width: 170pt; top: 230pt; height: 305pt;
+                            left: 40pt; width: 170pt; top: 240pt; height: 305pt;
                         }
                         @frame col2_frame {             /* Content frame 2 */
-                            left: 220pt; width: 170pt; top: 230pt; height: 305pt;
+                            left: 220pt; width: 170pt; top: 240pt; height: 305pt;
                         }
                         @frame col3_frame {             /* Content frame 2 */
-                            left: 410pt; width: 170pt; top: 230pt; height: 305pt;
+                            left: 410pt; width: 170pt; top: 240pt; height: 305pt;
                         }
                         @frame footer_frame {           /* Static frame */
                             -pdf-frame-content: footer_content;
-                            left: 50pt; width: 512pt; top: 530pt; height: 200pt;
+                            left: 50pt; width: 512pt; top: 540pt; height: 250pt;
                         }
                         @frame footer2_frame {           /* Static frame */
                             -pdf-frame-content: footer_content2;
-                            left: 50pt; width: 512pt; top: 750pt; height: 100pt;
+                            left: 50pt; width: 512pt; top: 800pt; height: 100pt;
                         }
                     }
 
@@ -39,7 +39,7 @@
                         }
                         @frame footer2_frame {           /* Static frame */
                             -pdf-frame-content: footer_content2;
-                            left: 50pt; width: 512pt; top: 700pt; height: 100pt;
+                            left: 50pt; width: 512pt; top: 700pt; height: 200pt;
                         }
                     }
                 </style>
@@ -70,8 +70,8 @@
                 </table>
                 <hr style="margin-top: 1px;">
                 <table>
-                            <th class="text-right">Tag</th>
-                            <td>{{ relatorio.tag }}</td>
+                            <th class="text-right">Corrosividade</th>
+                            <td>{{ relatorio.corrosividade }}</td>
                             <th class="text-right">Tipo de serviço</th>
                             <td>{{ relatorio.tipo_serv }}</td>
                             <th class="text-right">Unidade/Planta</th>
@@ -83,8 +83,8 @@
                 <hr style="margin-top: 1px;">        
                 <table>
  
-                            <th class="text-right">Corrosividade</th>
-                            <td>{{ relatorio.corrosividade }}</td>
+                            <th class="text-right">Tag</th>
+                            <td>{{ relatorio.tag }}</td>
                             <th class="text-right">Esquema de pintura</th>
                             <td>{{ relatorio.esquema_pint }}</td>
                             <th class="text-right">Espessura do esquema</th>
@@ -168,7 +168,7 @@
                 <tr>
                     <th>Val</th>
                     <td>{% if obj.val_b %}
-                    {{ obj.get_val_b ]]
+                    {{ obj.get_val_b }}
                   {% else %}
                    {{ "none" }}
                   {% endif %}</td>
@@ -294,6 +294,13 @@
                 <th>Fiscalização</th>
                 </table>
             <hr style="margin-top: 0px;">
+		<table>
+                    {% if ass %} 
+                    <th><img src="{{ ass.ass_insp }}"style="width:100px;" alt=""></th>
+                    <th><img src="{{ ass.ass_coord }}" alt="" style="width:100px;"></th>
+                    <th><img src="{{ ass.ass_fiscal }}" alt="" style="width:30px;"></th>
+                    {% endif  %} 
+                    </table>
             </div>
  
             

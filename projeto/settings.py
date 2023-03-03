@@ -22,7 +22,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'wyrykb5fa*))8b9-+a(qz+c9l(yv2t3avo4a5yhgn%(n%sex@j'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['34.151.253.92', 'localhost']
 
@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'widget_tweaks',
     'bootstrapform',
     'qr_code',
+    'rolepermissions',
     #"django_extensions",
     #Meus apps
     'core',
@@ -143,3 +144,5 @@ LOGOUT_REDIRECT_URL = '/auth/login'
 
 SESSION_COOKIE_AGE = 1800
 SESSION_SAVE_EVERY_REQUEST = True
+
+ROLEPERMISSIONS_MODULE = 'projeto.roles'

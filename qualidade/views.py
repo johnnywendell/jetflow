@@ -3,7 +3,7 @@ from django.forms import inlineformset_factory
 from django.http import HttpResponseRedirect, FileResponse, HttpResponse
 from django.shortcuts import render, resolve_url, redirect, get_object_or_404
 from django.db.models import Q
-from .models import RelatorioInspecao, EtapaPintura, Photo
+from .models import RelatorioInspecao, EtapaPintura, Photo, Assinatura
 from .forms import EtapasForm, RelatoriosForm, PhotoForm
 from material.models import Material
 from django.template.loader import get_template
@@ -14,6 +14,9 @@ from django.conf import settings
 from django.views.generic import ListView
 from django.contrib.auth.decorators import login_required
 from usuarios.decorators import manager_required
+from rolepermissions.decorators import has_role_decorator
+
+
 
 @login_required
 def render_pdf_view(request, pk):
@@ -22,13 +25,14 @@ def render_pdf_view(request, pk):
     obj = relatorio.rip
     teste = relatorio.relatorio.all()
     materiais= Material.objects.filter(relatorio=obj)
+    ass = Assinatura.objects.filter(rip_numero=pk).first()
     links = []
     for item in teste:
         if item.photo:
             link = item.photo.url
             link = link[1:]
             links.append(link)
-    context = {'relatorio': relatorio, 'materiais':materiais, 'links':links}
+    context = {'relatorio': relatorio, 'materiais':materiais, 'links':links, 'ass':ass}
    
     # Create a Django response object, and specify content_type as pdf
     response = HttpResponse(content_type='application/pdf')
@@ -65,6 +69,7 @@ class RelatoriosList(ListView):
 @login_required
 @manager_required
 def relatorios_detail(request, pk):
+    ass = Assinatura.objects.filter(rip_numero=pk).first()
     template_name = 'relatorios_detail.html'
     obj = RelatorioInspecao.objects.get(pk=pk)
     relatorio = obj.rip
@@ -73,7 +78,7 @@ def relatorios_detail(request, pk):
     metro = 0
     for item in material_relatorio:
         metro += item.m2
-    context = {'object': obj, 'material_list': material, 'material_relatorio':material_relatorio, 'metro':metro}
+    context = {'object': obj, 'material_list': material, 'material_relatorio':material_relatorio, 'metro':metro,'ass':ass}
     if request.method == 'POST':
         vi = request.POST.get('valores')
         vi = str(vi)
@@ -144,3 +149,30 @@ def delete_photo(request, pk):
     photo = Photo.objects.get(pk=pk)
     photo.delete()
     return redirect('qualidade:relatorios_list')
+
+######################## assinaturas
+
+@has_role_decorator('inspetor')
+def assign_insp(request,pk):
+    user = str(request.user)
+    ass = "media/" + user + "_ass.png"
+    rip = RelatorioInspecao.objects.get(pk=pk)
+    Assinatura.objects.create(rip_numero=rip, ass_insp=ass)
+    url='qualidade:relatorios_detail'
+    return HttpResponseRedirect(resolve_url(url,pk))
+
+@has_role_decorator('coordenador')
+def assign_coord(request,pk):
+    user = str(request.user)
+    ass = "media/" + user + "_ass.png"
+    Assinatura.objects.filter(rip_numero=pk).update(ass_coord=ass)
+    url='qualidade:relatorios_detail'
+    return HttpResponseRedirect(resolve_url(url,pk))
+
+@has_role_decorator('fiscal')
+def assign_fiscal(request,pk):
+    user = str(request.user)
+    ass = "media/" + user + "_ass.png"
+    Assinatura.objects.filter(rip_numero=pk).update(ass_fiscal=ass)
+    url='qualidade:relatorios_detail'
+    return HttpResponseRedirect(resolve_url(url,pk))

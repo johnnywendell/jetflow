@@ -94,7 +94,7 @@ class EtapaPintura(models.Model):
     data_insp = models.DateField(verbose_name='Data inspeção')
 
     class Meta:
-        ordering = ('eps',)
+        ordering = ('pk',)
     def __str__(self):
         return str(self.tinta)
     def get_data_insp(self):
@@ -124,3 +124,9 @@ class Photo(models.Model):
     def delete(self, using=None, keep_parents=False):
         os.remove(self.photo.path)
         return super().delete(using, keep_parents)
+
+class Assinatura(models.Model):
+    rip_numero = models.ForeignKey(RelatorioInspecao, on_delete=models.CASCADE, verbose_name='rip',related_name='rel_ass')
+    ass_insp = models.CharField(max_length=70, blank=True, null=True)
+    ass_coord =  models.CharField(max_length=70, blank=True, null=True)
+    ass_fiscal = models.CharField(max_length=70, blank=True, null=True)

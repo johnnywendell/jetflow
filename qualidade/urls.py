@@ -15,4 +15,7 @@ urlpatterns =[
     path('photo/create/', v.photo_create, name='photo_create'),
     path('pdf/<int:pk>/', v.render_pdf_view, name='render_pdf_view'),
     path('photo/delete/<int:pk>', v.delete_photo, name='photo_delete'),
+    path('ass/insp/<int:pk>', v.assign_insp, name='ass_insp'),
+    path('ass/coord/<int:pk>', v.assign_coord, name='ass_coord'),
+    path('ass/fiscal/<int:pk>', v.assign_fiscal, name='ass_fiscal'),
 ]
