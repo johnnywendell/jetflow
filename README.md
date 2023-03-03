@@ -6,7 +6,8 @@ Fluxo de ordens e demandas em canteiro de jateamento e pintura
 
 * Controlar a entrada e saída de materiais do canteiro
 * Acompanhar em tempo real a execução do serviço com aspectos técnicos
-* Gerar relatórios de medições e de produção
+* Gerar relatórios de medição, produção, e qualidade
+* Gestão do controle de qualidade
 * Entre outros.
 
-Projeto em desenvolvimento baseado no framework django.
+Projeto desenvolvido para gerir a rotina da manutenção industrial.
