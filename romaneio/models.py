@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.urls import reverse_lazy
+from core.models import TimeStampedModel
 
 class Area(models.Model):
     area = models.CharField(max_length=30, unique=True)
@@ -16,11 +17,11 @@ class Solicitante(models.Model):
     def __str__(self):
         return self.solicitante
 
-class Romaneio(models.Model):
+class Romaneio(TimeStampedModel):
     funcionario = models.ForeignKey(User, on_delete=models.CASCADE)
     entrada = models.DateField(verbose_name='Data de Entrada')
     nf = models.CharField('NF',max_length=15, blank=True, null=True)
-    romaneio = models.CharField(max_length=15, unique=True)
+    romaneio = models.AutoField(auto_created=True,unique=True,primary_key=True)
     documento = models.CharField('documento referência', max_length=20, blank=True, null=True)
     obs = models.CharField('Obs',blank=True, null=True, max_length=40)
     area = models.ForeignKey(Area, on_delete=models.CASCADE)
@@ -30,7 +31,7 @@ class Romaneio(models.Model):
         ordering = ('romaneio',)
 
     def __str__(self):
-        return self.romaneio
+        return '{}/{}'.format(str(self.romaneio).zfill(4),self.entrada.strftime('%Y'))
 
     def get_entrada(self):
         return self.entrada.strftime('%d/%m/%Y')

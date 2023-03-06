@@ -109,6 +109,7 @@ def relatorios_add(request):
         formset=item_relatorios_formset(request.POST, instance=relatorios_form, prefix='relatorio' )
         if form.is_valid() and formset.is_valid():
             form=form.save(commit=False)
+            form.funcionario=request.user
             form.save()
             formset.save()
             url='qualidade:relatorios_detail'

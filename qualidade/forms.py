@@ -8,6 +8,7 @@ class RelatoriosForm(forms.ModelForm):
     class Meta:
         model = RelatorioInspecao
         fields = '__all__'
+        exclude = ('funcionario',)
         widgets = {
             'inicio':  DateInput(),
             'termino':  DateInput(),

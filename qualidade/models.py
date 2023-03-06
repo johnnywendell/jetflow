@@ -2,7 +2,8 @@ import os
 from django.db import models
 from romaneio.models import Solicitante, Area
 from django.urls import reverse_lazy
-
+from django.contrib.auth.models import User
+from core.models import TimeStampedModel
 
 CORROS = (
     ('C1','C1'),
@@ -14,8 +15,9 @@ CORROS = (
 
 )
     
-class RelatorioInspecao(models.Model):
-    rip = models.CharField('Relatório nº',max_length=15, unique=True)
+class RelatorioInspecao(TimeStampedModel):
+    funcionario = models.ForeignKey(User,on_delete=models.CASCADE)
+    rip = models.AutoField(auto_created=True,unique=True,primary_key=True)
     cliente = models.CharField('Cliente',max_length=15, blank=True, null=True)
     data = models.DateField(verbose_name='Data serviço')
     rec = models.CharField(max_length=15, blank=True, null=True)
@@ -30,19 +32,19 @@ class RelatorioInspecao(models.Model):
     cor_final = models.CharField(max_length=20, blank=True, null=True)
     fiscal = models.ForeignKey(Solicitante, on_delete=models.CASCADE, related_name='solicitantee')
     inspetor = models.CharField(max_length=20, blank=True, null=True)
+    rnc_n = models.BooleanField('RNC?',default=False)
     obs_inst = models.TextField('Instrumentos de medição',blank=True, null=True)
     obs_final = models.TextField('Observações finais', blank=True, null=True)
-    rnc_n = models.BooleanField('Rnc ?',default=False)
     aprovado = models.BooleanField(default=True)
 
     tratamento = models.CharField('Tratamento',max_length=20, blank=True, null=True)
     inicio = models.DateTimeField(verbose_name='Inicio')
     termino = models.DateTimeField(verbose_name='Fim')
-    temp_ambiente = models.DecimalField('Temperatura ambiente', max_digits=4, decimal_places=2)
-    ura = models.DecimalField('Úmidade relativa', max_digits=4, decimal_places=2)
-    po = models.DecimalField('Ponto de Orvalho', max_digits=4, decimal_places=2)
-    temp_super = models.DecimalField('Temperatura da superfície', max_digits=4, decimal_places=2)
-    imtemperismo = models.CharField('Grau de imtemperismo',max_length=2, blank=True, null=True)
+    temp_ambiente = models.DecimalField('Temperatura ambiente', max_digits=4, decimal_places=1)
+    ura = models.DecimalField('Úmidade relativa', max_digits=4, decimal_places=1)
+    po = models.DecimalField('Ponto de Orvalho', max_digits=4, decimal_places=1)
+    temp_super = models.DecimalField('Temperatura da superfície', max_digits=4, decimal_places=1)
+    intemperismo = models.CharField('Grau de intemperismo',max_length=2, blank=True, null=True)
     descontaminacao = models.CharField('Descontaminação',max_length=20, blank=True, null=True)
     poeira_tam = models.CharField('Teste de poeira tamanho',max_length=10, blank=True, null=True)
     poeira_quant = models.CharField('Teste de poeira quantidade',max_length=10, blank=True, null=True)
@@ -53,9 +55,9 @@ class RelatorioInspecao(models.Model):
 
 
     class Meta:
-        ordering = ('rip',)
+        ordering = ('-created',)
     def __str__(self):
-        return str(self.rip)
+        return 'J{}/{}'.format(str(self.rip).zfill(4),self.data.strftime('%Y'))
     def get_data(self):
         return self.data.strftime('%d/%m/%Y')
     def get_inicio(self):
@@ -76,20 +78,19 @@ class EtapaPintura(models.Model):
     val_c = models.DateField(verbose_name='Validade lote C', blank=True, null=True)
     cor_munsell = models.CharField(max_length=20, blank=True, null=True)
     temp_amb = models.IntegerField('Temp. ambiente', blank=True, null=True)
-    ura = models.DecimalField('Úmidade relativa', max_digits=4, decimal_places=2)
-    po = models.DecimalField('Ponto de Orvalho', max_digits=4, decimal_places=2)
-    temp_substrato = models.DecimalField('Temperatura da substrato', max_digits=4, decimal_places=2)
+    ura = models.DecimalField('Úmidade relativa', max_digits=4, decimal_places=1)
+    po = models.DecimalField('Ponto de Orvalho', max_digits=4, decimal_places=1)
+    temp_substrato = models.DecimalField('Temperatura da substrato', max_digits=4, decimal_places=1)
     diluente = models.CharField(max_length=15, blank=True, null=True)
     met_aplic = models.CharField(max_length=20, blank=True, null=True)
     inicio = models.DateTimeField(verbose_name='Inicio')
     termino = models.DateTimeField(verbose_name='Fim')
     inter_repintura = models.CharField(max_length=15, blank=True, null=True)
-    epe = models.IntegerField('Espesura específicada', blank=True, null=True)
-    eps = models.IntegerField('Espesura seca', blank=True, null=True)
+    epe = models.IntegerField('Espessura especificada', blank=True, null=True)
+    eps = models.IntegerField('Espessura seca', blank=True, null=True)
     insp_visual = models.BooleanField(default=True)
     aderencia = models.CharField(max_length=15, blank=True, null=True)
     holiday = models.CharField(max_length=15, blank=True, null=True)
-    pulloff = models.CharField(max_length=15, blank=True, null=True)
     laudo = models.BooleanField(default=True)
     data_insp = models.DateField(verbose_name='Data inspeção')
 

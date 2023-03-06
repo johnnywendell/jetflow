@@ -144,7 +144,15 @@ def area_add(request):
         form=AreaForm(instance=area_form, prefix='main')
     context={'form':form,'objects_list': objects}
     return render(request, template_name, context)
-    
+
+@login_required
+@manager_required
+def delete_area(request,pk):
+    area = Area.objects.get(pk=pk)
+    area.delete()
+    url = '#'
+    return HttpResponseRedirect(url)
+
 @login_required
 @manager_required
 def solicitante_add(request):
