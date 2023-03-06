@@ -5,3 +5,4 @@ xlwt
 django-qr-code
 Pillow
 xhtml2pdf
+django-role-permissions
