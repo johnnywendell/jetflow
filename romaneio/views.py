@@ -16,6 +16,37 @@ from material.models import Material
 from material.forms import MaterialForm
 from usuarios.decorators import manager_required
 from django.contrib.auth.models import User
+from django.template.loader import get_template
+from xhtml2pdf import pisa
+from django.contrib.staticfiles import finders
+import os
+
+@login_required
+def render_pdf_view(request, pk):
+    template_path = "romaneio.html"
+    obj = Romaneio.objects.get(pk=pk)
+    materiais = obj.romaneios.all()
+    metro_quadrado = 0
+    for material in materiais:
+        metro_quadrado += material.m2
+    context = {'object': obj, 'metro':metro_quadrado}
+   
+    # Create a Django response object, and specify content_type as pdf
+    response = HttpResponse(content_type='application/pdf')
+
+    #if download
+    #response['Content-Disposition'] = 'attachment; filename="report.pdf"'
+    # find the template and render it.
+    template = get_template(template_path)
+    html = template.render(context)
+
+    # create a pdf
+    pisa_status = pisa.CreatePDF(
+       html, dest=response)
+    # if error then show some funny view
+    if pisa_status.err:
+       return HttpResponse('We had some errors <pre>' + html + '</pre>')
+    return response
 
 class RomaneioList(ListView):
     model = Romaneio

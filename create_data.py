@@ -3,6 +3,9 @@ import os
 #python manage.py dumpdata romaneio.area --indent 4 > fixture/area.json
 #python manage.py loaddata fixture/area.json --app romaneio.area
 
+def dump_model():
+    os.system("python manage.py dumpdata romaneio.area --indent 4 > fixture/area.json")
+
 def dump_data():
     os.system("python manage.py dumpdata romaneio.area --indent 4 > fixture/area.json")
     os.system("python manage.py dumpdata romaneio.solicitante --indent 4 > fixture/solicitante.json")
@@ -34,7 +37,7 @@ def load_data():
     os.system("python manage.py loaddata fixture/assinatura.json --app qualidade.assinatura")
 
 if __name__ == "__main__":
-    pass
+    dump_model()
     #load_data()
 
 
