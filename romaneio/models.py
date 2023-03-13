@@ -28,7 +28,7 @@ class Romaneio(TimeStampedModel):
     solicitante = models.ForeignKey(Solicitante, on_delete=models.CASCADE)
 
     class Meta:
-        ordering = ('romaneio',)
+        ordering = ('-created',)
 
     def __str__(self):
         return '{}/{}'.format(str(self.romaneio).zfill(4),self.entrada.strftime('%Y'))

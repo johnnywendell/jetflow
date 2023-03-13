@@ -7,7 +7,7 @@ $(document).ready(function(){
     //esconde o m2
     $('#id_romaneio-0-m2').prop('type', 'hidden')
     $('label[for="id_romaneio-0-m2"]').append('<span id="id_romaneio-0-m2-span" class="lead text-center" style="width: 100px;font-weight: bolder;background-color: lightgreen;"></span>')
-
+    $('label[for="id_romaneio-0-m2"]').append('<input id="id_romaneio-0-pol_inicial" class="form-control" type="hidden" />')
     $('#add-item').click(function(ev){
         ev.preventDefault();
         var count = $('#romaneio').children().length;
@@ -30,7 +30,7 @@ $(document).ready(function(){
         $('#id_romaneio-' + (count) + '-lados').addClass('clLados')
         // cria span para mostrar saldo na tela
         $('label[for="id_romaneio-' + (count) + '-m2"]').append('<span id="id_romaneio-' + (count) + '-m2-span" class="lead text-center" style="width: 100px;font-weight: bolder;background-color: lightgreen;"></span>')
-
+        $('label[for="id_romaneio-' + (count) + '-m2"]').append('<input id="id_romaneio-' + (count) + '-pol_inicial" class="form-control" type="hidden" />')
     });
     $('#scroll-left').click(function(ev){
         $('html, body').animate({
@@ -52,6 +52,7 @@ let campo2
 $(document).on('change', '.clPolegada', function(){
     let url = '/romaneios/json'
     let chave = $(this).val()
+    let self = $(this)
     mat = $(this).attr('id').replace('polegada','material')
     mat_val = $('#'+mat).val()
     $.ajax({
@@ -59,6 +60,8 @@ $(document).on('change', '.clPolegada', function(){
         type: 'GET',
         success: function(response){
             fator = response.data[mat_val][chave]
+            pol_inicial = self.attr('id').replace('polegada', 'pol_inicial')
+            $('#'+pol_inicial).val(fator)
         },
         error: function(xhr){
             //body
@@ -68,7 +71,8 @@ $(document).on('change', '.clPolegada', function(){
 $(document).on('change', '.clQuantidade', function(){ 
     quantidade = $(this).val()
     campo = $(this).attr('id').replace('m_quantidade','m2')
-    resultado = quantidade * fator
+    pol_inicial = $(this).attr('id').replace('m_quantidade','pol_inicial')
+    resultado = quantidade * $('#'+pol_inicial).val()
     resultado_2 = resultado.toFixed(3)
     $('#'+campo).prop('type', 'hidden')
     $('#'+campo).val(resultado_2)
