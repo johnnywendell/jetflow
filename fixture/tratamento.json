@@ -1,0 +1,44 @@
+[
+{
+    "model": "material.tratamento",
+    "pk": 1,
+    "fields": {
+        "tratamento": "LIMPEZA C/ SOLV. QUÍMICO"
+    }
+},
+{
+    "model": "material.tratamento",
+    "pk": 2,
+    "fields": {
+        "tratamento": "LIMPEZA C/ ÁGUA"
+    }
+},
+{
+    "model": "material.tratamento",
+    "pk": 3,
+    "fields": {
+        "tratamento": "PREP PS2 (Escória cobre)"
+    }
+},
+{
+    "model": "material.tratamento",
+    "pk": 4,
+    "fields": {
+        "tratamento": "PREP PPS2 (Granalha de Aço)"
+    }
+},
+{
+    "model": "material.tratamento",
+    "pk": 5,
+    "fields": {
+        "tratamento": "SA 2 ½ E SUMASTIC 228, SPB1"
+    }
+},
+{
+    "model": "material.tratamento",
+    "pk": 6,
+    "fields": {
+        "tratamento": "SUMATANE HS BRILHANTE PU, SPB1"
+    }
+}
+]

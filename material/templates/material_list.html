@@ -26,7 +26,6 @@
         <table class="table table-striped">
             <thead>
                 <tr>
-                    <th class="text-center">Fechado</th>
                     <th>Nº Romaneio</th>
                     <th>Tratamento</th>
                     <th>TF</th>
@@ -37,16 +36,11 @@
                     <th>Relatório</th>
                 </tr>
             </thead>
+            <form method="POST" novalidate>
+                {% csrf_token %}
             <tbody>
                 {% for object in objects_list %}
                 <tr>
-                    <td class="text-center">
-                        {% if object.concluido %}
-                          <i class="fa fa-check-circle ok"></i>
-                        {% else %}
-                          <i class="fa fa-minus-circle no"></i>
-                        {% endif %}
-                    </td>
                     <td>{{ object.n_romaneio }}</td>
                     <td>{{ object.jato }}</td>
                     <td>{{ object.tf }}</td>
@@ -55,11 +49,29 @@
                     <td><a href="{{ object.get_absolute_url }}">{{ object.material }}</a></td>
                     <td>{{ object.m2 }}</td>
                     <td>{{ object.relatorio }}</td>
+                    <td>{% if object.concluido %}
+                        <i class="fa fa-check-circle ok"></i>
+                      {% else %}
+                        <label class="control control--checkbox">
+                        <input type="checkbox" name="acceptRules" class="inline checkbox checkclass" id="checkbox-{{object.pk}}" value="False"/>
+                      </label></td>
+                      {% endif %}
                 </tr>
                  
                 {% endfor %}
             </tbody>
         </table>
+        <span class="pull-right">
+            <div style="display: flex;">
+           
+                <button type="submit" class="btn btn-dark float-right">
+                    <i class="fa fa-arrow-circle-o-up" aria-hidden="true"></i>
+                </button>
+           
+            </div>
+            <input hidden name="valores" id="valores">
+        </span>
+            </form> 
         {% else %}
         <p class="alert alert-warning">Sem Itens na Lista </p>
         {% endif %}
@@ -68,3 +80,26 @@
 
         
 {% endblock content %} 
+{% block js %}
+
+<script>
+
+    $(".checkclass").on('change', function() {
+        if ($(this).is(':checked')) {
+            valor = $(this).attr('id').replace('checkbox-','')
+        $(this).attr('value', valor);
+    }   else {
+        $(this).attr('value', 'False');
+    }
+    });
+    $(document).on('change', '.checkclass', function(){
+            var txt = "";
+            $('.checkclass').each(function(){
+                txt += $(this).val()+"," ;
+            });
+            $('#valores').val(txt);
+        });
+
+</script>
+
+{% endblock js %}

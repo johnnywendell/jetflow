@@ -1,0 +1,42 @@
+[
+{
+    "model": "qualidade.photo",
+    "pk": 3,
+    "fields": {
+        "rip_numero": 2,
+        "photo": "WhatsApp_Image_2023-02-16_at_10.42.10_3_abzy1UK.jpeg"
+    }
+},
+{
+    "model": "qualidade.photo",
+    "pk": 4,
+    "fields": {
+        "rip_numero": 2,
+        "photo": "WhatsApp_Image_2023-02-16_at_10.42.11_xXluOXv.jpeg"
+    }
+},
+{
+    "model": "qualidade.photo",
+    "pk": 5,
+    "fields": {
+        "rip_numero": 3,
+        "photo": "WhatsApp_Image_2023-02-27_at_12.34.57_1.jpeg"
+    }
+},
+{
+    "model": "qualidade.photo",
+    "pk": 6,
+    "fields": {
+        "rip_numero": 3,
+        "photo": "WhatsApp_Image_2023-02-27_at_12.34.56.jpeg"
+    }
+},
+{
+    "model": "qualidade.photo",
+    "pk": 7,
+    "fields": {
+        "rip_numero": 3,
+        "photo": "WhatsApp_Image_2023-02-27_at_12.34.56_2.jpeg"
+    }
+}
+]

@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-
+{% load qr_code %}
 {% block content %} 
 {% include "includes/nav_jetflow.html" %} 
 <a href="{% url 'romaneio:romaneio_list'  %}">voltar</a>
@@ -22,7 +22,7 @@
 
         </span> 
     </h1>
-
+<div class="row">
     <div class="col-sm-6">
         <table class="table table-user-information">
             <tbody>
@@ -63,7 +63,17 @@
             </tbody>
         </table>
     </div>
+	<div class="col-sm-6">
+        
+        <div class="d-flex justify-content-center " >
+            {% qr_from_text link size="M" %}
+        </div>
+        <div class="d-flex justify-content-center " >
+            <h5>QR CODE - ROMANEIO </h5>
+        </div>
+        </div>
 
+</div>
     <table class="table table-striped">
         <thead>
             <tr>

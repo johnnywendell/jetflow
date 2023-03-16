@@ -6,7 +6,11 @@
                 size: letter portrait;
                 @frame header_frame {           /* Static frame */
                     -pdf-frame-content: header_content;
-                    left: 50pt; width: 512pt; top: 20pt; height: 105pt;
+                    left: 50pt; width: 412pt; top: 20pt; height: 105pt;
+                }
+                @frame header_frame1 {           /* Static frame */
+                    -pdf-frame-content: header_content1;
+                    left: 462pt; width: 100pt; top: 20pt; height: 105pt;
                 }
                 @frame col_frame2 {             /* Content frame 1 */
        
@@ -19,7 +23,7 @@
             }
         </style>
     </head>
-
+{% load qr_code %}
    <body>
     
     <div id="header_content">
@@ -56,6 +60,9 @@
          
         </table>
 </div>
+<div id="header_content1">
+        {% qr_from_text link image_format="png" %}
+    </div>
 <h3 style="text-align:center;margin-bottom: 0px;margin: 0%;">Materiais</h3>
 <table>
         <th>Tratamento</th>
@@ -63,6 +70,7 @@
         <th>TI</th>
         <th>TA</th>
         <th>Tipo Mat.</th>
+        <th>Ø</th>
         <th>Descrição</th>
         <th>M²</th>
     </table>
@@ -74,6 +82,7 @@
         <td style="padding-top: 3px";>{{ obj.ti }}</td>
         <td style="padding-top: 3px";>{{ obj.ta }}</td>
         <td style="padding-top: 3px";>{{ obj.material }}</td>
+        <td style="padding-top: 3px";>{{ obj.polegada }}</td>
         <td style="padding-top: 3px";>{{ obj.descricao }}</td>
         <td style="padding-top: 3px";>{{ obj.m2 }}</td>
     </table>

@@ -1,0 +1,114 @@
+[
+{
+    "model": "auth.user",
+    "pk": 1,
+    "fields": {
+        "password": "pbkdf2_sha256$390000$R9ejSEJD6VV2XNBPWmHy8W$3PiVT6vLWlF9Cly5+N68bUD/nBmgx3n15hHOCDPMM1Q=",
+        "last_login": "2023-03-16T12:25:36.215Z",
+        "is_superuser": true,
+        "username": "admin",
+        "first_name": "",
+        "last_name": "",
+        "email": "johnnywendell8@gmail.com",
+        "is_staff": true,
+        "is_active": true,
+        "date_joined": "2023-03-06T22:32:40.980Z",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "auth.user",
+    "pk": 2,
+    "fields": {
+        "password": "pbkdf2_sha256$390000$j9CbY1RVEDChDpoabC5JiB$LrNPkyNBYskCK0r/lJpPYdv4GJucpJ5B556Xq58ImCg=",
+        "last_login": "2023-03-13T16:40:32.344Z",
+        "is_superuser": false,
+        "username": "rogerio.costa",
+        "first_name": "",
+        "last_name": "",
+        "email": "rogerio.costa@monsertec.com.br",
+        "is_staff": true,
+        "is_active": true,
+        "date_joined": "2023-03-07T10:33:23Z",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "auth.user",
+    "pk": 3,
+    "fields": {
+        "password": "pbkdf2_sha256$390000$wL8Sx8OZYt2hIy9JHVUyHp$AmzDn9RJf3Ps3b6pM3Ia0v/XnDHJfCeuaNJ6nhspLws=",
+        "last_login": "2023-03-16T17:31:11.731Z",
+        "is_superuser": false,
+        "username": "regivan.santos",
+        "first_name": "",
+        "last_name": "",
+        "email": "regivan.santos@monsertec.com",
+        "is_staff": true,
+        "is_active": true,
+        "date_joined": "2023-03-07T10:33:55Z",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "auth.user",
+    "pk": 4,
+    "fields": {
+        "password": "pbkdf2_sha256$390000$NMAS3slkyIlQKAUX2HrLGV$6O23Eyt6fHdku7TGqOW3ox/jn+Ivn/NqGAzH7ZUYgfE=",
+        "last_login": "2023-03-16T10:32:24.241Z",
+        "is_superuser": false,
+        "username": "jeferson.cruz",
+        "first_name": "",
+        "last_name": "",
+        "email": "jeferson.cruz@monsertec.com.br",
+        "is_staff": true,
+        "is_active": true,
+        "date_joined": "2023-03-07T10:34:28Z",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "auth.user",
+    "pk": 5,
+    "fields": {
+        "password": "pbkdf2_sha256$390000$rN3UzGbDA5oWX8pfpSF5Rf$xCN6hW59YUK+y+OESROgJ4LfjgIhwM9ahpP3yqj82VM=",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "allison.santana",
+        "first_name": "",
+        "last_name": "",
+        "email": "allison.santana@monsertec.com.br",
+        "is_staff": true,
+        "is_active": true,
+        "date_joined": "2023-03-07T10:34:59Z",
+        "groups": [
+            2
+        ],
+        "user_permissions": []
+    }
+},
+{
+    "model": "auth.user",
+    "pk": 6,
+    "fields": {
+        "password": "pbkdf2_sha256$390000$XdocfC6N3XLFO5Dai8dN2N$ihd2FQCbumLcRybbTRpSLZljlEXUhVFvdOpi0nNCsdQ=",
+        "last_login": "2023-03-15T18:46:14.101Z",
+        "is_superuser": false,
+        "username": "diego.passos",
+        "first_name": "",
+        "last_name": "",
+        "email": "diego.passos@monsertec.com.br",
+        "is_staff": true,
+        "is_active": true,
+        "date_joined": "2023-03-07T10:35:41Z",
+        "groups": [
+            2
+        ],
+        "user_permissions": []
+    }
+}
+]

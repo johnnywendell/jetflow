@@ -99,7 +99,17 @@ class MaterialList(ListView):
                 Q(material__icontains=search)
             )
         return queryset
-
+    def post(self, request, *args, **kwargs):
+        if request.method == 'POST':
+            vi = request.POST.get('valores')
+            vi = str(vi)
+            present = vi.split(",")
+            present.pop()
+            for i in present:
+                if not i == "False":
+                    Material.objects.filter(pk=i).update(concluido=True)
+            url='#'
+            return HttpResponseRedirect(url)
 
 def material_detail(request, pk):
     template_name = 'material_detail.html'
@@ -113,7 +123,7 @@ def material_detail(request, pk):
 def render_pdf_view(request, pk):
     obj = get_object_or_404(Material, pk=pk)
     template_path = 'qrcode.html'
-    link = f"http://34.151.197.232/material/{obj.pk}"
+    link = f"http://34.151.253.92/material/{obj.pk}"
     context = {'material': obj, 'link':link}
    
     # Create a Django response object, and specify content_type as pdf
@@ -199,11 +209,11 @@ def export_xlsx_func_material(request):
     filename = 'material_exportados.xls'
     _filename = filename.split('.')
     filename_final = f'{_filename[0]}_{MDATA}.{_filename[1]}'
-    queryset = Material.objects.all().values_list('concluido', 'n_romaneio__romaneio', 'jato__tratamento', 
+    queryset = Material.objects.all().values_list('pk','concluido','n_romaneio__area','n_romaneio__solicitante', 'n_romaneio__romaneio', 'jato__tratamento', 
     'tf__tinta_fundo','ti__tinta_intermediaria', 'ta__tinta_acabamento', 'cor', 'material', 'descricao',
      'polegada', 'm_quantidade', 'm2', 'raio', 'largura', 'altura', 'comprimento','lados','relatorio')
 
-    columns = ('concluido', 'Nº romaneio', 'Tratamento', 'Primer','TI', 
+    columns = ('id','concluido','area','solicitante', 'Nº romaneio', 'Tratamento', 'Primer','TI', 
     'TA', 'cor', 'material', 'descricao', 'polegada', 'M / Quant.', 'm2', 'Raio', 'Largura', 'Altura', 
     'Comprimento/lados','QTD_Equip','Nº Relatório')
     response = export_xlsx(model, filename_final, queryset, columns)

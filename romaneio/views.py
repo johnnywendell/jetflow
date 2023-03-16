@@ -27,9 +27,10 @@ def render_pdf_view(request, pk):
     obj = Romaneio.objects.get(pk=pk)
     materiais = obj.romaneios.all()
     metro_quadrado = 0
+    link = f"http://34.151.253.92/romaneios/{obj.pk}"
     for material in materiais:
         metro_quadrado += material.m2
-    context = {'object': obj, 'metro':metro_quadrado}
+    context = {'object': obj, 'metro':metro_quadrado, 'link':link}
    
     # Create a Django response object, and specify content_type as pdf
     response = HttpResponse(content_type='application/pdf')
@@ -70,9 +71,10 @@ def romaneio_detail(request, pk):
     obj = Romaneio.objects.get(pk=pk)
     materiais = obj.romaneios.all()
     metro_quadrado = 0
+    link = f"http://34.151.253.92/romaneios/{obj.pk}"
     for material in materiais:
         metro_quadrado += material.m2
-    context = {'object': obj, 'metro':metro_quadrado}
+    context = {'object': obj, 'metro':metro_quadrado, 'link':link}
     return render(request, template_name, context)
 
 @login_required

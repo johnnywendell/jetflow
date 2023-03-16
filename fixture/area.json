@@ -5,5 +5,131 @@
     "fields": {
         "area": "MONSERTEC"
     }
+},
+{
+    "model": "romaneio.area",
+    "pk": 2,
+    "fields": {
+        "area": "PE-01"
+    }
+},
+{
+    "model": "romaneio.area",
+    "pk": 3,
+    "fields": {
+        "area": "PE-02"
+    }
+},
+{
+    "model": "romaneio.area",
+    "pk": 4,
+    "fields": {
+        "area": "PE-03"
+    }
+},
+{
+    "model": "romaneio.area",
+    "pk": 5,
+    "fields": {
+        "area": "PVC"
+    }
+},
+{
+    "model": "romaneio.area",
+    "pk": 6,
+    "fields": {
+        "area": "TEGAL"
+    }
+},
+{
+    "model": "romaneio.area",
+    "pk": 7,
+    "fields": {
+        "area": "UA"
+    }
+},
+{
+    "model": "romaneio.area",
+    "pk": 8,
+    "fields": {
+        "area": "UO"
+    }
+},
+{
+    "model": "romaneio.area",
+    "pk": 9,
+    "fields": {
+        "area": "CS"
+    }
+},
+{
+    "model": "romaneio.area",
+    "pk": 10,
+    "fields": {
+        "area": "UTE"
+    }
+},
+{
+    "model": "romaneio.area",
+    "pk": 11,
+    "fields": {
+        "area": "DISTRIBUIÇÃO"
+    }
+},
+{
+    "model": "romaneio.area",
+    "pk": 12,
+    "fields": {
+        "area": "Q1 DIVERSOS"
+    }
+},
+{
+    "model": "romaneio.area",
+    "pk": 13,
+    "fields": {
+        "area": "TENENGE"
+    }
+},
+{
+    "model": "romaneio.area",
+    "pk": 14,
+    "fields": {
+        "area": "BRACELL"
+    }
+},
+{
+    "model": "romaneio.area",
+    "pk": 15,
+    "fields": {
+        "area": "X-OBRA"
+    }
+},
+{
+    "model": "romaneio.area",
+    "pk": 16,
+    "fields": {
+        "area": "SAO-2"
+    }
+},
+{
+    "model": "romaneio.area",
+    "pk": 17,
+    "fields": {
+        "area": "FB-5001D"
+    }
+},
+{
+    "model": "romaneio.area",
+    "pk": 18,
+    "fields": {
+        "area": "PVC PARADA"
+    }
+},
+{
+    "model": "romaneio.area",
+    "pk": 19,
+    "fields": {
+        "area": "DEP"
+    }
 }
 ]

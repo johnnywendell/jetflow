@@ -1,0 +1,72 @@
+[
+{
+    "model": "material.tintaintermediaria",
+    "pk": 1,
+    "fields": {
+        "tinta_intermediaria": "N-2630"
+    }
+},
+{
+    "model": "material.tintaintermediaria",
+    "pk": 2,
+    "fields": {
+        "tinta_intermediaria": "N-2680"
+    }
+},
+{
+    "model": "material.tintaintermediaria",
+    "pk": 3,
+    "fields": {
+        "tinta_intermediaria": "N-2628"
+    }
+},
+{
+    "model": "material.tintaintermediaria",
+    "pk": 4,
+    "fields": {
+        "tinta_intermediaria": "N-2288"
+    }
+},
+{
+    "model": "material.tintaintermediaria",
+    "pk": 5,
+    "fields": {
+        "tinta_intermediaria": "N 2912 Tipo I"
+    }
+},
+{
+    "model": "material.tintaintermediaria",
+    "pk": 6,
+    "fields": {
+        "tinta_intermediaria": "N 2912 Tipo II"
+    }
+},
+{
+    "model": "material.tintaintermediaria",
+    "pk": 7,
+    "fields": {
+        "tinta_intermediaria": "N 2912 Tipo III"
+    }
+},
+{
+    "model": "material.tintaintermediaria",
+    "pk": 8,
+    "fields": {
+        "tinta_intermediaria": "JOTATEMP 1000"
+    }
+},
+{
+    "model": "material.tintaintermediaria",
+    "pk": 9,
+    "fields": {
+        "tinta_intermediaria": "JOTAMASTIC 90"
+    }
+},
+{
+    "model": "material.tintaintermediaria",
+    "pk": 10,
+    "fields": {
+        "tinta_intermediaria": "SUMATANE HS BRILHANTE PU, SPB1"
+    }
+}
+]

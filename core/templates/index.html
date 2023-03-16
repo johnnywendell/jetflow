@@ -1,83 +1,59 @@
-<!doctype html>
-{% load static %}
-<html lang="en">
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Index</title>
-    <link rel="stylesheet" href="{% static 'css/styleindex.css' %}">
-  </head>
+{% extends "base.html" %}
 
-
-<body>          
-    <div id="cards">
-        <a href="{% url 'romaneio:romaneio_list' %}"><div class="card">
-          <div class="card-content">
-            <div class="card-image">
-              <i class="fa-duotone fa-apartment"></i>
-            </div>
-            <div class="card-info-wrapper">
-              <div class="card-info">
-                <i class="fa-duotone fa-apartment"></i>
-                <div class="card-info-title">
-                  <h3>Jetflow</h3>  
-                  <h4>Controle de fluxo do canteiro de jato</h4>
-                </div>    
-              </div>
-            </div>
-          </div>
-        </div></a>
-        <a href="{% url 'qualidade:relatorios_list' %}"><div class="card">
-          <div class="card-content">
-            <div class="card-image">
-              <i class="fa-duotone fa-unicorn"></i>
-            </div>
-            <div class="card-info-wrapper">
-              <div class="card-info">
-                <i class="fa-duotone fa-unicorn"></i>
-                <div class="card-info-title">
-                  <h3>Qualidade</h3>  
-                  <h4>Controle de qualidade</h4>
-                </div>    
-              </div>  
-            </div>
-          </div>
-        </div></a>
-        <div class="card">
-          <div class="card-content">
-            <div class="card-image">
-              <i class="fa-duotone fa-blender-phone"></i>
-            </div>
-            <div class="card-info-wrapper">
-              <div class="card-info">
-                <i class="fa-duotone fa-blender-phone"></i>
-                <div class="card-info-title">
-                  <h3>SSMA</h3>  
-                  <h4>Módulo de gestão de segurança</h4>
-                </div>    
-              </div>
-            </div>
-          </div>
+{% block content %} 
+{% include "includes/nav_login.html" %} 
+<div class="card-deck justify-content-center">
+<div class="card text-white  mb-3" style="max-width: 22rem; background-color: rgb(19, 39, 69);">
+    <div class="card-header"style="max-width: 22rem; background-color: rgb(171, 25, 26);">Produção</div>
+    <div class="card-body">
+      <a href="{% url 'romaneio:romaneio_list' %}"><h5 class="card-title text-light">Jetflow</h5></a>
+      <p class="card-text">Módulo de controle de fluxo no canteiro de jato</p>
+    </div>
+  </div>
+  <div class="card text-white  mb-3" style="max-width: 22rem; background-color: rgb(19, 39, 69);">
+    <div class="card-header"style="max-width: 22rem; background-color: rgb(171, 25, 26);">Qualidade</div>
+    <div class="card-body">
+        <a href="{% url 'qualidade:relatorios_list' %}"><h5 class="card-title  text-light">Relatórios</h5></a>
+      <p class="card-text">Módulo de Gestão de relatórios de inspeção</p>
+    </div>
+  </div>
+  <div class="card text-white  mb-3" style="max-width: 22rem; background-color: rgb(19, 39, 69);">
+    <div class="card-header"style="max-width: 22rem; background-color: rgb(171, 25, 26);">Segurança</div>
+    <div class="card-body">
+        <a href="#"><h5 class="card-title  text-light">SSMA</h5></a>
+      <p class="card-text">Módulo de Gestão de dados de SSMA</p>
+    </div>
+  </div>
+</div>
+<div class="card-deck justify-content-center">
+    <div class="card text-white mb-3" style="max-width: 22rem; background-color: rgb(19, 39, 69);">
+        <div class="card-header" style="max-width: 22rem; background-color: rgb(171, 25, 26);">Medição</div>
+        <div class="card-body">
+          <h5 class="card-title">Controle e medição</h5>
+          <p class="card-text">Módulo de Controle e acompanhamento de medições e emissão de notas</p>
         </div>
+      </div>
+      <div class="card text-white  mb-3" style="max-width: 22rem; background-color: rgb(19, 39, 69);">
+        <div class="card-header"style="max-width: 22rem; background-color: rgb(171, 25, 26);">Produção</div>
+        <div class="card-body">
+          <h5 class="card-title">RDC</h5>
+          <p class="card-text">Módulo de controle de relatórios diários de campo </p>
         </div>
-      <a class="link" href="{% url 'logout' %}" target="_blank">
-        <i class="fa-brands fa-youtube"></i>
-        <span>Logout</span>
-      </a>
-</body>
+      </div>
+      <div class="card text-white  mb-3" style="max-width: 22rem; background-color: rgb(19, 39, 69);">
+        <div class="card-header"style="max-width: 22rem; background-color:  rgb(171, 25, 26);">RH</div>
+        <div class="card-body">
+          <h5 class="card-title">Controle de efetivo</h5>
+          <p class="card-text">Módulo de controle do efetivo</p>
+        </div>
+      </div>
+    </div>
 
-
+{% endblock %} 
+{% block js %} 
 <script>
-    document.getElementById("cards").onmousemove = e => {
-  for(const card of document.getElementsByClassName("card")) {
-    const rect = card.getBoundingClientRect(),
-          x = e.clientX - rect.left,
-          y = e.clientY - rect.top;
-
-    card.style.setProperty("--mouse-x", `${x}px`);
-    card.style.setProperty("--mouse-y", `${y}px`);
-  };
-}
-
-</script>
+    $(document).ready(function(){
+        $('body').addClass('fundo')
+    });
+    </script>
+{% endblock js %}

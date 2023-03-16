@@ -1,0 +1,93 @@
+[
+{
+    "model": "material.tintafundo",
+    "pk": 1,
+    "fields": {
+        "tinta_fundo": "N-2630"
+    }
+},
+{
+    "model": "material.tintafundo",
+    "pk": 2,
+    "fields": {
+        "tinta_fundo": "N-1661"
+    }
+},
+{
+    "model": "material.tintafundo",
+    "pk": 3,
+    "fields": {
+        "tinta_fundo": "N-2198"
+    }
+},
+{
+    "model": "material.tintafundo",
+    "pk": 4,
+    "fields": {
+        "tinta_fundo": "N-2288"
+    }
+},
+{
+    "model": "material.tintafundo",
+    "pk": 5,
+    "fields": {
+        "tinta_fundo": "N-2680"
+    }
+},
+{
+    "model": "material.tintafundo",
+    "pk": 6,
+    "fields": {
+        "tinta_fundo": "N-1277"
+    }
+},
+{
+    "model": "material.tintafundo",
+    "pk": 7,
+    "fields": {
+        "tinta_fundo": "JOTATEMP 1000"
+    }
+},
+{
+    "model": "material.tintafundo",
+    "pk": 8,
+    "fields": {
+        "tinta_fundo": "N 2912 Tipo I"
+    }
+},
+{
+    "model": "material.tintafundo",
+    "pk": 9,
+    "fields": {
+        "tinta_fundo": "N 2912 Tipo II"
+    }
+},
+{
+    "model": "material.tintafundo",
+    "pk": 10,
+    "fields": {
+        "tinta_fundo": "N 2912 Tipo III"
+    }
+},
+{
+    "model": "material.tintafundo",
+    "pk": 11,
+    "fields": {
+        "tinta_fundo": "JOTAMASTIC 90"
+    }
+},
+{
+    "model": "material.tintafundo",
+    "pk": 12,
+    "fields": {
+        "tinta_fundo": "SUMATANE HS BRILHANTE PU, SPB1"
+    }
+},
+{
+    "model": "material.tintafundo",
+    "pk": 13,
+    "fields": {
+        "tinta_fundo": "PISTOLA CONV. AR"
+    }
+}
+]

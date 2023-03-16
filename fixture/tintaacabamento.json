@@ -1,0 +1,51 @@
+[
+{
+    "model": "material.tintaacabamento",
+    "pk": 1,
+    "fields": {
+        "tinta_acabamento": "N-2628"
+    }
+},
+{
+    "model": "material.tintaacabamento",
+    "pk": 2,
+    "fields": {
+        "tinta_acabamento": "N-2629"
+    }
+},
+{
+    "model": "material.tintaacabamento",
+    "pk": 3,
+    "fields": {
+        "tinta_acabamento": "N-2677"
+    }
+},
+{
+    "model": "material.tintaacabamento",
+    "pk": 4,
+    "fields": {
+        "tinta_acabamento": "N-2231"
+    }
+},
+{
+    "model": "material.tintaacabamento",
+    "pk": 5,
+    "fields": {
+        "tinta_acabamento": "N-2680"
+    }
+},
+{
+    "model": "material.tintaacabamento",
+    "pk": 6,
+    "fields": {
+        "tinta_acabamento": "N 1277"
+    }
+},
+{
+    "model": "material.tintaacabamento",
+    "pk": 7,
+    "fields": {
+        "tinta_acabamento": "SUMATANE HS BRILHANTE PU, SPB1"
+    }
+}
+]

@@ -37,7 +37,7 @@ def load_data():
     os.system("python manage.py loaddata fixture/assinatura.json --app qualidade.assinatura")
 
 if __name__ == "__main__":
-    dump_model()
+    dump_data()
     #load_data()
 
 
