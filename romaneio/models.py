@@ -25,6 +25,7 @@ class Romaneio(models.Model):
     obs = models.CharField('Obs',blank=True, null=True, max_length=40)
     area = models.ForeignKey(Area, on_delete=models.CASCADE)
     solicitante = models.ForeignKey(Solicitante, on_delete=models.CASCADE)
+    relatorio = models.CharField('relatorio',blank=True, null=True, max_length=10)
 
     class Meta:
         ordering = ('romaneio',)

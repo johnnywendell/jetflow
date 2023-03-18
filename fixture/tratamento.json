@@ -1,0 +1,9 @@
+[
+{
+    "model": "material.tratamento",
+    "pk": 1,
+    "fields": {
+        "tratamento": "SA 2.1/2\""
+    }
+}
+]

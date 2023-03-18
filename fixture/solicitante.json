@@ -1,0 +1,9 @@
+[
+{
+    "model": "romaneio.solicitante",
+    "pk": 1,
+    "fields": {
+        "solicitante": "JOHNNY"
+    }
+}
+]

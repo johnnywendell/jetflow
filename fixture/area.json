@@ -1,0 +1,9 @@
+[
+{
+    "model": "romaneio.area",
+    "pk": 1,
+    "fields": {
+        "area": "UA-1"
+    }
+}
+]

@@ -1,0 +1,9 @@
+[
+{
+    "model": "material.tintafundo",
+    "pk": 1,
+    "fields": {
+        "tinta_fundo": "N-2680"
+    }
+}
+]
