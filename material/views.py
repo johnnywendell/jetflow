@@ -7,7 +7,7 @@ from django.db.models import Q
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404
 from django.views.generic import CreateView, UpdateView, ListView
-from django.http import HttpResponseRedirect, HttpResponse
+from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
 from .models import Tratamento, TintaFundo, TintaIntermediaria, TintaAcabamento, Material
 from .forms import MaterialForm, TratamentoForm, TintaFundoForm, TintaIntermediariaForm, TintaAcabamentoForm
 from django.template.loader import get_template
@@ -16,6 +16,14 @@ from django.contrib.staticfiles import finders
 import os
 from django.conf import settings
 from romaneio.models import Romaneio
+from django.core import serializers
+
+def json_material(request):
+    #data = list(Material.objects.values())
+    dataset = Material.objects.all()
+    data = serializers.serialize('json', dataset)
+    return JsonResponse(data, safe=False)
+    #return JsonResponse({'data':data})
 
 @login_required
 def tratamento_add(request):

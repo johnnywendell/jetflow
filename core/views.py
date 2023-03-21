@@ -1,6 +1,9 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from material.models import Material
+from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
+import json
+from django.core import serializers
 
 @login_required
 def index(request):
@@ -27,4 +30,7 @@ def dashboard_jato(request):
             tintaa += material.m2
     context={'tratamento':tratamento, 'tintaf':tintaf,'tintai':tintai,'tintaa':tintaa}
     return render(request, 'dash_jato.html', context)
+
+def dash(request):
+    return render(request, 'dash.html')
 

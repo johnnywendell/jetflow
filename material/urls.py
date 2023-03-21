@@ -16,4 +16,5 @@ urlpatterns =[
     path('material/export/xlsx/', v.export_xlsx_func_material, name='export_xlsx_func_material'),
     path('material/pdf/<int:pk>/', v.render_pdf_view, name='render_pdf_view'),
     path('material/import_csv/', v.import_csv, name='import_csv_material'),
+    path('material/jsonmaterial/2b76e8ce5dfae938c4974bc08d48ed4e97e49d77', v.json_material, name='json_material'),
 ]

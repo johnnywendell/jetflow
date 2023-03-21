@@ -7,4 +7,5 @@ app_name ='core'
 urlpatterns =[
     path('', v.index, name='index'),
     path('dashjato/', v.dashboard_jato, name='dash_jato'),
+    path('dash/', v.dash, name='dash'),
 ]
