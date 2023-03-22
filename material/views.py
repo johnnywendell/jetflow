@@ -9,7 +9,7 @@ from django.shortcuts import render, get_object_or_404
 from django.views.generic import CreateView, UpdateView, ListView
 from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
 from .models import Tratamento, TintaFundo, TintaIntermediaria, TintaAcabamento, Material
-from .forms import MaterialForm, TratamentoForm, TintaFundoForm, TintaIntermediariaForm, TintaAcabamentoForm
+from .forms import MaterialForm, TratamentoForm, TintaFundoForm, TintaIntermediariaForm, TintaAcabamentoForm, MaterialForms
 from django.template.loader import get_template
 from xhtml2pdf import pisa
 from django.contrib.staticfiles import finders
@@ -17,6 +17,8 @@ import os
 from django.conf import settings
 from usuarios.decorators import manager_required
 from romaneio.models import Romaneio
+from django.db.models import Sum
+
 
 @login_required
 @manager_required
@@ -151,15 +153,19 @@ class MaterialCreate(CreateView):
 class MaterialUpdate(UpdateView):
     model = Material
     template_name = 'material_form.html'
-    form_class = MaterialForm
+    form_class = MaterialForms
 
 ################## gráficos
-def json_material(request):
-    data = list(Material.objects.values())
+def json_material(request,begin,end):
+    data_inicial = begin
+    data__final = end
+    data = list(Material.objects.filter(n_romaneio__entrada__range=[data_inicial, data__final]).values('n_romaneio__area__area').annotate(Sum('m2')))
     return JsonResponse({'data':data})
 
-def json_tf(request):
-    data = list(TintaFundo.objects.values())
+def json_status(request,begin,end):
+    data_inicial = begin
+    data__final = end
+    data = list(Material.objects.filter(n_romaneio__entrada__range=[data_inicial, data__final]).values('concluido').annotate(Sum('m2')))
     return JsonResponse({'data':data})
 
 def json_ti(request):

@@ -1,0 +1,341 @@
+{% extends "dash_base.html" %}
+
+{% block content %} 
+  <main>
+        <div class="head-title">
+            <div class="left">
+                <h1>Canteiro de jato</h1>
+                <ul class="breadcrumb">
+                    <li>
+                        <a href="#">Dashboard</a>
+                    </li>
+                    <li><i class='bx bx-chevron-right' ></i></li>
+                    <li>
+                        <a class="active" href="#">Home</a>
+                    </li>
+                </ul>
+            </div>
+            
+                <form method="POST" novalidate>
+                  {% csrf_token %}
+                  <div class="form-input">
+                <input class="form-input" name="begin" value="{{begin}}" type="date">
+                <input class="form-input" name="end" value="{{end}}" type="date">
+                <button type="submit" class="search-btn"><i class='bx bx-filter' ></i></button>
+                  </div>
+                </form>
+          
+        </div>
+
+        <ul class="box-info">
+            <li>
+                <i class='bx bxs-spray-can' ></i>
+                <span class="text">
+                    <h3>{{ tratamento }}</h3>
+                    <p>Jato (m²)</p>
+                </span>
+            </li>
+            <li>
+                <i class='bx bxs-paint-roll' ></i>
+                <span class="text">
+                    <h3>{{ tintaf }}</h3>
+                    <p>TF (m²)</p>
+                </span>
+            </li>
+            <li>
+                <i class='bx bxs-paint-roll' ></i>
+                <span class="text">
+                    <h3>{{ tintai }}</h3>
+                    <p>TI (m²)</p>
+                </span>
+            </li>
+            <li>
+                <i class='bx bxs-paint-roll' ></i>
+                <span class="text">
+                    <h3>{{ tintaa }}</h3>
+                    <p>TA (m²)</p>
+                </span>
+            </li>
+        </ul>
+
+
+        <div class="table-data">
+            <div class="order">
+                <div class="head">
+                    <h3>M² por Unidade/Área</h3>
+                </div>
+                <div >
+                  <canvas id="myChartProduct" data-url="{% url 'material:json_material' begin end %}" width="200" height="100"></canvas>
+                </div>
+                
+                
+            </div>
+            <div class="todo">
+                <div class="head">
+                    <h3>Status</h3>
+                    <i class='bx bx-plus' ></i>
+                    <i class='bx bx-filter' ></i>
+                </div>
+                <div >
+                  <canvas id="myChartPie" data-url="{% url 'material:json_status' begin end %}" width="200" height="130"></canvas>
+                </div>
+                
+                
+            </div>
+            
+        </div>
+        <div class="table-data">
+            <div class="order">
+                <div class="head">
+                    <h3>Lançamentos Recentes</h3>
+                    <i class='bx bx-search' ></i>
+                    <i class='bx bx-filter' ></i>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Nº</th>
+                            <th>Entrada</th>
+                            <th>Área</th>
+                            <th>Fiscal</th>
+                        </tr>
+                    </thead>
+               
+                    <tbody>
+                      {% for romaneio in romaneios %}
+                        <tr>
+                            <td>
+                                {{romaneio}}
+                            </td>
+                            <td>{{romaneio.entrada}}</td>
+                
+                            <td>{{romaneio.area}}</td>
+                         
+                            <td>{{ romaneio.solicitante }}</td>
+                        </tr>
+                        {% endfor %}
+                        <!--
+                        <tr>
+                            <td>
+                                <img src="img/people.png">
+                                <p>John Doe</p>
+                            </td>
+                            <td>01-10-2021</td>
+                            <td><span class="status completed">Completed</span></td>
+                            <td><span class="status pending">Pending</span></td>
+                            <td><span class="status process">Process</span></td>
+                        </tr>
+                        -->
+                    </tbody>
+                </table>
+            </div>
+            <div class="todo">
+                <div class="head">
+                    <h3>Últimos concluídos</h3>
+                    <i class='bx bx-plus' ></i>
+                    <i class='bx bx-filter' ></i>
+                </div>
+                
+                <ul class="todo-list">
+                  {% for material in materiais|slice:":5" %}
+                  {% cycle 'completed' 'not-completed' as class silent %}
+                    <li class="{{class}}">
+                        <p>{{material.n_romaneio}}({{material.material}}) | {{material.n_romaneio.area }} | {{material.m2}}m²</p>
+                        <i class='bx bx-dots-vertical-rounded' ></i>
+                    </li>
+                  {% endfor %}
+                </ul>
+            </div>
+            
+        </div>
+    </main>
+    {% endblock %}
+
+
+{% block js %}
+<script>
+
+$.ajax({
+  url: $("#myChartProduct").attr("data-url"),
+  success: function(response) {
+    let mylabels = response.data.map(function(e) {
+      return e.n_romaneio__area__area
+    })
+    let myvalues = response.data.map(function(e) {
+      return e.m2__sum
+    })
+    var ctx = document.getElementById('myChartProduct').getContext('2d');
+    var config = {
+      type: 'bar',
+      data: {
+        labels: mylabels,
+        datasets: [{
+          label: 'm²',
+          data: myvalues,
+          backgroundColor: [
+            'rgba(255, 99, 132, 0.9)',
+            'rgba(54, 162, 235, 0.9)',
+            'rgba(255, 206, 86, 0.9)',
+            'rgba(75, 192, 192, 0.9)',
+            'rgba(153, 102, 255, 0.9)',
+            'rgba(255, 159, 64, 0.9)',
+            'rgba(255, 99, 132, 0.9)',
+            'rgba(54, 162, 235, 0.9)',
+            'rgba(255, 206, 86, 0.9)',
+            'rgba(75, 192, 192, 0.9)',
+            'rgba(153, 102, 255, 0.9)',
+            'rgba(255, 159, 64, 0.9)',
+            'rgba(255, 99, 132, 0.9)',
+            'rgba(54, 162, 235, 0.9)',
+            'rgba(255, 206, 86, 0.9)',
+            'rgba(75, 192, 192, 0.9)',
+            'rgba(153, 102, 255, 0.9)',
+            'rgba(255, 159, 64, 0.9)',
+            'rgba(255, 99, 132, 0.9)',
+            'rgba(54, 162, 235, 0.9)',
+            'rgba(255, 206, 86, 0.9)',
+            'rgba(75, 192, 192, 0.9)'
+          ],
+          borderColor: [
+            'rgba(255, 99, 132, 1)',
+            'rgba(54, 162, 235, 1)',
+            'rgba(255, 206, 86, 1)',
+            'rgba(75, 192, 192, 1)',
+            'rgba(153, 102, 255, 1)',
+            'rgba(255, 159, 64, 1)',
+            'rgba(255, 99, 132, 1)',
+            'rgba(54, 162, 235, 1)',
+            'rgba(255, 206, 86, 1)',
+            'rgba(75, 192, 192, 1)',
+            'rgba(153, 102, 255, 1)',
+            'rgba(255, 159, 64, 1)',
+            'rgba(255, 99, 132, 1)',
+            'rgba(54, 162, 235, 1)',
+            'rgba(255, 206, 86, 1)',
+            'rgba(75, 192, 192, 1)',
+            'rgba(153, 102, 255, 1)',
+            'rgba(255, 159, 64, 1)',
+            'rgba(255, 99, 132, 1)',
+            'rgba(54, 162, 235, 1)',
+            'rgba(255, 206, 86, 1)',
+            'rgba(75, 192, 192, 1)'
+          ],
+          borderWidth: 1
+        }]
+      },
+      options: {
+        scales: {
+          yAxes: [{
+            ticks: {
+              beginAtZero: true
+            }
+          }]
+        }
+      }
+    }
+    var myChart = new Chart(ctx, config);
+  }
+});
+
+
+
+let bgcPalette = [
+  'rgba(249, 65, 68, 0.5)',
+  'rgba(243, 114, 44, 0.5)',
+  'rgba(248, 150, 30, 0.5)',
+  'rgba(249, 199, 79, 0.5)',
+  'rgba(144, 190, 109, 0.5)',
+  'rgba(67, 170, 139, 0.5)',
+  'rgba(87, 117, 144, 0.5)',
+]
+
+function random_color(array) {
+  return array[Math.floor(Math.random() * array.length)];
+}
+
+let bgcColorCategory = []
+let bdColorCategory = []
+
+for (var i = 0; i < 7; i++) {
+  let bgcRandomColor = random_color(bgcPalette)
+  bgcColorCategory.push(bgcRandomColor);
+
+  let bdRandomColor = bgcRandomColor.replace('0.5', '1');
+  bdColorCategory.push(bgcRandomColor);
+}
+
+$.ajax({
+  url: $("#myChartPie").attr("data-url"),
+  success: function(response) {
+    let mylabels = response.data.map(function(e) {
+      return e.concluido
+    })
+    let myvalues = response.data.map(function(e) {
+      return e.m2__sum
+    })
+    var ctx = document.getElementById('myChartPie').getContext('2d');
+    var data = {
+      labels: ['pendente','concluido'],
+      datasets: [{
+        data: myvalues,
+        backgroundColor: [
+            'rgba(255, 99, 132, 0.9)',
+            'rgba(54, 162, 235, 0.9)',
+            'rgba(255, 206, 86, 0.9)',
+            'rgba(75, 192, 192, 0.9)',
+            'rgba(153, 102, 255, 0.2)',
+            'rgba(255, 159, 64, 0.2)',
+            'rgba(255, 99, 132, 0.2)',
+            'rgba(54, 162, 235, 0.2)',
+            'rgba(255, 206, 86, 0.2)',
+            'rgba(75, 192, 192, 0.2)',
+            'rgba(153, 102, 255, 0.2)',
+            'rgba(255, 159, 64, 0.2)',
+            'rgba(255, 99, 132, 0.2)',
+            'rgba(54, 162, 235, 0.2)',
+            'rgba(255, 206, 86, 0.2)',
+            'rgba(75, 192, 192, 0.2)',
+            'rgba(153, 102, 255, 0.2)',
+            'rgba(255, 159, 64, 0.2)',
+            'rgba(255, 99, 132, 0.2)',
+            'rgba(54, 162, 235, 0.2)',
+            'rgba(255, 206, 86, 0.2)',
+            'rgba(75, 192, 192, 0.2)'
+          ],
+          borderColor: [
+            'rgba(255, 99, 132, 1)',
+            'rgba(54, 162, 235, 1)',
+            'rgba(255, 206, 86, 1)',
+            'rgba(75, 192, 192, 1)',
+            'rgba(153, 102, 255, 1)',
+            'rgba(255, 159, 64, 1)',
+            'rgba(255, 99, 132, 1)',
+            'rgba(54, 162, 235, 1)',
+            'rgba(255, 206, 86, 1)',
+            'rgba(75, 192, 192, 1)',
+            'rgba(153, 102, 255, 1)',
+            'rgba(255, 159, 64, 1)',
+            'rgba(255, 99, 132, 1)',
+            'rgba(54, 162, 235, 1)',
+            'rgba(255, 206, 86, 1)',
+            'rgba(75, 192, 192, 1)',
+            'rgba(153, 102, 255, 1)',
+            'rgba(255, 159, 64, 1)',
+            'rgba(255, 99, 132, 1)',
+            'rgba(54, 162, 235, 1)',
+            'rgba(255, 206, 86, 1)',
+            'rgba(75, 192, 192, 1)'
+          ],
+        borderWidth: 1
+      }]
+    }
+    // For a pie chart
+    var myPieChart = new Chart(ctx, {
+      type: 'doughnut',
+      data: data
+    });
+  }
+});
+
+</script>
+{% endblock js %}

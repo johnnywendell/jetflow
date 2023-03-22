@@ -28,3 +28,10 @@ class TintaAcabamentoForm(forms.ModelForm):
         model = TintaAcabamento
         fields = '__all__'
 
+class MaterialForms(forms.ModelForm):
+    class Meta:
+        model = Material
+        fields = '__all__'  
+        widgets = {
+            'concluido': forms.CheckboxInput(attrs={'class': 'special'}),
+        }
