@@ -215,7 +215,7 @@ def export_xlsx_func_material(request):
     filename = 'material_exportados.xls'
     _filename = filename.split('.')
     filename_final = f'{_filename[0]}_{MDATA}.{_filename[1]}'
-    queryset = Material.objects.all().values_list('pk','concluido','n_romaneio__area','n_romaneio__solicitante', 'n_romaneio__romaneio', 'jato__tratamento', 
+    queryset = Material.objects.all().values_list('pk','concluido','n_romaneio__area__area','n_romaneio__solicitante__solicitante', 'n_romaneio', 'jato__tratamento', 
     'tf__tinta_fundo','ti__tinta_intermediaria', 'ta__tinta_acabamento', 'cor', 'material', 'descricao',
      'polegada', 'm_quantidade', 'm2', 'raio', 'largura', 'altura', 'comprimento','lados','relatorio')
 

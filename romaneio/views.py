@@ -167,7 +167,13 @@ def area_add(request):
     template_name = 'area_add.html'
     area_form = Area()
     objects = Area.objects.all()
-    if request.method == 'POST':
+    if request.method == 'POST' and request.POST.get('edit-form'):
+        pk = request.POST.get('edit-form')
+        area = request.POST.get('main-area')
+        Area.objects.filter(pk=pk).update(area=area)
+        url = '#'
+        return HttpResponseRedirect(url)
+    elif request.method == 'POST':
         form=AreaForm(request.POST, instance=area_form, prefix='main')
         if form.is_valid():
             form=form.save()
@@ -192,7 +198,13 @@ def solicitante_add(request):
     template_name = 'solicitante_add.html'
     solicitante_form = Solicitante()
     objects = Solicitante.objects.all()
-    if request.method == 'POST':
+    if request.method == 'POST' and request.POST.get('edit-form'):
+        pk = request.POST.get('edit-form')
+        solicitante = request.POST.get('main-solicitante')
+        Solicitante.objects.filter(pk=pk).update(solicitante=solicitante)
+        url = '#'
+        return HttpResponseRedirect(url)
+    elif request.method == 'POST':
         form=SolicitanteForm(request.POST, instance=solicitante_form, prefix='main')
         if form.is_valid():
             form=form.save()

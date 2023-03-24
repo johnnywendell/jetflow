@@ -6,14 +6,14 @@ from core.models import TimeStampedModel
 class Area(models.Model):
     area = models.CharField(max_length=30, unique=True)
     class Meta:
-        ordering = ('area',)
+        ordering = ('pk',)
     def __str__(self):
         return self.area
 
 class Solicitante(models.Model):
     solicitante = models.CharField(max_length=30, unique=True)
     class Meta:
-        ordering = ('solicitante',)
+        ordering = ('pk',)
     def __str__(self):
         return self.solicitante
 

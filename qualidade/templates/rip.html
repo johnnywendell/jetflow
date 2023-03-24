@@ -102,7 +102,7 @@
                             <th class="text-right">Inspetor</th>
                             <td>{{ relatorio.inspetor }}</td>
                             <th class="text-right">Aprovado?</th>
-                            <td>{{ relatorio.aprovado }}</td>
+                            <td>{% if relatorio.aprovado %}✔{% else %}{% endif %}</td>
                 </table>
                 
             <h3 style="text-align:center;margin-bottom: 0px;">Tratamento da Superfície</h3>
@@ -143,7 +143,7 @@
                 <td>{{ relatorio.ambiente_pintura }}</td>
                 <td>{{ relatorio.intemperismo }}</td>
                 <td>{{ relatorio.descontaminacao }}</td>
-                <td>{{ relatorio.laudo }}</td>
+                <td>{% if relatorio.laudo %}✔{% else %}{% endif %}</td>
             </table>
         
             <h3 style="text-align:center;margin-bottom: 0px;margin-top: 5px;">Etapas de Pintura</h3>
@@ -247,7 +247,7 @@
                 </tr>
                 <tr>
                     <th>Laudo</th>
-                    <td>{{ obj.laudo}}</td>
+                    <td>{% if obj.laudo %}✔{% else %}{% endif %}</td>
                 </tr>
                 <tr>
                     <th>Data Inspeção</th>
@@ -263,10 +263,8 @@
             <h3 style="text-align:center;margin-bottom: 0px;margin: 0%;">Materiais</h3>
             <table>
                 <th>Nº Romaneio</th>
-                <th>Tratamento</th>
-                <th>TF</th>
-                <th>TI</th>
-                <th>TA</th>
+                <th>Descrição</th>
+                <th>Ø</th>
                 <th>Tipo Mat.</th>
                 <th>M²</th>
             </table>
@@ -274,10 +272,8 @@
             {% cycle '#eee' '#FFFFE0' as rowcolors silent %}
             <table style="text-align:center; background-color:{{rowcolors}};">
                 <td style="padding-top: 3px";>{{ material.n_romaneio }}</td>
-                <td style="padding-top: 3px";>{{ material.jato }}</td>
-                <td style="padding-top: 3px";>{{ material.tf }}</td>
-                <td style="padding-top: 3px";>{{ material.ti }}</td>
-                <td style="padding-top: 3px";>{{ material.ta}}</td>
+                <td style="padding-top: 3px";>{% if material.descricao %}{{ material.descricao }}{% else %}{% endif %}</td>
+                <td style="padding-top: 3px";>{% if material.polegada %}{{ material.polegada }}{% else %}n/a{% endif %}</td>
                 <td style="padding-top: 3px";>{{ material.material }}</td>
                 <td style="padding-top: 3px";>{{ material.m2 }}</td>
             </table>
