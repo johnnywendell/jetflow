@@ -1,0 +1,201 @@
+{% extends "base.html" %}
+{% block content %} 
+{% include "includes/nav_financeiro.html" %} 
+{% load widget_tweaks %}
+
+
+<a href="{% url 'financeiro:bmf_list'  %}">voltar</a>
+
+    <h1>BMF Nº {{ object }}
+        <span class="pull-right">
+            <a href="{% url 'financeiro:bmf_update' object.pk %}">
+                <button type="button" class="btn btn-success">
+                    <span class="fa fa-pencil"></span> Editar
+                </button>
+            </a>
+        </span>
+    </h1>
+<div class="row">
+    <div class="col-sm-6">
+        <table class="table table-user-information">
+            <tbody>
+                <tr>
+                    <th class="text-right">Contrato</th>
+                    <td>{{ object.contrato }}</td>
+                </tr>
+                <tr>
+                    <th class="text-right">Responsável Monsertec</th>
+                    <td> {{ object.funcionario }}</td>
+                </tr>
+                <tr>
+                    <th class="text-right">Período:</th>
+                    <td>
+                        {{ object.data_periodo }}
+                    </td>
+                </tr>
+                
+                <tr>
+                    <th class="text-right">Revisão</th>
+                    <td>{{ object.rev }}</td>
+                </tr>
+                <tr>
+                    <th class="text-right">Unidade/Planta</th>
+                    <td>{{ object.unidade }}</td>
+                </tr>
+                <tr>
+                    <th class="text-right">Fiscal/Solicitante</th>
+                    <td>{{ object.solicitante }}</td>
+                </tr>
+                <tr>
+                    <th class="text-right">AS/ASE</th>
+                    <td>{{ object.auth_serv }}</td>
+                </tr>
+                <tr>
+                    <th class="text-right">Escopo do serviço:</th>
+                    <td>{{ object.escopo }}</td>
+                </tr>
+                <tr>
+                    <th class="text-right">Local do serviço:</th>
+                    <td>{{ object.local }}</td>
+                </tr>
+                <tr>
+                    <th class="text-right">ID do serviço:</th>
+                    <td>{{ object.id_serv }}</td>
+                </tr>
+                <tr>
+                    <th class="text-right">Tipo do serviço:</th>
+                    <td>{{ object.tipo }}</td>
+                </tr>
+                <tr>
+                    <th class="text-right">Valor Total:</th>
+                    <td>{{ object.valor }}</td>
+                </tr>
+                <tr>
+                    <th class="text-right">Status</th>
+                    <td>{% if object.status %}
+                        <i class="fa fa-check-circle ok"></i>
+                      {% else %}
+                        <i class="fa fa-minus-circle no"></i>
+                      {% endif %}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg">Incluir itens</button>
+
+<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Item BM</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          
+          <div class="modal-body">
+            <form method="POST" novalidate>
+                {% csrf_token %}
+                
+                    <table class="table table-striped table-sm" id="itens_bm">
+                        <thead>
+                            <tr>
+                                <th>Item</th>
+                                <th>Valor</th>
+                                <th>Qtd</th>
+                                <th>Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                        <th><select name="item-0" class="valor form-control clSelect2" pk_item="id_main-valor" custo="{{ object.preco_item }}">  
+                            {% for object in itens_bm %}
+                            <option class="valor"  value="{{object.pk}}-{{object.preco_item}}">{{ object.item_ref }} - {{ object.disciplina }} {{ object.descricao }} ({{ object.und }})</option>
+                            {% endfor %}
+                        </select></th>
+                            <th><input id="inputvalor" name="inputvalor" class="form-control" type="number"></th>
+                            {% for item in form %}
+                            <th>
+                                {% render_field item class="form-control clQuantidade" %}
+                            </th>
+                            {% endfor %}
+                        </tr>
+                        </tbody>
+                    </table>
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-primary float-right" style="margin: 6px;"><i class="fa fa-plus"></i>Adicionar</button>
+          </div>
+        </form> 
+    </div>
+  </div>
+</div>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Itemref</th>
+                <th>disciplina</th>
+                <th>Descricao</th>
+                <th>und</th>
+                <th>Preco</th>
+                <th>Quantidade</th>
+                <th>Total</th>
+            </tr>
+        </thead>
+     
+        <tbody>
+            {% for obj in object.item_bm.all %}
+            <tr>
+                <td>{{ obj.pk }}</td>
+                <td>{{ obj.disciplina }}</td>
+                <td>{{ obj.descricao }}</td>
+                <td>{{ obj.und}}</td>
+                <td>{{ obj.preco_item }}</td>
+                {% for item in qtdbm %}
+                {% if item.valor == obj %}
+                     <td>{{ item.qtd }}</td>
+                     <td>{{ item.total }}</td>
+                {% endif %}
+                  
+                     {% endfor %}
+            </tr>
+            {% endfor %}
+        </tbody>
+      
+    </table>
+
+{% endblock content %} 
+
+{% block js %}
+<script>
+    $(document).ready(function(){
+        $('#id_main-valor').prop('type', 'hidden');
+    });
+    $(document).ready(function(){
+        
+        $(".valor").on("input", function(){
+            var textoDigitado = $(this).val();
+            resultado = textoDigitado.split("-")
+            valor_num = resultado[1].replace(',','.')
+            var inputCusto = $(this).attr("pk_item");
+            var valoritem = $(this).attr("custo");
+            $("#"+ inputCusto).val(resultado[0]);
+            $("#inputvalor").val(valor_num);
+            $('#id_main-valor').prop('type', 'hidden');
+        });
+        
+    });
+    $(document).on('change', '.clQuantidade', function(){ 
+        quantidade = $(this).val()
+        valor = $("#inputvalor").val()
+        resultado = valor * quantidade
+        resultado_fixed = resultado.toFixed(3)
+        id_resultado = $(this).attr('id').replace('qtd','total')
+        $('#'+id_resultado).val(resultado_fixed)
+    });
+</script>
+
+
+{% endblock js %}
+

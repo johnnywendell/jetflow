@@ -24,7 +24,7 @@ SECRET_KEY = 'wyrykb5fa*))8b9-+a(qz+c9l(yv2t3avo4a5yhgn%(n%sex@j'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['34.151.253.92', 'localhost']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 
 # Application definition
 
@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'material',
     'usuarios',
     'qualidade',
+    'financeiro',
 ]
 
 MIDDLEWARE = [
@@ -85,12 +86,8 @@ WSGI_APPLICATION = 'projeto.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'jetflow',
-        'HOST': '127.0.0.1',
-        'PORT': '3306',
-        'USER': 'userjetflow',
-        'PASSWORD': 'UzuMymw@314159',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
 
