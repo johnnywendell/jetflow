@@ -68,7 +68,7 @@
                 </tr>
                 <tr>
                     <th class="text-right">Valor Total:</th>
-                    <td>{{ object.valor }}</td>
+                    <td>R$ {{ object.valor }}</td>
                 </tr>
                 <tr>
                     <th class="text-right">Status</th>
@@ -82,7 +82,7 @@
         </table>
     </div>
 </div>
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg">Incluir itens</button>
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg"><i class="fa fa-plus"></i> Itens</button>
 
 <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg">
@@ -109,12 +109,13 @@
                         </thead>
                         <tbody>
                         <tr>
-                        <th><select name="item-0" class="valor form-control clSelect2" pk_item="id_main-valor" custo="{{ object.preco_item }}">  
+                        <th><select name="item-0" class="valor form-control clSelect2" pk_item="id_main-valor">  
                             {% for object in itens_bm %}
                             <option class="valor"  value="{{object.pk}}-{{object.preco_item}}">{{ object.item_ref }} - {{ object.disciplina }} {{ object.descricao }} ({{ object.und }})</option>
                             {% endfor %}
                         </select></th>
-                            <th><input id="inputvalor" name="inputvalor" class="form-control" type="number"></th>
+                            <th><input hidden id="inputvalor" name="inputvalor" class="form-control" type="number">
+                                <span id="inputvalor_span" class="lead" style="margin-top: 20px;"></span></th>
                             {% for item in form %}
                             <th>
                                 {% render_field item class="form-control clQuantidade" %}
@@ -134,20 +135,21 @@
     <table class="table table-striped">
         <thead>
             <tr>
-                <th>Itemref</th>
+                <th>Item</th>
                 <th>disciplina</th>
-                <th>Descricao</th>
+                <th>Descrição</th>
                 <th>und</th>
-                <th>Preco</th>
+                <th>Preço</th>
                 <th>Quantidade</th>
                 <th>Total</th>
+                <th>Delete</th>
             </tr>
         </thead>
      
         <tbody>
             {% for obj in object.item_bm.all %}
             <tr>
-                <td>{{ obj.pk }}</td>
+                <td>{{ obj.item_ref }}</td>
                 <td>{{ obj.disciplina }}</td>
                 <td>{{ obj.descricao }}</td>
                 <td>{{ obj.und}}</td>
@@ -155,7 +157,8 @@
                 {% for item in qtdbm %}
                 {% if item.valor == obj %}
                      <td>{{ item.qtd }}</td>
-                     <td>{{ item.total }}</td>
+                     <td>R$ {{ item.total }}</td>
+                     <td><a href="{% url 'financeiro:delete_item' obj.pk item.pk object.pk %}"><i class="fa fa-times-circle no"></i></a></td>
                 {% endif %}
                   
                      {% endfor %}
@@ -170,7 +173,7 @@
 {% block js %}
 <script>
     $(document).ready(function(){
-        $('#id_main-valor').prop('type', 'hidden');
+        $('#id_main-valor').attr('hidden','true');
     });
     $(document).ready(function(){
         
@@ -182,7 +185,8 @@
             var valoritem = $(this).attr("custo");
             $("#"+ inputCusto).val(resultado[0]);
             $("#inputvalor").val(valor_num);
-            $('#id_main-valor').prop('type', 'hidden');
+            $("#inputvalor_span").text(valor_num);
+            ;
         });
         
     });

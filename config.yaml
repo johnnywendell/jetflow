@@ -1,0 +1,6 @@
+resources:
+- name: a-special-vm
+  type: compute.v1.instances
+  properties:
+    machineType: zones/us-central1-a/machineTypes/f1-micro
+    image: projects/skilled-circle-378123/global/images/djangoimagem-1

@@ -12,4 +12,5 @@ urlpatterns =[
     path('bmf/<int:pk>/edit/', login_required(v.BmfUpdate.as_view()), name='bmf_update'),
     path('bmf/create/', login_required(v.BmfCreate.as_view()), name='bmf_create'),
     path('bmf/<int:pk>/', v.bmf_detail, name='bmf_detail'),
+    path('bmf/deleteitem/<int:pk>/<int:id>/<int:ind>/', v.delete_item, name='delete_item'),
 ]
