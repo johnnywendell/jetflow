@@ -3,10 +3,10 @@
 {% block content %} 
 {% include "includes/nav_financeiro.html" %} 
     <div class="page-header">
-        <h2><i class="fa fa-user"></i> BMF
+        <h2><i class="fa fa-user"></i> FRS
             <span class="pull-right">
                 <div style="display: flex;">
-                <a href="{% url 'financeiro:bmf_create' %}">
+                <a href="{% url 'financeiro:frs_create' %}">
                     <button type="button" class="btn btn-primary">
                         <span class="fa fa-plus"></span>Adicionar
                     </button>                    
@@ -20,11 +20,11 @@
         <table class="table table-striped">
             <thead>
                 <tr>
-                    <th>Nº BM</th>
-                    <th>Data</th>
-                    <th>UND</th>
-                    <th>Solicitante</th>
-                    <th>Tipo</th>
+                    <th>Nº FRS</th>
+                    <th>Status FRS</th>
+                    <th>Data Aprov.</th>
+                    <th>Nf</th>
+                    <th>Data emissão</th>
                     <th>Valor</th>
                     <th class="text-center">Status</th>
                 </tr>
@@ -33,12 +33,12 @@
                 {% for object in objects_list %}
                 <tr>
                     <td><a href="{{ object.get_absolute_url }}">{{ object }}</a></td>
-                    <td>{{ object.data_periodo }}</td>
-                    <td>{{ object.unidade }}</td>
-                    <td>{{ object.solicitante }}</td>
-                    <td>{{ object.tipo }}</td>
+                    <td>{{ object.status_frs }}</td>
+                    <td>{{ object.data_aprov }}</td>
+                    <td>{{ object.nf }}</td>
+                    <td>{{ object.data_emissão }}</td>
                     <td>R$ {{ object.valor }}</td>
-                    <td class="text-center">{% if object.status %}
+                    <td class="text-center">{% if object.status_nf %}
                         <i class="fa fa-check-circle ok"></i>
                       {% else %}
                         <i class="fa fa-minus-circle no"></i>

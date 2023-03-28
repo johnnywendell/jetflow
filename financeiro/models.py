@@ -28,8 +28,16 @@ class FRS(TimeStampedModel):
     status_frs = models.CharField(max_length=20,choices=FRS_STATUS)
     data_aprov = models.DateField(verbose_name='Aprovação', blank=True, null=True)
     nf = models.CharField(max_length=30,unique=True)
-    data_emissão = models.DateField(verbose_name='Aprovação', blank=True, null=True)
+    data_emissão = models.DateField(verbose_name='Emissão nota', blank=True, null=True)
     status_nf = models.BooleanField(default=False)
+    valor = models.DecimalField('Valor', max_digits=11, decimal_places=3, blank=True, null=True)
+    class Meta:
+        ordering = ('-created',)
+
+    def __str__(self):
+        return self.frs_n
+    def get_absolute_url(self):
+        return reverse_lazy('financeiro:frs_detail', kwargs={'pk': self.pk})
 
 BMS_STATUS = (  ('APROVADO','APROVADO'),
                 ('NÃO APROVADO','NÃO APROVADO'),
@@ -41,6 +49,14 @@ class BMS(TimeStampedModel):
     status = models.CharField(max_length=20,choices=BMS_STATUS)
     aprovador = models.ForeignKey(Aprovador, on_delete=models.CASCADE)
     frs = models.ForeignKey(FRS, on_delete=models.CASCADE, blank=True, null=True, related_name='frs')
+    valor = models.DecimalField('Valor', max_digits=11, decimal_places=3, blank=True, null=True)
+    class Meta:
+        ordering = ('-created',)
+
+    def __str__(self):
+        return self.bms_n
+    def get_absolute_url(self):
+        return reverse_lazy('financeiro:bms_detail', kwargs={'pk': self.pk})
 
 
 DMS_STATUS = (  ('APROVADO','APROVADO'),
@@ -56,17 +72,28 @@ class DMS(TimeStampedModel):
     data_aprov = models.DateField(verbose_name='Aprovação', blank=True, null=True)
     aprovador = models.ForeignKey(Aprovador, on_delete=models.CASCADE)
     bms = models.ForeignKey(BMS, on_delete=models.CASCADE, blank=True, null=True, related_name='bms')
+    valor = models.DecimalField('Valor', max_digits=11, decimal_places=3, blank=True, null=True)
+    class Meta:
+        ordering = ('-created',)
+    def __str__(self):
+        return self.dms_n
+    def get_absolute_url(self):
+        return reverse_lazy('financeiro:dms_detail', kwargs={'pk': self.pk})
 
 DISCIP = (
-    ('Andaime','Andaime'),
-    ('Pintura','Pintura'),
-    ('Isolamento','Isolamento'),
+    ('ANDAIME','ANDAIME'),
+    ('PINTURA','PINTURA'),
+    ('ISOLAMENTO','ISOLAMENTO'),
+    ('GERAL','GERAL'),
+    ('ALTA DENSIDADE','ALTA DENSIDADE'),
 )
 UND = (
-    ('m','m'),
-    ('m2','m2'),
-    ('m3','m3'),
-    ('und','und'),
+    ('M','M'),
+    ('M2','M2'),
+    ('M3','M3'),
+    ('UN','UN'),
+    ('VAL','VAL'),
+    ('H','H'),
 )
 class ItemBm(models.Model):
     contrato = models.ForeignKey(Contrato, on_delete=models.CASCADE)
@@ -101,7 +128,7 @@ class BMF(TimeStampedModel):
         ordering = ('-created',)
 
     def __str__(self):
-        return 'BMF {}/{}'.format(str(self.bmf).zfill(4),self.data_periodo.strftime('%Y'))
+        return 'BMF Nº{}/{}'.format(str(self.bmf).zfill(4),self.data_periodo.strftime('%Y'))
 
     def get_data(self):
         return self.data_periodo.strftime('%d/%m/%Y')

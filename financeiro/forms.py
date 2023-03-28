@@ -1,5 +1,5 @@
 from django import forms
-from .models import Contrato, BMF, ItemBm, QtdBM
+from .models import Contrato, BMF, ItemBm, QtdBM, Aprovador, DMS, BMS, FRS
 
 
 class DateInput(forms.DateInput):
@@ -9,7 +9,7 @@ class BmfForm(forms.ModelForm):
     class Meta:
         model = BMF
         fields = '__all__'
-        exclude = ('item_bm','valor','dms')
+        exclude = ('item_bm','valor','dms', 'funcionario')
         widgets = {
             'data_periodo':  DateInput()
         }
@@ -30,3 +30,36 @@ class QtdForm(forms.ModelForm):
         model = QtdBM
         fields = '__all__'
         exclude = ('bmf',)
+
+class DmsForm(forms.ModelForm):
+    class Meta:
+        model = DMS
+        fields = '__all__'
+        exclude = ('bms','valor')
+        widgets = {
+            'data_aprov':  DateInput()
+        }
+
+class BmsForm(forms.ModelForm):
+    class Meta:
+        model = BMS
+        fields = '__all__'
+        exclude = ('frs','valor')
+        widgets = {
+            'data_periodo':  DateInput()
+        }
+
+class FrsForm(forms.ModelForm):
+    class Meta:
+        model = FRS
+        fields = '__all__'
+        exclude = ('valor',)
+        widgets = {
+            'data_aprov':  DateInput(),
+            'data_emissão':  DateInput()
+        }
+
+class AprovadorForm(forms.ModelForm):
+    class Meta:
+        model = Aprovador
+        fields = '__all__'

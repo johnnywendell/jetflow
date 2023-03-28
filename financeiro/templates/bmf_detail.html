@@ -6,7 +6,7 @@
 
 <a href="{% url 'financeiro:bmf_list'  %}">voltar</a>
 
-    <h1>BMF Nº {{ object }}
+    <h1>{{ object }}
         <span class="pull-right">
             <a href="{% url 'financeiro:bmf_update' object.pk %}">
                 <button type="button" class="btn btn-success">
@@ -71,6 +71,10 @@
                     <td>R$ {{ object.valor }}</td>
                 </tr>
                 <tr>
+                    <th class="text-right">DMS:</th>
+                    <td>{{ object.dms }}</td>
+                </tr>
+                <tr>
                     <th class="text-right">Status</th>
                     <td>{% if object.status %}
                         <i class="fa fa-check-circle ok"></i>
@@ -102,6 +106,7 @@
                         <thead>
                             <tr>
                                 <th>Item</th>
+                                <th>Descrição</th>
                                 <th>Valor</th>
                                 <th>Qtd</th>
                                 <th>Total</th>
@@ -109,11 +114,9 @@
                         </thead>
                         <tbody>
                         <tr>
-                        <th><select name="item-0" class="valor form-control clSelect2" pk_item="id_main-valor">  
-                            {% for object in itens_bm %}
-                            <option class="valor"  value="{{object.pk}}-{{object.preco_item}}">{{ object.item_ref }} - {{ object.disciplina }} {{ object.descricao }} ({{ object.und }})</option>
-                            {% endfor %}
-                        </select></th>
+                        <th><input type="text" class="valor form-control" pk_item="id_main-valor"> 
+                        <input hidden id="hashid" name="hashid" type="number"></th>
+                            <th><span id="descricao-item" type="text" class="lead"></span></th>
                             <th><input hidden id="inputvalor" name="inputvalor" class="form-control" type="number">
                                 <span id="inputvalor_span" class="lead" style="margin-top: 20px;"></span></th>
                             {% for item in form %}
@@ -177,16 +180,26 @@
     });
     $(document).ready(function(){
         
-        $(".valor").on("input", function(){
+        $(".valor").on("input", function(){            
             var textoDigitado = $(this).val();
-            resultado = textoDigitado.split("-")
-            valor_num = resultado[1].replace(',','.')
-            var inputCusto = $(this).attr("pk_item");
-            var valoritem = $(this).attr("custo");
-            $("#"+ inputCusto).val(resultado[0]);
-            $("#inputvalor").val(valor_num);
-            $("#inputvalor_span").text(valor_num);
-            ;
+            let url = '/itensbm/json/' + textoDigitado
+            $.ajax({
+                url:url,
+                type: 'GET',
+                success: function(response){
+                    pk = response.data[0].id
+                    preco = response.data[0].preco_item
+                    descricao = response.data[0].descricao
+                    $("#descricao-item").text(descricao);
+                    $("#inputvalor").val(preco);
+                    $("#inputvalor_span").text(preco);
+                    $("#id_main-valor").val(pk);
+                    $("#hashid").val(pk);
+                },
+                error: function(xhr){
+                    //body
+                }
+            })
         });
         
     });
@@ -198,6 +211,8 @@
         id_resultado = $(this).attr('id').replace('qtd','total')
         $('#'+id_resultado).val(resultado_fixed)
     });
+
+
 </script>
 
 
