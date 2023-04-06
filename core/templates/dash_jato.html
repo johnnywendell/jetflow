@@ -154,6 +154,9 @@
 
 {% block js %}
 <script>
+  $(document).ready(function(){
+    $('#dash_jato').addClass('active')
+    });
 
 $.ajax({
   url: $("#myChartProduct").attr("data-url"),

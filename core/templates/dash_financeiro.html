@@ -1,0 +1,515 @@
+{% extends "dash_base.html" %}
+{% load l10n %}
+{% block content %} 
+  <main>
+        <div class="head-title">
+            <div class="left">
+                <h1>Faturamento / Medição</h1>
+                <ul class="breadcrumb">
+                    <li>
+                        <a href="#">Dashboard</a>
+                    </li>
+                    <li><i class='bx bx-chevron-right' ></i></li>
+                    <li>
+                        <a class="active" href="#">Home</a>
+                    </li>
+                </ul>
+            </div>
+            
+                <form method="POST" novalidate>
+                  {% csrf_token %}
+                  <div class="form-input">
+                <input class="form-input" name="begin" value="{{begin}}" type="date">
+                <input class="form-input" name="end" value="{{end}}" type="date">
+                <input hidden id="status_dms" name="status_dms" type="text" value="{{status_dms}}">
+                <button type="submit" id="search-btn-id" class="search-btn"><i class='bx bx-filter' ></i></button>
+                  </div>
+                </form>
+          
+        </div>
+
+        <ul class="box-info">
+            <li>
+                <i class='bx bxs-dollar-circle' ></i>
+                <span class="text">
+                    <h3>R${{ fat_total | floatformat:2 }}</h3>
+                    <p>Faturamento Total</p>
+                </span>
+            </li>
+            <li>
+                <i class='bx bxs-dollar-circle' ></i>
+                <span class="text">
+                    <h3>R${{ fat_aprov | floatformat:2}}</h3>
+                    <p>Aprovado</p>
+                </span>
+            </li>
+            <li>
+                <i class='bx bxs-dollar-circle' ></i>
+                <span class="text">
+                    <h3>R${{ fat_pen | floatformat:2}}</h3>
+                    <p>Pendente</p>
+                </span>
+            </li>
+        </ul>
+
+
+        <div class="table-data">
+            <div class="order">
+                <div class="head">
+                    <h3>Faturamento/Área</h3>
+                </div>
+                <div >
+                  <canvas id="myChartProduct" data-url="{% url 'financeiro:json_fat_uni' begin end %}" width="200" height="100"></canvas>
+                </div>
+                
+            </div>
+            <div class="todo">
+                <div class="head">
+                    <h3>Faturamento/Tipo</h3>
+                    <i class='bx bx-plus' ></i>
+                    <i class='bx bx-filter' ></i>
+                </div>
+                <div >
+                  <canvas id="myChartPie" data-url="{% url 'financeiro:json_fat_tipo' begin end %}" width="200" height="130"></canvas>
+                </div>
+                
+                
+            </div>
+            
+        </div>
+        <div class="table-data">
+            <div class="order">
+                <div class="head">
+                    <h3>Faturamento/Fiscal</h3>
+                </div>
+                <canvas id="myChartProduct2" data-url="{% url 'financeiro:json_fat_sol' begin end %}" width="200" height="100"></canvas>
+            </div>
+            <div class="todo">
+                <div class="head">
+                    <h3>Pendências por Planejador</h3>
+                    <i class='bx bx-plus' ></i>
+                    <i class='bx bx-filter' ></i>
+                </div>
+                
+                <ul class="todo-list">
+                  {% for item in pendencias %}
+                  {% cycle 'completed' 'not-completed' as class silent %}
+                    <li class="{{class}}">
+                        <p>{{item.funcionario__username}} - R$ {{ item.valor__sum | floatformat:2}}</p>
+                        <i class='bx bx-dots-vertical-rounded' ></i>
+                    </li>
+                  {% endfor %}
+                </ul>
+            </div>
+            
+        </div>
+        <div class="table-data">
+            <div class="order">
+                <div class="head">
+                    <h3>Acompanhamento/DMS</h3>
+                    <i class='bx bx-plus' ></i>
+                    <select class="seletor"name="dms_select" id="dms_select">
+                        <option value="APROVADO">APROVADO</option>
+                        <option value="AGUARDANDO OM">AGUARDANDO OM</option>
+                        <option value="LANÇAMENTO">EM LANÇAMENTO</option>
+                        <option value="NÃO APROVADO">NÃO APROVADO</option>
+                        <option value="REPROVADO">REPROVADO</option>
+                    </select>
+                    <i class='bx bx-filter filtro_dms' id="filtro_dms" ></i>
+                </div>
+                <canvas id="myChartdms" data-url="{% url 'financeiro:json_fat_dms' begin end status_dms %}" width="200" height="100"></canvas>
+            </div> 
+        </div>
+    </main>
+    {% endblock %}
+
+
+{% block js %}
+<script>
+Chart.pluginService.register({
+  beforeRender: function(chart) {
+    if (chart.config.options.showAllTooltips) {
+      chart.pluginTooltips = [];
+      chart.config.data.datasets.forEach(function(dataset, i) {
+        chart.getDatasetMeta(i).data.forEach(function(sector, j) {
+          chart.pluginTooltips.push(new Chart.Tooltip({
+            _chart: chart.chart,
+            _chartInstance: chart,
+            _data: chart.data,
+            _options: chart.options.tooltips,
+            _active: [sector]
+          }, chart));
+        });
+      });
+      chart.options.tooltips.enabled = false;
+    }
+  },
+  afterDraw: function(chart, easing) {
+    if (chart.config.options.showAllTooltips) {
+      if (!chart.allTooltipsOnce) {
+        if (easing !== 1)
+          return;
+        chart.allTooltipsOnce = true;
+      }
+
+      chart.options.tooltips.enabled = true;
+      Chart.helpers.each(chart.pluginTooltips, function(tooltip) {
+        tooltip.initialize();
+        tooltip.update();
+        tooltip.pivot();
+        tooltip.transition(easing).draw();
+      });
+      chart.options.tooltips.enabled = false;
+    }
+  }
+});
+    $(document).ready(function(){
+    $('#dash_financeiro').addClass('active')
+    $('#filtro_dms').click(function(ev){
+                $('#search-btn-id').click()     
+            });
+    });
+    $(document).on('change', '.seletor', function(){
+            var txt = $(this).val();
+            $('#status_dms').val(txt);
+        });
+
+$.ajax({
+  url: $("#myChartProduct").attr("data-url"),
+  success: function(response) {
+    let mylabels = response.data.map(function(e) {
+      return e.unidade__area
+    })
+    let myvalues = response.data.map(function(e) {
+      return e.valor__sum
+    })
+    var ctx = document.getElementById('myChartProduct').getContext('2d');
+    var config = {
+      type: 'bar',
+      data: {
+        labels: mylabels,
+        datasets: [{
+          label: 'R$',
+          data: myvalues,
+          backgroundColor: [
+          'rgba(255, 99, 132, 0.9)',
+            'rgba(54, 162, 235, 0.9)',
+            'rgba(255, 206, 86, 0.9)',
+            'rgba(75, 192, 192, 0.9)',
+            'rgba(153, 102, 255, 0.9)',
+            'rgba(255, 159, 64, 0.9)',
+            'rgba(249, 65, 68, 0.9)',
+            'rgba(243, 114, 44, 0.9)',
+            'rgba(248, 150, 30, 0.9)',
+            'rgba(249, 199, 79, 0.9)',
+            'rgba(144, 190, 109, 0.9)',
+            'rgba(67, 170, 139, 0.9)',
+            'rgba(87, 117, 144, 0.9)',
+            'rgba(249, 65, 68, 0.9)',
+            'rgba(21, 114, 44, 0.9)',
+            'rgba(24, 150, 30, 0.9)',
+            'rgba(249, 199, 79, 0.9)',
+            'rgba(123, 12, 109, 0.9)',
+            'rgba(67, 170, 139, 0.9)',
+            'rgba(10, 117, 29, 0.9)',
+            'rgba(54, 11, 235, 0.9)',
+            'rgba(255, 206, 86, 0.9)',
+            'rgba(75, 192, 88, 0.9)',
+            'rgba(153, 102, 255, 0.9)',
+            'rgba(200, 159, 73, 0.9)',
+            'rgba(249, 65, 68, 0.9)',
+            'rgba(243, 220, 44, 0.9)',
+            'rgba(255, 150, 50, 0.9)',
+            'rgba(100, 102, 255, 0.9)',
+            'rgba(120, 159, 64, 0.9)',
+            'rgba(77, 65, 68, 0.9)',
+            'rgba(215, 12, 44, 0.9)',
+            'rgba(248, 89, 30, 0.9)',
+            'rgba(200, 130, 79, 0.9)',
+            'rgba(122, 190, 25, 0.9)',
+            'rgba(10, 215, 139, 0.9)',
+            'rgba(87, 117, 80, 0.9)',
+            'rgba(249, 65, 177, 0.9)',
+            'rgba(21, 195, 90, 0.9)',
+          ],
+        }]
+      },
+      options: {
+        //showAllTooltips: true,
+        scales: {
+          yAxes: [{
+            ticks: {
+              beginAtZero: true
+            }
+          }]
+        }
+      }
+    }
+    var myChart = new Chart(ctx, config);
+  }
+});
+
+
+
+let bgcPalette = [
+  'rgba(249, 65, 68, 0.5)',
+  'rgba(243, 114, 44, 0.5)',
+  'rgba(248, 150, 30, 0.5)',
+  'rgba(249, 199, 79, 0.5)',
+  'rgba(144, 190, 109, 0.5)',
+  'rgba(67, 170, 139, 0.5)',
+  'rgba(87, 117, 144, 0.5)',
+]
+
+function random_color(array) {
+  return array[Math.floor(Math.random() * array.length)];
+}
+
+let bgcColorCategory = []
+let bdColorCategory = []
+
+for (var i = 0; i < 7; i++) {
+  let bgcRandomColor = random_color(bgcPalette)
+  bgcColorCategory.push(bgcRandomColor);
+
+  let bdRandomColor = bgcRandomColor.replace('0.5', '1');
+  bdColorCategory.push(bgcRandomColor);
+}
+
+$.ajax({
+  url: $("#myChartPie").attr("data-url"),
+  success: function(response) {
+    let mylabels = response.data.map(function(e) {
+      return e.tipo
+    })
+    let myvalues = response.data.map(function(e) {
+      return e.valor__sum
+    })
+    var ctx = document.getElementById('myChartPie').getContext('2d');
+    var data = {
+      labels: mylabels,
+      datasets: [{
+        label: 'R$',
+        data: myvalues,
+        backgroundColor: [
+            'rgba(255, 99, 132, 0.9)',
+            'rgba(54, 162, 235, 0.9)',
+            'rgba(255, 206, 86, 0.9)',
+            'rgba(75, 192, 192, 0.9)',
+            'rgba(153, 102, 255, 0.2)',
+            'rgba(255, 159, 64, 0.2)',
+            'rgba(255, 99, 132, 0.2)',
+            'rgba(54, 162, 235, 0.2)',
+            'rgba(255, 206, 86, 0.2)',
+            'rgba(75, 192, 192, 0.2)',
+            'rgba(153, 102, 255, 0.2)',
+            'rgba(255, 159, 64, 0.2)',
+            'rgba(255, 99, 132, 0.2)',
+            'rgba(54, 162, 235, 0.2)',
+            'rgba(255, 206, 86, 0.2)',
+            'rgba(75, 192, 192, 0.2)',
+            'rgba(153, 102, 255, 0.2)',
+            'rgba(255, 159, 64, 0.2)',
+            'rgba(255, 99, 132, 0.2)',
+            'rgba(54, 162, 235, 0.2)',
+            'rgba(255, 206, 86, 0.2)',
+            'rgba(75, 192, 192, 0.2)'
+          ],
+          borderColor: [
+            'rgba(255, 99, 132, 1)',
+            'rgba(54, 162, 235, 1)',
+            'rgba(255, 206, 86, 1)',
+            'rgba(75, 192, 192, 1)',
+            'rgba(153, 102, 255, 1)',
+            'rgba(255, 159, 64, 1)',
+            'rgba(255, 99, 132, 1)',
+            'rgba(54, 162, 235, 1)',
+            'rgba(255, 206, 86, 1)',
+            'rgba(75, 192, 192, 1)',
+            'rgba(153, 102, 255, 1)',
+            'rgba(255, 159, 64, 1)',
+            'rgba(255, 99, 132, 1)',
+            'rgba(54, 162, 235, 1)',
+            'rgba(255, 206, 86, 1)',
+            'rgba(75, 192, 192, 1)',
+            'rgba(153, 102, 255, 1)',
+            'rgba(255, 159, 64, 1)',
+            'rgba(255, 99, 132, 1)',
+            'rgba(54, 162, 235, 1)',
+            'rgba(255, 206, 86, 1)',
+            'rgba(75, 192, 192, 1)'
+          ],
+        borderWidth: 1
+      }]
+    }
+    // For a pie chart
+    var myPieChart = new Chart(ctx, {
+      type: 'doughnut',
+      data: data
+    });
+  }
+});
+
+$.ajax({
+  url: $("#myChartProduct2").attr("data-url"),
+  success: function(response) {
+    let mylabels = response.data.map(function(e) {
+      return e.solicitante__solicitante
+    })
+    let myvalues = response.data.map(function(e) {
+      return e.valor__sum
+    })
+    var ctx = document.getElementById('myChartProduct2').getContext('2d');
+    var config = {
+      type: 'bar',
+      data: {
+        labels: mylabels,
+        datasets: [{
+          label: 'R$',
+          data: myvalues,
+          backgroundColor: [
+          'rgba(255, 99, 132, 0.9)',
+            'rgba(54, 162, 235, 0.9)',
+            'rgba(255, 206, 86, 0.9)',
+            'rgba(75, 192, 192, 0.9)',
+            'rgba(153, 102, 255, 0.9)',
+            'rgba(255, 159, 64, 0.9)',
+            'rgba(249, 65, 68, 0.9)',
+            'rgba(243, 114, 44, 0.9)',
+            'rgba(248, 150, 30, 0.9)',
+            'rgba(249, 199, 79, 0.9)',
+            'rgba(144, 190, 109, 0.9)',
+            'rgba(67, 170, 139, 0.9)',
+            'rgba(87, 117, 144, 0.9)',
+            'rgba(249, 65, 68, 0.9)',
+            'rgba(21, 114, 44, 0.9)',
+            'rgba(24, 150, 30, 0.9)',
+            'rgba(249, 199, 79, 0.9)',
+            'rgba(123, 12, 109, 0.9)',
+            'rgba(67, 170, 139, 0.9)',
+            'rgba(10, 117, 29, 0.9)',
+            'rgba(54, 11, 235, 0.9)',
+            'rgba(255, 206, 86, 0.9)',
+            'rgba(75, 192, 88, 0.9)',
+            'rgba(153, 102, 255, 0.9)',
+            'rgba(200, 159, 73, 0.9)',
+            'rgba(249, 65, 68, 0.9)',
+            'rgba(243, 220, 44, 0.9)',
+            'rgba(255, 150, 50, 0.9)',
+            'rgba(100, 102, 255, 0.9)',
+            'rgba(120, 159, 64, 0.9)',
+            'rgba(77, 65, 68, 0.9)',
+            'rgba(215, 12, 44, 0.9)',
+            'rgba(248, 89, 30, 0.9)',
+            'rgba(200, 130, 79, 0.9)',
+            'rgba(122, 190, 25, 0.9)',
+            'rgba(10, 215, 139, 0.9)',
+            'rgba(87, 117, 80, 0.9)',
+            'rgba(249, 65, 177, 0.9)',
+            'rgba(21, 195, 90, 0.9)',
+          ],
+         
+        }]
+      },
+      options: {
+        scales: {
+          yAxes: [{
+            ticks: {
+              beginAtZero: true
+            }
+          }]
+        }
+      }
+    }
+    var myChart = new Chart(ctx, config);
+  }
+});
+
+$.ajax({
+  url: $("#myChartdms").attr("data-url"),
+  success: function(response) {
+    let lab = $("#status_dms").val()
+    let mylabels = response.data.map(function(e) {
+      return e.aprovador__aprovador
+    })
+    let myvalues = response.data.map(function(e) {
+      return e.valor__sum
+    })
+ 
+    var ctx = document.getElementById('myChartdms').getContext('2d');
+    var config = {
+      type: 'bar',
+      data: {
+        labels: mylabels,
+        datasets: [{
+          label: lab + ' R$',
+          data: myvalues,
+          backgroundColor: [
+          'rgba(255, 99, 132, 0.9)',
+            'rgba(54, 162, 235, 0.9)',
+            'rgba(255, 206, 86, 0.9)',
+            'rgba(75, 192, 192, 0.9)',
+            'rgba(153, 102, 255, 0.9)',
+            'rgba(255, 159, 64, 0.9)',
+            'rgba(249, 65, 68, 0.9)',
+            'rgba(243, 114, 44, 0.9)',
+            'rgba(248, 150, 30, 0.9)',
+            'rgba(249, 199, 79, 0.9)',
+            'rgba(144, 190, 109, 0.9)',
+            'rgba(67, 170, 139, 0.9)',
+            'rgba(87, 117, 144, 0.9)',
+            'rgba(249, 65, 68, 0.9)',
+            'rgba(21, 114, 44, 0.9)',
+            'rgba(24, 150, 30, 0.9)',
+            'rgba(249, 199, 79, 0.9)',
+            'rgba(123, 12, 109, 0.9)',
+            'rgba(67, 170, 139, 0.9)',
+            'rgba(10, 117, 29, 0.9)',
+            'rgba(54, 11, 235, 0.9)',
+            'rgba(255, 206, 86, 0.9)',
+            'rgba(75, 192, 88, 0.9)',
+            'rgba(153, 102, 255, 0.9)',
+            'rgba(200, 159, 73, 0.9)',
+            'rgba(249, 65, 68, 0.9)',
+            'rgba(243, 220, 44, 0.9)',
+            'rgba(255, 150, 50, 0.9)',
+            'rgba(100, 102, 255, 0.9)',
+            'rgba(120, 159, 64, 0.9)',
+            'rgba(77, 65, 68, 0.9)',
+            'rgba(215, 12, 44, 0.9)',
+            'rgba(248, 89, 30, 0.9)',
+            'rgba(200, 130, 79, 0.9)',
+            'rgba(122, 190, 25, 0.9)',
+            'rgba(10, 215, 139, 0.9)',
+            'rgba(87, 117, 80, 0.9)',
+            'rgba(249, 65, 177, 0.9)',
+            'rgba(21, 195, 90, 0.9)',
+          ],
+        },
+    ]
+      },
+      options: {
+                
+                plugins: {
+                title: {
+                    display: true,
+                    text: 'Chart.js Bar Chart - Stacked'
+                },
+                },
+                responsive: true,
+                scales: {
+                x: {
+                    stacked: true,
+                },
+                y: {
+                    stacked: true
+                }
+                }
+            }
+    }
+    var myChart = new Chart(ctx, config);
+  }
+});
+
+</script>
+{% endblock js %}

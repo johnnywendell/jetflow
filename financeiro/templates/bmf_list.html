@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-
+{% load l10n %}
 {% block content %} 
 {% include "includes/nav_financeiro.html" %} 
     <div class="page-header">
@@ -10,6 +10,11 @@
                     <button type="button" class="btn btn-primary">
                         <span class="fa fa-plus"></span>Adicionar
                     </button>                    
+                </a>
+                <a href="{% url 'financeiro:export_xlsx_func_bmf' %}">
+                    <button type="button" class="btn btn-info">
+                        <span class="fa fa-plus"></span>Exportar BMF
+                    </button>
                 </a>
                 </div>
             </span>
@@ -37,7 +42,7 @@
                     <td>{{ object.unidade }}</td>
                     <td>{{ object.solicitante }}</td>
                     <td>{{ object.tipo }}</td>
-                    <td>R$ {{ object.valor }}</td>
+                    <td>R$ {{ object.valor | floatformat:3 }}</td>
                     <td class="text-center">{% if object.status %}
                         <i class="fa fa-check-circle ok"></i>
                       {% else %}

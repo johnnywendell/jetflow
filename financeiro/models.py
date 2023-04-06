@@ -116,7 +116,7 @@ class BMF(TimeStampedModel):
     solicitante = models.ForeignKey(Solicitante, on_delete=models.CASCADE)
     contrato = models.ForeignKey(Contrato, on_delete=models.CASCADE)
     auth_serv = models.CharField('AS',max_length=80)
-    escopo = models.CharField('Escopo do serviço',max_length=80)
+    escopo = models.CharField('Escopo do serviço',max_length=120)
     local = models.CharField('Local do serviço',max_length=80)
     id_serv = models.CharField('ID serviço',max_length=80)
     tipo = models.CharField('Tipo',max_length=80)
