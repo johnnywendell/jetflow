@@ -115,7 +115,7 @@ class EtapaPintura(models.Model):
 
 class Photo(models.Model):
     rip_numero = models.ForeignKey(RelatorioInspecao, on_delete=models.CASCADE, verbose_name='RIP',related_name='relatorio')
-    photo = models.ImageField('foto',upload_to='')
+    photo = models.ImageField('foto',upload_to='photos/')
     class Meta:
         ordering =('pk',)
         verbose_name = 'foto'

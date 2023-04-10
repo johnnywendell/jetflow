@@ -172,8 +172,8 @@ class FRSUpdate(UpdateView):
     template_name = 'bmf_form.html'
     form_class = FrsForm
 ############## jsonitens
-def json_itens(request, ref):
-    data = list(ItemBm.objects.values().filter(item_ref=ref))
+def json_itens(request, ref, pk):
+    data = list(ItemBm.objects.values().filter(~Q(bmf__pk=pk),item_ref=ref))
     return JsonResponse({'data':data})
 def json_fat_uni(request,begin,end):
     data_inicial = begin
@@ -198,7 +198,7 @@ def json_fat_dms(request,begin,end,status):
     return JsonResponse({'data':data})
 
 
-###############
+############### Entry.objects.filter(~Q(id=3))
 def bmf_detail(request, pk):
     template_name = 'bmf_detail.html'
     obj = BMF.objects.get(pk=pk)

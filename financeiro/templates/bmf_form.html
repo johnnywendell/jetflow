@@ -4,7 +4,7 @@
 
 {% block content %}
 {% include "includes/nav_financeiro.html" %} 
-<form method="POST" novalidate>
+<form method="POST" novalidate enctype="multipart/form-data">
     {% csrf_token %}
     {% for field in form.visible_fields %}
     <div class="form-group{% if field.errors %} has error {% endif %}">

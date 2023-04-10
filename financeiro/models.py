@@ -31,6 +31,7 @@ class FRS(TimeStampedModel):
     data_emissão = models.DateField(verbose_name='Emissão nota', blank=True, null=True)
     status_nf = models.BooleanField(default=False)
     valor = models.DecimalField('Valor', max_digits=11, decimal_places=3, blank=True, null=True)
+    follow_up = models.TextField('Obs/followup', blank=True, null=True)
     class Meta:
         ordering = ('-created',)
 
@@ -50,6 +51,7 @@ class BMS(TimeStampedModel):
     aprovador = models.ForeignKey(Aprovador, on_delete=models.CASCADE)
     frs = models.ForeignKey(FRS, on_delete=models.CASCADE, blank=True, null=True, related_name='frs')
     valor = models.DecimalField('Valor', max_digits=11, decimal_places=3, blank=True, null=True)
+    follow_up = models.TextField('Obs/followup', blank=True, null=True)
     class Meta:
         ordering = ('-created',)
 
@@ -73,6 +75,7 @@ class DMS(TimeStampedModel):
     aprovador = models.ForeignKey(Aprovador, on_delete=models.CASCADE)
     bms = models.ForeignKey(BMS, on_delete=models.CASCADE, blank=True, null=True, related_name='bms')
     valor = models.DecimalField('Valor', max_digits=11, decimal_places=3, blank=True, null=True)
+    follow_up = models.TextField('Obs/followup', blank=True, null=True)
     class Meta:
         ordering = ('-created',)
     def __str__(self):
@@ -124,6 +127,8 @@ class BMF(TimeStampedModel):
     dms = models.ForeignKey(DMS, on_delete=models.CASCADE, blank=True, null=True, related_name='dms')
     status = models.BooleanField(default=False)
     item_bm = models.ManyToManyField(ItemBm, blank=True)
+    follow_up = models.TextField('Obs/followup', blank=True, null=True)
+    doc = models.FileField('documento',upload_to='bmfs/', max_length=100, blank=True, null=True)
     class Meta:
         ordering = ('-created',)
 

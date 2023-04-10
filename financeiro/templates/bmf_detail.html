@@ -75,6 +75,13 @@
                     <td>{{ object.dms }}</td>
                 </tr>
                 <tr>
+                    <th class="text-right">Arquivo:</th>
+                    <td> {% if object.doc %} 
+                        <a class="btn btn-sm btn-info"  href="{{ object.doc.url }}" download="{{ object.doc }}">Download</a>
+                        {% else %}
+                        {% endif %}</td>
+                </tr>
+                <tr>
                     <th class="text-right">Status</th>
                     <td>{% if object.status %}
                         <i class="fa fa-check-circle ok"></i>
@@ -82,6 +89,7 @@
                         <i class="fa fa-minus-circle no"></i>
                       {% endif %}</td>
                 </tr>
+                
             </tbody>
         </table>
     </div>
@@ -129,12 +137,14 @@
                     </table>
           </div>
           <div class="modal-footer">
+            <input hidden id="pkid" name="pkid" type="number" value="{{ object.pk }}"></th>
             <button type="submit" class="btn btn-primary float-right" style="margin: 6px;"><i class="fa fa-plus"></i>Adicionar</button>
           </div>
         </form> 
     </div>
   </div>
 </div>
+   
     <table class="table table-striped">
         <thead>
             <tr>
@@ -182,7 +192,8 @@
         
         $(".valor").on("input", function(){            
             var textoDigitado = $(this).val();
-            let url = '/itensbm/json/' + textoDigitado
+            var pkid = $("#pkid").val();
+            let url = '/itensbm/json/' + textoDigitado + '/' + pkid
             $.ajax({
                 url:url,
                 type: 'GET',
