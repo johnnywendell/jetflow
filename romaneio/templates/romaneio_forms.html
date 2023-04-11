@@ -34,9 +34,9 @@
                 <div class="row">
                     <div class="col-sm-12">
                         <legend style="border-bottom: 1px solid #e5e5e5;">Materiais</legend>
-                        <div id="romaneio" class="form-inline">
+                        <div id="romaneio" class="form-control">
                             {% for item_romaneio_form in formset %}
-                            <div id="item-{{ forloop.counter0 }}" class="form-group">
+                            <div id="item-{{ forloop.counter0 }}" class="form-control">
                                 {{ item_romaneio_form|bootstrap }}
                             </div>
                             {% endfor %}

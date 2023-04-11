@@ -9,10 +9,7 @@ class BmfForm(forms.ModelForm):
     class Meta:
         model = BMF
         fields = '__all__'
-        exclude = ('item_bm','valor','dms', 'funcionario')
-        widgets = {
-            'data_periodo':  DateInput()
-        }
+        exclude = ('item_bm','valor','dms', 'funcionario','rev','slug')
 
 class ContratoForm(forms.ModelForm):
     class Meta:
@@ -29,7 +26,7 @@ class QtdForm(forms.ModelForm):
     class Meta:
         model = QtdBM
         fields = '__all__'
-        exclude = ('bmf',)
+        exclude = ('bmf','valor')
 
 class DmsForm(forms.ModelForm):
     class Meta:

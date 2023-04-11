@@ -3,6 +3,8 @@ from django.urls import reverse_lazy
 from core.models import TimeStampedModel
 from romaneio.models import Area, Solicitante
 from django.contrib.auth.models import User
+from django.db.models.signals import pre_save, post_save
+
 
 class Aprovador(models.Model):
     aprovador = models.CharField(max_length=30, unique=True)
@@ -114,7 +116,7 @@ class BMF(TimeStampedModel):
     funcionario = models.ForeignKey(User, on_delete=models.CASCADE)
     bmf = models.AutoField(auto_created=True,unique=True,primary_key=True)
     data_periodo = models.DateField(verbose_name='Período')
-    rev = models.IntegerField('Revisão', blank=True, null=True)
+    rev = models.IntegerField('Revisão',default=0)
     unidade = models.ForeignKey(Area, on_delete=models.CASCADE)
     solicitante = models.ForeignKey(Solicitante, on_delete=models.CASCADE)
     contrato = models.ForeignKey(Contrato, on_delete=models.CASCADE)
@@ -129,6 +131,8 @@ class BMF(TimeStampedModel):
     item_bm = models.ManyToManyField(ItemBm, blank=True)
     follow_up = models.TextField('Obs/followup', blank=True, null=True)
     doc = models.FileField('documento',upload_to='bmfs/', max_length=100, blank=True, null=True)
+    slug = models.SlugField(default="", null=False)
+
     class Meta:
         ordering = ('-created',)
 
@@ -145,7 +149,9 @@ class BMF(TimeStampedModel):
             return 'Pendente'
 
     def get_absolute_url(self):
-        return reverse_lazy('financeiro:bmf_detail', kwargs={'pk': self.pk})
+        return reverse_lazy('financeiro:bmf_detail', kwargs={'slug': self.slug})
+    
+    
 
 class QtdBM(models.Model):
     qtd = models.DecimalField('qtd', max_digits=11, decimal_places=3)
@@ -154,3 +160,29 @@ class QtdBM(models.Model):
     valor = models.ForeignKey(ItemBm, on_delete=models.CASCADE)
 
 
+import string, random
+from django.utils.text import slugify 
+  
+def random_string_generator(size = 10, chars = string.ascii_lowercase + string.digits): 
+    return ''.join(random.choice(chars) for _ in range(size)) 
+  
+def unique_slug_generator(instance, new_slug = None): 
+    if new_slug is not None: 
+        slug = new_slug 
+    else: 
+        slug = slugify(instance.escopo) 
+    Klass = instance.__class__ 
+    qs_exists = Klass.objects.filter(slug = slug).exists() 
+      
+    if qs_exists: 
+        new_slug = "{slug}-{randstr}".format( 
+            slug = slug, randstr = random_string_generator(size = 6)) 
+        return unique_slug_generator(instance, new_slug = new_slug) 
+    return slug 
+
+def pre_save_receiver(sender, instance, *args, **kwargs): 
+   if not instance.slug: 
+       instance.slug = unique_slug_generator(instance) 
+  
+  
+pre_save.connect(pre_save_receiver, sender = BMF)

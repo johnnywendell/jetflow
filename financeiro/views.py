@@ -7,12 +7,13 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, render, resolve_url
 from django.http import HttpResponseRedirect, JsonResponse, HttpResponse
 from django.views.generic import CreateView, UpdateView, ListView
-from django.db.models import Q
+from django.db.models import Q, F
 from .models import Contrato, BMF, ItemBm, QtdBM,Aprovador,DMS,BMS,FRS
 from .forms import ContratoForm, BmfForm, ItemForm, QtdForm,AprovadorForm,DmsForm,BmsForm,FrsForm
 from django.db.models import Sum
 from django.contrib.auth.models import User
-from romaneio.models import Area, Solicitante 
+from romaneio.models import Area, Solicitante
+
 
 def contrato_add(request):
     template_name = 'contrato.html'
@@ -197,12 +198,12 @@ def json_fat_dms(request,begin,end,status):
     data = list(DMS.objects.filter(created__range=[data_inicial, data__final],status=status).values('aprovador__aprovador').annotate(Sum('valor')))
     return JsonResponse({'data':data})
 
-
 ############### Entry.objects.filter(~Q(id=3))
-def bmf_detail(request, pk):
+
+def bmf_detail(request, slug):
     template_name = 'bmf_detail.html'
-    obj = BMF.objects.get(pk=pk)
-    qtdbm = QtdBM.objects.filter(bmf=pk)
+    obj = BMF.objects.get(slug=slug)
+    qtdbm = QtdBM.objects.filter(bmf=obj.pk)
     item_form = QtdBM()
     if request.method == 'POST':
         form=QtdForm(request.POST, instance=item_form, prefix='main')
@@ -211,12 +212,14 @@ def bmf_detail(request, pk):
             obj.item_bm.add(itembm)
             form=form.save(commit=False)
             form.bmf = obj
+            item_bm = ItemBm.objects.get(pk=itembm)
+            form.valor = item_bm
             form.save()
-            qtdbm = QtdBM.objects.filter(bmf=pk)
+            qtdbm = QtdBM.objects.filter(bmf=obj.pk)
             valor_total = 0
             for item in qtdbm:
                 valor_total += item.total
-            BMF.objects.filter(pk=pk).update(valor=valor_total)
+            BMF.objects.filter(slug=slug).update(valor=valor_total)
             url='#'
             return HttpResponseRedirect(url)
     else:
@@ -235,7 +238,7 @@ def delete_item(request, pk, id, ind):
     valor_total = 0
     for x in qtdbm:
         valor_total += x.total
-    BMF.objects.filter(pk=ind).update(valor=valor_total)
+    BMF.objects.filter(pk=ind).update(valor=valor_total, rev=F('rev')+1)
     return HttpResponseRedirect(resolve_url('financeiro:bmf_detail',obj.pk))
 
 def dms_detail(request, pk):    
@@ -316,7 +319,6 @@ def frsitem_delete(request, pk, id):
     FRS.objects.filter(pk=id).update(valor=valor_total)
     return HttpResponseRedirect(resolve_url('financeiro:frs_detail',id))
 
-
 ######################### importações e exportações
 
 def save_data(data):
@@ -355,7 +357,6 @@ def import_csv(request):
     template_name = 'itemcontrato_import.html'
     return render(request, template_name)
 
-
 def export_xlsx(model, filename, queryset, columns):
     response = HttpResponse(content_type='application/ms-excel')
     response['Content-Disposition'] = 'attachment; filename="%s"' % filename
@@ -381,7 +382,6 @@ def export_xlsx(model, filename, queryset, columns):
 
     wb.save(response)
     return response
-
 
 def export_xlsx_func_bmf(request):
     MDATA = datetime.now().strftime('%Y-%m-%d')
@@ -466,8 +466,7 @@ def save_data_dms(data):
                 status = status,
                 data_aprov = datetime.strptime(data_aprov, '%d/%m/%Y').date(),
                 aprovador = Aprovador.objects.get(pk=aprovador),
-                valor = valor,
-                
+                valor = valor,             
         )
         aux.append(obj)
     DMS.objects.bulk_create(aux)
@@ -512,12 +511,12 @@ def import_csv_aprovador(request):
 def save_data_solicitante(data):
     aux = []
     for item in data:
-        area = item.get('area')
-        obj = Area(
-                area = area,
+        area = item.get('solicitante')
+        obj = Solicitante(
+                solicitante = area,
         )
         aux.append(obj)
-    Area.objects.bulk_create(aux)
+    Solicitante.objects.bulk_create(aux)
 def import_csv_solicitante(request):
     if request.method == 'POST' and request.FILES['myfile']:
         myfile = request.FILES['myfile']

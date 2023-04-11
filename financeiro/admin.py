@@ -7,6 +7,8 @@ class BMFAdmin(admin.ModelAdmin):
     list_display = (
         '__str__',
     )
+    prepopulated_fields = {"slug": ("escopo", "local")}
+
 @admin.register(ItemBm)
 class ItemBmAdmin(admin.ModelAdmin):
     list_display = (
