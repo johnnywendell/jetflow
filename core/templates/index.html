@@ -18,10 +18,10 @@
     </div>
   </div>
   <div class="card text-white  mb-3" style="max-width: 22rem; background-color: rgb(19, 39, 69);">
-    <div class="card-header"style="max-width: 22rem; background-color: rgb(171, 25, 26);">Segurança</div>
+    <div class="card-header"style="max-width: 22rem; background-color: rgb(171, 25, 26);">Manager</div>
     <div class="card-body">
-        <a href="#"><h5 class="card-title  text-light">SSMA</h5></a>
-      <p class="card-text">Módulo de Gestão de dados de SSMA</p>
+      <a href="{% url 'financeiro:gerencia' %}"><h5 class="card-title  text-light">Coordenação</h5></a>
+      <p class="card-text">Módulo de Gestão da Obra</p>
     </div>
   </div>
 </div>
@@ -34,10 +34,10 @@
         </div>
       </div>
       <div class="card text-white  mb-3" style="max-width: 22rem; background-color: rgb(19, 39, 69);">
-        <div class="card-header"style="max-width: 22rem; background-color: rgb(171, 25, 26);">Produção</div>
+        <div class="card-header"style="max-width: 22rem; background-color: rgb(171, 25, 26);">Planejamento</div>
         <div class="card-body">
-          <h5 class="card-title">RDC</h5>
-          <p class="card-text">Módulo de controle de relatórios diários de campo </p>
+          <a href="{% url 'financeiro:bmf_list_planejador' %}"><h5 class="card-title  text-light">BMF</h5></a>
+          <p class="card-text">Módulo de cadastro de BMF </p>
         </div>
       </div>
       <div class="card text-white  mb-3" style="max-width: 22rem; background-color: rgb(19, 39, 69);">

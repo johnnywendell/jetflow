@@ -14,7 +14,7 @@ from .models import Area, Solicitante, Romaneio
 from .forms import RomaneioForm, AreaForm, SolicitanteForm
 from material.models import Material
 from material.forms import MaterialForm
-from usuarios.decorators import manager_required
+from usuarios.decorators import manager_required, superuser_required
 from django.contrib.auth.models import User
 from django.template.loader import get_template
 from xhtml2pdf import pisa
@@ -60,7 +60,8 @@ class RomaneioList(ListView):
         if search:
             queryset = queryset.filter(
                 Q(romaneio__icontains=search) |
-                Q(solicitante__solicitante__icontains=search)
+                Q(solicitante__solicitante__icontains=search) |
+                Q(documento__icontains=search) 
             )
         return queryset
 
@@ -244,7 +245,7 @@ def export_xlsx(model, filename, queryset, columns):
     return response
 
 @login_required
-@manager_required
+@superuser_required
 def export_xlsx_func(request):
     MDATA = datetime.now().strftime('%Y-%m-%d')
     model = 'Romaneio'
@@ -286,7 +287,7 @@ def save_data(data):
     Romaneio.objects.bulk_create(aux)
 
 @login_required
-@manager_required
+@superuser_required
 def import_csv(request):
     if request.method == 'POST' and request.FILES['myfile']:
         myfile = request.FILES['myfile']

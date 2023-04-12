@@ -10,11 +10,17 @@ from django.views.generic import CreateView, UpdateView, ListView
 from django.db.models import Q, F
 from .models import Contrato, BMF, ItemBm, QtdBM,Aprovador,DMS,BMS,FRS
 from .forms import ContratoForm, BmfForm, ItemForm, QtdForm,AprovadorForm,DmsForm,BmsForm,FrsForm
-from django.db.models import Sum
+from django.db.models import Sum, Count, Case, When
+from django.db import models
 from django.contrib.auth.models import User
 from romaneio.models import Area, Solicitante
+from django.contrib.auth.decorators import login_required
+from usuarios.decorators import manager_required, superuser_required
+from rolepermissions.decorators import has_role_decorator
 
 
+@login_required
+@manager_required
 def contrato_add(request):
     template_name = 'contrato.html'
     contrato_form = Contrato()
@@ -36,6 +42,8 @@ def contrato_add(request):
     context={'form':form,'objects_list': objects}
     return render(request, template_name, context)
 
+@login_required
+@manager_required
 def aprovador_add(request):
     template_name = 'aprovador.html'
     aprovador_form = Aprovador()
@@ -57,6 +65,8 @@ def aprovador_add(request):
     context={'form':form,'objects_list': objects}
     return render(request, template_name, context)
 
+@login_required
+@manager_required
 def itembm_add(request):
     template_name = 'itembm.html'
     item_form = ItemBm()
@@ -92,6 +102,16 @@ def itembm_add(request):
         form=ItemForm(instance=item_form, prefix='main')
     context={'form':form,'objects_list': objects, 'limitador':'limit'}
     return render(request, template_name, context)
+
+@has_role_decorator('planejador')
+def bmf_list_planejador(request):
+    template_name='bmf_list.html'
+    objects=BMF.objects.filter(funcionario=request.user).all()
+    search = request.GET.get('search')
+    if search:
+        objects = objects.filter(bmf__icontains=search)
+    context={'objects_list': objects}
+    return render(request,template_name, context)
 
 class BmfList(ListView):
     model = BMF
@@ -198,8 +218,39 @@ def json_fat_dms(request,begin,end,status):
     data = list(DMS.objects.filter(created__range=[data_inicial, data__final],status=status).values('aprovador__aprovador').annotate(Sum('valor')))
     return JsonResponse({'data':data})
 
-############### Entry.objects.filter(~Q(id=3))
+########## Entry.objects.filter(~Q(id=3)) ###########
 
+@manager_required
+def administracao(request):
+    template_name = 'gerencia.html'
+    funcionarios = User.objects.all()
+    bmfs_pendentes = BMF.objects.filter(status=False).all()
+    objects = BMF.objects.values('funcionario__username').annotate(
+            revisao=Sum('rev'),
+            bm_total=Count('bmf'),
+            bm_revisado=Count(Case(When(rev__gt=1, then=1), output_field=models.IntegerField())),
+            valor=Sum('valor'),
+            valor_max=Sum('valor_max'),).order_by('-revisao')
+    if request.method == 'POST':
+        if request.POST.get('periodo') != "":
+            data = request.POST.get('periodo')
+            bmfs_pendentes = BMF.objects.filter(status=False, data_periodo=data).all()
+            objects = BMF.objects.filter(data_periodo=data).values('funcionario__username').annotate(
+                revisao=Sum('rev'),
+                bm_total=Count('bmf'),
+                bm_revisado=Count(Case(When(rev__gt=1, then=1), output_field=models.IntegerField())),
+                valor=Sum('valor'),
+                valor_max=Sum('valor_max'),).order_by('-revisao')
+        elif request.POST.get('planejador'):
+            plan = request.POST.get('planejador')
+            bmfs_pendentes = BMF.objects.filter(status=False, funcionario=plan).all()
+            
+                                
+    context={'objects_list': objects, 'bmfs':bmfs_pendentes, 'funcionarios':funcionarios}
+    return render(request,template_name, context)
+
+
+@login_required
 def bmf_detail(request, slug):
     template_name = 'bmf_detail.html'
     obj = BMF.objects.get(slug=slug)
@@ -220,6 +271,8 @@ def bmf_detail(request, slug):
             for item in qtdbm:
                 valor_total += item.total
             BMF.objects.filter(slug=slug).update(valor=valor_total)
+            if not valor_total < obj.valor_max:
+                BMF.objects.filter(slug=slug).update(valor_max=valor_total)
             url='#'
             return HttpResponseRedirect(url)
     else:
@@ -228,6 +281,7 @@ def bmf_detail(request, slug):
     context = {'object': obj, 'form':form, 'qtdbm':qtdbm}
     return render(request, template_name, context)
 
+@login_required
 def delete_item(request, pk, id, ind):
     item = ItemBm.objects.get(pk=pk)
     qtd = QtdBM.objects.get(pk=id)
@@ -239,8 +293,10 @@ def delete_item(request, pk, id, ind):
     for x in qtdbm:
         valor_total += x.total
     BMF.objects.filter(pk=ind).update(valor=valor_total, rev=F('rev')+1)
-    return HttpResponseRedirect(resolve_url('financeiro:bmf_detail',obj.pk))
+    return HttpResponseRedirect(resolve_url('financeiro:bmf_detail',obj.slug))
 
+@login_required
+@manager_required
 def dms_detail(request, pk):    
     template_name = 'dms_detail.html'
     obj = DMS.objects.get(pk=pk)
@@ -258,6 +314,8 @@ def dms_detail(request, pk):
     context = {'object': obj, 'itens':itens}
     return render(request, template_name, context)
 
+@login_required
+@manager_required
 def dmsitem_delete(request, pk, id):
     BMF.objects.filter(pk=pk).update(dms=None)
     qtditem = BMF.objects.filter(dms=id)
@@ -267,6 +325,8 @@ def dmsitem_delete(request, pk, id):
     DMS.objects.filter(pk=id).update(valor=valor_total)
     return HttpResponseRedirect(resolve_url('financeiro:dms_detail',id))
 
+@login_required
+@manager_required
 def bms_detail(request, pk):    
     template_name = 'bms_detail.html'
     obj = BMS.objects.get(pk=pk)
@@ -284,6 +344,8 @@ def bms_detail(request, pk):
     context = {'object': obj, 'itens':itens}
     return render(request, template_name, context)
 
+@login_required
+@manager_required
 def bmsitem_delete(request, pk, id):
     DMS.objects.filter(pk=pk).update(bms=None)
     qtditem = DMS.objects.filter(bms=id)
@@ -293,6 +355,8 @@ def bmsitem_delete(request, pk, id):
     BMS.objects.filter(pk=id).update(valor=valor_total)
     return HttpResponseRedirect(resolve_url('financeiro:bms_detail',id))
 
+@login_required
+@manager_required
 def frs_detail(request, pk):    
     template_name = 'frs_detail.html'
     obj = FRS.objects.get(pk=pk)
@@ -310,6 +374,8 @@ def frs_detail(request, pk):
     context = {'object': obj, 'itens':itens}
     return render(request, template_name, context)
 
+@login_required
+@manager_required
 def frsitem_delete(request, pk, id):
     BMS.objects.filter(pk=pk).update(frs=None)
     qtditem = BMS.objects.filter(frs=id)
@@ -321,41 +387,6 @@ def frsitem_delete(request, pk, id):
 
 ######################### importações e exportações
 
-def save_data(data):
-    '''
-    Salva os dados no banco.
-    '''
-    aux = []
-    for item in data:
-        contrato = 1
-        item_ref = item.get('item_ref')
-        disciplina = item.get('disciplina')
-        descricao = item.get('descricao')
-        und = item.get('und')
-        preco_item = item.get('preco_item')
-        obj = ItemBm(
-                contrato = Contrato.objects.get(pk=contrato),
-                item_ref = item_ref,
-                disciplina = disciplina,
-                descricao = descricao,
-                und = und,
-                preco_item = preco_item,
-        )
-        aux.append(obj)
-    ItemBm.objects.bulk_create(aux)
-def import_csv(request):
-    if request.method == 'POST' and request.FILES['myfile']:
-        myfile = request.FILES['myfile']
-        # Lendo arquivo InMemoryUploadedFile
-        file = myfile.read().decode('utf-8')
-        reader = csv.DictReader(io.StringIO(file))
-        # Gerando uma list comprehension
-        data = [line for line in reader]
-        save_data(data)
-        return HttpResponseRedirect(reverse('financeiro:bmf_list'))
-
-    template_name = 'itemcontrato_import.html'
-    return render(request, template_name)
 
 def export_xlsx(model, filename, queryset, columns):
     response = HttpResponse(content_type='application/ms-excel')
@@ -383,6 +414,7 @@ def export_xlsx(model, filename, queryset, columns):
     wb.save(response)
     return response
 
+@login_required
 def export_xlsx_func_bmf(request):
     MDATA = datetime.now().strftime('%Y-%m-%d')
     model = 'BMF'
@@ -405,7 +437,45 @@ def export_xlsx_func_bmf(request):
     response = export_xlsx(model, filename_final, queryset, columns)
     return response
 
-###############################################################################
+################################## CSV ####################################
+def save_data(data):
+    '''
+    Salva os dados no banco.
+    '''
+    aux = []
+    for item in data:
+        contrato = 1
+        item_ref = item.get('item_ref')
+        disciplina = item.get('disciplina')
+        descricao = item.get('descricao')
+        und = item.get('und')
+        preco_item = item.get('preco_item')
+        obj = ItemBm(
+                contrato = Contrato.objects.get(pk=contrato),
+                item_ref = item_ref,
+                disciplina = disciplina,
+                descricao = descricao,
+                und = und,
+                preco_item = preco_item,
+        )
+        aux.append(obj)
+    ItemBm.objects.bulk_create(aux)
+
+@superuser_required
+def import_csv(request):
+    if request.method == 'POST' and request.FILES['myfile']:
+        myfile = request.FILES['myfile']
+        # Lendo arquivo InMemoryUploadedFile
+        file = myfile.read().decode('utf-8')
+        reader = csv.DictReader(io.StringIO(file))
+        # Gerando uma list comprehension
+        data = [line for line in reader]
+        save_data(data)
+        return HttpResponseRedirect(reverse('financeiro:bmf_list'))
+
+    template_name = 'itemcontrato_import.html'
+    return render(request, template_name)
+
 def save_data_bmf(data):
     aux = []
     for item in data:
@@ -439,6 +509,8 @@ def save_data_bmf(data):
         )
         aux.append(obj)
     BMF.objects.bulk_create(aux)
+
+@superuser_required
 def import_csv_bmf(request):
     if request.method == 'POST' and request.FILES['myfile']:
         myfile = request.FILES['myfile']
@@ -470,6 +542,8 @@ def save_data_dms(data):
         )
         aux.append(obj)
     DMS.objects.bulk_create(aux)
+
+@superuser_required
 def import_csv_dms(request):
     if request.method == 'POST' and request.FILES['myfile']:
         myfile = request.FILES['myfile']
@@ -484,7 +558,6 @@ def import_csv_dms(request):
     template_name = 'itemcontrato_import.html'
     return render(request, template_name)
 
-
 def save_data_aprovador(data):
     aux = []
     for item in data:
@@ -494,6 +567,8 @@ def save_data_aprovador(data):
         )
         aux.append(obj)
     Aprovador.objects.bulk_create(aux)
+
+@superuser_required
 def import_csv_aprovador(request):
     if request.method == 'POST' and request.FILES['myfile']:
         myfile = request.FILES['myfile']
@@ -517,6 +592,8 @@ def save_data_solicitante(data):
         )
         aux.append(obj)
     Solicitante.objects.bulk_create(aux)
+
+@superuser_required
 def import_csv_solicitante(request):
     if request.method == 'POST' and request.FILES['myfile']:
         myfile = request.FILES['myfile']

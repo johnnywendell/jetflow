@@ -9,7 +9,7 @@ class BmfForm(forms.ModelForm):
     class Meta:
         model = BMF
         fields = '__all__'
-        exclude = ('item_bm','valor','dms', 'funcionario','rev','slug')
+        exclude = ('item_bm','valor','dms', 'funcionario','rev','slug','valor_max')
 
 class ContratoForm(forms.ModelForm):
     class Meta:

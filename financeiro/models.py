@@ -5,7 +5,6 @@ from romaneio.models import Area, Solicitante
 from django.contrib.auth.models import User
 from django.db.models.signals import pre_save, post_save
 
-
 class Aprovador(models.Model):
     aprovador = models.CharField(max_length=30, unique=True)
     class Meta:
@@ -132,6 +131,7 @@ class BMF(TimeStampedModel):
     follow_up = models.TextField('Obs/followup', blank=True, null=True)
     doc = models.FileField('documento',upload_to='bmfs/', max_length=100, blank=True, null=True)
     slug = models.SlugField(default="", null=False)
+    valor_max = models.DecimalField('Valor Maximo', max_digits=11, decimal_places=3, default=0)
 
     class Meta:
         ordering = ('-created',)
@@ -151,15 +151,13 @@ class BMF(TimeStampedModel):
     def get_absolute_url(self):
         return reverse_lazy('financeiro:bmf_detail', kwargs={'slug': self.slug})
     
-    
-
 class QtdBM(models.Model):
     qtd = models.DecimalField('qtd', max_digits=11, decimal_places=3)
     total = models.DecimalField('total', max_digits=11, decimal_places=3)
     bmf = models.ForeignKey(BMF, on_delete=models.CASCADE)
     valor = models.ForeignKey(ItemBm, on_delete=models.CASCADE)
 
-
+##############################################################################################
 import string, random
 from django.utils.text import slugify 
   

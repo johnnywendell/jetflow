@@ -1,3 +1,4 @@
+{% load permission_tags %}
 <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
     <a class="navbar-brand" href="/"><img src="/media/logobrancomonsertec.png" alt="lgo" height="25px" style="padding-bottom: 6px;margin: 0px;"></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
@@ -6,9 +7,11 @@
 
     <div class="collapse navbar-collapse" id="navbarsExampleDefault">
         <ul class="navbar-nav mr-auto">
+            {% if user|has_role:'medidor' %}
             <li class="nav-item">
                 <a class="nav-link" href="{% url 'financeiro:bmf_list' %}">BMF</a>
             </li>
+            
             <li class="nav-item">
                 <a class="nav-link" href="{% url 'financeiro:dms_list' %}">DMS</a>
             </li>
@@ -18,6 +21,11 @@
             <li class="nav-item">
                 <a class="nav-link" href="{% url 'financeiro:frs_list' %}">FRS</a>
             </li>
+            {% else %}
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'financeiro:bmf_list_planejador' %}">BMF</a>
+            </li>
+            {% endif %}
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Cadastros</a>
                 <div class="dropdown-menu" aria-labelledby="dropdown01">
@@ -26,11 +34,13 @@
                     <a class="dropdown-item" href="{% url 'financeiro:contrato_add' %}">Contrato</a>
                     <a class="dropdown-item" href="{% url 'financeiro:itembm_add' %}">Item Bm</a>
                     <a class="dropdown-item" href="{% url 'financeiro:aprovador_add' %}">Aprovador</a>
+                    {% if user|has_role:'gerencia' %}
                     <a class="dropdown-item" href="{% url 'financeiro:import_csvcontrato' %}">Import itens contrato CSV(adm)</a>
                     <a class="dropdown-item" href="{% url 'financeiro:import_csv_bmf' %}">Import BMF CSV(adm)</a>
                     <a class="dropdown-item" href="{% url 'financeiro:import_csv_dms' %}">Import DMS (adm)</a>
                     <a class="dropdown-item" href="{% url 'financeiro:import_csv_aprovador' %}">Import Aprovador (adm)</a>
                     <a class="dropdown-item" href="{% url 'financeiro:import_csv_solicitante' %}">Import Solicitante (adm)</a>
+                    {% endif %}
                 </div>
             </li>
         </ul>

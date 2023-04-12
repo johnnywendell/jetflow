@@ -15,7 +15,7 @@ from xhtml2pdf import pisa
 from django.contrib.staticfiles import finders
 import os
 from django.conf import settings
-from usuarios.decorators import manager_required
+from usuarios.decorators import manager_required, superuser_required
 from romaneio.models import Romaneio
 from django.db.models import Sum
 
@@ -271,7 +271,7 @@ def save_data(data):
     Material.objects.bulk_create(aux)
 
 @login_required
-@manager_required
+@superuser_required
 def import_csv(request):
     if request.method == 'POST' and request.FILES['myfile']:
         myfile = request.FILES['myfile']

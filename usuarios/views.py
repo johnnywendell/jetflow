@@ -34,3 +34,14 @@ def login(request):
             return HttpResponseRedirect('/')
         else:
             return HttpResponseRedirect('/')
+        
+def login_update(request):
+    if request.method == "GET":
+        return render(request, 'cadastro.html')
+    else:
+        user = request.user
+        new_password = request.POST.get('password')
+        user.set_password(new_password)
+        user.save()
+        return HttpResponseRedirect('/')
+        

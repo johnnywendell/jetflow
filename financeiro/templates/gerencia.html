@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+{% load l10n %}
+{% block content %} 
+{% include "includes/nav_login.html" %} 
+    <div class="page-header">
+        <h2><i class="fa fa-user"></i> Acompanhamento Planejador
+        </h2>
+<hr>
+        
+<div class="row">
+    {% if objects_list %}
+    <div class="col-sm-8">
+        <table class="table table-striped table-sm table-bordered">
+            <thead >
+                <tr>
+                    <th>Planejador</th>
+                    <th class="text-center">Revisões</th>
+                    <th class="text-center">Qtd BMF</th>
+                    <th class="text-center">BMF's rev.</th>
+                    <th class="text-center">Valor Original</th>
+                    <th class="text-center">Valor final</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for object in objects_list %}
+                <tr>
+                    <td>{{ object.funcionario__username }}</td>
+                    <td class="text-center">{{ object.revisao }}</td>
+                    <td class="text-center">{{ object.bm_total }}</td>
+                    <td class="text-center">{{ object.bm_revisado }}</td>
+                    <td class="text-center">R$ {{ object.valor_max | floatformat:3 }}</td>
+                    <td class="text-center">R$ {{ object.valor | floatformat:3 }}</td>
+                </tr>
+                 
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+        {% else %}
+        <div class="col-sm-8">
+        <p class="alert alert-warning">Sem Itens na Lista </p>
+        </div>
+        {% endif %}
+    
+    <div class="col-sm-4">
+        <h4>BMF's Pendentes</h4>
+        <form method="POST" novalidate>
+            {% csrf_token %}
+            <input type="date" class="form-control" name="periodo" id="periodo">
+        <div class="form-inline" style="justify-content: space-between">
+        <select class="form-control my-1" name="planejador" id="planejador" placeholder="planejador">
+            <option value="">Planejador</option>
+            {% for funcionario in funcionarios %}
+            <option value="{{ funcionario.pk }}">{{ funcionario.username }}</option>
+            {% endfor %}
+        </select>
+        <button type="submit" class="btn btn-primary" >Filtro</button>
+        </div>
+        </form> 
+        
+        <table class="table table-striped table-sm table-dark table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th>BMF Nº</th>
+
+                    <th class="text-center">Valor</th>
+                    <th class="text-center">Unidade</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for obj in bmfs %}
+                <tr>
+                    <td><a  class="text-light" href="{{ obj.get_absolute_url }}">{{ obj }}</a></td>
+
+                    <td class="text-center">R$ {{ obj.valor | floatformat:3 }}</td>
+                    <td class="text-center">{{ obj.unidade }}</td>
+                </tr>
+                 
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+</div>
+
+{% endblock content %} 
