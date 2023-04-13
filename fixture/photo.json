@@ -38,5 +38,101 @@
         "rip_numero": 3,
         "photo": "WhatsApp_Image_2023-02-27_at_12.34.56_2.jpeg"
     }
+},
+{
+    "model": "qualidade.photo",
+    "pk": 8,
+    "fields": {
+        "rip_numero": 6,
+        "photo": "WhatsApp_Image_2023-02-27_at_12.34.53.jpeg"
+    }
+},
+{
+    "model": "qualidade.photo",
+    "pk": 9,
+    "fields": {
+        "rip_numero": 6,
+        "photo": "WhatsApp_Image_2023-02-27_at_12.34.52_1.jpeg"
+    }
+},
+{
+    "model": "qualidade.photo",
+    "pk": 10,
+    "fields": {
+        "rip_numero": 5,
+        "photo": "WhatsApp_Image_2023-02-27_at_12.34.49.jpeg"
+    }
+},
+{
+    "model": "qualidade.photo",
+    "pk": 11,
+    "fields": {
+        "rip_numero": 5,
+        "photo": "WhatsApp_Image_2023-02-27_at_12.34.50.jpeg"
+    }
+},
+{
+    "model": "qualidade.photo",
+    "pk": 12,
+    "fields": {
+        "rip_numero": 8,
+        "photo": "foto.jpg"
+    }
+},
+{
+    "model": "qualidade.photo",
+    "pk": 14,
+    "fields": {
+        "rip_numero": 8,
+        "photo": "chapa.jpg"
+    }
+},
+{
+    "model": "qualidade.photo",
+    "pk": 15,
+    "fields": {
+        "rip_numero": 4,
+        "photo": "jj.jpg"
+    }
+},
+{
+    "model": "qualidade.photo",
+    "pk": 16,
+    "fields": {
+        "rip_numero": 4,
+        "photo": "ver.jpg"
+    }
+},
+{
+    "model": "qualidade.photo",
+    "pk": 17,
+    "fields": {
+        "rip_numero": 7,
+        "photo": "jkl.jpg"
+    }
+},
+{
+    "model": "qualidade.photo",
+    "pk": 18,
+    "fields": {
+        "rip_numero": 7,
+        "photo": "lm.jpg"
+    }
+},
+{
+    "model": "qualidade.photo",
+    "pk": 19,
+    "fields": {
+        "rip_numero": 9,
+        "photo": "hn.jpg"
+    }
+},
+{
+    "model": "qualidade.photo",
+    "pk": 20,
+    "fields": {
+        "rip_numero": 9,
+        "photo": "lmn.jpg"
+    }
 }
 ]

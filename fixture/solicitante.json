@@ -129,7 +129,28 @@
     "model": "romaneio.solicitante",
     "pk": 19,
     "fields": {
-        "solicitante": "Quincas Lobo"
+        "solicitante": "QUINCAS LOBO"
+    }
+},
+{
+    "model": "romaneio.solicitante",
+    "pk": 20,
+    "fields": {
+        "solicitante": "JOÃO QUINTINO"
+    }
+},
+{
+    "model": "romaneio.solicitante",
+    "pk": 21,
+    "fields": {
+        "solicitante": "Francisco Gomes de Sá Neto"
+    }
+},
+{
+    "model": "romaneio.solicitante",
+    "pk": 22,
+    "fields": {
+        "solicitante": "Jonas"
     }
 }
 ]

@@ -33,11 +33,11 @@ def load_data():
     os.system("python manage.py loaddata fixture/material.json --app material.material ")
     os.system("python manage.py loaddata fixture/relatorioinspecao.json --app qualidade.relatorioinspecao")
     os.system("python manage.py loaddata fixture/etapapintura.json --app qualidade.etapapintura")
-    os.system("python manage.py loaddata fixture/photo.json --app qualidade.photo")
-    os.system("python manage.py loaddata fixture/assinatura.json --app qualidade.assinatura")
+    #os.system("python manage.py loaddata fixture/photo.json --app qualidade.photo")
+    #os.system("python manage.py loaddata fixture/assinatura.json --app qualidade.assinatura")
 
 if __name__ == "__main__":
-    dump_data()
+    load_data()
     #load_data()
 
 

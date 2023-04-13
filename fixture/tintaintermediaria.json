@@ -68,5 +68,12 @@
     "fields": {
         "tinta_intermediaria": "SUMATANE HS BRILHANTE PU, SPB1"
     }
+},
+{
+    "model": "material.tintaintermediaria",
+    "pk": 11,
+    "fields": {
+        "tinta_intermediaria": "PISTOLA CONV. AR PARCEIRA"
+    }
 }
 ]

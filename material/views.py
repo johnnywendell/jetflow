@@ -116,7 +116,7 @@ class MaterialList(ListView):
 def material_detail(request, pk):
     template_name = 'material_detail.html'
     obj = Material.objects.get(pk=pk)
-    link = f"http://34.151.253.92/material/{obj.pk}"
+    link = f"https://monsertec.singularcode.net/material/{obj.pk}"
     context = {'object': obj, 'link':link}
     return render(request, template_name, context)
 
@@ -125,7 +125,7 @@ def material_detail(request, pk):
 def render_pdf_view(request, pk):
     obj = get_object_or_404(Material, pk=pk)
     template_path = 'qrcode.html'
-    link = f"http://34.151.253.92/material/{obj.pk}"
+    link = f"https://monsertec.singularcode.net/material/{obj.pk}"
     context = {'material': obj, 'link':link}
    
     # Create a Django response object, and specify content_type as pdf
