@@ -35,7 +35,11 @@
                         }
                         @frame col1_frame2 {             /* Content frame 1 */
                
-                            left: 50pt; width: 512pt; top: 180pt; height: 495pt;
+                            left: 50pt; width: 512pt; top: 180pt; height: 370pt;
+                        }
+                        @frame footer2_frame2 {           /* Static frame */
+                            -pdf-frame-content: footer2_content2;
+                            left: 50pt; width: 512pt; top: 600pt; height: 100pt;
                         }
                         @frame footer2_frame {           /* Static frame */
                             -pdf-frame-content: footer_content2;
@@ -63,10 +67,10 @@
                             <td> {{ relatorio.cliente }}</td>
                             <th class="text-right">Data</th>
                             <td>{{ relatorio.get_data }}</td>
-                            <th class="text-right">Dcoumento ref.</th>
-                            <td>{{ relatorio.rec }}</td>
-                            <th class="text-right">Nota</th>
-                            <td>{{ relatorio.nota }}</td>
+                            <th class="text-right">Contrato</th>
+                            <td>N</td>
+                            <th class="text-right">Cod.</th>
+                            <td>FRM-OBRA-061</td>
                 </table>
                 <hr style="margin-top: 1px;">
                 <table>
@@ -85,12 +89,12 @@
  
                             <th class="text-right">Tag</th>
                             <td>{{ relatorio.tag }}</td>
-                            <th class="text-right">Esquema de pintura</th>
-                            <td>{{ relatorio.esquema_pint }}</td>
-                            <th class="text-right">Espessura do esquema</th>
-                            <td>{{ relatorio.esp_esquema }}</td>
-                            <th class="text-right">Cor Final</th>
-                            <td>{{ relatorio.cor_final }}</td>
+                            <th class="text-right">Tratamento</th>
+                            <td>{{ relatorio.tratamento }}</td>
+                            <th class="text-right">Documento Ref.</th>
+                            <td>{{ relatorio.rec }}</td>
+                            <th class="text-right">Nota</th>
+                            <td>{{ relatorio.nota }}</td>
                 
                 </table>
                 <hr style="margin-top: 1px;">
@@ -279,6 +283,18 @@
             </table>
             {% endfor %}
         </div>
+       
+        <div id="footer2_content2">
+<hr>       
+     <table style="margin-bottom: 0px;padding-bottom: 0px;">
+                <th>Instrumentos</th>
+                <th>Obs.</th>
+                </table>
+                <table>
+                    <td>{{relatorio.obs_inst}}</td>
+                    <td>{{relatorio.obs_final }}</td>
+                    </table>
+            </div>
         <div id="footer_content2">
             <table style="margin-bottom: 0px;padding-bottom: 0px;">
                 <th>Inspeção</th>
