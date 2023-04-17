@@ -22,6 +22,25 @@ from django.contrib.staticfiles import finders
 import os
 
 @login_required
+def render_pdf_view_tag(request, pk):
+    template_path = "qrcode.html"
+    obj = Romaneio.objects.get(pk=pk)
+    link = f"https://monsertec.singularcode.net/romaneios/{obj.pk}"
+    context = {'object': obj, 'link':link}
+   
+    response = HttpResponse(content_type='application/pdf')
+
+    template = get_template(template_path)
+    html = template.render(context)
+
+    pisa_status = pisa.CreatePDF(
+       html, dest=response)
+
+    if pisa_status.err:
+       return HttpResponse('We had some errors <pre>' + html + '</pre>')
+    return response
+
+@login_required
 def render_pdf_view(request, pk):
     template_path = "romaneio.html"
     obj = Romaneio.objects.get(pk=pk)
@@ -66,7 +85,6 @@ class RomaneioList(ListView):
         return queryset
 
 
-@login_required
 def romaneio_detail(request, pk):
     template_name = 'romaneio_detail.html'
     obj = Romaneio.objects.get(pk=pk)

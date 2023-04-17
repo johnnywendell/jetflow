@@ -1,0 +1,20 @@
+{% load qr_code %}
+<head>
+<style>
+    @page {
+        size: a7 portrait;
+        margin: 1cm;
+    }
+</style>
+</head>
+{% load qr_code %}
+<body>
+    <img src="media/logo.png" alt="blah">
+    <div >
+        <th>Romaneio nº {{ object }} - </th>
+    </div>
+    <div >
+        {% qr_from_text link image_format="png" %}
+    </div>
+</body>
+
