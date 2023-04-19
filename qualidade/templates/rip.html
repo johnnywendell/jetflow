@@ -80,8 +80,8 @@
                             <td>{{ relatorio.tipo_serv }}</td>
                             <th class="text-right">Unidade/Planta</th>
                             <td> {{ relatorio.unidade }}</td>
-                            <th class="text-right">Setor</th>
-                            <td>{{ relatorio.setor }}</td>
+                            <th class="text-right">REV</th>
+                            <td>001</td>
                  
                 </table>
                 <hr style="margin-top: 1px;">        
@@ -89,8 +89,8 @@
  
                             <th class="text-right">Tag</th>
                             <td>{{ relatorio.tag }}</td>
-                            <th class="text-right">Tratamento</th>
-                            <td>{{ relatorio.tratamento }}</td>
+                            <th class="text-right">Setor</th>
+                            <td>{{ relatorio.setor }}</td>
                             <th class="text-right">Documento Ref.</th>
                             <td>{{ relatorio.rec }}</td>
                             <th class="text-right">Nota</th>
@@ -109,7 +109,7 @@
                             <td>{% if relatorio.aprovado %}✔{% else %}{% endif %}</td>
                 </table>
                 
-            <h3 style="text-align:center;margin-bottom: 0px;">Tratamento da Superfície</h3>
+            <h3 style="text-align:center;margin-bottom: 0px;">Tratamento da Superfície - {{relatorio.tratamento}}</h3>
             <hr style="margin-top: 0px;">
              <table>
                 <th>Inicio</th>
@@ -335,8 +335,8 @@
                             <td>{{ relatorio.tipo_serv }}</td>
                             <th class="text-right">Unidade/Planta</th>
                             <td> {{ relatorio.unidade }}</td>
-                            <th class="text-right">Setor</th>
-                            <td>{{ relatorio.setor }}</td>
+                            <th class="text-right">REV</th>
+                            <td>001</td>
                  
                 </table>
                 <hr style="margin-top: 1px;">        
