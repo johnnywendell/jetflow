@@ -97,7 +97,7 @@ class MaterialList(ListView):
         search = self.request.GET.get('search')
         if search:
             queryset = queryset.filter(
-                Q(n_romaneio__romaneio=search) |
+                Q(n_romaneio__romaneio__icontains=search) |
                 Q(descricao__icontains=search)
             )
         return queryset

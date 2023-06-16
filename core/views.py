@@ -14,6 +14,7 @@ def index(request):
 
 @login_required
 def dashboard_jato(request):
+    # mat = Material.objects.filter(~F('modified') == F('created')).order_by('-romaneio')[:10]
     romaneios = Romaneio.objects.all().order_by('-romaneio')[:5]
     begin = "2023-01-01"
     end = "2023-12-30"
@@ -57,7 +58,7 @@ def dashboard_jato(request):
                 tintaa += material.m2
     
     context={'tratamento':tratamento, 'tintaf':tintaf,'tintai':tintai,'tintaa':tintaa, 'begin':begin, 
-             'end':end, 'romaneios':romaneios, 'materiais':materiais}      
+             'end':end, 'romaneios':romaneios, 'materiais':materiais}
     return render(request, 'dash_jato.html', context)
 
 

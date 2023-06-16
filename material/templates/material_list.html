@@ -27,13 +27,12 @@
             <thead>
                 <tr>
                     <th>Nº Romaneio</th>
-                    <th>Tratamento</th>
                     <th>TF</th>
                     <th>TI</th>
                     <th>TA</th>
                     <th>Tipo Mat.</th>
                     <th>M²</th>
-                    <th>Relatório</th>
+                    <th>Descrição/Tag</th>
                     <th><i class="fa fa-check-circle"></i></th>
                 </tr>
             </thead>
@@ -43,18 +42,17 @@
                 {% for object in objects_list %}
                 <tr>
                     <td>{{ object.n_romaneio }}</td>
-                    <td>{{ object.jato }}</td>
                     <td>{{ object.tf }}</td>
                     <td>{{ object.ti }}</td>
                     <td>{{ object.ta}}</td>
                     <td><a href="{{ object.get_absolute_url }}">{{ object.material }}</a></td>
                     <td>{{ object.m2 }}</td>
-                    <td>{{ object.relatorio }}</td>
+                    <td>{{ object.descricao }}</td>
                     <td>{% if object.concluido %}
                         <i class="fa fa-check-circle ok"></i>
                       {% else %}
                         <label class="control control--checkbox">
-                        <input type="checkbox" name="acceptRules" class="inline checkbox checkclass" id="checkbox-{{object.pk}}" value="False"/>
+                        <input type="checkbox" name="acceptRules" class="inline checkbox checkclass" id="checkbox-{{ object.pk }}" value="False"/>
                       </label></td>
                       {% endif %}
                 </tr>
@@ -97,6 +95,7 @@
             var txt = "";
             $('.checkclass').each(function(){
                 txt += $(this).val()+"," ;
+                txt = txt.replace('.','');
             });
             $('#valores').val(txt);
         });
