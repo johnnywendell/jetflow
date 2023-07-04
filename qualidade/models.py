@@ -6,6 +6,7 @@ from django.contrib.auth.models import User
 from core.models import TimeStampedModel
 
 CORROS = (
+    ('N/A','N/A'),
     ('C1','C1'),
     ('C2','C2'),
     ('C3','C3'),

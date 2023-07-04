@@ -440,7 +440,8 @@
             var txt = "";
             $('.clSelect2').each(function(){
                 txt += $(this).val()+"," ;
-            });
+                txt = txt.replace('.','')
+                 });
             $('#valores').val(txt);
         });
 
