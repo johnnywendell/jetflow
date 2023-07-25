@@ -1,8 +1,8 @@
 from django.contrib import admin
-from .models import BMF, ItemBm, DMS, Contrato
+from .models import RDO, ItemBm, DMS, Contrato
 
 
-@admin.register(BMF)
+@admin.register(RDO)
 class BMFAdmin(admin.ModelAdmin):
     list_display = (
         '__str__',

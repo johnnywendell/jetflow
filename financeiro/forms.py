@@ -1,5 +1,5 @@
 from django import forms
-from .models import Contrato, BMF, ItemBm, QtdBM, Aprovador, DMS, BMS, FRS
+from .models import Contrato, RDO, ItemBm, QtdBM, Aprovador, DMS, BMS, FRS
 
 
 class DateInput(forms.DateInput):
@@ -7,7 +7,7 @@ class DateInput(forms.DateInput):
 
 class BmfForm(forms.ModelForm):
     class Meta:
-        model = BMF
+        model = RDO
         fields = '__all__'
         exclude = ('item_bm','valor','dms', 'funcionario','rev','slug','valor_max')
 
@@ -26,7 +26,7 @@ class QtdForm(forms.ModelForm):
     class Meta:
         model = QtdBM
         fields = '__all__'
-        exclude = ('bmf','valor')
+        exclude = ('rdo','valor')
 
 class DmsForm(forms.ModelForm):
     class Meta:

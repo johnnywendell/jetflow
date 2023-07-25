@@ -8,7 +8,7 @@ from django.shortcuts import render, render, resolve_url
 from django.http import HttpResponseRedirect, JsonResponse, HttpResponse
 from django.views.generic import CreateView, UpdateView, ListView
 from django.db.models import Q, F
-from .models import Contrato, BMF, ItemBm, QtdBM,Aprovador,DMS,BMS,FRS
+from .models import Contrato, RDO, ItemBm, QtdBM,Aprovador,DMS,BMS,FRS
 from .forms import ContratoForm, BmfForm, ItemForm, QtdForm,AprovadorForm,DmsForm,BmsForm,FrsForm
 from django.db.models import Sum, Count, Case, When
 from django.db import models
@@ -106,7 +106,7 @@ def itembm_add(request):
 @has_role_decorator('planejador')
 def bmf_list_planejador(request):
     template_name='bmf_list.html'
-    objects=BMF.objects.filter(funcionario=request.user).all()
+    objects=RDO.objects.filter(funcionario=request.user).all()
     search = request.GET.get('search')
     if search:
         objects = objects.filter(bmf__icontains=search)
@@ -114,7 +114,7 @@ def bmf_list_planejador(request):
     return render(request,template_name, context)
 
 class BmfList(ListView):
-    model = BMF
+    model = RDO
     template_name = 'bmf_list.html'
     paginate_by = 20
     context_object_name = 'objects_list'
@@ -148,7 +148,7 @@ class FrsList(ListView):
     context_object_name = 'objects_list'
 
 class BmfCreate(CreateView):
-    model = BMF
+    model = RDO
     template_name = 'bmf_form.html'
     form_class = BmfForm
     def form_valid(self, form):
@@ -159,7 +159,7 @@ class BmfCreate(CreateView):
         return HttpResponseRedirect(self.get_success_url())
  
 class BmfUpdate(UpdateView):
-    model = BMF
+    model = RDO
     template_name = 'bmf_form.html'
     form_class = BmfForm
 
@@ -194,22 +194,22 @@ class FRSUpdate(UpdateView):
     form_class = FrsForm
 ############## jsonitens
 def json_itens(request, ref, pk):
-    data = list(ItemBm.objects.values().filter(~Q(bmf__pk=pk),item_ref=ref))
+    data = list(ItemBm.objects.values().filter(~Q(rdo__pk=pk),item_ref=ref))
     return JsonResponse({'data':data})
 def json_fat_uni(request,begin,end):
     data_inicial = begin
     data__final = end
-    data = list(BMF.objects.filter(data_periodo__range=[data_inicial, data__final]).values('unidade__area').annotate(Sum('valor')))
+    data = list(RDO.objects.filter(data_periodo__range=[data_inicial, data__final]).values('unidade__area').annotate(Sum('valor')))
     return JsonResponse({'data':data})
 def json_fat_sol(request,begin,end):
     data_inicial = begin
     data__final = end
-    data = list(BMF.objects.filter(data_periodo__range=[data_inicial, data__final]).values('solicitante__solicitante').annotate(Sum('valor')))
+    data = list(RDO.objects.filter(data_periodo__range=[data_inicial, data__final]).values('solicitante__solicitante').annotate(Sum('valor')))
     return JsonResponse({'data':data})
 def json_fat_tipo(request,begin,end):
     data_inicial = begin
     data__final = end
-    data = list(BMF.objects.filter(data_periodo__range=[data_inicial, data__final]).values('tipo').annotate(Sum('valor')))
+    data = list(RDO.objects.filter(data_periodo__range=[data_inicial, data__final]).values('tipo').annotate(Sum('valor')))
     return JsonResponse({'data':data})
 def json_fat_dms(request,begin,end,status):
     data_inicial = begin
@@ -224,8 +224,8 @@ def json_fat_dms(request,begin,end,status):
 def administracao(request):
     template_name = 'gerencia.html'
     funcionarios = User.objects.all()
-    bmfs_pendentes = BMF.objects.filter(status=False).all()
-    objects = BMF.objects.values('funcionario__username').annotate(
+    bmfs_pendentes = RDO.objects.filter(status=False).all()
+    objects = RDO.objects.values('funcionario__username').annotate(
             revisao=Sum('rev'),
             bm_total=Count('bmf'),
             bm_revisado=Count(Case(When(rev__gt=1, then=1), output_field=models.IntegerField())),
@@ -235,7 +235,7 @@ def administracao(request):
         if request.POST.get('periodo') != "":
             data = request.POST.get('periodo')
             bmfs_pendentes = BMF.objects.filter(status=False, data_periodo=data).all()
-            objects = BMF.objects.filter(data_periodo=data).values('funcionario__username').annotate(
+            objects = RDO.objects.filter(data_periodo=data).values('funcionario__username').annotate(
                 revisao=Sum('rev'),
                 bm_total=Count('bmf'),
                 bm_revisado=Count(Case(When(rev__gt=1, then=1), output_field=models.IntegerField())),
@@ -243,7 +243,7 @@ def administracao(request):
                 valor_max=Sum('valor_max'),).order_by('-revisao')
         elif request.POST.get('planejador'):
             plan = request.POST.get('planejador')
-            bmfs_pendentes = BMF.objects.filter(status=False, funcionario=plan).all()
+            bmfs_pendentes = RDO.objects.filter(status=False, funcionario=plan).all()
             
                                 
     context={'objects_list': objects, 'bmfs':bmfs_pendentes, 'funcionarios':funcionarios}
@@ -253,8 +253,8 @@ def administracao(request):
 @login_required
 def bmf_detail(request, slug):
     template_name = 'bmf_detail.html'
-    obj = BMF.objects.get(slug=slug)
-    qtdbm = QtdBM.objects.filter(bmf=obj.pk)
+    obj = RDO.objects.get(slug=slug)
+    qtdbm = QtdBM.objects.filter(rdo=obj.pk)
     item_form = QtdBM()
     if request.method == 'POST':
         form=QtdForm(request.POST, instance=item_form, prefix='main')
@@ -262,17 +262,17 @@ def bmf_detail(request, slug):
         if form.is_valid():
             obj.item_bm.add(itembm)
             form=form.save(commit=False)
-            form.bmf = obj
+            form.rdo = obj
             item_bm = ItemBm.objects.get(pk=itembm)
             form.valor = item_bm
             form.save()
-            qtdbm = QtdBM.objects.filter(bmf=obj.pk)
+            qtdbm = QtdBM.objects.filter(rdo=obj.pk)
             valor_total = 0
             for item in qtdbm:
                 valor_total += item.total
-            BMF.objects.filter(slug=slug).update(valor=valor_total)
+            RDO.objects.filter(slug=slug).update(valor=valor_total)
             if not valor_total < obj.valor_max:
-                BMF.objects.filter(slug=slug).update(valor_max=valor_total)
+                RDO.objects.filter(slug=slug).update(valor_max=valor_total)
             url='#'
             return HttpResponseRedirect(url)
     else:
@@ -285,14 +285,14 @@ def bmf_detail(request, slug):
 def delete_item(request, pk, id, ind):
     item = ItemBm.objects.get(pk=pk)
     qtd = QtdBM.objects.get(pk=id)
-    obj = BMF.objects.get(pk=ind)
+    obj = RDO.objects.get(pk=ind)
     qtd.delete()
     obj.item_bm.remove(item)
-    qtdbm = QtdBM.objects.filter(bmf=ind)
+    qtdbm = QtdBM.objects.filter(rdo=ind)
     valor_total = 0
     for x in qtdbm:
         valor_total += x.total
-    BMF.objects.filter(pk=ind).update(valor=valor_total, rev=F('rev')+1)
+    RDO.objects.filter(pk=ind).update(valor=valor_total, rev=F('rev')+1)
     return HttpResponseRedirect(resolve_url('financeiro:bmf_detail',obj.slug))
 
 @login_required
@@ -300,11 +300,11 @@ def delete_item(request, pk, id, ind):
 def dms_detail(request, pk):    
     template_name = 'dms_detail.html'
     obj = DMS.objects.get(pk=pk)
-    itens = BMF.objects.filter(dms=None)
+    itens = RDO.objects.filter(dms=None)
     if request.method == 'POST':
         bmf = request.POST.get('bmf')
-        BMF.objects.filter(pk=bmf).update(dms=pk)
-        qtditem = BMF.objects.filter(dms=pk)
+        RDO.objects.filter(pk=bmf).update(dms=pk)
+        qtditem = RDO.objects.filter(dms=pk)
         valor_total = 0
         for item in qtditem:
             valor_total += item.valor
@@ -317,8 +317,8 @@ def dms_detail(request, pk):
 @login_required
 @manager_required
 def dmsitem_delete(request, pk, id):
-    BMF.objects.filter(pk=pk).update(dms=None)
-    qtditem = BMF.objects.filter(dms=id)
+    RDO.objects.filter(pk=pk).update(dms=None)
+    qtditem = RDO.objects.filter(dms=id)
     valor_total = 0
     for item in qtditem:
         valor_total += item.valor
@@ -421,7 +421,7 @@ def export_xlsx_func_bmf(request):
     filename = 'bmf_exportados.xls'
     _filename = filename.split('.')
     filename_final = f'{_filename[0]}_{MDATA}.{_filename[1]}'
-    queryset = BMF.objects.all().values_list('bmf','funcionario__username','data_periodo','unidade__area','solicitante__solicitante','auth_serv',
+    queryset = RDO.objects.all().values_list('bmf','funcionario__username','data_periodo','unidade__area','solicitante__solicitante','auth_serv',
                                              'escopo','local','id_serv','tipo','valor','status','dms__dms_n','dms__aprovador__aprovador',
                                              'dms__data_aprov','dms__status','dms__bms__bms_n','dms__bms__status',
                                              'dms__bms__aprovador__aprovador','dms__bms__frs__frs_n','dms__bms__frs__status_frs',
@@ -492,7 +492,7 @@ def save_data_bmf(data):
         tipo = item.get('tipo')
         valor = float(item.get('valor'))
         status = True if item.get('status') == 'True' else False
-        obj = BMF(
+        obj = RDO(
                 funcionario = User.objects.get(pk=funcionario),
                 data_periodo = datetime.strptime(data_periodo, '%d/%m/%Y').date(),
                 rev = rev,
@@ -508,7 +508,7 @@ def save_data_bmf(data):
                 status = status,
         )
         aux.append(obj)
-    BMF.objects.bulk_create(aux)
+    RDO.objects.bulk_create(aux)
 
 @superuser_required
 def import_csv_bmf(request):

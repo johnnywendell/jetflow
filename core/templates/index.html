@@ -3,21 +3,21 @@
 {% include "includes/nav_login.html" %} 
 <div class="card-deck justify-content-center">
 <div class="card text-white  mb-3" style="max-width: 22rem; background-color: rgb(19, 39, 69);">
-    <div class="card-header"style="max-width: 22rem; background-color: rgb(171, 25, 26);">Produção</div>
+    <div class="card-header"style="max-width: 22rem; background-color: rgb(27, 77, 105);">Produção</div>
     <div class="card-body">
       <a href="{% url 'romaneio:romaneio_list' %}"><h5 class="card-title text-light">Jetflow</h5></a>
       <p class="card-text">Módulo de controle de fluxo no canteiro de jato</p>
     </div>
   </div>
   <div class="card text-white  mb-3" style="max-width: 22rem; background-color: rgb(19, 39, 69);">
-    <div class="card-header"style="max-width: 22rem; background-color: rgb(171, 25, 26);">Qualidade</div>
+    <div class="card-header"style="max-width: 22rem; background-color: rgb(27, 77, 105);">Qualidade</div>
     <div class="card-body">
         <a href="{% url 'qualidade:relatorios_list' %}"><h5 class="card-title  text-light">Relatórios</h5></a>
       <p class="card-text">Módulo de Gestão de relatórios de inspeção</p>
     </div>
   </div>
   <div class="card text-white  mb-3" style="max-width: 22rem; background-color: rgb(19, 39, 69);">
-    <div class="card-header"style="max-width: 22rem; background-color: rgb(171, 25, 26);">Fiscal</div>
+    <div class="card-header"style="max-width: 22rem; background-color: rgb(27, 77, 105);">Fiscal</div>
     <div class="card-body">
       <a href="{% url 'qualidade:relatorios_list_fiscal' %}"><h5 class="card-title  text-light">Área Fiscalização</h5></a>
       <p class="card-text">Módulo do Fiscal/Cliente</p>
@@ -26,28 +26,28 @@
 </div>
 <div class="card-deck justify-content-center">
     <div class="card text-white mb-3" style="max-width: 22rem; background-color: rgb(19, 39, 69);">
-        <div class="card-header" style="max-width: 22rem; background-color: rgb(171, 25, 26);">Medição</div>
+        <div class="card-header" style="max-width: 22rem; background-color: rgb(27, 77, 105);">RDO</div>
         <div class="card-body">
-          <a href="{% url 'financeiro:bmf_list' %}"><h5 class="card-title  text-light">Controle e medição</h5></a>
-          <p class="card-text">Módulo de Controle e acompanhamento de medições e emissão de notas</p>
+          <a href="{% url 'financeiro:bmf_list' %}"><h5 class="card-title  text-light">Relatório diário de campo</h5></a>
+          <p class="card-text">Módulo de controle dos serviços</p>
         </div>
       </div>
       <div class="card text-white  mb-3" style="max-width: 22rem; background-color: rgb(19, 39, 69);">
-        <div class="card-header"style="max-width: 22rem; background-color: rgb(171, 25, 26);">Planejamento</div>
+        <div class="card-header"style="max-width: 22rem; background-color: rgb(27, 77, 105);">Planejamento</div>
         <div class="card-body">
-          <a href="{% url 'financeiro:bmf_list_planejador' %}"><h5 class="card-title  text-light">BMF</h5></a>
-          <p class="card-text">Módulo de cadastro de BMF </p>
+          <a href="{% url 'financeiro:bmf_list_planejador' %}"><h5 class="card-title  text-light">Controle e medições</Canvas></h5></a>
+          <p class="card-text">Módulo de cadastro das medições </p>
         </div>
       </div>
       <div class="card text-white  mb-3" style="max-width: 22rem; background-color: rgb(19, 39, 69);">
-        <div class="card-header"style="max-width: 22rem; background-color:  rgb(171, 25, 26);">Relatórios</div>
+        <div class="card-header"style="max-width: 22rem; background-color:  rgb(27, 77, 105);">Relatórios</div>
         <div class="card-body">
           <a href="{% url 'core:dash_jato' %}"><h5 class="card-title text-white">Dashboards</h5></a>
           <p class="card-text">Dashboards e Relatórios</p>
         </div>
       </div>
     </div>
-    <a  href="{% url 'logout' %}">
+    <a  href="{% url 'logout' %}" class="text-light">
       <span>Logout</span>
     </a>
 

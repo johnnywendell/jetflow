@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from material.models import Material, Romaneio
-from financeiro.models import BMF,DMS,BMS
+from financeiro.models import RDO,DMS,BMS
 from django.shortcuts import render
 from django.core import serializers
 from django.db.models import Sum
@@ -68,8 +68,8 @@ def dashboard_financeiro(request):
     begin = "2023-01-01"
     end = "2023-12-30"
     status_dms = "APROVADO"
-    bmf = BMF.objects.filter(data_periodo__range=[begin, end]).order_by('-modified')
-    pendencias = BMF.objects.filter(data_periodo__range=[begin, end],status=False).values('funcionario__username').annotate(Sum('valor'))
+    bmf = RDO.objects.filter(data_periodo__range=[begin, end]).order_by('-modified')
+    pendencias = RDO.objects.filter(data_periodo__range=[begin, end],status=False).values('funcionario__username').annotate(Sum('valor'))
     fat_total = 0
     fat_pen = 0
     fat_aprov = 0
@@ -86,8 +86,8 @@ def dashboard_financeiro(request):
         begin = request.POST.get('begin')
         end = request.POST.get('end')
         status_dms = request.POST.get('status_dms')
-        bmf = BMF.objects.filter(data_periodo__range=[begin, end])
-        pendencias = BMF.objects.filter(data_periodo__range=[begin, end],status=False).values('funcionario__username').annotate(Sum('valor'))
+        bmf = RDO.objects.filter(data_periodo__range=[begin, end])
+        pendencias = RDO.objects.filter(data_periodo__range=[begin, end],status=False).values('funcionario__username').annotate(Sum('valor'))
         fat_total = 0
         fat_pen = 0
         fat_aprov = 0

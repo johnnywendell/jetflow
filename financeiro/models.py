@@ -111,9 +111,9 @@ class ItemBm(models.Model):
     def __str__(self):
         return self.item_ref
 
-class BMF(TimeStampedModel):
+class RDO(TimeStampedModel):
     funcionario = models.ForeignKey(User, on_delete=models.CASCADE)
-    bmf = models.AutoField(auto_created=True,unique=True,primary_key=True)
+    bmf = models.AutoField("RDO",auto_created=True,unique=True,primary_key=True)
     data_periodo = models.DateField(verbose_name='Período')
     rev = models.IntegerField('Revisão',default=0)
     unidade = models.ForeignKey(Area, on_delete=models.CASCADE)
@@ -137,7 +137,7 @@ class BMF(TimeStampedModel):
         ordering = ('-created',)
 
     def __str__(self):
-        return 'BMF Nº{}/{}'.format(str(self.bmf).zfill(4),self.data_periodo.strftime('%Y'))
+        return 'RDO Nº{}/{}'.format(str(self.bmf).zfill(4),self.data_periodo.strftime('%Y'))
 
     def get_data(self):
         return self.data_periodo.strftime('%d/%m/%Y')
@@ -154,7 +154,7 @@ class BMF(TimeStampedModel):
 class QtdBM(models.Model):
     qtd = models.DecimalField('qtd', max_digits=11, decimal_places=3)
     total = models.DecimalField('total', max_digits=11, decimal_places=3)
-    bmf = models.ForeignKey(BMF, on_delete=models.CASCADE)
+    rdo = models.ForeignKey(RDO, on_delete=models.CASCADE)
     valor = models.ForeignKey(ItemBm, on_delete=models.CASCADE)
 
 ##############################################################################################
@@ -183,4 +183,4 @@ def pre_save_receiver(sender, instance, *args, **kwargs):
        instance.slug = unique_slug_generator(instance) 
   
   
-pre_save.connect(pre_save_receiver, sender = BMF)
+pre_save.connect(pre_save_receiver, sender = RDO)
