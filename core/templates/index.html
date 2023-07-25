@@ -1,5 +1,4 @@
 {% extends "base.html" %}
-
 {% block content %} 
 {% include "includes/nav_login.html" %} 
 <div class="card-deck justify-content-center">
@@ -18,10 +17,10 @@
     </div>
   </div>
   <div class="card text-white  mb-3" style="max-width: 22rem; background-color: rgb(19, 39, 69);">
-    <div class="card-header"style="max-width: 22rem; background-color: rgb(171, 25, 26);">Manager</div>
+    <div class="card-header"style="max-width: 22rem; background-color: rgb(171, 25, 26);">Fiscal</div>
     <div class="card-body">
-      <a href="{% url 'financeiro:gerencia' %}"><h5 class="card-title  text-light">Coordenação</h5></a>
-      <p class="card-text">Módulo de Gestão da Obra</p>
+      <a href="{% url 'qualidade:relatorios_list_fiscal' %}"><h5 class="card-title  text-light">Área Fiscalização</h5></a>
+      <p class="card-text">Módulo do Fiscal/Cliente</p>
     </div>
   </div>
 </div>
