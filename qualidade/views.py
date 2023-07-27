@@ -58,7 +58,7 @@ class RelatoriosList(ListView):
     context_object_name = 'objects_list'
     def get_queryset(self):
         queryset = super(RelatoriosList, self).get_queryset()
-        search = self.request.GET.get('search')
+        search = self.request.GET.get('q')
         if search:
             queryset = queryset.filter(
                 Q(rip__icontains=search) |
@@ -73,8 +73,8 @@ def relatorios_detail(request, pk):
     template_name = 'relatorios_detail.html'
     obj = RelatorioInspecao.objects.get(pk=pk)
     relatorio = obj.rip
-    material = Material.objects.filter(concluido=True, relatorio=None)
-    material_relatorio = Material.objects.filter(relatorio=relatorio)
+    material = Material.objects.select_related('n_romaneio').filter(concluido=True, relatorio=None)
+    material_relatorio = Material.objects.select_related('n_romaneio').filter(relatorio=relatorio)
     metro = 0
     for item in material_relatorio:
         metro += item.m2

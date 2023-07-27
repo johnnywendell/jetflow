@@ -75,7 +75,7 @@ class RomaneioList(ListView):
     context_object_name = 'objects_list'
     def get_queryset(self):
         queryset = super(RomaneioList, self).get_queryset()
-        search = self.request.GET.get('search')
+        search = self.request.GET.get('q')
         if search:
             queryset = queryset.filter(
                 Q(romaneio__icontains=search) |
