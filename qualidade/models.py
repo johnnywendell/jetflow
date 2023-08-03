@@ -140,6 +140,14 @@ CHOICE = (
     ('SIM','SIM'),
     ('NÃO','NÃO'),
 )
+TIPOS = (
+    ('PARADA','PARADA'),
+    ('PROJETO','PROJETO'),
+    ('NOTA','NOTA'),
+    ('PLANO DE PINTURA','PLANO DE PINTURA'),
+    ('INTEGRIDADE','INTEGRIDADE'),
+    ('MANUTENCAO','MANUTENÇÃO'),
+)
 
 class ChecklistInspecao(TimeStampedModel):
     funcionario = models.ForeignKey(User,on_delete=models.CASCADE)
@@ -149,15 +157,16 @@ class ChecklistInspecao(TimeStampedModel):
     rec = models.CharField(max_length=15, blank=True, null=True)
     nota = models.CharField('Nota',max_length=15, blank=True, null=True)
     tag = models.CharField('Tag',max_length=20, blank=True, null=True)
-    tipo_serv = models.CharField('Tipo serviço',max_length=20, blank=True, null=True)
+    tipo_serv = models.CharField('Tipo serviço',max_length=20, choices=TIPOS)
     unidade = models.CharField('Area',max_length=30, blank=True, null=True)
     setor = models.CharField('Setor',max_length=15, blank=True, null=True)
     corrosividade = models.CharField(max_length=15, choices=CORROS)
     fiscal = models.CharField('Fiscal',max_length=30, blank=True, null=True)
+    
     inspetor = models.CharField(max_length=20, blank=True, null=True)
 
     tratamento = models.CharField('Tratamento',max_length=50, blank=True, null=True)
-    
+    tipo_subs = models.CharField('Tipo do substrato',max_length=50, blank=True, null=True)
 
     
     inicio = models.DateTimeField(verbose_name='Inicio')
@@ -184,11 +193,11 @@ class ChecklistInspecao(TimeStampedModel):
     
 
     rnc_n = models.BooleanField('RNC?',default=False)
-    aprovado = models.BooleanField(default=True)
-    laudo = models.BooleanField(default=True)
-    m2 = models.DecimalField('Metro quadrado', max_digits=6, decimal_places=2, blank=True, null=True)
-    obs_inst = models.TextField('Instrumentos de medição',blank=True, null=True)
+    aprovado = models.BooleanField(default=False)
+    laudo = models.BooleanField(default=False)
     
+    obs_inst = models.TextField('Instrumentos de medição',blank=True, null=True)
+    m2 = models.DecimalField('Metro quadrado', max_digits=6, decimal_places=2, blank=True, null=True)
     
 
     class Meta:
@@ -208,7 +217,7 @@ class EtapaChecklist(models.Model):
     rip_n = models.ForeignKey(ChecklistInspecao, on_delete=models.CASCADE, related_name='checklist')
     tinta = models.CharField(max_length=20, blank=True, null=True)
     lote_a = models.CharField(max_length=20, blank=True, null=True)
-    val_a = models.DateField(verbose_name='Validade lote A')
+    val_a = models.DateField(verbose_name='Validade lote A', blank=True, null=True)
     lote_b = models.CharField(max_length=20, blank=True, null=True)
     val_b = models.DateField(verbose_name='Validade lote B', blank=True, null=True)
     lote_c = models.CharField(max_length=20, blank=True, null=True)
@@ -221,13 +230,12 @@ class EtapaChecklist(models.Model):
     diluente = models.CharField(max_length=15, blank=True, null=True)
     met_aplic = models.CharField(max_length=20, blank=True, null=True)
     inicio = models.DateTimeField(verbose_name='Inicio')
-    termino = models.DateTimeField(verbose_name='Fim')
     inter_repintura = models.CharField(max_length=15, blank=True, null=True)
     epe = models.IntegerField('Espessura especificada', blank=True, null=True)
     eps = models.IntegerField('Espessura seca', blank=True, null=True)
     insp_visual = models.BooleanField(default=True)
     aderencia = models.CharField(max_length=15, blank=True, null=True)
-    laudo = models.BooleanField(default=True)
+    laudo = models.BooleanField(default=False)
     data_insp = models.DateField(verbose_name='Data inspeção', blank=True, null=True)
     pintor = models.CharField("Matrícula Executante",max_length=10, blank=True, null=True)
 
@@ -239,8 +247,6 @@ class EtapaChecklist(models.Model):
         return self.data_insp.strftime('%d/%m/%Y')
     def get_inicio(self):
         return self.inicio.strftime('%d/%m/%Y')
-    def get_termino(self):
-        return self.termino.strftime('%d/%m/%Y')
     def get_val_a(self):
         return self.val_a.strftime('%d/%m/%Y')
     def get_val_b(self):

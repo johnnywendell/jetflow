@@ -4,6 +4,7 @@ from django.contrib.auth.decorators import login_required
 from usuarios.decorators import manager_required
 from django.contrib.auth.decorators import login_required
 
+
 app_name ='qualidade'
 
 urlpatterns =[
@@ -28,6 +29,7 @@ urlpatterns =[
     path('photocheck/create/', v.photo_create_check, name='photo_create_check'),
     path('pdfcheck/<int:pk>/', v.render_pdf_view_check, name='render_pdf_view_check'),
     path('photocheck/delete/<int:pk>', v.delete_photo_check, name='delete_photo_check'),
+    path('pdfchecksimple/<int:pk>/', v.render_pdf_view_check_simple, name='render_pdf_view_check_simple'),
 
 
 ]

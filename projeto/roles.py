@@ -12,6 +12,9 @@ class Fiscal(AbstractUserRole):
 class Medidor(AbstractUserRole):
     available_permissions = {'ass_medidor':True}
 
+class Encarregado(AbstractUserRole):
+    available_permissions = {'ass_encarregado':True}
+
 class Planejador(AbstractUserRole):
     available_permissions = {'ass_planejador':True}
 

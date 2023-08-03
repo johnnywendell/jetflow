@@ -2,6 +2,7 @@ from django.urls import path
 from financeiro import views as v
 from django.contrib.auth.decorators import login_required
 from usuarios.decorators import manager_required
+from rolepermissions.decorators import has_role_decorator
 
 app_name ='financeiro'
 
@@ -16,7 +17,7 @@ urlpatterns =[
     path('bms/', manager_required(v.BmsList.as_view()), name='bms_list'),
     path('frs/', manager_required(v.FrsList.as_view()), name='frs_list'),
     path('bmf/<int:pk>/edit/', login_required(v.BmfUpdate.as_view()), name='bmf_update'),
-    path('bmf/create/', login_required(v.BmfCreate.as_view()), name='bmf_create'),
+    path('bmf/create/', has_role_decorator('coordenador')(v.BmfCreate.as_view()), name='bmf_create'),
     path('dms/<int:pk>/edit/', manager_required(v.DMSUpdate.as_view()), name='dms_update'),
     path('dms/create/', manager_required(v.DMSCreate.as_view()), name='dms_create'),
     path('bms/<int:pk>/edit/', manager_required(v.BmsUpdate.as_view()), name='bms_update'),

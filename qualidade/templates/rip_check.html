@@ -17,9 +17,17 @@
                 @frame col3_frame {             /* Content frame 2 */
                     left: 410pt; width: 170pt; top: 240pt; height: 285pt;
                 }
+                @frame footer3_frame2 {           /* Static frame */
+                    -pdf-frame-content: footer3_content2;
+                    left: 50pt; width: 512pt; top: 600pt; height: 100pt;
+                }
                 @frame footer2_frame {           /* Static frame */
                     -pdf-frame-content: footer_content2;
-                    left: 50pt; width: 512pt; top: 600pt; height: 200pt;
+                    left: 50pt; width: 512pt; top: 700pt; height: 200pt;
+                }
+                @frame page_frame {           /* Static frame */
+                            -pdf-frame-content: page_count;
+                            left: 50pt; width: 512pt; top: 780pt; height: 14pt;
                 }
             }
 
@@ -40,6 +48,10 @@
                 @frame footer2_frame {           /* Static frame */
                     -pdf-frame-content: footer_content2;
                     left: 50pt; width: 512pt; top: 700pt; height: 200pt;
+                }
+                @frame page_frame {           /* Static frame */
+                            -pdf-frame-content: page_count;
+                            left: 50pt; width: 512pt; top: 780pt; height: 14pt;
                 }
             }
         </style>
@@ -262,27 +274,40 @@
     {% endfor %}
 
 
-<div id="footer2_content2">
+<div id="footer3_content2">
 <hr>       
 <table style="margin-bottom: 0px;padding-bottom: 0px;">
         <th>Instrumentos</th>
-        <th>Obs.</th>
+        
         </table>
         <table>
             <td>{{checklist.obs_inst}}</td>
+          
+            </table>
+    </div>
+    <div id="footer2_content2">
+<hr>       
+<table style="margin-bottom: 0px;padding-bottom: 0px;">
+      
+        <th>Obs.</th>
+        </table>
+        <table>
+            
             <td>{{checklist.obs_final }}</td>
             </table>
     </div>
 <div id="footer_content2">
     <table style="margin-bottom: 0px;padding-bottom: 0px;">
+        <hr style="margin-top: 0px;">
         <th>Inspeção</th>
         <th>Fiscalização</th>
         </table>
-    <hr style="margin-top: 0px;">
+   
 <table>
      
             </table>
     </div>
+    <div id="page_count">Página <pdf:pagenumber> de <pdf:pagecount> </div>
 
     
 

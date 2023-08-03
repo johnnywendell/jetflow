@@ -90,15 +90,15 @@ def tintaacabamento_add(request):
 class MaterialList(ListView):
     model = Material
     template_name = 'material_list.html'
-    paginate_by = 20
+    paginate_by = 5
     context_object_name = 'objects_list'
     def get_queryset(self):
         queryset = super(MaterialList, self).get_queryset()
-        search = self.request.GET.get('search')
-        if search:
+        q = self.request.GET.get('q')
+        if q:
             queryset = queryset.filter(
-                Q(n_romaneio__romaneio=search) |
-                Q(descricao__icontains=search)
+                Q(n_romaneio__romaneio=q) |
+                Q(descricao__icontains=q)
             )
         return queryset
     def post(self, request, *args, **kwargs):

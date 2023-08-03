@@ -21,9 +21,9 @@
                             -pdf-frame-content: footer_content;
                             left: 50pt; width: 512pt; top: 520pt; height: 250pt;
                         }
-                        @frame footer2_frame {           /* Static frame */
-                            -pdf-frame-content: footer_content2;
-                            left: 50pt; width: 512pt; top: 800pt; height: 100pt;
+                        @frame page_frame {           /* Static frame */
+                            -pdf-frame-content: page_count;
+                            left: 50pt; width: 512pt; top: 780pt; height: 14pt;
                         }
                     }
 
@@ -44,6 +44,10 @@
                         @frame footer2_frame {           /* Static frame */
                             -pdf-frame-content: footer_content2;
                             left: 50pt; width: 512pt; top: 700pt; height: 200pt;
+                        }
+                        @frame page_frame {           /* Static frame */
+                            -pdf-frame-content: page_count;
+                            left: 50pt; width: 512pt; top: 780pt; height: 14pt;
                         }
                     }
                 </style>
@@ -309,8 +313,7 @@
                     {% endif  %} 
                     </table>
             </div>
- 
-            
+            <div id="page_count">Página <pdf:pagenumber> de <pdf:pagecount> </div>
 
             <div id="header_content2">
                 <img src="media/logo.png" alt="blah">

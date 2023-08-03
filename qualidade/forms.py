@@ -49,7 +49,7 @@ class ChecklistForm(forms.ModelForm):
         model = ChecklistInspecao
         fields = '__all__'
         exclude = ('funcionario','temp_ambiente','ura','po','temp_super','intemperismo','descontaminacao','poeira_tam',
-                   'poeira_quant','teor_sais','ambiente_pintura','rugosidade','obs_inst','m2')
+                   'poeira_quant','teor_sais','ambiente_pintura','rugosidade','obs_inst','inspetor','rnc_n','aprovado','laudo')
         widgets = {
             'inicio':  DateInput(),
             'termino':  DateInput(),
@@ -67,13 +67,14 @@ class EtapascheckForm(forms.ModelForm):
     class Meta:
         model = EtapaChecklist
         fields = '__all__'
+        exclude = ('temp_amb','ura','po','temp_substrato','inter_repintura','epe','eps','insp_visual','aderencia',
+                   'data_insp','laudo')
         widgets = {
             'data_insp':  DateInput(),
             'val_a':  DateInput(),
             'val_b':  DateInput(),
             'val_c':  DateInput(),
             'inicio':  DateInput(),
-            'termino':  DateInput(),
         }
 
 class EtapascheckForminsp(forms.ModelForm):

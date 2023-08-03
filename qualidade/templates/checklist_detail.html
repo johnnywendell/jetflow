@@ -5,6 +5,14 @@
 
     <h2>Checklist Nº {{ object }}
         <span class="pull-right">
+            <a href="{% url 'qualidade:render_pdf_view_check_simple' object.pk %}">
+                <button type="button" class="btn btn-primary">
+                    <span class="fa fa-pencil"></span> gerar PDF simplificado
+                </button>
+            </a>
+
+        </span>
+        <span class="pull-right">
             <a href="{% url 'qualidade:render_pdf_view_check' object.pk %}">
                 <button type="button" class="btn btn-success">
                     <span class="fa fa-pencil"></span> gerar PDF
@@ -67,6 +75,10 @@
                     <th class="text-right">Tag</th>
                     <td>{{ object.tag }}</td>
                 </tr>
+                <tr>
+                    <th class="text-right">Tipo substrato</th>
+                    <td>{{ object.tipo_subs }}</td>
+                </tr>
                 
             </tbody>
         </table>
@@ -78,8 +90,8 @@
                     <td>{{ object.fiscal }}</td>
                 </tr>
                 <tr>
-                    <th class="text-right">Inspetor</th>
-                    <td>{{ object.inspetor }}</td>
+                    <th class="text-right">Encarregado</th>
+                    <td>{{ object.funcionario }}</td>
                 </tr>
                 <tr>
                     <th class="text-right">NC? </th>

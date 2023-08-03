@@ -209,7 +209,8 @@ class Checklist_list(ListView):
                 Q(unidade__icontains=search)
             )
         return queryset
-    
+
+@has_role_decorator('encarregado')   
 def checklist_add(request):
     template_name = 'checklist_add.html'
     checklist_form=ChecklistInspecao()
@@ -239,7 +240,6 @@ def checklist_add(request):
     return render(request, template_name, context)
 
 @login_required
-@manager_required
 def checklist_detail(request, pk):
     template_name = 'checklist_detail.html'
     obj = ChecklistInspecao.objects.get(pk=pk)
@@ -256,6 +256,8 @@ class EtapacheckUpdate(UpdateView):
     template_name = 'checklist_form.html'
     form_class = EtapascheckForminsp
 
+
+@has_role_decorator('fiscal')
 @login_required
 @manager_required
 def photo_create_check(request):
@@ -270,6 +272,8 @@ def photo_create_check(request):
     context ={'form':form}
     return render(request, template_name, context)
 
+
+@has_role_decorator('fiscal')
 @login_required
 @manager_required
 def delete_photo_check(request, pk):
@@ -281,6 +285,36 @@ def delete_photo_check(request, pk):
 def render_pdf_view_check(request, pk):
     checklist = get_object_or_404(ChecklistInspecao, pk=pk)
     template_path = 'rip_check.html'
+    teste = checklist.checklists.all()
+    links = []
+    for item in teste:
+        if item.photo:
+            link = item.photo.url
+            link = link[1:]
+            links.append(link)
+    context = {'checklist': checklist, 'links':links}
+   
+    # Create a Django response object, and specify content_type as pdf
+    response = HttpResponse(content_type='application/pdf')
+
+    #if download
+    #response['Content-Disposition'] = 'attachment; filename="report.pdf"'
+    # find the template and render it.
+    template = get_template(template_path)
+    html = template.render(context)
+
+    # create a pdf
+    pisa_status = pisa.CreatePDF(
+       html, dest=response)
+    # if error then show some funny view
+    if pisa_status.err:
+       return HttpResponse('We had some errors <pre>' + html + '</pre>')
+    return response
+
+@login_required
+def render_pdf_view_check_simple(request, pk):
+    checklist = get_object_or_404(ChecklistInspecao, pk=pk)
+    template_path = 'rip_simp.html'
     teste = checklist.checklists.all()
     links = []
     for item in teste:
