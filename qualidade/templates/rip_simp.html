@@ -80,17 +80,17 @@
                     <td style="padding-top: 3px;padding-left: 2px;"> {{ checklist.tratamento }}{% for obj in object.checklist.all %}-{obj}{% endfor %}</td>
                 <tr>
                     <th class="text-left">Cor final</th>
-                    <td style="padding-top: 3px;padding-left: 2px;"> VERMELHO </td>
+                    <td style="padding-top: 3px;padding-left: 2px;"> {{ cor }} </td>
                 </tr>
                     <th class="text-left">Tipo de substrato</th>
                     <td style="padding-top: 3px;padding-left: 2px;"> {{ checklist.tipo_subs }} </td>
                 <tr>
                     <th class="text-left">Espessura total</th>
-                    <td style="padding-top: 3px;padding-left: 2px;">447mc </td>
+                    <td style="padding-top: 3px;padding-left: 2px;">{{ espessura_total }} </td>
                 </tr>
                 <tr>
-                    <th class="text-left">Taderência do esquema</th>
-                    <td style="padding-top: 3px;padding-left: 2px;">n/a</td>
+                    <th class="text-left">Aderência do esquema</th>
+                    <td style="padding-top: 3px;padding-left: 2px;">{{ aderencia }}</td>
                 </tr>
                 <tr>
                     <th class="text-left">TAG</th>
@@ -109,8 +109,6 @@
                     <td style="padding-top: 3px;padding-left: 2px;"> {{ checklist.inspetor }} </td>
                 </tr>
         </table>
-
-
 </div>   
 
 

@@ -257,7 +257,7 @@ class EtapacheckUpdate(UpdateView):
     form_class = EtapascheckForminsp
 
 
-@has_role_decorator('fiscal')
+@has_role_decorator('inspetor')
 @login_required
 @manager_required
 def photo_create_check(request):
@@ -273,7 +273,7 @@ def photo_create_check(request):
     return render(request, template_name, context)
 
 
-@has_role_decorator('fiscal')
+@has_role_decorator('inspetor')
 @login_required
 @manager_required
 def delete_photo_check(request, pk):
@@ -316,13 +316,22 @@ def render_pdf_view_check_simple(request, pk):
     checklist = get_object_or_404(ChecklistInspecao, pk=pk)
     template_path = 'rip_simp.html'
     teste = checklist.checklists.all()
+    etapas = checklist.checklist.all()
     links = []
+    ultimo_item = etapas[1:]
+    espessura_total = 0
+    for y in etapas:
+        if y.eps:
+            espessura_total += y.eps
+    for x in ultimo_item:
+        cor = x.cor_munsell
+        aderencia = x.aderencia
     for item in teste:
         if item.photo:
             link = item.photo.url
             link = link[1:]
             links.append(link)
-    context = {'checklist': checklist, 'links':links}
+    context = {'checklist': checklist, 'links':links, 'cor':cor, 'espessura_total':espessura_total, 'aderencia':aderencia}
    
     # Create a Django response object, and specify content_type as pdf
     response = HttpResponse(content_type='application/pdf')
