@@ -202,11 +202,12 @@ class Checklist_list(ListView):
     context_object_name = 'objects_list'
     def get_queryset(self):
         queryset = super(Checklist_list, self).get_queryset()
-        search = self.request.GET.get('search')
-        if search:
+        q = self.request.GET.get('q')
+        if q:
             queryset = queryset.filter(
-                Q(rip=search) |
-                Q(unidade__icontains=search)
+                Q(rip__icontains=q) |
+                Q(unidade__icontains=q) |
+                Q(rec__icontains=q) 
             )
         return queryset
 
@@ -318,7 +319,7 @@ def render_pdf_view_check_simple(request, pk):
     teste = checklist.checklists.all()
     etapas = checklist.checklist.all()
     links = []
-    ultimo_item = etapas[1:]
+    ultimo_item = etapas[0:]
     espessura_total = 0
     for y in etapas:
         if y.eps:

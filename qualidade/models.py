@@ -112,7 +112,7 @@ class EtapaPintura(models.Model):
     def get_val_c(self):
         return self.val_c.strftime('%d/%m/%Y')
     def get_absolute_url(self):
-        return reverse_lazy('qualidade:relatorios_list')
+        return reverse_lazy('qualidade:relatorios_detail', kwargs={'pk': self.rip_n.rip })
 
 class Photo(models.Model):
     rip_numero = models.ForeignKey(RelatorioInspecao, on_delete=models.CASCADE, verbose_name='RIP',related_name='relatorio')
@@ -254,7 +254,7 @@ class EtapaChecklist(models.Model):
     def get_val_c(self):
         return self.val_c.strftime('%d/%m/%Y')
     def get_absolute_url(self):
-        return reverse_lazy('qualidade:check_list')
+        return reverse_lazy('qualidade:checklist_detail', kwargs={'pk': self.rip_n.rip})
     
 class Photocheck(models.Model):
     rip_numero = models.ForeignKey(ChecklistInspecao, on_delete=models.CASCADE, verbose_name='RIP',related_name='checklists')

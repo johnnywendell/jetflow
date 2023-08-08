@@ -27,7 +27,7 @@
         </ul>
       
         <form action="." method="GET" class="form-inline">
-            <input type="text" id="search" name="search" class="form-control" placeholder="Busca">
+            <input type="text" id="q" name="q" value="{{ request.GET.q }}" class="form-control" placeholder="Busca">
             <input type="submit" class="btn btn-secondary" style="margin-left: 10px;" value="OK">
         </form>
 
