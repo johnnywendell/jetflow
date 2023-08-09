@@ -6,7 +6,7 @@ from usuarios.decorators import manager_required
 app_name ='romaneio'
 
 urlpatterns =[
-    path('romaneios/', login_required(v.RomaneioList.as_view()), name='romaneio_list'),
+    path('romaneios/', manager_required(v.RomaneioList.as_view()), name='romaneio_list'),
     path('romaneios/<int:pk>/', v.romaneio_detail, name='romaneio_detail'),
     path('romaneios/add/', v.romaneio_add, name='romaneios_add'),
     path('romaneios/<int:pk>/edit/', manager_required(v.RomaneioUpdate.as_view()), name='romaneio_edit'),

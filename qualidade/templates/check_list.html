@@ -1,20 +1,17 @@
+
 {% extends "base.html" %}
 
+
 {% block content %} 
-{% include "includes/nav_jetflow.html" %} 
+{% include "includes/nav_qualidade.html" %}
     <div class="page-header">
-        <h2><i class="fa fa-user"></i> Romaneios
+        <h2><i class="fa fa-user"></i> Checklist
             <span class="pull-right">
                 <div style="display: flex;">
-                <a href="{% url 'romaneio:romaneios_add' %}">
+                <a href="{% url 'qualidade:checklist_add' %}">
                     <button type="button" class="btn btn-primary">
                         <span class="fa fa-plus"></span>Adicionar
                     </button>                    
-                </a>
-                <a href="{% url 'romaneio:export_xlsx_func' %}">
-                    <button type="button" class="btn btn-info">
-                        <span class="fa fa-plus"></span>Exportar dados
-                    </button>
                 </a>
                 </div>
             </span>
@@ -25,23 +22,23 @@
         <table class="table table-striped">
             <thead>
                 <tr>
-                    <th>Nº Romaneio</th>
-                    <th>Data Entrada</th>
-                    <th>Documento Referência</th>
-                    <th>Obs</th>
-		    <th>Área</th>
-                    <th class="text-center">Solicitante</th>
+                    <th>Nº Rip</th>
+                    <th>Cliente</th>
+                    <th>Rec/PJ/OM</th>
+                    <th>Unidade/Planta</th>
+                    <th class="text-center">Fiscal</th>
+                    <th>Plot</th>
                 </tr>
             </thead>
             <tbody>
                 {% for object in objects_list %}
                 <tr>
                     <td><a href="{{ object.get_absolute_url }}">{{ object }}</a></td>
-                    <td>{{ object.entrada }}</td>
-                    <td>{{ object.documento }}</td>
-                    <td>{{ object.obs }}
-                    <td>{{ object.area }}</td>
-                    <td class="text-center">{{ object.solicitante }}</td>
+                    <td>{{ object.cliente }}</td>
+                    <td>{{ object.rec }}</td>
+                    <td>{{ object.unidade }}</td>
+                    <td class="text-center">{{ object.fiscal }}</td>
+               	    <td><a href="{% url 'qualidade:render_pdf_view_check' object.pk %}"><i class="fa fa-thin fa-print"></i></a></td>
                 </tr>
                  
                 {% endfor %}
@@ -55,3 +52,4 @@
     {% include "includes/pagination.html" %}
 
 {% endblock content %} 
+

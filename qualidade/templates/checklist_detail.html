@@ -1,0 +1,363 @@
+{% extends "base.html" %}
+
+{% block content %} 
+{% include "includes/nav_qualidade.html" %}
+
+    <h2>Checklist Nº {{ object }}
+        <span class="pull-right">
+            <a href="{% url 'qualidade:render_pdf_view_check_simple' object.pk %}">
+                <button type="button" class="btn btn-primary">
+                    <span class="fa fa-pencil"></span> gerar PDF simplificado
+                </button>
+            </a>
+
+        </span>
+        <span class="pull-right">
+            <a href="{% url 'qualidade:render_pdf_view_check' object.pk %}">
+                <button type="button" class="btn btn-success">
+                    <span class="fa fa-pencil"></span> gerar PDF
+                </button>
+            </a>
+
+        </span>
+        <span class="pull-right">
+            <a href="{% url 'qualidade:checklist_update' object.pk %}">
+                <button type="button" class="btn btn-info">
+                    <span class="fa fa-pencil"></span> Editar
+                </button>
+            </a>
+
+        </span>
+    </h2>
+    <div class="row">
+    <div class="col-sm-4">
+        <table class="table table-user-information table-sm">
+            <tbody>
+                <tr>
+                    <th class="text-right">Cliente</th>
+                    <td> {{ object.cliente }}</td>
+                </tr>
+                <tr>
+                    <th class="text-right">Data</th>
+                    <td>{{ object.get_data }}</td>
+                </tr>
+                <tr>
+                    <th class="text-right">Dcoumento ref.</th>
+                    <td>{{ object.rec }}</td>
+                </tr>
+                <tr>
+                    <th class="text-right">Nota</th>
+                    <td>{{ object.nota }}</td>
+                </tr>
+                <tr>
+                    <th class="text-right">Tipo de serviço</th>
+                    <td>{{ object.tipo_serv }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="col-sm-4">
+        <table class="table table-user-information table-sm">
+            <tbody>
+                <tr>
+                    <th class="text-right">Unidade/Planta</th>
+                    <td> {{ object.unidade }}</td>
+                </tr>
+                <tr>
+                    <th class="text-right">Setor</th>
+                    <td>{{ object.setor }}</td>
+                </tr>
+                <tr>
+                    <th class="text-right">Corrosividade</th>
+                    <td>{{ object.corrosividade }}</td>
+                </tr>
+                <tr>
+                    <th class="text-right">Tag</th>
+                    <td>{{ object.tag }}</td>
+                </tr>
+                <tr>
+                    <th class="text-right">Tipo substrato</th>
+                    <td>{{ object.tipo_subs }}</td>
+                </tr>
+                
+            </tbody>
+        </table>
+    </div>
+    <div class="col-sm-4">
+        <table class="table table-user-information table-sm">
+                <tr>
+                    <th class="text-right">Fiscal</th>
+                    <td>{{ object.fiscal }}</td>
+                </tr>
+                <tr>
+                    <th class="text-right">Encarregado</th>
+                    <td>{{ object.funcionario }}</td>
+                </tr>
+                <tr>
+                    <th class="text-right">NC? </th>
+                    <td>{% if object.rnc_n %}
+                        <i class="fa fa-check-circle ok"></i>
+                      {% else %}
+                        <i class="fa fa-minus-circle no"></i>
+                      {% endif %}</td>
+                    
+                </tr>
+                <tr>
+                    <th class="text-right">Aprovado?</th>
+                    <td>{% if object.aprovado %}
+                        <i class="fa fa-check-circle ok"></i>
+                      {% else %}
+                        <i class="fa fa-minus-circle no"></i>
+                      {% endif %}</td>
+                </tr>
+                
+            </tbody>
+        </table>
+    </div>
+    <div class="col-sm-12">
+        <table class="table table-user-information table-sm">
+                <tr>
+                    <th class="text-left">Todos pontos de contato foram instalados calha tipo Utec?</th>
+                    <td>{{ object.calha_utec }}</td>
+                </tr>
+                <tr>
+                    <th class="text-left">Foram pintados os guias e os pontos de contatos da tubulação?</th>
+                    <td>{{ object.guia_pc }}</td>
+                </tr>
+                <tr>
+                    <th class="text-left">Aplicado fita de proteção nos pontos com grampos de fixação?</th>
+                    <td>{{ object.fita_protec }}</td>
+                </tr>
+                <tr>
+                    <th class="text-left">Foi pintado todos trechos recomendados da REC?</th>
+                    <td>{{ object.trecho_rec }}</td>
+                </tr>
+                <tr>
+                    <th class="text-left">Foi Aplicado elastômero nos acessórios?</th>
+                    <td>{{ object.elastomero }}</td>
+                </tr>
+                <tr>
+                    <th class="text-left">Foram pintados todos os volantes e caps?</th>
+                    <td>{{ object.volante_caps }}</td>
+                </tr>
+               
+                
+            </tbody>
+        </table>
+    </div>
+    </div>
+    <legend style="border-bottom: 1px solid #e5e5e5;">Tratamento da Superfície - {{ object.tratamento }} </legend>
+    <table class="table table-bordered table-sm">
+        <thead>
+            <tr>
+                <th>Inicio</th>
+                <th>Termino</th>
+                <th>Temp. amb.</th>
+                <th>U.R.A</th>
+                <th>P.O</th>
+                <th>Temp. Superfície</th>
+                <th>Rugosidade</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>{{ object.get_inicio }}</td>
+                <td>{{ object.get_termino }}</td>
+                <td>{{ object.temp_ambiente }}</td>
+                <td>{{ object.ura}}</td>
+                <td>{{ object.po }}</td>
+                <td>{{ object.temp_super }}</td>
+                <td>{{ object.rugosidade}}</td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-bordered table-sm">
+        <thead>
+            <tr>
+                
+                <th>Poeira Tam</th>
+                <th>Poeira QTD</th>
+                <th>Teor Sais</th>
+                <th>Amb pintura</th>
+                <th>Intemperismo</th>
+                <th>Descontaminacao</th>
+                <th>Laudo</th>
+                
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>{{ object.poeira_tam }}</td>
+                <td>{{ object.tpoeira_quant }}</td>
+                <td>{{ object.teor_sais}}</td>
+                <td>{{ object.ambiente_pintura }}</td>
+                <td>{{ object.intemperismo }}</td>
+                <td>{{ object.descontaminacao }}</td>
+                <td>{% if object.laudo %}
+                    <i class="fa fa-check-circle ok"></i>
+                  {% else %}
+                    <i class="fa fa-minus-circle no"></i>
+                  {% endif %}</td>
+                
+            </tr>
+        </tbody>
+    </table>
+
+    <legend style="border-bottom: 1px solid #e5e5e5;">Etapas de Pintura</legend>
+<div class="row">
+    {% for obj in object.checklist.all %}
+    <div class="col-sm-4">
+    <a href="{% url 'qualidade:etapascheck_update' obj.pk %}"><h4 class="text-center">{{ obj }}</h4></a>
+    <table class="table table-sm table-bordered">
+            <tr>    
+                <th>Lote A</th>
+                <td>{{ obj.lote_a }}</td>
+            </tr>
+            <tr>
+                <th>Val</th>
+                <td>{% if obj.val_a %}{{ obj.get_val_a}}{% else %}
+                    {{ "---" }} {% endif %}</td>
+            </tr>
+            <tr>
+                <th>Lote B</th>
+                <td>{{ obj.lote_b }}</td>
+            </tr>
+            <tr>
+                <th>Val</th>
+			
+                <td>{% if obj.val_b %}
+			{{ obj.get_val_b }}
+			{% else %}
+			{{ "---" }} {% endif %}
+			</td>
+            		
+		</tr>
+            <tr>
+                <th>Lote C</th>
+                <td>{{ obj.lote_c }}</td>
+            </tr>
+            <tr>
+                <th>Val</th>
+                <td>{% if obj.val_c %}
+			{{ obj.get_val_c}}
+			{% else  %}
+			{{ "---" }} {% endif %}
+			</td>
+            </tr>
+            <tr>
+                <th>Cor Munsell</th>
+                <td>{{ obj.cor_munsell }}</td>
+            </tr>
+            <tr>
+                <th>Temp. amb.</th>
+                <td>{{ obj.temp_amb }}</td>
+            </tr>
+            <tr>
+                <th>U.R.A</th>
+                <td>{{ obj.ura}}</td>
+            </tr>
+            <tr>
+                <th>P.O.</th>
+                <td>{{ obj.po }}</td>
+            </tr>
+            <tr>
+                <th>Temp. Substr.</th>
+                <td>{{ obj.temp_substrato }}</td>
+            </tr>
+            <tr>
+                <th>Diluente</th>
+                <td>{{ obj.diluente }}</td>
+            </tr>
+            <tr>
+                <th>Método apl.</th>
+                <td>{{ obj.met_aplic}}</td>
+            </tr>
+            <tr>
+                <th>Início</th>
+                <td>{{ obj.get_inicio }}</td>
+            </tr>
+            
+            <tr>
+                <th>Intervalo Repintura</th>
+                <td>{{ obj.inter_repintura }}</td>
+            </tr>
+            <tr>
+                <th>Espessura Específicada</th>
+                <td>{{ obj.epe}}</td>
+            </tr>
+	    <tr>
+                <th>Espessura Seca</th>
+                <td>{{ obj.eps }}</td>
+            </tr>
+            <tr>
+                <th>Inspeção visual</th>
+                <td>{% if obj.insp_visual %}
+                    <i class="fa fa-check-circle ok"></i>
+                  {% else %}
+                    <i class="fa fa-minus-circle no"></i>
+                  {% endif %}</td>
+            </tr>
+            <tr>
+                <th>Aderência</th>
+                <td>{{ obj.aderencia }}</td>
+            </tr>	
+            <tr>
+                <th>Laudo</th>
+                <td>{% if obj.laudo %}
+                    <i class="fa fa-check-circle ok"></i>
+                  {% else %}
+                    <i class="fa fa-minus-circle no"></i>
+                  {% endif %}</td>
+            </tr>
+            <tr>
+                <th>Data Inspeção</th>
+                <td>{{ obj.data_insp}}</td>
+            </tr>
+        </table>
+    </div>
+    {% endfor %}
+</div>        
+        <div class="row">
+                <div class="col-sm-6">
+                    <table class="table table-user-information">
+                        <tbody>
+                <tr>
+                    <th class="text-right">Observações instrumentos</th>
+                    <td>{{ object.obs_inst }}</td>
+
+                </tr>
+            </tbody>
+            </table>
+            </div>
+            <div class="col-sm-6">
+                <table class="table table-user-information" >
+                    <tbody>
+            <tr>
+                <th class="text-right">Observações finais</th>
+
+                <td>{{ object.obs_final }}</td>
+            </tr>
+            </tbody>
+            </table>
+            </div>
+            </div>
+            <div>
+                <legend style="border-bottom: 1px solid #e5e5e5;">Registro fotográfico</legend>  
+                <a class="btn btn-info btn-sm" href="{% url 'qualidade:photo_create_check' %}"style="margin: 6px;">Adicionar Imagem</a>
+                <div class="row" style="margin-bottom: 10px;">
+                {% for item in object.checklists.all %}
+                {% if item.photo %}
+                <div style="flex-direction: column;display: flex; align-items: center;">
+                <img src="{{ item.photo.url }}" alt="" class="img-thumbnail" width="150px">
+                <a href="{% url 'qualidade:delete_photo_check' item.pk %}" class="btn btn-danger btn-sm" style="width: 50%;">delete</a>
+                </div>
+                {% endif %}
+                {% endfor %}
+                </div>
+            </div>
+                   
+{% endblock content %} 
+
+{% block js %}
+{% endblock js %}
+
