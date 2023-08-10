@@ -29,4 +29,7 @@ urlpatterns =[
     path('pdfcheck/<int:pk>/', v.render_pdf_view_check, name='render_pdf_view_check'),
     path('photocheck/delete/<int:pk>', v.delete_photo_check, name='delete_photo_check'),
     path('pdfchecksimple/<int:pk>/', v.render_pdf_view_check_simple, name='render_pdf_view_check_simple'),
+
+    path('qualidade/edit/<int:pk>/checkenc', has_role_decorator('encarregado')(v.ChecklistUpdateEncarregado.as_view()), name='checklist_updateenc'),
+    path('qualidade/edit/etapa/<int:pk>/checkenc', has_role_decorator('encarregado')(v.EtapacheckUpdateEncarregado.as_view()), name='etapascheck_updateenc'),
 ]

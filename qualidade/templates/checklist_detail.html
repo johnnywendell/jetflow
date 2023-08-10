@@ -1,13 +1,15 @@
 {% extends "base.html" %}
+{% load permission_tags %}
 
 {% block content %} 
 {% include "includes/nav_qualidade.html" %}
 
     <h2>Checklist Nº {{ object }}
+        {% if user|has_role:'inspetor' %}
         <span class="pull-right">
             <a href="{% url 'qualidade:render_pdf_view_check_simple' object.pk %}">
                 <button type="button" class="btn btn-primary">
-                    <span class="fa fa-pencil"></span> gerar PDF simplificado
+                    <span class="fa fa-pencil"></span> gerar RIP simplificado
                 </button>
             </a>
 
@@ -15,12 +17,13 @@
         <span class="pull-right">
             <a href="{% url 'qualidade:render_pdf_view_check' object.pk %}">
                 <button type="button" class="btn btn-success">
-                    <span class="fa fa-pencil"></span> gerar PDF
+                    <span class="fa fa-pencil"></span> gerar RIP
                 </button>
             </a>
 
         </span>
         <span class="pull-right">
+
             <a href="{% url 'qualidade:checklist_update' object.pk %}">
                 <button type="button" class="btn btn-info">
                     <span class="fa fa-pencil"></span> Editar
@@ -28,6 +31,19 @@
             </a>
 
         </span>
+        {% else %}
+        {% if object.aprovado %}
+        {% else %}
+        <span class="pull-right">
+
+            <a href="{% url 'qualidade:checklist_updateenc' object.pk %}">
+                <button type="button" class="btn btn-info">
+                    <span class="fa fa-pencil"></span> Editar
+                </button>
+            </a>
+        </span>
+        {% endif %}
+        {% endif %}
     </h2>
     <div class="row">
     <div class="col-sm-4">
@@ -86,7 +102,7 @@
     <div class="col-sm-4">
         <table class="table table-user-information table-sm">
                 <tr>
-                    <th class="text-right">Fiscal</th>
+                    <th class="text-right">Solicitante</th>
                     <td>{{ object.fiscal }}</td>
                 </tr>
                 <tr>
@@ -109,6 +125,10 @@
                       {% else %}
                         <i class="fa fa-minus-circle no"></i>
                       {% endif %}</td>
+                </tr>
+                <tr>
+                    <th class="text-right">M2</th>
+                    <td>{{ object.m2 }}</td>
                 </tr>
                 
             </tbody>
@@ -207,7 +227,15 @@
 <div class="row">
     {% for obj in object.checklist.all %}
     <div class="col-sm-4">
+    {% if user|has_role:'inspetor' %}
     <a href="{% url 'qualidade:etapascheck_update' obj.pk %}"><h4 class="text-center">{{ obj }}</h4></a>
+    {% else %}
+    {% if object.aprovado %}
+    <h4 class="text-center">{{ obj}}</h4>
+    {% else %}
+    <a href="{% url 'qualidade:etapascheck_updateenc' obj.pk %}"><h4 class="text-center">{{ obj }}</h4></a>
+    {% endif %}
+    {% endif %}
     <table class="table table-sm table-bordered">
             <tr>    
                 <th>Lote A</th>

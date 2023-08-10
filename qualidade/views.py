@@ -242,6 +242,17 @@ class EtapacheckUpdate(UpdateView):
     template_name = 'checklist_form.html'
     form_class = EtapascheckForminsp
 
+class ChecklistUpdateEncarregado(UpdateView):
+    model = ChecklistInspecao
+    template_name = 'checklist_form.html'
+    form_class = ChecklistForm
+
+class EtapacheckUpdateEncarregado(UpdateView):
+    model = EtapaChecklist
+    template_name = 'checklist_form.html'
+    form_class = EtapascheckForm
+
+
 
 @has_role_decorator('inspetor')
 @login_required
