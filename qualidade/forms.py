@@ -51,9 +51,9 @@ class ChecklistForm(forms.ModelForm):
         exclude = ('funcionario','temp_ambiente','ura','po','temp_super','intemperismo','descontaminacao','poeira_tam',
                    'poeira_quant','teor_sais','ambiente_pintura','rugosidade','obs_inst','inspetor','rnc_n','aprovado','laudo')
         widgets = {
-            'inicio':  DateInput(),
-            'termino':  DateInput(),
-            'data':  DateInput(),
+            'inicio':  forms.DateInput(format='%Y-%m-%d', attrs={'type': 'date'}),
+            'termino':  forms.DateInput(format='%Y-%m-%d', attrs={'type': 'date'}),
+            'data':  forms.DateInput(format='%Y-%m-%d', attrs={'type': 'date'}),
         }
 
 class ChecklistForminsp(forms.ModelForm):

@@ -58,11 +58,11 @@ class RelatoriosList(ListView):
     context_object_name = 'objects_list'
     def get_queryset(self):
         queryset = super(RelatoriosList, self).get_queryset()
-        search = self.request.GET.get('search')
-        if search:
+        q = self.request.GET.get('q')
+        if q:
             queryset = queryset.filter(
-                Q(rip__icontains=search) |
-                Q(fiscal__solicitante__icontains=search)
+                Q(rip__icontains=q) |
+                Q(fiscal__solicitante__icontains=q)
             )
         return queryset
     
@@ -256,6 +256,16 @@ class EtapacheckUpdate(UpdateView):
     model = EtapaChecklist
     template_name = 'checklist_form.html'
     form_class = EtapascheckForminsp
+
+class ChecklistUpdateEncarregado(UpdateView):
+    model = ChecklistInspecao
+    template_name = 'checklist_form.html'
+    form_class = ChecklistForm
+
+class EtapacheckUpdateEncarregado(UpdateView):
+    model = EtapaChecklist
+    template_name = 'checklist_form.html'
+    form_class = EtapascheckForm
 
 
 @has_role_decorator('inspetor')

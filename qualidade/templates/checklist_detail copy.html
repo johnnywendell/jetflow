@@ -1,15 +1,13 @@
 {% extends "base.html" %}
-{% load permission_tags %}
 
 {% block content %} 
 {% include "includes/nav_qualidade.html" %}
 
     <h2>Checklist Nº {{ object }}
-        {% if user|has_role:'inspetor' %}
         <span class="pull-right">
             <a href="{% url 'qualidade:render_pdf_view_check_simple' object.pk %}">
                 <button type="button" class="btn btn-primary">
-                    <span class="fa fa-pencil"></span> gerar RIP simplificado
+                    <span class="fa fa-pencil"></span> gerar PDF simplificado
                 </button>
             </a>
 
@@ -17,13 +15,12 @@
         <span class="pull-right">
             <a href="{% url 'qualidade:render_pdf_view_check' object.pk %}">
                 <button type="button" class="btn btn-success">
-                    <span class="fa fa-pencil"></span> gerar RIP
+                    <span class="fa fa-pencil"></span> gerar PDF
                 </button>
             </a>
 
         </span>
         <span class="pull-right">
-
             <a href="{% url 'qualidade:checklist_update' object.pk %}">
                 <button type="button" class="btn btn-info">
                     <span class="fa fa-pencil"></span> Editar
@@ -31,22 +28,6 @@
             </a>
 
         </span>
-        {% else %}
-        {% if object.aprovado %}
-        {% else %}
-        {% if request.user == object.funcionario %}
-        <span class="pull-right">
-
-            <a href="{% url 'qualidade:checklist_updateenc' object.pk %}">
-                <button type="button" class="btn btn-info">
-                    <span class="fa fa-pencil"></span> Editar
-                </button>
-            </a>
-        </span>
-        {% else %}
-        {% endif %}
-        {% endif %}
-        {% endif %}
     </h2>
     <div class="row">
     <div class="col-sm-4">
@@ -128,10 +109,6 @@
                       {% else %}
                         <i class="fa fa-minus-circle no"></i>
                       {% endif %}</td>
-                </tr>
-                <tr>
-                    <th class="text-right">M2</th>
-                    <td>{{ object.m2 }}</td>
                 </tr>
                 
             </tbody>
@@ -227,127 +204,7 @@
     </table>
 
     <legend style="border-bottom: 1px solid #e5e5e5;">Etapas de Pintura</legend>
-<div class="row">
-    {% for obj in object.checklist.all %}
-    <div class="col-sm-4">
-    {% if user|has_role:'inspetor' %}
-    <a href="{% url 'qualidade:etapascheck_update' obj.pk %}"><h4 class="text-center">{{ obj }}</h4></a>
-    {% else %}
-    {% if object.aprovado %}
-    <h4 class="text-center">{{ obj}}</h4>
-    {% else %}
-    <a href="{% url 'qualidade:etapascheck_updateenc' obj.pk %}"><h4 class="text-center">{{ obj }}</h4></a>
-    {% endif %}
-    {% endif %}
-    <table class="table table-sm table-bordered">
-            <tr>    
-                <th>Lote A</th>
-                <td>{{ obj.lote_a }}</td>
-            </tr>
-            <tr>
-                <th>Val</th>
-                <td>{% if obj.val_a %}{{ obj.get_val_a}}{% else %}
-                    {{ "---" }} {% endif %}</td>
-            </tr>
-            <tr>
-                <th>Lote B</th>
-                <td>{{ obj.lote_b }}</td>
-            </tr>
-            <tr>
-                <th>Val</th>
-			
-                <td>{% if obj.val_b %}
-			{{ obj.get_val_b }}
-			{% else %}
-			{{ "---" }} {% endif %}
-			</td>
-            		
-		</tr>
-            <tr>
-                <th>Lote C</th>
-                <td>{{ obj.lote_c }}</td>
-            </tr>
-            <tr>
-                <th>Val</th>
-                <td>{% if obj.val_c %}
-			{{ obj.get_val_c}}
-			{% else  %}
-			{{ "---" }} {% endif %}
-			</td>
-            </tr>
-            <tr>
-                <th>Cor Munsell</th>
-                <td>{{ obj.cor_munsell }}</td>
-            </tr>
-            <tr>
-                <th>Temp. amb.</th>
-                <td>{{ obj.temp_amb }}</td>
-            </tr>
-            <tr>
-                <th>U.R.A</th>
-                <td>{{ obj.ura}}</td>
-            </tr>
-            <tr>
-                <th>P.O.</th>
-                <td>{{ obj.po }}</td>
-            </tr>
-            <tr>
-                <th>Temp. Substr.</th>
-                <td>{{ obj.temp_substrato }}</td>
-            </tr>
-            <tr>
-                <th>Diluente</th>
-                <td>{{ obj.diluente }}</td>
-            </tr>
-            <tr>
-                <th>Método apl.</th>
-                <td>{{ obj.met_aplic}}</td>
-            </tr>
-            <tr>
-                <th>Início</th>
-                <td>{{ obj.get_inicio }}</td>
-            </tr>
-            
-            <tr>
-                <th>Intervalo Repintura</th>
-                <td>{{ obj.inter_repintura }}</td>
-            </tr>
-            <tr>
-                <th>Espessura Específicada</th>
-                <td>{{ obj.epe}}</td>
-            </tr>
-	    <tr>
-                <th>Espessura Seca</th>
-                <td>{{ obj.eps }}</td>
-            </tr>
-            <tr>
-                <th>Inspeção visual</th>
-                <td>{% if obj.insp_visual %}
-                    <i class="fa fa-check-circle ok"></i>
-                  {% else %}
-                    <i class="fa fa-minus-circle no"></i>
-                  {% endif %}</td>
-            </tr>
-            <tr>
-                <th>Aderência</th>
-                <td>{{ obj.aderencia }}</td>
-            </tr>	
-            <tr>
-                <th>Laudo</th>
-                <td>{% if obj.laudo %}
-                    <i class="fa fa-check-circle ok"></i>
-                  {% else %}
-                    <i class="fa fa-minus-circle no"></i>
-                  {% endif %}</td>
-            </tr>
-            <tr>
-                <th>Data Inspeção</th>
-                <td>{{ obj.data_insp}}</td>
-            </tr>
-        </table>
-    </div>
-    {% endfor %}
-</div>        
+
         <div class="row">
                 <div class="col-sm-6">
                     <table class="table table-user-information">
@@ -386,7 +243,8 @@
                 {% endfor %}
                 </div>
             </div>
-                   
+             
+            
 {% endblock content %} 
 
 {% block js %}
