@@ -25,6 +25,7 @@ urlpatterns =[
     path('qualidade/check/', login_required(v.Checklist_list.as_view()), name='check_list'),
     path('qualidade/<int:pk>/check', v.checklist_detail, name='checklist_detail'),
     path('qualidade/add/check', v.checklist_add, name='checklist_add'),
+    path('qualidade/edit/check2/<int:pk>', v.checklist_edit, name='checklist_edit'),
     path('qualidade/edit/<int:pk>/check', has_role_decorator('inspetor')(v.ChecklistUpdate.as_view()), name='checklist_update'),
     path('qualidade/edit/etapa/<int:pk>/check', has_role_decorator('inspetor')(v.EtapacheckUpdate.as_view()), name='etapascheck_update'),
     path('photocheck/create/', v.photo_create_check, name='photo_create_check'),

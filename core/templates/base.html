@@ -22,7 +22,79 @@
   <body>
     
     <div class="container">
-      {% block content %}   {% endblock content %}
+      <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top navbar-person">
+        <a class="navbar-brand" href="/"><img src="/media/logobrancomonsertec.png" alt="lgo" height="25px" style="padding-bottom: 6px;margin: 0px;"></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+    
+        <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+            <ul class="navbar-nav mr-auto">
+      </ul>
+            {% if user.is_authenticated %}
+                <ul class="navbar-nav px3">
+                        <li class="nav-item">
+                        <a href="#"  class="nav-link">Usuario: {{ user.username }} </a>
+                        </li>
+                </ul>
+            {% endif %}
+        </div>
+    </nav>
+      <!--msb: main sidebar-->
+      <div class="msb text-light" id="msb" style="margin-top: 50px;">
+              <nav class="navbar navbar-default" role="navigation">
+                  <!-- Brand and toggle get grouped for better mobile display -->
+                  <div class="navbar-header">
+                      <div class="brand-wrapper">
+                          <!-- Brand -->
+                          <div class="brand-name-wrapper">
+                              <a class="navbar-brand" href="#" style="width: 100%;">
+                                  Menu<i id="msbo" class="fa fa-solid fa-bars pull-right" style="margin-top: 5px;"></i>
+                              </a>
+                          </div>
+      
+                      </div>
+      
+                  </div>
+      
+                  <!-- Main Menu -->
+                  <div class="side-menu-container" style="width: 100%;">
+                      <ul class="nav navbar-nav">
+                        
+                          <li><a href="#"><i class="fa fa-dashboard"></i>Dashboard</a></li>
+                          <li class="active"><a href="#"><i class="fa fa-puzzle-piece"></i>Components</a></li>
+                          <li><a href="#"><i class="fa fa-heart"></i>Extras</a></li>
+      
+                          <!-- Dropdown-->
+                          <li  id="dropdown">
+                              <a data-toggle="collapse" href="#dropdown-lvl1">
+                                  <i class="fa fa-diamond"></i>Apps
+                                <span class="caret"></span>
+                            </a>
+                              <!-- Dropdown level 1 -->
+                              <div id="dropdown-lvl1" class="panel-collapse collapse">
+                                  <div class="panel-body">
+                                      <ul class="nav navbar-nav">
+                                          <li><a href="#"><i class="fa fa-chevron-right"></i>Mail</a></li>
+                                          <li><a href="#"><i class="fa fa-chevron-right"></i>Calendar</a></li>
+                                          <li><a href="#"><i class="fa fa-chevron-right"></i>Ecommerce</a></li>
+                                          <li><a href="#"><i class="fa fa-chevron-right"></i>User</a></li>
+                                          <li><a href="#"><i class="fa fa-chevron-right"></i>Social</a></li>
+                                      </ul>
+                                  </div>
+                              </div>
+                          </li>
+                          <li><a href="#"><i class="fa fa-heart"></i>Link</a></li>
+                      </ul>
+                  </div><!-- /.navbar-collapse -->
+              </nav>  
+      </div>
+      <!--main content wrapper-->
+      <div class="mcw">
+        
+        {% block content %}   {% endblock content %}
+      </div>
+      
     </div>
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
@@ -30,6 +102,15 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <!-- select2 -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+    <script>
+      $(document).ready(function(){
+          $('#msbo').on('click', function(){
+          $('body').toggleClass('msb-x');
+    });
+              
+  
+      });
+      </script>
     {% block js %}   {% endblock js %}
   </body>
 </html>

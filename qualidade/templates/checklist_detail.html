@@ -2,7 +2,7 @@
 {% load permission_tags %}
 
 {% block content %} 
-{% include "includes/nav_qualidade.html" %}
+
 
     <h2>Checklist Nº {{ object }}
         {% if user|has_role:'inspetor' %}
@@ -27,6 +27,15 @@
             <a href="{% url 'qualidade:checklist_update' object.pk %}">
                 <button type="button" class="btn btn-info">
                     <span class="fa fa-pencil"></span> Editar
+                </button>
+            </a>
+
+        </span>
+        <span class="pull-right">
+
+            <a href="{% url 'qualidade:checklist_edit' object.pk %}">
+                <button type="button" class="btn btn-info">
+                    <span class="fa fa-pencil"></span> Editar no teste
                 </button>
             </a>
 

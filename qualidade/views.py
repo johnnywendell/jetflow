@@ -240,6 +240,49 @@ def checklist_add(request):
     context={'form':form, 'formset':formset}
     return render(request, template_name, context)
 
+def checklist_edit(request, pk):
+    template_name = 'checklist_add.html'
+    if request.method == "GET":
+        objeto = ChecklistInspecao.objects.filter(pk=pk).first()
+        if objeto is None:
+            return redirect('qualidade:check_list')
+        form = ChecklistForm(instance=objeto)
+        item_checklist_formset = inlineformset_factory(
+            ChecklistInspecao,
+            EtapaChecklist,
+            form=EtapascheckForm,
+            extra=0,
+            can_delete=False,
+            min_num=1,
+            validate_min=True
+            )
+        formset = item_checklist_formset(instance=objeto)
+        context={'form':form, 'formset':formset}
+        return render(request, template_name, context)
+    if request.method == "POST":
+        objeto = ChecklistInspecao.objects.filter(pk=pk).first()
+        if objeto is None:
+            return redirect('qualidade:check_list')
+        form = ChecklistForm(request.POST, instance=objeto)
+        item_checklist_formset = inlineformset_factory(
+            ChecklistInspecao,
+            EtapaChecklist,
+            form=EtapascheckForm,
+            )
+        formset = item_checklist_formset(request.POST, instance=objeto)
+        if form.is_valid() and formset.is_valid():
+            form=form.save(commit=False)
+            form.funcionario=request.user
+            formset.instance = form
+            formset.save()
+            url='qualidade:checklist_detail'
+            return HttpResponseRedirect(resolve_url(url,form.pk))
+        else:
+            context={'form':form, 'formset': formset}
+            return render(request, template_name, context)
+
+    
+
 @login_required
 def checklist_detail(request, pk):
     template_name = 'checklist_detail.html'

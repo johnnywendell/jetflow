@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+{% block content %} 
+<nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+    <a class="navbar-brand" href="/"><img src="/media/logobrancomonsertec.png" alt="lgo" height="25px" style="padding-bottom: 6px;margin: 0px;"></a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+        <ul class="navbar-nav mr-auto">
+	</ul>
+        {% if user.is_authenticated %}
+            <ul class="navbar-nav px3">
+                    <li class="nav-item">
+                    <a href="#"  class="nav-link">Usuario: {{ user.username }} </a>
+                    </li>
+            </ul>
+        {% endif %}
+    </div>
+</nav>
+  <!--msb: main sidebar-->
+  <div class="msb" id="msb" style="margin-top: 50px;">
+          <nav class="navbar navbar-default" role="navigation">
+              <!-- Brand and toggle get grouped for better mobile display -->
+              <div class="navbar-header">
+                  <div class="brand-wrapper">
+                      <!-- Brand -->
+                      <div class="brand-name-wrapper">
+                          <a class="navbar-brand" href="#" style="width: 100%;">
+                              Menu<i id="msbo" class="fa fa-solid fa-bars pull-right" style="margin-top: 5px;"></i>
+                          </a>
+                      </div>
+  
+                  </div>
+  
+              </div>
+  
+              <!-- Main Menu -->
+              <div class="side-menu-container">
+                  <ul class="nav navbar-nav">
+  
+                      <li><a href="#"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+                      <li class="active"><a href="#"><i class="fa fa-puzzle-piece"></i> Components</a></li>
+                      <li><a href="#"><i class="fa fa-heart"></i> Extras</a></li>
+  
+                      <!-- Dropdown-->
+                      <li class="panel panel-default" id="dropdown">
+                          <a data-toggle="collapse" href="#dropdown-lvl1">
+                              <i class="fa fa-diamond"></i> Apps
+                            <span class="caret"></span>
+                        </a>
+                          <!-- Dropdown level 1 -->
+                          <div id="dropdown-lvl1" class="panel-collapse collapse">
+                              <div class="panel-body">
+                                  <ul class="nav navbar-nav">
+                                      <li><a href="#"><i class="fa fa-chevron-right"></i> Mail</a></li>
+                                      <li><a href="#"><i class="fa fa-chevron-right"></i>Calendar</a></li>
+                                      <li><a href="#"><i class="fa fa-chevron-right"></i>Ecommerce</a></li>
+                                      <li><a href="#"><i class="fa fa-chevron-right"></i>User</a></li>
+                                      <li><a href="#"><i class="fa fa-chevron-right"></i>Social</a></li>
+                                  </ul>
+                              </div>
+                          </div>
+                      </li>
+                      <li><a href="#"><i class="fa fa-heart"></i>  Link</a></li>
+                  </ul>
+              </div><!-- /.navbar-collapse -->
+          </nav>  
+  </div>
+  <!--main content wrapper-->
+  <div class="mcw">
+    
+   
+  </div>
+
+
+  {% endblock %} 
+
+{% block js %} 
+<script>
+    $(document).ready(function(){
+        $('#msbo').on('click', function(){
+        $('body').toggleClass('msb-x');
+  });
+            
+
+    });
+    </script>
+{% endblock js %}

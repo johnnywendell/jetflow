@@ -14,7 +14,7 @@
                 <div class="row">
                     <div class="col-sm-12">
                         {% for field in form.visible_fields %}
-                        <div class="form-check-inline form-row w-25{% if field.errors %} has error {% endif %}">
+                        <div class="form-check-inline form-row w-25 phonetest {% if field.errors %} has error {% endif %}">
                             <label for="{{ field.id_for_label }}">
                                 {% if field.field.required %}
                                     <span class="required">{{ field.label }} </span>

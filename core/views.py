@@ -8,6 +8,11 @@ from django.core import serializers
 from django.db.models import Sum
 
 
+
+@login_required
+def navbar(request):
+    return render(request, 'navbar.html')
+
 @login_required
 def index(request):
     return render(request, 'index.html')
