@@ -1,8 +1,6 @@
 from django import forms
 from .models import Romaneio, Area, Solicitante
 
-class DateInput(forms.DateInput):
-    input_type = 'date'
 
 class RomaneioForm(forms.ModelForm):
     class Meta:
@@ -10,7 +8,7 @@ class RomaneioForm(forms.ModelForm):
         fields = '__all__'
         exclude = ('funcionario',)
         widgets = {
-            'entrada':  DateInput()
+            'entrada':  forms.DateInput(format='%Y-%m-%d', attrs={'type': 'date'}),
         }
 
 class AreaForm(forms.ModelForm):

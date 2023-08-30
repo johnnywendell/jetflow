@@ -13,7 +13,7 @@ import os
 from django.conf import settings
 from django.views.generic import ListView
 from django.contrib.auth.decorators import login_required
-from usuarios.decorators import manager_required
+from usuarios.decorators import manager_required, superuser_required
 from rolepermissions.decorators import has_role_decorator
 
 
@@ -120,6 +120,50 @@ def relatorios_add(request):
     context={'form':form, 'formset':formset}
     return render(request, template_name, context)
 
+@login_required
+@manager_required
+def relatorios_edit(request, pk):
+    template_name = 'relatorios_add.html'
+    if request.method == "GET":
+        objeto = RelatorioInspecao.objects.filter(pk=pk).first()
+        if objeto is None:
+            return redirect('qualidade:relatorios_list')
+        form = RelatoriosForm(instance=objeto)
+        item_formset = inlineformset_factory(
+            RelatorioInspecao,
+            EtapaPintura,
+            form=EtapasForm,
+            extra=0,
+            can_delete=False,
+            min_num=1,
+            validate_min=True
+            )
+        formset = item_formset(instance=objeto)
+        context={'form':form, 'formset':formset}
+        return render(request, template_name, context)
+    if request.method == "POST":
+        objeto = RelatorioInspecao.objects.filter(pk=pk).first()
+        if objeto is None:
+            return redirect('qualidade:relatorios_list')
+        form = RelatoriosForm(request.POST, instance=objeto)
+        item_formset = inlineformset_factory(
+            RelatorioInspecao,
+            EtapaPintura,
+            form=EtapasForm,
+            )
+        formset = item_formset(request.POST, instance=objeto)
+        if form.is_valid() and formset.is_valid():
+            form=form.save(commit=False)
+            form.funcionario=request.user
+            form.save()
+            formset.save()
+            url='qualidade:relatorios_detail'
+            return HttpResponseRedirect(resolve_url(url,form.pk))
+        else:
+            context={'form':form, 'formset': formset}
+            return render(request, template_name, context)
+
+
 class RelatorioUpdate(UpdateView):
     model = RelatorioInspecao
     template_name = 'relatorio_form.html'
@@ -191,7 +235,7 @@ class Checklist_list(ListView):
         if q:
             queryset = queryset.filter(
                 Q(rip__icontains=q) |
-                Q(unidade__icontains=q) |
+                Q(funcionario__username__icontains=q) |
                 Q(rec__icontains=q) 
             )
         return queryset
@@ -225,6 +269,48 @@ def checklist_add(request):
     context={'form':form, 'formset':formset}
     return render(request, template_name, context)
 
+@has_role_decorator('encarregado')   
+def checklist_edit(request, pk):
+    template_name = 'checklist_add.html'
+    if request.method == "GET":
+        objeto = ChecklistInspecao.objects.filter(pk=pk).first()
+        if objeto is None:
+            return redirect('qualidade:check_list')
+        form = ChecklistForm(instance=objeto)
+        item_checklist_formset = inlineformset_factory(
+            ChecklistInspecao,
+            EtapaChecklist,
+            form=EtapascheckForm,
+            extra=0,
+            can_delete=False,
+            min_num=1,
+            validate_min=True
+            )
+        formset = item_checklist_formset(instance=objeto)
+        context={'form':form, 'formset':formset}
+        return render(request, template_name, context)
+    if request.method == "POST":
+        objeto = ChecklistInspecao.objects.filter(pk=pk).first()
+        if objeto is None:
+            return redirect('qualidade:check_list')
+        form = ChecklistForm(request.POST, instance=objeto)
+        item_checklist_formset = inlineformset_factory(
+            ChecklistInspecao,
+            EtapaChecklist,
+            form=EtapascheckForm,
+            )
+        formset = item_checklist_formset(request.POST, instance=objeto)
+        if form.is_valid() and formset.is_valid():
+            form=form.save(commit=False)
+            form.funcionario=request.user
+            form.save()
+            formset.save()
+            url='qualidade:checklist_detail'
+            return HttpResponseRedirect(resolve_url(url,form.pk))
+        else:
+            context={'form':form, 'formset': formset}
+            return render(request, template_name, context)
+
 @login_required
 def checklist_detail(request, pk):
     template_name = 'checklist_detail.html'
@@ -242,21 +328,16 @@ class EtapacheckUpdate(UpdateView):
     template_name = 'checklist_form.html'
     form_class = EtapascheckForminsp
 
-class ChecklistUpdateEncarregado(UpdateView):
-    model = ChecklistInspecao
-    template_name = 'checklist_form.html'
-    form_class = ChecklistForm
-
-class EtapacheckUpdateEncarregado(UpdateView):
-    model = EtapaChecklist
-    template_name = 'checklist_form.html'
-    form_class = EtapascheckForm
-
+@login_required
+@superuser_required
+def delete_checklist(request, pk):
+    check = ChecklistInspecao.objects.get(pk=pk)
+    check.delete()
+    return redirect('qualidade:check_list')
 
 
 @has_role_decorator('inspetor')
 @login_required
-@manager_required
 def photo_create_check(request):
     template_name = 'photo_form.html'
     form = PhotoFormcheck(request.POST or None)
@@ -272,7 +353,6 @@ def photo_create_check(request):
 
 @has_role_decorator('inspetor')
 @login_required
-@manager_required
 def delete_photo_check(request, pk):
     photo = Photocheck.objects.get(pk=pk)
     photo.delete()

@@ -126,6 +126,50 @@ def romaneio_add(request):
     context={'form':form, 'formset':formset}
     return render(request, template_name, context)
 
+@login_required
+@manager_required
+def romaneio_edit(request, pk):
+    template_name = 'romaneio_forms.html'
+    if request.method == "GET":
+        objeto = Romaneio.objects.filter(pk=pk).first()
+        if objeto is None:
+            return redirect('romaneio:romaneio_list')
+        form = RomaneioForm(instance=objeto)
+        item_formset = inlineformset_factory(
+            Romaneio,
+            Material,
+            form=MaterialForm,
+            extra=0,
+            can_delete=False,
+            min_num=1,
+            validate_min=True
+            )
+        formset = item_formset(instance=objeto)
+        context={'form':form, 'formset':formset}
+        return render(request, template_name, context)
+    if request.method == "POST":
+        objeto = Romaneio.objects.filter(pk=pk).first()
+        if objeto is None:
+            return redirect('romaneio:romaneio_list')
+        form = RomaneioForm(request.POST, instance=objeto)
+        item_formset = inlineformset_factory(
+            Romaneio,
+            Material,
+            form=MaterialForm,
+            )
+        formset = item_formset(request.POST, instance=objeto)
+        if form.is_valid() and formset.is_valid():
+            form=form.save(commit=False)
+            form.funcionario=request.user
+            form.save()
+            formset.save()
+            url='romaneio:romaneio_detail'
+            return HttpResponseRedirect(resolve_url(url,form.pk))
+        else:
+            context={'form':form, 'formset': formset}
+            return render(request, template_name, context)
+
+
 
 class RomaneioCreate(CreateView):
     model = Romaneio

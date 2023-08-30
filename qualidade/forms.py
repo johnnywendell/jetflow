@@ -1,18 +1,15 @@
 from django import forms
 from .models import RelatorioInspecao, EtapaPintura, Photo, ChecklistInspecao, EtapaChecklist,Photocheck
 
-class DateInput(forms.DateInput):
-    input_type = 'date'
-
 class RelatoriosForm(forms.ModelForm):
     class Meta:
         model = RelatorioInspecao
         fields = '__all__'
         exclude = ('funcionario','esquema_pint','esp_esquema','cor_final')
         widgets = {
-            'inicio':  DateInput(),
-            'termino':  DateInput(),
-            'data':  DateInput(),
+            'inicio':  forms.DateInput(format='%Y-%m-%d', attrs={'type': 'date'}),
+            'termino':  forms.DateInput(format='%Y-%m-%d', attrs={'type': 'date'}),
+            'data':  forms.DateInput(format='%Y-%m-%d', attrs={'type': 'date'}),
         }
 
 class EtapasForm(forms.ModelForm):
@@ -21,12 +18,12 @@ class EtapasForm(forms.ModelForm):
         fields = '__all__'
         #exclude = ('funcionario',)
         widgets = {
-            'data_insp':  DateInput(),
-            'val_a':  DateInput(),
-            'val_b':  DateInput(),
-            'val_c':  DateInput(),
-            'inicio':  DateInput(),
-            'termino':  DateInput(),
+            'data_insp':  forms.DateInput(format='%Y-%m-%d', attrs={'type': 'date'}),
+            'val_a':  forms.DateInput(format='%Y-%m-%d', attrs={'type': 'date'}),
+            'val_b':  forms.DateInput(format='%Y-%m-%d', attrs={'type': 'date'}),
+            'val_c':  forms.DateInput(format='%Y-%m-%d', attrs={'type': 'date'}),
+            'inicio':  forms.DateInput(format='%Y-%m-%d', attrs={'type': 'date'}),
+            'termino':  forms.DateInput(format='%Y-%m-%d', attrs={'type': 'date'}),
         }
 class PhotoForm(forms.ModelForm): 
     required_css_class = 'required'
@@ -49,9 +46,9 @@ class ChecklistForm(forms.ModelForm):
         exclude = ('funcionario','temp_ambiente','ura','po','temp_super','intemperismo','descontaminacao','poeira_tam',
                    'poeira_quant','teor_sais','ambiente_pintura','rugosidade','obs_inst','inspetor','rnc_n','aprovado','laudo')
         widgets = {
-            'inicio':  DateInput(),
-            'termino':  DateInput(),
-            'data':  DateInput(),
+            'inicio':  forms.DateInput(format='%Y-%m-%d', attrs={'type': 'date'}),
+            'termino':  forms.DateInput(format='%Y-%m-%d', attrs={'type': 'date'}),
+            'data':  forms.DateInput(format='%Y-%m-%d', attrs={'type': 'date'}),
         }
 
 class ChecklistForminsp(forms.ModelForm):
@@ -68,11 +65,11 @@ class EtapascheckForm(forms.ModelForm):
         exclude = ('temp_amb','ura','po','temp_substrato','inter_repintura','epe','eps','insp_visual','aderencia',
                    'data_insp','laudo')
         widgets = {
-            'data_insp':  DateInput(),
-            'val_a':  DateInput(),
-            'val_b':  DateInput(),
-            'val_c':  DateInput(),
-            'inicio':  DateInput(),
+            'data_insp':  forms.DateInput(format='%Y-%m-%d', attrs={'type': 'date'}),
+            'val_a':  forms.DateInput(format='%Y-%m-%d', attrs={'type': 'date'}),
+            'val_b':  forms.DateInput(format='%Y-%m-%d', attrs={'type': 'date'}),
+            'val_c':  forms.DateInput(format='%Y-%m-%d', attrs={'type': 'date'}),
+            'inicio':  forms.DateInput(format='%Y-%m-%d', attrs={'type': 'date'}),
         }
 
 class EtapascheckForminsp(forms.ModelForm):

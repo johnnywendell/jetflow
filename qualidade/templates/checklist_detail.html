@@ -34,14 +34,17 @@
         {% else %}
         {% if object.aprovado %}
         {% else %}
+	{% if request.user == object.funcionario %}
         <span class="pull-right">
 
-            <a href="{% url 'qualidade:checklist_updateenc' object.pk %}">
+            <a href="{% url 'qualidade:checklist_edit' object.pk %}">
                 <button type="button" class="btn btn-info">
                     <span class="fa fa-pencil"></span> Editar
                 </button>
             </a>
         </span>
+	{% else %}
+        {% endif %}
         {% endif %}
         {% endif %}
     </h2>
@@ -230,11 +233,7 @@
     {% if user|has_role:'inspetor' %}
     <a href="{% url 'qualidade:etapascheck_update' obj.pk %}"><h4 class="text-center">{{ obj }}</h4></a>
     {% else %}
-    {% if object.aprovado %}
     <h4 class="text-center">{{ obj}}</h4>
-    {% else %}
-    <a href="{% url 'qualidade:etapascheck_updateenc' obj.pk %}"><h4 class="text-center">{{ obj }}</h4></a>
-    {% endif %}
     {% endif %}
     <table class="table table-sm table-bordered">
             <tr>    

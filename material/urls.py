@@ -6,7 +6,7 @@ from usuarios.decorators import manager_required
 app_name ='material'
 
 urlpatterns =[
-    path('material/', login_required(v.MaterialList.as_view()), name='material_list'),
+    path('material/', manager_required(v.MaterialList.as_view()), name='material_list'),
     path('material/<int:pk>', v.material_detail, name='material_detail'),
     path('material/add/', manager_required(v.MaterialCreate.as_view()), name='material_add'),
     path('material/<int:pk>/edit/', manager_required(v.MaterialUpdate.as_view()), name='material_edit'),

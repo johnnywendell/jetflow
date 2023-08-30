@@ -12,7 +12,7 @@ CORROS = (
     ('C3','C3'),
     ('C4','C4'),
     ('C5','C5'),
-    ('C6','C6'),
+    ('CX','CX'),
 
 )
     
@@ -153,11 +153,11 @@ class ChecklistInspecao(TimeStampedModel):
     rip = models.AutoField(auto_created=True,unique=True,primary_key=True)
     cliente = models.CharField('Cliente',max_length=15, blank=True, null=True)
     data = models.DateField(verbose_name='Data serviço')
-    rec = models.CharField(max_length=15, blank=True, null=True)
+    rec = models.CharField('REC/outros',max_length=15, blank=True, null=True)
     nota = models.CharField('Nota',max_length=15, blank=True, null=True)
     tag = models.CharField('Tag',max_length=20, blank=True, null=True)
     tipo_serv = models.CharField('Tipo serviço',max_length=20, choices=TIPOS)
-    unidade = models.CharField('Area',max_length=30, blank=True, null=True)
+    unidade = models.CharField('Unidade',max_length=30, blank=True, null=True)
     setor = models.CharField('Setor',max_length=15, blank=True, null=True)
     corrosividade = models.CharField(max_length=15, choices=CORROS)
     fiscal = models.CharField('Fiscal',max_length=30, blank=True, null=True)
@@ -227,7 +227,7 @@ class EtapaChecklist(models.Model):
     po = models.DecimalField('Ponto de Orvalho', max_digits=4, decimal_places=1, blank=True, null=True)
     temp_substrato = models.DecimalField('Temperatura da substrato', max_digits=4, decimal_places=1, blank=True, null=True)
     diluente = models.CharField(max_length=15, blank=True, null=True)
-    met_aplic = models.CharField(max_length=20, blank=True, null=True)
+    met_aplic = models.CharField('Método de aplicação',max_length=20, blank=True, null=True)
     inicio = models.DateTimeField(verbose_name='Inicio')
     inter_repintura = models.CharField(max_length=15, blank=True, null=True)
     epe = models.IntegerField('Espessura especificada', blank=True, null=True)

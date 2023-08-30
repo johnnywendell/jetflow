@@ -27,7 +27,8 @@
                     <th>Rec/PJ/OM</th>
                     <th>Unidade/Planta</th>
                     <th class="text-center">Fiscal</th>
-                    <th>Plot</th>
+                    <th>Encarregado</th>
+                    <th>Status</th>
                 </tr>
             </thead>
             <tbody>
@@ -38,7 +39,12 @@
                     <td>{{ object.rec }}</td>
                     <td>{{ object.unidade }}</td>
                     <td class="text-center">{{ object.fiscal }}</td>
-               	    <td><a href="{% url 'qualidade:render_pdf_view_check' object.pk %}"><i class="fa fa-thin fa-print"></i></a></td>
+               	    <td>{{ object.funcionario }}</td>
+                    <td class="text-center">{% if object.aprovado %}
+                        <i class="fa fa-check-circle ok"></i>
+                      {% else %}
+                        <i class="fa fa-minus-circle no"></i>
+                      {% endif %}</td>
                 </tr>
                  
                 {% endfor %}

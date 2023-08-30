@@ -98,7 +98,7 @@ class MaterialList(ListView):
         if search:
             queryset = queryset.filter(
                 Q(n_romaneio__romaneio=search) |
-                Q(descricao__icontains=search)
+                Q(concluido__icontains=search)
             )
         return queryset
     def post(self, request, *args, **kwargs):
