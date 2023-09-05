@@ -11,7 +11,7 @@ from django.db.models import Sum
 
 @login_required
 def navbar(request):
-    return render(request, 'navbar.html')
+    return render(request, 'profile.html')
 
 @login_required
 def index(request):

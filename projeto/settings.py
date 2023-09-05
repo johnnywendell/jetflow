@@ -147,3 +147,14 @@ ROLEPERMISSIONS_MODULE = 'projeto.roles'
 
 THOUSAND_SEPARATOR='.',
 USE_THOUSAND_SEPARATOR=True
+
+
+EMAIL_BACKEND = config('EMAIL_BACKEND')
+EMAIL_HOST = config('EMAIL_HOST')
+EMAIL_PORT = config('EMAIL_PORT')  # A porta para comunicação com o servidor SMTP do Gmail
+EMAIL_USE_TLS = config('EMAIL_USE_TLS')  # Use TLS (Transport Layer Security) para criptografar a conexão
+EMAIL_HOST_USER = config('EMAIL_HOST_USER')  # Seu endereço de e-mail Gmail
+EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')  # Sua senha de e-mail Gmail ou uma senha de aplicativo se você tiver a autenticação de 2 fatores ativada
+DEFAULT_FROM_EMAIL = config('DEFAULT_FROM_EMAIL')  # O endereço de e-mail padrão para envio de e-mails
+
+

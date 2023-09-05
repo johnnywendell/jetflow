@@ -5,6 +5,7 @@ from django.urls import reverse_lazy
 from django.contrib.auth.models import User
 from core.models import TimeStampedModel
 
+
 CORROS = (
     ('N/A','N/A'),
     ('C1','C1'),

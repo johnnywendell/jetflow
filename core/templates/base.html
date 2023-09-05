@@ -32,6 +32,10 @@
             <ul class="navbar-nav mr-auto">
       </ul>
             {% if user.is_authenticated %}
+            <form action="." method="GET" class="form-inline">
+                <input type="text" id="q" name="q" value="{{ request.GET.q }}" class="form-control" placeholder="Busca">
+                <input type="submit" class="btn btn-secondary" style="margin-left: 10px;" value="OK">
+              </form>
                 <ul class="navbar-nav px3">
                         <li class="nav-item">
                         <a href="#"  class="nav-link">Usuario: {{ user.username }} </a>
@@ -41,6 +45,7 @@
         </div>
     </nav>
       <!--msb: main sidebar-->
+            {% if user.is_authenticated %}
       <div class="msb text-light" id="msb" style="margin-top: 50px;">
               <nav class="navbar navbar-default" role="navigation">
                   <!-- Brand and toggle get grouped for better mobile display -->
@@ -60,36 +65,110 @@
                   <!-- Main Menu -->
                   <div class="side-menu-container" style="width: 100%;">
                       <ul class="nav navbar-nav">
-                        
-                          <li><a href="#"><i class="fa fa-dashboard"></i>Dashboard</a></li>
-                          <li class="active"><a href="#"><i class="fa fa-puzzle-piece"></i>Components</a></li>
-                          <li><a href="#"><i class="fa fa-heart"></i>Extras</a></li>
-      
+                        <!-- Dropdown-->
+                        <li  id="dropdown0">
+                            <a data-toggle="collapse" href="#dropdown-lvl0">
+                                <i class="fa fa-puzzle-piece"></i>Cadastros
+                              <span class="caret"></span>
+                          </a>
+                            <!-- Dropdown level 1 -->
+                            <div id="dropdown-lvl0" class="panel-collapse collapse">
+                                <div class="panel-body">
+                                    <ul class="nav navbar-nav">
+                                        <li><a href="{% url 'romaneio:area_add' %}"><i class="fa fa-chevron-right"></i>Área/Unidade</a></li>
+                                        <li><a href="{% url 'romaneio:solicitante_add' %}"><i class="fa fa-chevron-right"></i>Solicitante</a></li>
+                                        <li><a href="{% url 'material:tratamento_add' %}"><i class="fa fa-chevron-right"></i>Tratamento</a></li>
+                                        <li><a href="{% url 'material:tintafundo_add' %}"><i class="fa fa-chevron-right"></i>TF</a></li>
+                                        <li><a href="{% url 'material:tintaintermediaria_add' %}"><i class="fa fa-chevron-right"></i>TI</a></li>
+                                        <li><a href="{% url 'material:tintaacabamento_add' %}"><i class="fa fa-chevron-right"></i>TA</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </li>
+                        <!-- ENDropdown -->
                           <!-- Dropdown-->
                           <li  id="dropdown">
                               <a data-toggle="collapse" href="#dropdown-lvl1">
-                                  <i class="fa fa-diamond"></i>Apps
+                                  <i class="fa fa-paint-brush"></i>Canteiro de Jato
                                 <span class="caret"></span>
                             </a>
                               <!-- Dropdown level 1 -->
                               <div id="dropdown-lvl1" class="panel-collapse collapse">
                                   <div class="panel-body">
                                       <ul class="nav navbar-nav">
-                                          <li><a href="#"><i class="fa fa-chevron-right"></i>Mail</a></li>
-                                          <li><a href="#"><i class="fa fa-chevron-right"></i>Calendar</a></li>
-                                          <li><a href="#"><i class="fa fa-chevron-right"></i>Ecommerce</a></li>
-                                          <li><a href="#"><i class="fa fa-chevron-right"></i>User</a></li>
-                                          <li><a href="#"><i class="fa fa-chevron-right"></i>Social</a></li>
+                                          <li><a href="{% url 'romaneio:romaneio_list' %}"><i class="fa fa-chevron-right"></i>Romaneios</a></li>
+                                          <li><a href="{% url 'material:material_list' %}"><i class="fa fa-chevron-right"></i>Materiais</a></li>
+                                          <li><a href="{% url 'qualidade:relatorios_list' %}"><i class="fa fa-chevron-right"></i>Controle de qualidade</a></li>
                                       </ul>
                                   </div>
                               </div>
                           </li>
-                          <li><a href="#"><i class="fa fa-heart"></i>Link</a></li>
+                          <!-- ENDropdown -->
+                          <!-- Dropdown2-->
+                          <li  id="dropdown2">
+                            <a data-toggle="collapse" href="#dropdown-lvl2">
+                                <i class="fa fa-industry"></i>Produção
+                              <span class="caret"></span>
+                          </a>
+                            <!-- Dropdown level 1 -->
+                            <div id="dropdown-lvl2" class="panel-collapse collapse">
+                                <div class="panel-body">
+                                    <ul class="nav navbar-nav">
+                                        <li><a href="{% url 'qualidade:check_list' %}"><i class="fa fa-chevron-right"></i>Check-List</a></li>
+                                        <li><a href="#"><i class="fa fa-chevron-right"></i>RDO</a></li>                        
+                                    </ul>
+                                </div>
+                            </div>
+                        </li>
+                        <!-- ENDropdown -->
+                        <!-- Dropdown3-->
+                        <li  id="dropdown3">
+                            <a data-toggle="collapse" href="#dropdown-lvl3">
+                                <i class="fa fa-money"></i>Financeiro
+                              <span class="caret"></span>
+                          </a>
+                            <!-- Dropdown level 1 -->
+                            <div id="dropdown-lvl3" class="panel-collapse collapse">
+                                <div class="panel-body">
+                                    <ul class="nav navbar-nav">
+                                        <li><a href="#"><i class="fa fa-chevron-right"></i>BMF</a></li>
+                                        <li><a href="#"><i class="fa fa-chevron-right"></i>DMS</a></li>
+                                        <li><a href="#"><i class="fa fa-chevron-right"></i>FRS</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </li>
+                        <!-- ENDropdown -->
+                     
+                          <li><a href="{% url 'core:dash_jato' %}"><i class="fa fa-dashboard"></i>Dashboard</a></li>
+                          
+                          <li><a href="#"><i class="fa fa-heart"></i>Segurança</a></li>
+                          <!-- Dropdown4-->
+                        <li  id="dropdown4">
+                            <a data-toggle="collapse" href="#dropdown-lvl4">
+                                <i class="fa fa-upload"></i>Importações
+                              <span class="caret"></span>
+                          </a>
+                            <!-- Dropdown level 1 -->
+                            <div id="dropdown-lvl4" class="panel-collapse collapse">
+                                <div class="panel-body">
+                                    <ul class="nav navbar-nav">
+                                        <li><a href="{% url 'romaneio:import_csv' %}"><i class="fa fa-chevron-right"></i>Romaneio</a></li>
+                                        <li><a href="{% url 'material:import_csv_material' %}"><i class="fa fa-chevron-right"></i>Materiais</a></li>
+                                        <li><a href="#"><i class="fa fa-chevron-right"></i>FRS</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </li>
+                        <!-- ENDropdown -->
+                        <li><a href="/auth/update/"><i class="fa fa-key"></i>Alterar senha</a></li>
+                        <li><a href="{% url 'logout' %}"><i class="fa fa-sign-out"></i>Sair</a></li>
                       </ul>
                   </div><!-- /.navbar-collapse -->
               </nav>  
       </div>
       <!--main content wrapper-->
+            {% endif %}
       <div class="mcw">
         
         {% block content %}   {% endblock content %}
@@ -106,7 +185,7 @@
       $(document).ready(function(){
           $('#msbo').on('click', function(){
           $('body').toggleClass('msb-x');
-    });
+      });
               
   
       });

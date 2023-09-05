@@ -11,7 +11,7 @@ app_name ='qualidade'
 urlpatterns =[
     path('qualidade/', manager_required(v.RelatoriosList.as_view()), name='relatorios_list'),
     path('qualidade/fiscal', login_required(v.RelatoriosFiscalList.as_view()), name='relatorios_list_fiscal'),
-    path('qualidade/edit/<int:pk>/', manager_required(v.RelatorioUpdate.as_view()), name='relatorios_update'),
+    path('qualidade/edit/<int:pk>/', v.relatorios_edit, name='relatorios_update'),
     path('qualidade/edit/etapa/<int:pk>/', manager_required(v.EtapaUpdate.as_view()), name='etapas_update'),
     path('qualidade/<int:pk>/', v.relatorios_detail, name='relatorios_detail'),
     path('qualidade/add/', v.relatorios_add, name='relatorios_add'),
@@ -23,7 +23,7 @@ urlpatterns =[
     path('ass/fiscal/<int:pk>', v.assign_fiscal, name='ass_fiscal'),
 
     path('qualidade/check/', login_required(v.Checklist_list.as_view()), name='check_list'),
-    path('qualidade/<int:pk>/check', v.checklist_detail, name='checklist_detail'),
+    path('qualidade/check/<int:pk>/', v.checklist_detail, name='checklist_detail'),
     path('qualidade/add/check', v.checklist_add, name='checklist_add'),
     path('qualidade/edit/check2/<int:pk>', v.checklist_edit, name='checklist_edit'),
     path('qualidade/edit/<int:pk>/check', has_role_decorator('inspetor')(v.ChecklistUpdate.as_view()), name='checklist_update'),
@@ -35,4 +35,5 @@ urlpatterns =[
 
     path('qualidade/edit/<int:pk>/checkenc', has_role_decorator('encarregado')(v.ChecklistUpdateEncarregado.as_view()), name='checklist_updateenc'),
     path('qualidade/edit/etapa/<int:pk>/checkenc', has_role_decorator('encarregado')(v.EtapacheckUpdateEncarregado.as_view()), name='etapascheck_updateenc'),
+
 ]

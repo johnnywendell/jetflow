@@ -99,13 +99,10 @@ span.required:after {
 
 @media (max-width: 960px) { 
       .phonetest{	 	     
-        width: 90%!important;
-        margin-left: 10%;
+        width: 100%!important;
       }
 
 }
-
-
 ul.nv,
 ul.ns {
   position: relative;
@@ -151,13 +148,19 @@ ul.ns {
 
 /*main content wrapper*/
 .mcw {
-  margin-left: 200px;
+  
   position: relative;
   min-height: 100%;
   
   /*content view*/
   .cv {
   }
+}
+@media (max-width: 960px) { 
+  .mcw{	 	     
+    margin-left: 30px;
+  }
+
 }
 
 
@@ -195,37 +198,37 @@ li:hover {
   }
 }
 .msb, .mnb {
-    -moz-animation: slidein 300ms forwards;
-    -o-animation: slidein 300ms forwards;
-    -webkit-animation: slidein 300ms forwards;
-    animation: slidein 300ms forwards;
+    -moz-animation: slideout 300ms forwards;
+    -o-animation: slideout 300ms forwards;
+    -webkit-animation: slideout 300ms forwards;
+    animation: slideout 300ms forwards;
     -webkit-transform-style: preserve-3d;
     transform-style: preserve-3d;  
 }
-.mcw {
-    -moz-animation: bodyslidein 300ms forwards;
-    -o-animation: bodyslidein 300ms forwards;
-    -webkit-animation: bodyslidein 300ms forwards;
-    animation: bodyslidein 300ms forwards;
+.mcw-desativado {
+    -moz-animation: bodyslideout 300ms forwards;
+    -o-animation: bodyslideout 300ms forwards;
+    -webkit-animation: bodyslideout 300ms forwards;
+    animation: bodyslideout 300ms forwards;
     -webkit-transform-style: preserve-3d;
     transform-style: preserve-3d;  
 }
 body.msb-x {
 
-  .mcw, .mnb {
+  .mcw-desativado, .mnb-desativado {
     margin-left: 0;
--moz-animation: bodyslideout 300ms forwards;
-    -o-animation: bodyslideout 300ms forwards;
-    -webkit-animation: bodyslideout 300ms forwards;
-    animation: bodyslideout 300ms forwards;
+    -moz-animation: bodyslidein 300ms forwards;
+    -o-animation: bodyslidein 300ms forwards;
+    -webkit-animation: bodyslidein 300ms forwards;
+    animation: bodyslidein 300ms forwards;
     -webkit-transform-style: preserve-3d;
     transform-style: preserve-3d;
   }
   .msb {
-    -moz-animation: slideout 300ms forwards;
-    -o-animation: slideout 300ms forwards;
-    -webkit-animation: slideout 300ms forwards;
-    animation: slideout 300ms forwards;
+    -moz-animation: slidein 300ms forwards;
+    -o-animation: slidein 300ms forwards;
+    -webkit-animation: slidein 300ms forwards;
+    animation: slidein 300ms forwards;
     -webkit-transform-style: preserve-3d;
     transform-style: preserve-3d;
   }

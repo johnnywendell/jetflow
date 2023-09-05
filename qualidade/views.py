@@ -134,6 +134,51 @@ def relatorios_add(request):
     context={'form':form, 'formset':formset}
     return render(request, template_name, context)
 
+@login_required
+@manager_required
+def relatorios_edit(request, pk):
+    template_name = 'relatorios_add.html'
+    if request.method == "GET":
+        objeto = RelatorioInspecao.objects.filter(pk=pk).first()
+        if objeto is None:
+            return redirect('qualidade:relatorios_list')
+        form = RelatoriosForm(instance=objeto)
+        item_formset = inlineformset_factory(
+            RelatorioInspecao,
+            EtapaPintura,
+            form=EtapasForm,
+            extra=0,
+            can_delete=False,
+            min_num=1,
+            validate_min=True
+            )
+        formset = item_formset(instance=objeto)
+        context={'form':form, 'formset':formset}
+        return render(request, template_name, context)
+    if request.method == "POST":
+        objeto = RelatorioInspecao.objects.filter(pk=pk).first()
+        if objeto is None:
+            return redirect('qualidade:relatorios_list')
+        form = RelatoriosForm(request.POST, instance=objeto)
+        item_formset = inlineformset_factory(
+            RelatorioInspecao,
+            EtapaPintura,
+            form=EtapasForm,
+            )
+        formset = item_formset(request.POST, instance=objeto)
+        if form.is_valid() and formset.is_valid():
+            form=form.save(commit=False)
+            form.funcionario=request.user
+            form.save()
+            formset.instance = form
+            formset.save()
+            url='qualidade:relatorios_detail'
+            return HttpResponseRedirect(resolve_url(url,form.pk))
+        else:
+            context={'form':form, 'formset': formset}
+            return render(request, template_name, context)
+
+
 
 class RelatorioUpdate(UpdateView):
     model = RelatorioInspecao
@@ -240,6 +285,7 @@ def checklist_add(request):
     context={'form':form, 'formset':formset}
     return render(request, template_name, context)
 
+@has_role_decorator('encarregado')   
 def checklist_edit(request, pk):
     template_name = 'checklist_add.html'
     if request.method == "GET":
@@ -273,6 +319,7 @@ def checklist_edit(request, pk):
         if form.is_valid() and formset.is_valid():
             form=form.save(commit=False)
             form.funcionario=request.user
+            form.save()
             formset.instance = form
             formset.save()
             url='qualidade:checklist_detail'
@@ -287,6 +334,11 @@ def checklist_edit(request, pk):
 def checklist_detail(request, pk):
     template_name = 'checklist_detail.html'
     obj = ChecklistInspecao.objects.get(pk=pk)
+    if request.method == "POST":
+        m2 = request.POST.get('metro2')
+        ChecklistInspecao.objects.filter(pk=pk).update(m2=m2)
+        url='qualidade:checklist_detail'
+        return HttpResponseRedirect(resolve_url(url,pk))
     context = {'object': obj}
     return render(request, template_name, context)
 

@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.urls import reverse_lazy
 from core.models import TimeStampedModel
+from django.conf import settings
 
 class Area(models.Model):
     area = models.CharField(max_length=30, unique=True)

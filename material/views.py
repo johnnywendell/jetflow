@@ -9,7 +9,7 @@ from django.shortcuts import render, get_object_or_404
 from django.views.generic import CreateView, UpdateView, ListView
 from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
 from .models import Tratamento, TintaFundo, TintaIntermediaria, TintaAcabamento, Material
-from .forms import MaterialForm, TratamentoForm, TintaFundoForm, TintaIntermediariaForm, TintaAcabamentoForm, MaterialForms
+from .forms import ContatoForms, MaterialForm, TratamentoForm, TintaFundoForm, TintaIntermediariaForm, TintaAcabamentoForm, MaterialForms
 from django.template.loader import get_template
 from xhtml2pdf import pisa
 from django.contrib.staticfiles import finders
@@ -18,7 +18,22 @@ from django.conf import settings
 from usuarios.decorators import manager_required, superuser_required
 from romaneio.models import Romaneio
 from django.db.models import Sum
+from django.contrib import messages
 
+def contato(request):
+    template_name = 'material_form.html'
+    if request.method =="POST":
+        form = ContatoForms(request.POST)
+        if form.is_valid():
+            form.send_email()
+            messages.success(request,"Email enviado com sucesso")
+            form = ContatoForms()
+        else:
+            messages.error(request, "Não foi possível enviar o email")
+    else:
+        form = ContatoForms()
+    context={'form':form,}
+    return render(request, template_name, context)
 
 @login_required
 @manager_required

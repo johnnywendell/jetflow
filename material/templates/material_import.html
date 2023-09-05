@@ -3,7 +3,7 @@
 {% load widget_tweaks %}
 
 {% block content %}
-{% include "includes/nav_jetflow.html" %} 
+
   <form method="POST" enctype="multipart/form-data">
     {% csrf_token %}
     <input name="myfile" type="file" />

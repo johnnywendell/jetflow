@@ -9,7 +9,8 @@ urlpatterns =[
     path('romaneios/', login_required(v.RomaneioList.as_view()), name='romaneio_list'),
     path('romaneios/<int:pk>/', v.romaneio_detail, name='romaneio_detail'),
     path('romaneios/add/', v.romaneio_add, name='romaneios_add'),
-    path('romaneios/<int:pk>/edit/', manager_required(v.RomaneioUpdate.as_view()), name='romaneio_edit'),
+
+    path('romaneios/<int:pk>/edit/', v.romaneio_edit, name='romaneio_edit'),
     path('romaneios/json/', v.json_fatores, name='json_fatores'),
     path('area/', v.area_add, name='area_add'),
     path('solicitante/', v.solicitante_add, name='solicitante_add'),

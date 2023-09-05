@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import AbstractUser
 
 class TimeStampedModel(models.Model):
     created = models.DateTimeField(
@@ -13,3 +14,5 @@ class TimeStampedModel(models.Model):
     )
     class Meta:
         abstract = True
+
+

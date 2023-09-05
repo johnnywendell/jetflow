@@ -5,7 +5,7 @@ import xlwt
 from django.urls import reverse
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, resolve_url
+from django.shortcuts import render, resolve_url, redirect
 from django.db.models import Q
 from django.views.generic import CreateView, UpdateView, ListView
 from django.forms import inlineformset_factory
@@ -75,7 +75,7 @@ class RomaneioList(ListView):
     context_object_name = 'objects_list'
     def get_queryset(self):
         queryset = super(RomaneioList, self).get_queryset()
-        search = self.request.GET.get('search')
+        search = self.request.GET.get('q')
         if search:
             queryset = queryset.filter(
                 Q(romaneio__icontains=search) |
@@ -125,6 +125,48 @@ def romaneio_add(request):
         formset=item_romaneio_formset(instance=romaneio_form, prefix='romaneio' )
     context={'form':form, 'formset':formset}
     return render(request, template_name, context)
+
+@login_required
+@manager_required
+def romaneio_edit(request, pk):
+    template_name = 'romaneio_forms.html'
+    if request.method == "GET":
+        objeto = Romaneio.objects.filter(pk=pk).first()
+        if objeto is None:
+            return redirect('romaneio:romaneio_list')
+        form = RomaneioForm(instance=objeto)
+        item_romaneio_formset = inlineformset_factory(
+            Romaneio,
+            Material,
+            form=MaterialForm,
+            extra=0,
+            can_delete=False,
+            min_num=1,
+            validate_min=True
+            )
+        formset = item_romaneio_formset(instance=objeto)
+        context={'form':form, 'formset':formset}
+        return render(request, template_name, context)
+    if request.method == "POST":
+        objeto = Romaneio.objects.filter(pk=pk).first()
+        if objeto is None:
+            return redirect('romaneio:romaneio_list')
+        form = RomaneioForm(request.POST, instance=objeto)
+        item_romaneio_formset = inlineformset_factory(
+            Romaneio,
+            Material,
+            form=MaterialForm,
+            )
+        formset = item_romaneio_formset(request.POST, instance=objeto)
+        if form.is_valid() and formset.is_valid():
+            modelo = form.save()
+            formset.instance = modelo
+            formset.save()
+            url='romaneio:romaneio_detail'
+            return HttpResponseRedirect(resolve_url(url,modelo.pk))
+        else:
+            context={'form':form, 'formset': formset}
+            return render(request, template_name, context)
 
 
 class RomaneioCreate(CreateView):
