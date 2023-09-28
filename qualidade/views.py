@@ -133,8 +133,8 @@ def relatorios_edit(request, pk):
             RelatorioInspecao,
             EtapaPintura,
             form=EtapasForm,
-            extra=0,
-            can_delete=False,
+            extra=1,
+            can_delete=True,
             min_num=1,
             validate_min=True
             )
@@ -315,6 +315,11 @@ def checklist_edit(request, pk):
 def checklist_detail(request, pk):
     template_name = 'checklist_detail.html'
     obj = ChecklistInspecao.objects.get(pk=pk)
+    if request.method == "POST":
+        m2 = request.POST.get('metro2')
+        ChecklistInspecao.objects.filter(pk=pk).update(m2=m2)
+        url='qualidade:checklist_detail'
+        return HttpResponseRedirect(resolve_url(url,pk))
     context = {'object': obj}
     return render(request, template_name, context)
 

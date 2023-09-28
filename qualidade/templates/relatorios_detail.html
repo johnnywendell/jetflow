@@ -188,7 +188,11 @@
             </tr>
             <tr>
                 <th>Val</th>
-                <td>{{ obj.get_val_a}}</td>
+                <td>{% if obj.val_a %}
+		       {{ obj.get_val_a}}
+                       {% else %}
+		       {{ "none" }} {% endif %}
+		       </td>
             </tr>
             <tr>
                 <th>Lote B</th>

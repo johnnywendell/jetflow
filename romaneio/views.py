@@ -139,8 +139,8 @@ def romaneio_edit(request, pk):
             Romaneio,
             Material,
             form=MaterialForm,
-            extra=0,
-            can_delete=False,
+            extra=1,
+            can_delete=True,
             min_num=1,
             validate_min=True
             )

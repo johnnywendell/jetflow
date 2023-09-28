@@ -131,7 +131,19 @@
                 </tr>
                 <tr>
                     <th class="text-right">M2</th>
-                    <td>{{ object.m2 }}</td>
+                    <td>{% if object.m2 %}
+                        {{ object.m2 }}
+                        {% else %}
+                        {% if user|has_role:'planejador' %}
+                        <form action="." method="post">{% csrf_token %}
+                          <div class="form-inline">  
+                        <input id="metro2" name="metro2" type="number" step=".01" class="form-control form-control-sm w-50">
+                        <button type="submit" class="btn btn-sm btn-primary">+</button>    
+                        </div>
+                    </form>
+                    {% endif %}
+                        {% endif %}
+			</td>
                 </tr>
                 
             </tbody>

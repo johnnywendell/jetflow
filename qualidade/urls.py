@@ -21,7 +21,7 @@ urlpatterns =[
     path('ass/fiscal/<int:pk>', v.assign_fiscal, name='ass_fiscal'),
 
     path('qualidade/check/', login_required(v.Checklist_list.as_view()), name='check_list'),
-    path('qualidade/<int:pk>/checklist', v.checklist_detail, name='checklist_detail'),
+    path('qualidade/checklist/<int:pk>', v.checklist_detail, name='checklist_detail'),
     path('qualidade/add/check', v.checklist_add, name='checklist_add'),
     path('qualidade/edit/check2/<int:pk>', v.checklist_edit, name='checklist_edit'),
     path('qualidade/edit/<int:pk>/check', has_role_decorator('inspetor')(v.ChecklistUpdate.as_view()), name='checklist_update'),
