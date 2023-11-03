@@ -18,7 +18,9 @@ from django.contrib import admin
 from django.contrib.auth.views import LogoutView
 from django.urls import include, path
 from django.conf.urls.static import static
+from ninja import NinjaAPI
 
+from .api import api
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -27,9 +29,13 @@ urlpatterns = [
     path('', include('material.urls')),
     path('', include('qualidade.urls')),
     path('', include('financeiro.urls')),
+    path("api/v1/", api.urls),
     path('logout/', LogoutView.as_view(), name='logout'),
     path('auth/', include('usuarios.urls')),
 ]
+
+
+
 if settings.DEBUG:
     urlpatterns += static(
         settings.MEDIA_URL, 

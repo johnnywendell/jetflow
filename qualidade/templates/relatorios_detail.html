@@ -1,9 +1,17 @@
 {% extends "base.html" %}
-
+{% load static %}
 {% block content %} 
 {% include "includes/nav_qualidade.html" %}
 
     <h2>Relatorio Nº {{ object }}
+        <span class="pull-right">
+                <a href="{% url 'qualidade:render_pdf_view_simple' object.pk %}">
+                    <button type="button" class="btn btn-primary">
+                        <span class="fa fa-pencil"></span> gerar RIP simplificado
+                    </button>
+                </a>
+    
+            </span>
         <span class="pull-right">
             <a href="{% url 'qualidade:render_pdf_view' object.pk %}">
                 <button type="button" class="btn btn-success">
@@ -337,19 +345,97 @@
                 {% endfor %}
             </select>
         {% endif %}
-        </div>
-        <span id="add-item" class="btn btn-info" style="margin: 6px;">
-            <i class="fa fa-plus"></i>Adicionar
-        </span>
-        <input type="hidden" name="valores" id="valores">
+        </div>          
+    
+<!---->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg"><i class="fa fa-plus"></i> Itens</button>
+<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Material</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            
+            <div class="modal-body">
+                <div x-data="getData">
+                  
+                    <h2></h2>
                 
-        <button type="submit" class="btn btn-primary float-right" style="margin: 6px;">incluir materiais</button>
-    </form> 
- 
+                    <form @submit.prevent="saveData">
+                
+                    <!-- busca material -->
+                      <div class="form-group row autocomplete">
+                        <label
+                          for=""
+                          class="col-sm-2 col-form-label"
+                        >Material</label>
+                        <div class="col-sm-10">
+                        <!-- manual -->
+                          <input
+                            type="text"
+                            class="form-control"
+                            placeholder="Material"
+                            x-model="searchMaterial"
+                          >
+                          
+                        </div>
+                        <div class="col-sm-12">
+                            <table
+            
+                            x-show="materiaisShow"
+                            class="table table-striped"
+                          >
+                          <thead>
+                            <tr>
+                                <th>Material</th>
+                                <th>Descrição</th>
+                                <th>Quantidade</th>
+                                <th>m2</th>
+                                <th><i class="fa fa-check-circle"></i></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <template
+                              x-id="['materiais']"
+                              x-for="item in materiais"
+                              :key="item.id"
+                            >
+                              <tr>
+                              <td x-text="item.material"></td>
+                              <td x-text="item.descricao"></td>
+                              <td x-text="item.m_quantidade"></td>
+                              <td x-text="item.id"></td>
+                              <td>
+                              <input type="checkbox" class="addclassitem" @click="item.isChecked = !item.isChecked" x-bind:value="item.isChecked ? item.id : 'null'" /> 
+                            </td>
+                                  
+                            </label>
+                          </li></td>
+                            </tr>
+                            </template>
+                        </tbody>
+                        </table>
+                        <input hidden name="valores" id="valores">
+                        </div>
+                      <!-- <p x-text="searchCliente"></p> -->
+                      </div>
+                    </div>    
+                     
+            </div>
+            <div class="modal-footer">
+    
+              <button type="submit" class="btn btn-primary float-right" style="margin: 6px;"><i class="fa fa-plus"></i>Adicionar</button>
+            </div>
         
-        
-        
-       
+      </div>
+    </div>
+  </div>
+</form> 
+
+  <!---->     
         <div class="row">
                 <div class="col-sm-6">
                     <table class="table table-user-information">
@@ -376,7 +462,7 @@
             </div>
             <div>
                 <legend style="border-bottom: 1px solid #e5e5e5;">Registro fotográfico</legend>  
-                <a class="btn btn-info btn-sm" href="{% url 'qualidade:photo_create' %}"style="margin: 6px;">Adicionar Imagem</a>
+                <a class="btn btn-info btn-sm" href="{% url 'qualidade:photo_create' object.pk %}"style="margin: 6px;">Adicionar Imagem</a>
                 <div class="row" style="margin-bottom: 10px;">
                 {% for item in object.relatorio.all %}
                 {% if item.photo %}
@@ -399,16 +485,7 @@
                       {% endif %}
                     </div>
                   </div></div>
-                <div class="col-sm-4"><div class="card" style="height: 12rem;">
-                    <div class="card-body" style="text-align: center;">
-                        {% if ass.ass_coord %} 
-                        <h5 class="card-subtitle">Assinatura Coordenação</h5>
-                        <i class="fa fa-check ok" aria-hidden="true"></i>
-                        {% else %}
-                        <h5 class="card-subtitle"><a href="{% url 'qualidade:ass_coord' object.pk %}">Assinatura Coordenação</a></h5>
-                        {% endif %}
-                    </div>
-                  </div></div>
+  
                 <div class="col-sm-4"><div class="card" style="height: 12rem;">
                     <div class="card-body" style="text-align: center;">
                         {% if ass.ass_fiscal %} 
@@ -420,45 +497,26 @@
                     </div>
                   </div></div>
             </div>
-            
-{% endblock content %} 
+
+
+        
+{% endblock %}
 
 {% block js %}
+<script
+    src="{% static 'js/servico.js' %}"
+    data-csrf="{{ csrf_token }}"
+  ></script>
 
-    <script >
-        $(document).ready(function(){
-            // Select2
-                $('.clSelect2').select2()
-                $('#add-item').click(function(ev){
-                ev.preventDefault();
-                var count = $('#materiais').children().length;
-                var tmplMarkup = $('#item-material').html();
-                var compiledTmpl = tmplMarkup.replace(/__prefix__/g, count);
-                $('div#materiais').append(compiledTmpl);
-                $('.clSelect2').select2()
-            });
-
-        });
-
-        $(document).on('change', '.clSelect2', function(){
+  <script>
+        $(document).on('change', '.addclassitem', function(){
             var txt = "";
-            $('.clSelect2').each(function(){
+            $('.addclassitem').each(function(){
                 txt += $(this).val()+"," ;
                 txt = txt.replace('.','')
                  });
             $('#valores').val(txt);
         });
 
-
-
-    </script>
-    <script type="text/html" id="item-material">
-            {% if material_list %}
-                <select id="material-__prefix__" class="form-control clSelect2">  
-                    {% for object in material_list %}
-                    <option value="{{object.pk}}">{{ object.n_romaneio }} - {{ object.material }} - {{ object.jato }}-{{ object.tf }}-{{ object.ti }}-{{ object.ta }} - {{ object.m2 }}m²</option>
-                    {% endfor %}
-                </select>
-            {% endif %}  
-    </script>
+  </script>
 {% endblock js %}

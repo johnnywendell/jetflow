@@ -26,7 +26,13 @@ def tratamento_add(request):
     template_name = 'tratamento_add.html'
     tratamento_form = Tratamento()
     objects = Tratamento.objects.all()
-    if request.method == 'POST':
+    if request.method == 'POST' and request.POST.get('edit-form'):
+        pk = request.POST.get('edit-form')
+        tratamento = request.POST.get('main-tratamento')
+        Tratamento.objects.filter(pk=pk).update(tratamento=tratamento)
+        url = '#'
+        return HttpResponseRedirect(url)
+    elif request.method == 'POST':
         form=TratamentoForm(request.POST, instance=tratamento_form, prefix='main')
         if form.is_valid():
             form=form.save()
@@ -42,7 +48,13 @@ def tintafundo_add(request):
     template_name = 'tintafundo_add.html'
     tintaf_form = TintaFundo()
     objects = TintaFundo.objects.all()
-    if request.method == 'POST':
+    if request.method == 'POST' and request.POST.get('edit-form'):
+        pk = request.POST.get('edit-form')
+        tf = request.POST.get('main-tinta_fundo')
+        TintaFundo.objects.filter(pk=pk).update(tinta_fundo=tf)
+        url = '#'
+        return HttpResponseRedirect(url)
+    elif request.method == 'POST':
         form=TintaFundoForm(request.POST, instance=tintaf_form, prefix='main')
         if form.is_valid():
             form=form.save()
@@ -58,7 +70,13 @@ def tintaintermediaria_add(request):
     template_name = 'tintaintermediaria_add.html'
     tintai_form = TintaIntermediaria()
     objects = TintaIntermediaria.objects.all()
-    if request.method == 'POST':
+    if request.method == 'POST' and request.POST.get('edit-form'):
+        pk = request.POST.get('edit-form')
+        ti = request.POST.get('main-tinta_intermediaria')
+        TintaIntermediaria.objects.filter(pk=pk).update(tinta_intermediaria=ti)
+        url = '#'
+        return HttpResponseRedirect(url)
+    elif request.method == 'POST':
         form=TintaIntermediariaForm(request.POST, instance=tintai_form, prefix='main')
         if form.is_valid():
             form=form.save()
@@ -74,7 +92,13 @@ def tintaacabamento_add(request):
     template_name = 'tintaacabamento_add.html'
     tintaa_form = TintaAcabamento()
     objects = TintaAcabamento.objects.all()
-    if request.method == 'POST':
+    if request.method == 'POST' and request.POST.get('edit-form'):
+        pk = request.POST.get('edit-form')
+        ta = request.POST.get('main-tinta_acabamento')
+        TintaAcabamento.objects.filter(pk=pk).update(tinta_acabamento=ta)
+        url = '#'
+        return HttpResponseRedirect(url)
+    elif request.method == 'POST':
         form=TintaAcabamentoForm(request.POST, instance=tintaa_form, prefix='main')
         if form.is_valid():
             form=form.save()
@@ -84,7 +108,6 @@ def tintaacabamento_add(request):
         form=TintaAcabamentoForm(instance=tintaa_form, prefix='main')
     context={'form':form,'objects_list': objects}
     return render(request, template_name, context)
-
 
 
 class MaterialList(ListView):

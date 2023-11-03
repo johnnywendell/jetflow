@@ -382,7 +382,7 @@
             </div>
             <div>
                 <legend style="border-bottom: 1px solid #e5e5e5;">Registro fotográfico</legend>  
-                <a class="btn btn-info btn-sm" href="{% url 'qualidade:photo_create_check' %}"style="margin: 6px;">Adicionar Imagem</a>
+                <a class="btn btn-info btn-sm" href="{% url 'qualidade:photo_create_check' object.pk %}"style="margin: 6px;">Adicionar Imagem</a>
                 <div class="row" style="margin-bottom: 10px;">
                 {% for item in object.checklists.all %}
                 {% if item.photo %}

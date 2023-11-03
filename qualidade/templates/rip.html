@@ -290,6 +290,9 @@
                 <td style="padding-top: 3px";>{{ material.m2 }}</td>
             </table>
             {% endfor %}
+{% if ass %}
+                    <img src="{{ ass.ass_insp }}"style="width:100px;" alt="">
+                    {% endif  %}
         </div>
        
         <div id="footer2_content2">
@@ -308,11 +311,10 @@
                 <th>Inspeção</th>
                 <th>Fiscalização</th>
                 </table>
-            <hr style="margin-top: 0px;">
-		<table>
+            <hr style="margin-bottom: 0px;padding-bottom: 0px;margin-top: 0px;">
+		<table style="margin-bottom: 0px;padding-bottom: 0px;margin-top: 0px;">
                     {% if ass %} 
-                    <th><img src="{{ ass.ass_insp }}"style="width:100px;" alt=""></th>
-                    <th><img src="{{ ass.ass_coord }}" alt="" style="width:100px;"></th>
+                    <th><img src="{{ ass.ass_insp }}"style="width:160px;margin-bottom: 0px;padding-bottom: 0px;margin-top: 0px;" alt=""></th>
                     <th><img src="{{ ass.ass_fiscal }}" alt="" style="width:30px;"></th>
                     {% endif  %} 
                     </table>

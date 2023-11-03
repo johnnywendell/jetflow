@@ -14,5 +14,16 @@
     </div>
   </form>
 </div>
-
+<input hidden id="hashid" name="hashid" value="{{ pk }}" type="number">
 {% endblock content %} 
+
+{% block js %}
+<script>
+  $(document).ready(function(){
+      $('#id_rip-_numero').attr('hidden','true');
+      pk = $("#hashid").val();
+      $("#id_rip_numero").val(pk);
+  });
+  
+</script>
+{% endblock js %}

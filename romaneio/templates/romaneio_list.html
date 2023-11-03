@@ -37,11 +37,11 @@
                 {% for object in objects_list %}
                 <tr>
                     <td><a href="{{ object.get_absolute_url }}">{{ object }}</a></td>
-                    <td>{{ object.entrada }}</td>
+                    <td>{{ object.get_entrada }}</td>
                     <td>{{ object.documento }}</td>
                     <td>{{ object.obs }}
                     <td>{{ object.area }}</td>
-                    <td class="text-center">{{ object.solicitante }}</td>
+                    <td>{{ object.solicitante }}</td>
                 </tr>
                  
                 {% endfor %}
