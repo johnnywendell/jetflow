@@ -1,65 +1,22 @@
 {% extends "base.html" %}
-
 {% block content %} 
-{% include "includes/nav_login.html" %} 
-<div class="card-deck justify-content-center">
-<div class="card text-white  mb-3" style="max-width: 22rem; background-color: rgb(19, 39, 69);">
-    <div class="card-header"style="max-width: 22rem; background-color: rgb(171, 25, 26);">Produção</div>
-    <div class="card-body">
-      <a href="{% url 'romaneio:romaneio_list' %}"><h5 class="card-title text-light">Jetflow</h5></a>
-      <p class="card-text">Módulo de controle de fluxo no canteiro de jato</p>
-    </div>
-  </div>
-  <div class="card text-white  mb-3" style="max-width: 22rem; background-color: rgb(19, 39, 69);">
-    <div class="card-header"style="max-width: 22rem; background-color: rgb(171, 25, 26);">Qualidade</div>
-    <div class="card-body">
-        <a href="{% url 'qualidade:relatorios_list' %}"><h5 class="card-title  text-light">Relatórios</h5></a>
-      <p class="card-text">Módulo de Gestão de relatórios de inspeção</p>
-    </div>
-  </div>
-  <div class="card text-white  mb-3" style="max-width: 22rem; background-color: rgb(19, 39, 69);">
-    <div class="card-header"style="max-width: 22rem; background-color: rgb(171, 25, 26);">Manager</div>
-    <div class="card-body">
-      <a href="{% url 'financeiro:gerencia' %}"><h5 class="card-title  text-light">Coordenação</h5></a>
-      <p class="card-text">Módulo de Gestão da Obra</p>
-    </div>
-  </div>
-</div>
-<div class="card-deck justify-content-center">
-    <div class="card text-white mb-3" style="max-width: 22rem; background-color: rgb(19, 39, 69);">
-        <div class="card-header" style="max-width: 22rem; background-color: rgb(171, 25, 26);">Medição</div>
-        <div class="card-body">
-          <a href="{% url 'financeiro:bmf_list' %}"><h5 class="card-title  text-light">Controle e medição</h5></a>
-          <p class="card-text">Módulo de Controle e acompanhamento de medições e emissão de notas</p>
-        </div>
+
+<div class="row">
+    <div class="col-sm-12">
+    <div class="card bg-dark text-light">
+      <div class="card-header">
+        Bem vindo(a), {{ user.username }}
       </div>
-      <div class="card text-white  mb-3" style="max-width: 22rem; background-color: rgb(19, 39, 69);">
-        <div class="card-header"style="max-width: 22rem; background-color: rgb(171, 25, 26);">Planejamento</div>
-        <div class="card-body">
-          <a href="{% url 'financeiro:bmf_list_planejador' %}"><h5 class="card-title  text-light">BMF</h5></a>
-          <p class="card-text">Módulo de cadastro de BMF </p>
-        </div>
+      {% if user.is_authenticated %}
+      <div class="card-body">
+        <h5 class="card-title">Simple Task 1.0v</h5>
+        <p class="card-text">Sistema de gestão e controle de recursos da obra</p>
+        <a href="#" class="btn btn-primary">Informações do usuário</a>
       </div>
-      <div class="card text-white  mb-3" style="max-width: 22rem; background-color: rgb(19, 39, 69);">
-        <div class="card-header"style="max-width: 22rem; background-color:  rgb(171, 25, 26);">Relatórios</div>
-        <div class="card-body">
-          <a href="{% url 'core:dash_jato' %}"><h5 class="card-title text-white">Dashboards</h5></a>
-          <p class="card-text">Dashboards e Relatórios</p>
-        </div>
-      </div>
+      {% endif %}
     </div>
-    <div class="card-deck justify-content-right">
-      <div class="card text-white mb-3" style="max-width: 22rem; background-color: rgb(19, 39, 69);">
-          <div class="card-header" style="max-width: 22rem; background-color: rgb(171, 25, 26);">Produção</div>
-          <div class="card-body">
-            <a href="{% url 'qualidade:check_list' %}"><h5 class="card-title  text-light">Check List</h5></a>
-            <p class="card-text">Módulo de lançamento de check lists</p>
-          </div>
-        </div>
-      </div>
-    <a  href="{% url 'logout' %}">
-      <span>Logout</span>
-    </a>
+    </div>
+
 
 {% endblock %} 
 {% block js %} 

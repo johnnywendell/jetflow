@@ -9,6 +9,10 @@ from django.db.models import Sum
 
 
 @login_required
+def navbar(request):
+    return render(request, 'profile.html')
+
+@login_required
 def index(request):
     return render(request, 'index.html')
 

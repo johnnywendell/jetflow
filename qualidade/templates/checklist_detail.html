@@ -2,7 +2,6 @@
 {% load permission_tags %}
 
 {% block content %} 
-{% include "includes/nav_qualidade.html" %}
 
     <h2>Checklist Nº {{ object }}
         {% if user|has_role:'inspetor' %}
