@@ -8,7 +8,7 @@ from django.shortcuts import render, render, resolve_url
 from django.http import HttpResponseRedirect, JsonResponse, HttpResponse
 from django.views.generic import CreateView, UpdateView, ListView
 from django.db.models import Q, F
-from .models import Contrato, BMF, ItemBm, QtdBM,Aprovador,DMS,BMS,FRS
+from ..rdo.models import Contrato, RDO, ItemBm, QtdBM,Aprovador,BoletimMedicao,FRS
 from .forms import ContratoForm, BmfForm, ItemForm, QtdForm,AprovadorForm,DmsForm,BmsForm,FrsForm
 from django.db.models import Sum, Count, Case, When
 from django.db import models

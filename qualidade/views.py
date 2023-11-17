@@ -51,6 +51,45 @@ def render_pdf_view(request, pk):
        return HttpResponse('We had some errors <pre>' + html + '</pre>')
     return response
 
+@login_required
+def render_pdf_view_simple(request, pk):
+    checklist = get_object_or_404(RelatorioInspecao, pk=pk)
+    template_path = 'rip_simp.html'
+    teste = checklist.relatorio.all()
+    etapas = checklist.relatorios.all()
+    links = []
+    ultimo_item = etapas[0:]
+    espessura_total = 0
+    ambiente = checklist.ambiente_pintura
+    ass = Assinatura.objects.filter(rip_numero=pk).first()
+    for y in etapas:
+        if y.eps:
+            espessura_total += y.eps
+    for x in ultimo_item:
+        cor = x.cor_munsell
+        aderencia = x.aderencia
+    for item in teste:
+        if item.photo:
+            link = item.photo.url
+            link = link[1:]
+            links.append(link)
+    context = {'object': checklist, 'links':links, 'cor':cor, 'espessura_total':espessura_total, 'aderencia':aderencia,'ambiente':ambiente,'ass':ass}
+   
+    # Create a Django response object, and specify content_type as pdf
+    response = HttpResponse(content_type='application/pdf')
+    template = get_template(template_path)
+    html = template.render(context)
+
+    # create a pdf
+    pisa_status = pisa.CreatePDF(
+       html, dest=response)
+    # if error then show some funny view
+    if pisa_status.err:
+       return HttpResponse('We had some errors <pre>' + html + '</pre>')
+    return response
+
+
+
 class RelatoriosList(ListView):
     model = RelatorioInspecao
     template_name = 'relatorios_list.html'
@@ -87,19 +126,20 @@ def relatorios_detail(request, pk):
     template_name = 'relatorios_detail.html'
     obj = RelatorioInspecao.objects.get(pk=pk)
     relatorio = obj.rip
-    material = Material.objects.select_related('n_romaneio').filter(concluido=True, relatorio=None)
+    
     material_relatorio = Material.objects.filter(relatorio=relatorio)
     metro = 0
     for item in material_relatorio:
         metro += item.m2
-    context = {'object': obj, 'material_list': material, 'material_relatorio':material_relatorio, 'metro':metro,'ass':ass}
+    context = {'object': obj,'material_relatorio':material_relatorio, 'metro':metro,'ass':ass}
     if request.method == 'POST':
         vi = request.POST.get('valores')
         vi = str(vi)
         present = vi.split(",")
         present.pop()
         for i in present:
-            Material.objects.filter(pk=i).update(relatorio=relatorio)
+            if not i == "null":
+                Material.objects.filter(pk=i).update(relatorio=relatorio)
         url='qualidade:relatorios_detail'
         return HttpResponseRedirect(resolve_url(url,pk))
     return render(request, template_name, context)
@@ -192,7 +232,7 @@ class EtapaUpdate(UpdateView):
 
 @login_required
 @manager_required
-def photo_create(request):
+def photo_create(request, pk):
     template_name = 'photo_form.html'
     form = PhotoForm(request.POST or None)
     if request.method == 'POST':
@@ -201,7 +241,7 @@ def photo_create(request):
             rip = form.save(commit=False)
             Photo.objects.create(rip_numero=rip.rip_numero, photo=photo)
             return redirect('qualidade:relatorios_list')
-    context ={'form':form}
+    context ={'form':form, 'pk':pk}
     return render(request, template_name, context)
 
 @login_required
@@ -365,7 +405,6 @@ class EtapacheckUpdateEncarregado(UpdateView):
 
 @has_role_decorator('inspetor')
 @login_required
-@manager_required
 def photo_create_check(request):
     template_name = 'photo_form.html'
     form = PhotoFormcheck(request.POST or None)
@@ -437,7 +476,7 @@ def render_pdf_view_check_simple(request, pk):
             link = item.photo.url
             link = link[1:]
             links.append(link)
-    context = {'checklist': checklist, 'links':links, 'cor':cor, 'espessura_total':espessura_total, 'aderencia':aderencia}
+    context = {'object': checklist, 'links':links, 'cor':cor, 'espessura_total':espessura_total, 'aderencia':aderencia}
    
     # Create a Django response object, and specify content_type as pdf
     response = HttpResponse(content_type='application/pdf')

@@ -39,9 +39,9 @@
        <table style="margin: 0px;">
        
                     <th class="text-right">Cliente</th>
-                    <td> {{ checklist.cliente }}</td>
+                    <td> {{ object.cliente }}</td>
                     <th class="text-right">Data</th>
-                    <td>{{ checklist.get_data }}</td>
+                    <td>{{ object.get_data }}</td>
                     <th class="text-right">Contrato</th>
                     <td>4600019864</td>
                     <th class="text-right">Cod.</th>
@@ -51,39 +51,39 @@
         <table>
 
                     <th class="text-right">N.º RIP</th>
-                    <td>{{ checklist }}</td>
+                    <td>{{ object }}</td>
                     <th class="text-right">Procedimento</th>
                     <td> PNE-00-00095 </td>
                     <th class="text-right">Documento Ref.</th>
-                    <td>{{ checklist.rec }}</td>
+                    <td>{{ object.rec }}</td>
                     <th class="text-right">Nota</th>
-                    <td>{{ checklist.nota }}</td>
+                    <td>{{ object.nota }}</td>
         
         </table>
         <hr style="margin-top: 1px;">
         <table>
                     <th class="text-right">N.º RIP</th>
-                    <td> {{ checklist }} </td>
+                    <td> {{ object }} </td>
                     <th class="text-right">Solicitante</th>
-                    <td>{{ checklist.fiscal }}</td>
+                    <td>{{ object.fiscal }}</td>
                     <th class="text-right">Inspetor</th>
-                    <td>{{ checklist.inspetor }}</td>
+                    <td>{{ object.inspetor }}</td>
                     <th class="text-right">Aprovado?</th>
-                    <td>{% if checklist.aprovado %}✔{% else %}{% endif %}</td>
+                    <td>{% if object.aprovado %}✔{% else %}{% endif %}</td>
         </table>
         <table border="0.5" style="padding-top: 1.8px;">
                 <tr>
                     <th class="text-left">Tipo de serviço</th>
-                    <td style="padding-top: 3px;padding-left: 2px;"> {{ checklist.tipo_serv }} </td>
+                    <td style="padding-top: 3px;padding-left: 2px;"> {{ object.tipo_serv }} </td>
                 </tr>
                     <th class="text-left">Sistema de pintura aplicado</th>
-                    <td style="padding-top: 3px;padding-left: 2px;"> {{ checklist.tratamento }}{% for obj in object.checklist.all %}-{obj}{% endfor %}</td>
+                    <td style="padding-top: 3px;padding-left: 2px;"> {{ object.tratamento }}{% for obj in object.checklist.all %}-{obj}{% endfor %}{% for obj in object.relatorios.all %}-{obj}{% endfor %}</td>
                 <tr>
                     <th class="text-left">Cor final</th>
                     <td style="padding-top: 3px;padding-left: 2px;"> {{ cor }} </td>
                 </tr>
                     <th class="text-left">Tipo de substrato</th>
-                    <td style="padding-top: 3px;padding-left: 2px;"> {{ checklist.tipo_subs }} </td>
+                    <td style="padding-top: 3px;padding-left: 2px;"> {{ object.tipo_subs }} {{ ambiente }} </td>
                 <tr>
                     <th class="text-left">Espessura total</th>
                     <td style="padding-top: 3px;padding-left: 2px;">{{ espessura_total }} </td>
@@ -94,19 +94,19 @@
                 </tr>
                 <tr>
                     <th class="text-left">TAG</th>
-                    <td style="padding-top: 3px;padding-left: 2px;"> {{ checklist.tag }} </td>
+                    <td style="padding-top: 3px;padding-left: 2px;"> {{ object.tag }} </td>
                 </tr>
                 <tr>
                     <th class="text-left">Código do setor</th>
-                    <td style="padding-top: 3px;padding-left: 2px;"> {{ checklist.unidade }}.{{ checklist.setor }}.{{ checklist.corrosividade }} </td>
+                    <td style="padding-top: 3px;padding-left: 2px;"> {{ object.unidade }}.{{ object.setor }}.{{ object.corrosividade }} </td>
                 </tr>
                 <tr>
                     <th class="text-left">Responsável</th>
-                    <td style="padding-top: 3px;padding-left: 2px;"> {{ checklist.fiscal }} </td>
+                    <td style="padding-top: 3px;padding-left: 2px;"> {{ object.fiscal }} </td>
                 </tr>
                 <tr>
                     <th class="text-left">Inspetor</th>
-                    <td style="padding-top: 3px;padding-left: 2px;"> {{ checklist.inspetor }} </td>
+                    <td style="padding-top: 3px;padding-left: 2px;"> {{ object.inspetor }} </td>
                 </tr>
         </table>
 </div>   
@@ -118,16 +118,20 @@
         <th>Obs.</th>
         </table>
         <table>
-            <td>{{checklist.obs_final }}</td>
+            <td>{{object.obs_final }}</td>
             </table>
         </div>
         <div id="footer2_content2">
-    <table style="margin-bottom: 0px;padding-bottom: 0px;">
+    <table style="margin-bottom: 0px;padding-bottom: 0px;margin-top: 0px;">
         <th>Inspeção</th>
         <th>Fiscalização</th>
         </table>
     <hr style="margin-top: 0px;">
-<table>
+<table>{% if ass %} 
+                    <th><img src="{{ ass.ass_insp }}"style="width:100px;" alt=""></th>
+           
+                    <th><img src="{{ ass.ass_fiscal }}" alt="" style="width:30px;"></th>
+                    {% endif  %}
      
             </table>
 

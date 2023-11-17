@@ -495,7 +495,16 @@
                       {% endif %}
                     </div>
                   </div></div>
-  
+                <div class="col-sm-4"><div class="card" style="height: 12rem;">
+                    <div class="card-body" style="text-align: center;">
+                        {% if ass.ass_coord %} 
+                        <h5 class="card-subtitle">Assinatura Coordenação</h5>
+                        <i class="fa fa-check ok" aria-hidden="true"></i>
+                        {% else %}
+                        <h5 class="card-subtitle"><a href="{% url 'qualidade:ass_coord' object.pk %}">Assinatura Coordenação</a></h5>
+                        {% endif %}
+                    </div>
+                  </div></div>
                 <div class="col-sm-4"><div class="card" style="height: 12rem;">
                     <div class="card-body" style="text-align: center;">
                         {% if ass.ass_fiscal %} 

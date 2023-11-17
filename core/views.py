@@ -2,10 +2,18 @@ from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from material.models import Material, Romaneio
-from financeiro.models import BMF,DMS,BMS
+
 from django.shortcuts import render
 from django.core import serializers
 from django.db.models import Sum
+from .models import DialogoComportamental, DialogoForm
+from django.views.generic import CreateView, UpdateView, ListView
+
+
+class DialogoUpdate(CreateView):
+    model = DialogoComportamental
+    template_name = 'table.html'
+    form_class = DialogoForm
 
 
 

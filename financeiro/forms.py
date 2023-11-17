@@ -1,5 +1,5 @@
 from django import forms
-from .models import Contrato, BMF, ItemBm, QtdBM, Aprovador, DMS, BMS, FRS
+from .models import Contrato, RDO, ItemBm, QtdBM,Aprovador,BoletimMedicao,FRS
 
 
 class DateInput(forms.DateInput):

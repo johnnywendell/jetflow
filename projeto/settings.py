@@ -48,7 +48,7 @@ INSTALLED_APPS = [
     'material',
     'usuarios',
     'qualidade',
-    'financeiro',
+    'rdo',
 ]
 
 MIDDLEWARE = [
