@@ -1,29 +1,125 @@
 {% extends "base.html" %}
 
 {% load widget_tweaks %}
-
+{% load bootstrap %}
 {% block content %}
 
-<form method="POST" novalidate enctype="multipart/form-data">
-    {% csrf_token %}
-    {% for field in form.visible_fields %}
-    <div class="form-group{% if field.errors %} has error {% endif %}">
-        <label for="{{ field.id_for_label }}">
-            {% if field.field.required %}
-                <span class="required">{{ field.label }} </span>
-                {% else %}
-                {{ field.label }}
-                {% endif %}
-        </label>
-        {% render_field field class="form-control" %}
-        {% for error in field.errors %}
-            <span class="text-muted">{{ error }}</span>
-        {% endfor %}
+ <!-- Start Header form -->
+ <div class="text-center">
+    <img src="/media/logo.png" alt="network-logo" width="300" height="40" />
+    <h2 style="margin-top: 10px;">RELATÓRIO DIÁRIO DA OBRA</h2>
+  
+  </div>
+  <!-- End Header form -->
+
+  <!-- Start Card -->
+  <div class="card">
+    <!-- Start Card Body -->
+    <div class="card-body">
+      <!-- Start Form -->
+      <form method="POST" novalidate enctype="multipart/form-data">
+        {% csrf_token %}
+        <!-- 1º line -->
+        <div class="form-row">
+        <div class="form-group col-sm-4">
+          {{ form.unidade|bootstrap }}
+          <small class="form-text text-muted">Please fill your name</small>
+        </div>
+        <div class="form-group col-sm-4">
+            {{ form.solicitante|bootstrap }}
+            <small class="form-text text-muted">Please fill your name</small>
+          </div>
+          <div class="form-group col-sm-4">
+            {{ form.contrato|bootstrap }}
+            <small class="form-text text-muted">Please fill your name</small>
+          </div>
+        </div>
+        <!-- End  -->
+        <!-- 2º line -->
+        <div class="form-row">
+            <div class="form-group col-sm-3">
+              {{ form.disciplina|bootstrap }}
+              <small class="form-text text-muted">Please fill your name</small>
+            </div>
+            <div class="form-group col-sm-3">
+                {{ form.auth_serv|bootstrap }}
+                <small class="form-text text-muted">Please fill your name</small>
+              </div>
+              <div class="form-group col-sm-3">
+                {{ form.tipo|bootstrap }}
+                <small class="form-text text-muted">Please fill your name</small>
+              </div>
+              <div class="form-group col-sm-3">
+                {{ form.clima|bootstrap }}
+                <small class="form-text text-muted">Please fill your name</small>
+              </div>
+            </div>
+        <!-- End  -->
+
+        <!-- 3º line -->
+        <div class="form-group">
+            {{ form.escopo|bootstrap }}
+          <small class="form-text text-muted">We'll never share your phone number with anyone else.</small>
+        </div>
+        <!-- End -->
+        <!-- 4º line -->
+        <div class="form-group">
+            {{ form.local|bootstrap }}
+          <small class="form-text text-muted">We'll never share your phone number with anyone else.</small>
+        </div>
+        <!-- End -->
+
+        <!-- 5º line -->
+        <div class="form-row">
+          <!-- Start Input Date -->
+          <div class="form-group col-md-4">
+            {{ form.data_periodo|bootstrap }}
+            <small class="form-text text-muted">Please choose date and time for meeting.</small>
+          </div>
+          <!-- End Input Date -->
+
+          <!-- timeinput -->
+          <div class="form-group col-md-2">
+            {{ form.inicio|bootstrap }}
+          </div>
+          <div class="form-group col-md-2">
+            {{ form.termino|bootstrap }}
+          </div>
+          <!-- End -->
+
+          <!-- time pt -->
+          <div class="form-group col-md-2">
+            {{ form.inicio_pt|bootstrap }}
+          </div>
+          <div class="form-group col-md-2">
+            {{ form.termino_pt|bootstrap }}
+          </div>
+          <!-- End-->
+        </div>
+        <!-- End -->
+
+        <div class="form-group">
+          {{ form.doc|bootstrap }}
+        <small class="form-text text-muted">We'll never share your phone number with anyone else.</small>
+        </div>
+        <hr />
+
+
+        <!-- Start Input Remark -->
+        <div class="form-group">
+          {{ form.obs|bootstrap }}
+        </div>
+        <!-- End Input Remark -->
+
+        <!-- Start Submit Button -->
+        <button type="submit" class="btn btn-success">Salvar</button>
+        
+        <!-- End Submit Button -->
+      </form>
+      <!-- End Form -->
     </div>
-    {% endfor %}
-    <button type="submit" class="btn btn-success">Cadastrar</button>
-    
-</form>
+    <!-- End Card Body -->
+  </div>
 
 {% endblock content %}
 

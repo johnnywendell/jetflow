@@ -114,3 +114,27 @@ class RdoCreate(CreateView):
         obj.save()  
         self.object = obj      
         return HttpResponseRedirect(self.get_success_url())
+
+class RdoList(ListView):
+    model = RDO
+    template_name = 'rdo_list.html'
+    paginate_by = 20
+    context_object_name = 'objects_list'
+    def get_queryset(self):
+        queryset = super(RdoList, self).get_queryset()
+        search = self.request.GET.get('search')
+        if search:
+            queryset = queryset.filter(
+                Q(bmf__icontains=search) |
+                Q(solicitante__solicitante__icontains=search) |
+                Q(unidade__area__icontains=search)|
+                Q(status__icontains=search)
+            )
+        return queryset
+    
+@login_required
+def rdo_detail(request, slug):
+    template_name = 'rdo_detail.html'
+    obj = RDO.objects.get(slug=slug)
+    context = {'object': obj}
+    return render(request, template_name, context)

@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% load l10n %}
+{% block content %} 
+
+
+    <div class="page-header">
+        <h2><i class="fa fa-user"></i> BMF
+            <span class="pull-right">
+                <div style="display: flex;">
+                <a href="{% url 'rdo:rdo_create' %}">
+                    <button type="button" class="btn btn-primary">
+                        <span class="fa fa-plus"></span>Adicionar
+                    </button>                    
+                </a>
+                <a href="#">
+                    <button type="button" class="btn btn-info">
+                        <span class="fa fa-plus"></span>Exportar RDO's
+                    </button>
+                </a>
+                </div>
+            </span>
+        </h2>
+
+        {% if objects_list %}
+
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Nº RDO</th>
+                    <th>Data</th>
+                    <th>UND</th>
+                    <th>Solicitante</th>
+                    <th>Tipo</th>
+                    
+                    <th class="text-center">Disciplina</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for object in objects_list %}
+                <tr>
+                    <td><a href="{{ object.get_absolute_url }}">{{ object }}</a></td>
+                    <td>{{ object.data_periodo }}</td>
+                    <td>{{ object.unidade }}</td>
+                    <td>{{ object.solicitante }}</td>
+                    <td>{{ object.tipo }}</td>
+                    <!--<td>R$ {{ object.valor | floatformat:3 }}</td>-->
+                    <td class="text-center">{{ object.disciplina }}</td>
+                </tr>
+                 
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <p class="alert alert-warning">Sem Itens na Lista </p>
+        {% endif %}
+    </div>
+
+    {% include "includes/pagination.html" %}
+
+{% endblock content %} 

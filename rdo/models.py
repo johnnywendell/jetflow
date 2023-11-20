@@ -133,12 +133,12 @@ CLIMA = (
 class RDO(TimeStampedModel):
     funcionario = models.ForeignKey(User, on_delete=models.CASCADE)
     rdo = models.AutoField(auto_created=True,unique=True,primary_key=True)
-    data_periodo = models.DateField(verbose_name='Período')
+    data_periodo = models.DateField(verbose_name='Data')
     unidade = models.ForeignKey(Area, on_delete=models.CASCADE)
     solicitante = models.ForeignKey(Solicitante, on_delete=models.CASCADE)
     contrato = models.ForeignKey(Contrato, on_delete=models.CASCADE)
     disciplina = models.CharField(max_length=20,choices=DISCIP)
-    auth_serv = models.CharField('AS',max_length=80, blank=True, null=True)
+    auth_serv = models.ForeignKey(AS, on_delete=models.CASCADE, blank=True, null=True, related_name='asss',verbose_name='AS')
     escopo = models.CharField('Escopo do serviço',max_length=120)
     local = models.CharField('Local do serviço',max_length=80)
     tipo = models.CharField('Tipo Serviço',max_length=20,choices=TIPO)
@@ -146,10 +146,13 @@ class RDO(TimeStampedModel):
     valor = models.DecimalField('Valor', max_digits=11, decimal_places=3, blank=True, null=True)
     bm = models.ForeignKey(BoletimMedicao, on_delete=models.CASCADE, blank=True, null=True, related_name='bms')
     item_bm = models.ManyToManyField(ItemBm, blank=True)
-    inicio = models.DateTimeField(verbose_name='Inicio')
-    termino = models.DateTimeField(verbose_name='Fim')
+    inicio = models.TimeField(verbose_name='Inicio',blank=True, null=True)
+    termino = models.TimeField(verbose_name='Fim',blank=True, null=True)
+    inicio_pt = models.TimeField(verbose_name='Inicio PT',blank=True, null=True)
+    termino_pt = models.TimeField(verbose_name='Término PT',blank=True, null=True)
     doc = models.FileField('documento',upload_to='bmfs/', max_length=100, blank=True, null=True)
     slug = models.SlugField(default="", null=False)
+    obs = models.TextField('Obs', blank=True, null=True)
 
     class Meta:
         ordering = ('-created',)
@@ -158,7 +161,7 @@ class RDO(TimeStampedModel):
     def get_data(self):
         return self.data_periodo.strftime('%d/%m/%Y')
     def get_absolute_url(self):
-        return reverse_lazy('financeiro:rdo_detail', kwargs={'slug': self.slug})
+        return reverse_lazy('rdo:rdo_detail', kwargs={'slug': self.slug})
 
 class QtdBM(models.Model):
     efetivo = models.IntegerField('Efetivo')

@@ -1,0 +1,100 @@
+{% extends "base.html" %}
+{% block content %} 
+
+{% load widget_tweaks %}
+
+
+<a href="{% url 'rdo:rdo_list'  %}">voltar</a>
+
+    <h1>{{ object }}
+        <span class="pull-right">
+            <a href="#">
+                <button type="button" class="btn btn-success">
+                    <span class="fa fa-pencil"></span> Editar
+                </button>
+            </a>
+        </span>
+    </h1>
+<div class="row">
+    <div class="col-sm-6">
+        <table class="table table-user-information">
+            <tbody>
+                <tr>
+                    <th class="text-left">Contrato</th>
+                    <td>{{ object.contrato }}</td>
+                </tr>
+                <tr>
+                    <th class="text-left">Responsável Monsertec</th>
+                    <td> {{ object.funcionario }}</td>
+                </tr>
+                <tr>
+                    <th class="text-left">Período:</th>
+                    <td>
+                        {{ object.data_periodo }}
+                    </td>
+                </tr>
+                <tr>
+                    <th class="text-left">Unidade/Planta</th>
+                    <td>{{ object.unidade }}</td>
+                </tr>
+                <tr>
+                    <th class="text-left">Fiscal/Solicitante</th>
+                    <td>{{ object.solicitante }}</td>
+                </tr>
+                <tr>
+                    <th class="text-left">AS/ASE</th>
+                    <td>{{ object.auth_serv }}</td>
+                </tr>
+                <tr>
+                    <th class="text-left">Escopo do serviço:</th>
+                    <td>{{ object.escopo }}</td>
+                </tr>
+                <tr>
+                    <th class="text-left">Local do serviço:</th>
+                    <td>{{ object.local }}</td>
+                </tr>
+                <tr>
+                    <th class="text-left">Clima</th>
+                    <td>{{ object.clima }}</td>
+                </tr>
+                <tr>
+                    <th class="text-left">Tipo do serviço:</th>
+                    <td>{{ object.tipo }}</td>
+                </tr>
+                <tr>
+                    <th class="text-left">Valor Total:</th>
+                    <td>R$ {{ object.valor }}</td>
+                </tr>
+                <tr>
+                    <th class="text-left">BM:</th>
+                    <td>{{ object.bm }}</td>
+                </tr>
+                <tr>
+                    <th class="text-left">Hora atividade</th>
+                    <td>início: {{ object.inicio }}  término {{ object.termino }}</td>
+                </tr>
+                <tr>
+                    <th class="text-left">Arquivo:</th>
+                    <td> {% if object.doc %} 
+                        <a class="btn btn-sm btn-info"  href="{{ object.doc.url }}" download="{{ object.doc }}">Download</a>
+                        {% else %}
+                        {% endif %}</td>
+                </tr>
+                <tr>
+                    <th class="text-left">OBS:</th>
+                    <td>{{ object.obs }}</td>
+                </tr>
+                
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock content %} 
+
+{% block js %}
+
+
+
+{% endblock js %}
+

@@ -10,6 +10,13 @@ class RdoForm(forms.ModelForm):
         model = RDO
         fields = '__all__'
         exclude = ('item_bm','valor','d_numero', 'funcionario','slug')
+        widgets = {
+            'data_periodo':  forms.DateInput(format='%Y-%m-%d', attrs={'type': 'date'}),
+            'inicio':  forms.TimeInput(attrs={'type': 'time'}),
+            'termino':  forms.TimeInput(attrs={'type': 'time'}),
+            'inicio_pt':  forms.TimeInput(attrs={'type': 'time'}),
+            'termino_pt':  forms.TimeInput(attrs={'type': 'time'}),
+        }
 
 class ContratoForm(forms.ModelForm):
     class Meta:

@@ -7,3 +7,4 @@ Pillow
 xhtml2pdf
 django-role-permissions
 python-decouple
+django-ninja
