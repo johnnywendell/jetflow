@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+
+{% load widget_tweaks %}
+{% load bootstrap %}
+
+{% block content %} 
+
+<div class="row">
+    <div class="cols">
+        <form method="POST" novalidate>
+            {% csrf_token %}
+            <legend style="border-bottom: 1px solid #e5e5e5;">Contrato</legend>
+            <div class="row">
+                <div class="col-sm-12">
+                    {% for field in form.visible_fields %}
+                    <div class="form-check-inline form-row w-25{% if field.errors %} has error {% endif %}">
+                        <label for="{{ field.id_for_label }}">
+                            {% if field.field.required %}
+                                <span class="required">{{ field.label }} </span>
+                                {% else %}
+                                {{ field.label }}
+                                {% endif %}
+                        </label>
+                        {% render_field field class="form-control" %}
+                        {% for error in field.errors %}
+                            <span class="text-muted">{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                    {% endfor %}
+                </div>
+                
+            </div>
+             <div class="form-row py-3">
+                <div class="form-group col-md-1">
+                    <input placeholder="ID"class="form-control"name="edit-form" id="edit-form"type="text">
+                </div>
+                <div class="form-group col-md-1">
+                <button class="btn btn-primary" value="Save">
+                   Salvar
+                </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="row" style="margin-top: 20px;">
+    {% if objects_list %}
+
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Contrato</th>
+                    <th>Item</th>
+                    <th>Disciplina</th>
+                    <th>Descrição</th>
+                    <th>unidade</th>
+                    <th>Preço</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for object in objects_list %}
+                <tr>
+                    <td>{{ object.pk }}</td>
+                    <td>{{ object.contrato }}</td>
+                    <td>{{ object.item_ref}}</td>
+                    <td>{{ object.disciplina}}</td>
+                    <td>{{ object.descricao}}</td>
+                    <td>{{ object.und}}</td>
+                    <td>{{ object.preco_item}}</td>
+                </tr>
+                 
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <p class="alert alert-warning">Sem Itens na Lista </p>
+        {% endif %}
+</div>
+
+{% endblock content %} 

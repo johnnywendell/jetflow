@@ -8,7 +8,6 @@
     <link rel="shortcut icon" href="https://www.djangoproject.com/favicon.ico">
     <title>Jet Flow</title>
     <!-- Bootstrap CSS -->
-    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">-->
     <link rel="stylesheet" href="{% static 'css/bootstrap_modified.css' %}">
     <!-- fontawesome -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -120,7 +119,7 @@
                                 <div class="panel-body">
                                     <ul class="nav navbar-nav">
                                         <li><a href="{% url 'qualidade:check_list' %}"><i class="fa fa-chevron-right"></i>Check-List</a></li>
-                                        <li><a href="#"><i class="fa fa-chevron-right"></i>RDO</a></li>                        
+                                        <li><a href="{% url 'rdo:rdo_list' %}"><i class="fa fa-chevron-right"></i>RDO</a></li>                        
                                     </ul>
                                 </div>
                             </div>
@@ -136,7 +135,7 @@
                             <div id="dropdown-lvl3" class="panel-collapse collapse">
                                 <div class="panel-body">
                                     <ul class="nav navbar-nav">
-                                        <li><a href="#"><i class="fa fa-chevron-right"></i>BMF</a></li>
+                                        <li><a href="{% url 'rdo:itembm_add' %}"><i class="fa fa-chevron-right"></i>Item BM</a></li>
                                         <li><a href="#"><i class="fa fa-chevron-right"></i>DMS</a></li>
                                         <li><a href="#"><i class="fa fa-chevron-right"></i>FRS</a></li>
                                     </ul>
@@ -160,7 +159,7 @@
                                     <ul class="nav navbar-nav">
                                         <li><a href="{% url 'romaneio:import_csv' %}"><i class="fa fa-chevron-right"></i>Romaneio</a></li>
                                         <li><a href="{% url 'material:import_csv_material' %}"><i class="fa fa-chevron-right"></i>Materiais</a></li>
-                                        <li><a href="#"><i class="fa fa-chevron-right"></i>FRS</a></li>
+                                        <li><a href="{% url 'rdo:import_csv_itembm' %}"><i class="fa fa-chevron-right"></i>Item BM</a></li>
                                     </ul>
                                 </div>
                             </div>

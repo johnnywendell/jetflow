@@ -19,6 +19,8 @@ from usuarios.decorators import manager_required, superuser_required
 from romaneio.models import Romaneio
 from django.db.models import Sum
 from django.contrib import messages
+from django.core.files.storage import FileSystemStorage
+from .utils import converter_afd_para_csv
 
 def contato(request):
     template_name = 'material_form.html'
@@ -324,3 +326,38 @@ def import_csv(request):
 
     template_name = 'material_import.html'
     return render(request, template_name)
+
+### extra
+
+def upload_arquivos(request):
+    return render(request, 'upload.html')
+
+def processar_arquivos(request):
+    if request.method == 'POST' and request.FILES['arquivos']:
+        arquivos_afd = request.FILES.getlist('arquivos')
+        
+        # Salvar os arquivos temporariamente
+        fs = FileSystemStorage()
+        caminhos_arquivos_afd = []
+
+        for arquivo_afd in arquivos_afd:
+            caminho_arquivo_afd = fs.save(arquivo_afd.name, arquivo_afd)
+            caminhos_arquivos_afd.append(os.path.join(fs.location, caminho_arquivo_afd))
+
+        # Nome do arquivo compilado
+        arquivo_compilado = os.path.join(fs.location, 'Resultado_Compilado.csv')
+
+        # Converter arquivos AFD para CSV
+        converter_afd_para_csv(caminhos_arquivos_afd, arquivo_compilado)
+
+        # Remover arquivos temporários
+        for caminho_arquivo_afd in caminhos_arquivos_afd:
+            fs.delete(os.path.basename(caminho_arquivo_afd))
+
+        # Enviar o arquivo compilado como resposta para download
+        with open(arquivo_compilado, 'rb') as arquivo:
+            response = HttpResponse(arquivo.read(), content_type='text/csv')
+            response['Content-Disposition'] = f'attachment; filename={os.path.basename(arquivo_compilado)}'
+            return response
+
+    return HttpResponse("Erro no processamento de arquivos.")

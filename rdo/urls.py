@@ -10,4 +10,7 @@ urlpatterns =[
     path('rdo/create/', has_role_decorator('coordenador')(v.RdoCreate.as_view()), name='rdo_create'),
     path('rdo/<slug:slug>/', v.rdo_detail, name='rdo_detail'),
     path('rdo/', manager_required(v.RdoList.as_view()), name='rdo_list'),
+    path('rdo/edit/<slug:slug>/', v.rdo_edit, name='rdo_edit'),
+    path('itembm/', v.itembm_add, name='itembm_add'),
+    path('import/csvitembm/', v.import_csv_itembm, name='import_csv_itembm'),
  ]

@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% load widget_tweaks %}
+{% load bootstrap %}
+
+{% block content %} 
+    <h2>Upload de Arquivos de ponto</h2>
+    <form action="{% url 'material:processar_arquivos' %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <label for="arquivos">Selecione os arquivos AFD:</label>
+        <input type="file" name="arquivos" id="arquivos" accept=".txt" multiple required>
+        <br>
+        <input type="submit" value="Processar e Baixar">
+    </form>
+{% endblock content %} 

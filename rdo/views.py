@@ -4,7 +4,7 @@ import io
 import xlwt
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, render, resolve_url
+from django.shortcuts import render, render, resolve_url, redirect
 from django.http import HttpResponseRedirect, JsonResponse, HttpResponse
 from django.views.generic import CreateView, UpdateView, ListView
 from django.db.models import Q, F
@@ -70,10 +70,10 @@ def aprovador_add(request):
 def itembm_add(request):
     template_name = 'itembm.html'
     item_form = ItemBm()
-    search = request.GET.get('search')
+    search = request.GET.get('q')
     objects = ItemBm.objects.all()
     if search:
-        objects = objects.filter(item_ref__icontains=search)
+        objects = objects.filter(descricao__icontains=search)
     else:
         objects = objects.filter(pk=1)
     if request.method == 'POST' and request.POST.get('edit-form'):
@@ -115,6 +115,31 @@ class RdoCreate(CreateView):
         self.object = obj      
         return HttpResponseRedirect(self.get_success_url())
 
+@login_required
+@manager_required
+def rdo_edit(request, slug):
+    template_name = 'rdo_form.html'
+    if request.method == "GET":
+        objeto = RDO.objects.filter(slug=slug).first()
+        if objeto is None:
+            return redirect('rdo:rdo_list')
+        form = RdoForm(instance=objeto)
+        context={'form':form}
+        return render(request, template_name, context)
+    if request.method == "POST":
+        objeto = RDO.objects.filter(slug=slug).first()
+        if objeto is None:
+            return redirect('rdo:rdo_list')
+        form = RdoForm(request.POST, instance=objeto)
+        if form.is_valid():
+            modelo = form.save()
+            modelo.save()
+            url='rdo:rdo_detail'
+            return HttpResponseRedirect(resolve_url(url,modelo.slug))
+        else:
+            context={'form':form}
+            return render(request, template_name, context)
+
 class RdoList(ListView):
     model = RDO
     template_name = 'rdo_list.html'
@@ -136,5 +161,62 @@ class RdoList(ListView):
 def rdo_detail(request, slug):
     template_name = 'rdo_detail.html'
     obj = RDO.objects.get(slug=slug)
-    context = {'object': obj}
+    qtdbm = QtdBM.objects.filter(bmf=obj.pk)
+    if request.method == 'POST':
+        form=QtdForm(request.POST)
+        itembm = request.POST.get('id_itembm')
+        if form.is_valid():
+            obj.item_bm.add(itembm)
+            form=form.save(commit=False)
+            form.bmf = obj
+            item_bm = ItemBm.objects.get(pk=itembm)
+            form.valor = item_bm
+            form.save()
+            url='#'
+            return HttpResponseRedirect(url)       
+    else:
+        form=QtdForm()
+
+    context = {'object': obj,'form':form, 'qtdbm':qtdbm}
     return render(request, template_name, context)
+
+
+########### import csv ##############
+
+def save_data(data):
+    '''
+    Salva os dados no banco.
+    '''
+    aux = []
+    for item in data:
+        contrato = 1
+        item_ref = item.get('item_ref')
+        disciplina = item.get('disciplina')
+        descricao = item.get('descricao')
+        und = item.get('und')
+        preco_item = item.get('preco_item')
+        obj = ItemBm(
+                contrato = Contrato.objects.get(pk=contrato),
+                item_ref = item_ref,
+                disciplina = disciplina,
+                descricao = descricao,
+                und = und,
+                preco_item = preco_item,
+        )
+        aux.append(obj)
+    ItemBm.objects.bulk_create(aux)
+
+@superuser_required
+def import_csv_itembm(request):
+    if request.method == 'POST' and request.FILES['myfile']:
+        myfile = request.FILES['myfile']
+        # Lendo arquivo InMemoryUploadedFile
+        file = myfile.read().decode('utf-8')
+        reader = csv.DictReader(io.StringIO(file))
+        # Gerando uma list comprehension
+        data = [line for line in reader]
+        save_data(data)
+        return HttpResponseRedirect(reverse('rdo:itembm_add'))
+
+    template_name = 'model_import.html'
+    return render(request, template_name)

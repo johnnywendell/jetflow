@@ -1,14 +1,16 @@
 {% extends "base.html" %}
 {% block content %} 
-
+{% load static %}
 {% load widget_tweaks %}
+
+
 
 
 <a href="{% url 'rdo:rdo_list'  %}">voltar</a>
 
     <h1>{{ object }}
         <span class="pull-right">
-            <a href="#">
+            <a href="{% url 'rdo:rdo_edit' object.slug %}">
                 <button type="button" class="btn btn-success">
                     <span class="fa fa-pencil"></span> Editar
                 </button>
@@ -16,7 +18,7 @@
         </span>
     </h1>
 <div class="row">
-    <div class="col-sm-6">
+    <div class="col-sm-12">
         <table class="table table-user-information">
             <tbody>
                 <tr>
@@ -89,12 +91,167 @@
         </table>
     </div>
 </div>
+<legend style="border-bottom: 1px solid #e5e5e5;">Serviços<button type="button" class="btn btn-sm btn-primary mx-2" data-toggle="modal" data-target=".bd-example-modal-lg"><i class="fa fa-plus"></i></button></legend>
+<form method="POST" novalidate enctype="multipart/form-data">
+    {% csrf_token %}
+<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Serviço</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            
+            <div class="modal-body">
+                
+                <div x-data="getData">
+                  
+                    <h2></h2>
+                
+                    <form @submit.prevent="saveData">
+                
+                    <!-- busca material -->
+                      <div class="form-group row autocomplete">
+                        <label
+                          for=""
+                          class="col-sm-2 col-form-label"
+                        >Servico</label>
+                        <div class="col-sm-10">
+                        <!-- manual -->
+                          <input
+                            type="text"
+                            class="form-control"
+                            placeholder="Servico"
+                            x-model="searchServico"
+                          >
+                          <ul
+                                id="id_ul"
+                                x-show="servicosShow"
+                            >
+                                <template
+                                x-for="servico in servicos"
+                                :key="servico.id"
+                                >
+                                <li
+                                    x-text="servico.item_ref + ' : ' + servico.descricao"
+                                    @click="getServico(servico)"
+                                ></li>
+                                </template>
+                          
+                        </div>
+                        
+                      <!-- <p x-text="searchCliente"></p> -->
+                      </div>
+                     
+                        
+                      <p>◉ <span x-text="servicoSelecionado.descricao"></span></p>  
+                    
+                      <input type="number" x-model="servicoSelecionado.id" name="id_itembm" id="id_itembm" class="form-control" hidden />  
+                      <div class="form-row">
+                        <div class="form-group col-sm-4">
+                            <label for="inputName">item</label>
+                            <input type="text" x-model="servicoSelecionado.item_ref" class="form-control" />
+                        </div>
+                        <div class="form-group col-sm-4">
+                            <label for="inputName">unidade</label>
+                            <input type="text" x-model="servicoSelecionado.und"class="form-control" >  
+                          </div>
+                          <div class="form-group col-sm-4">
+                            <label for="inputName">preço</label>
+                            <input type="number" x-model="servicoSelecionado.preco_item"  step="0.001" id="inputvalor" class="form-control" >
+                          </div>
+                        </div>
+                    
+                        <div class="form-row">
+                            <div class="form-group col-sm-4">
+                                <label for="inputName">efetivo</label>
+                                {% render_field form.efetivo class="form-control clEfetivo" %}
+                            </div>
+                            <div class="form-group col-sm-4">
+                                <label for="inputName">Qtd.</label>
+                                {% render_field form.qtd class="form-control clQuantidade" %}
+                              </div>
+                              <div class="form-group col-sm-4">
+                                <label for="inputName">Total</label>
+                                {% render_field form.total class="form-control" %}
+                              </div>
+                            </div>
+                    </div>    
+                
+            </div>
+            <div class="modal-footer">
+    
+              <button type="submit" class="btn btn-primary float-right" style="margin: 6px;"><i class="fa fa-plus"></i>Adicionar</button>
+            
+            </div>
+        
+      </div>
+    </div>
+  </div>
+</form>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Item</th>
+            <th>disciplina</th>
+            <th>Descrição</th>
+            <th>und</th>
+            <th>Preço</th>
+            <th>Quantidade</th>
+            
+            
+        </tr>
+    </thead>
+ 
+    <tbody>
+        {% for obj in object.item_bm.all %}
+        <tr>
+            <td>{{ obj.item_ref }}</td>
+            <td>{{ obj.disciplina }}</td>
+            <td>{{ obj.descricao }}</td>
+            <td>{{ obj.und}}</td>
+            <td>{{ obj.preco_item }}</td>
+            {% for item in qtdbm %}
+            {% if item.valor == obj %}
+                 <td>{{ item.qtd }}</td>
+                 
+    
+            {% endif %}
+              
+                 {% endfor %}
+        </tr>
+        {% endfor %}
+    </tbody>
+  
+</table>
 
 {% endblock content %} 
 
 {% block js %}
+<script
+    src="{% static 'js/servico.js' %}"
+    data-csrf="{{ csrf_token }}"
+  ></script>
+  <script>
+    $(document).on('change', '.clQuantidade', function(){ 
+        quantidade = $(this).val()
+        valor = $("#inputvalor").val()
+        resultado = valor * quantidade
+        resultado_fixed = resultado.toFixed(3)
+        //id_resultado = $(this).attr('id').replace('qtd','total')
+        $('#id_total').val(resultado_fixed)
+    });
+    $(document).on('change', '.clEfetivo', function(){ 
+        quantidade = $(this).val()
+        resultado = 9.22 * quantidade
+        resultado_fixed = resultado.toFixed(3)
+        //id_resultado = $(this).attr('id').replace('qtd','total')
+        $('#id_qtd').val(resultado_fixed)
+    });
 
-
+  </script>
 
 {% endblock js %}
 

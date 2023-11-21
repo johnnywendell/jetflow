@@ -23,4 +23,6 @@ urlpatterns =[
     path('material/jsonti/2b76e8ce5dfae938c4974bc08d48ed4e97e49d77', v.json_ti, name='json_ti'),
     path('material/jsonta/2b76e8ce5dfae938c4974bc08d48ed4e97e49d77', v.json_ta, name='json_ta'),
     path('contato/', v.contato, name='contato'),
+    path('upload/', v.upload_arquivos, name='upload_arquivos'),
+    path('processar/', v.processar_arquivos, name='processar_arquivos'),
 ]

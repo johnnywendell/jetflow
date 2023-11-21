@@ -15,7 +15,7 @@ const getData = () => ({
   currentId: 1,
   ordemServicoItems: [],
   materiaisShow: false,
-  servicoShow: false,
+  servicosShow: false,
 
   init() {
     // watch - monitora as ações
@@ -27,7 +27,7 @@ const getData = () => ({
     })
     this.$watch('searchServico', (newValue, oldValue) => {
       if (!newValue) this.servicos = []
-      if (newValue.length >= 1) {
+      if (newValue.length >= 3) {
         this.getServicos(newValue)
       }
     })
@@ -67,17 +67,17 @@ const getData = () => ({
 
   getServicos(newValue) {
     const search = newValue
-    fetch(`/api/v1/servico/servico/?search=${search}`)
+    fetch(`/api/v1/rdo/itembm/?search=${search}`)
       .then(response => response.json())
       .then(data => {
         this.servicos = data
-        this.servicoShow = true
+        this.servicosShow = true
       })
   },
 
   getServico(servico) {
     this.servicoSelecionado = servico
-    this.servicoShow = false
+    this.servicosShow = false
   },
 
   saveData() {
