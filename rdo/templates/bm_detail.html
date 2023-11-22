@@ -47,7 +47,7 @@
     </div>
 
 </div>
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg"><i class="fa fa-plus"></i> Itens</button>
+
 
 <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg">
@@ -74,64 +74,92 @@
     </div>
   </div>
 </div>
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>Nº BM</th>
-                <th>Data</th>
-                <th>UND</th>
-                <th>Solicitante</th>
-                <th>Tipo</th>
-                <th>Valor</th>
-                <th class="text-center">Status</th>
-              
-            </tr>
-        </thead>
-        <tbody>
-            {% for obj in object.bms.all %}
-            <tr>
-                <td><a href="{{ obj.get_absolute_url }}">{{ obj }}</a></td>
-                    <td>{{ obj.data_periodo }}</td>
-                    <td>{{ obj.unidade }}</td>
-                    <td>{{ obj.solicitante }}</td>
-                    <td>{{ obj.tipo }}</td>
-                    <td>R$ {{ obj.valor }}</td>
-                    <td class="text-center">{{ obj.get_status }}</td>
-                    
-            </tr>
-            {% endfor %}
-        </tbody>
     
-    </table>
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>item</th>
-                <th>descricao</th>
-                <th>und</th>
-                <th>preco</th>
-                <th>qtd</th>
-                <th>total</th>
+    
+    <div class="accordion " id="accordionExample">
+        <div class="card ">
+          <div class="card-header " id="headingOne">
+            <h5 class="mb-0 ">
+              <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                Itens Boletim de Medição
+              </button>
+            </h5>
+          </div>
+      
+          <div id="collapseOne" class="collapse show"  aria-labelledby="headingOne" data-parent="#accordionExample">
+            <div class="card-body p-0">
+                <table class="table table-striped w-100">
+                    <thead>
+                        <tr>
+                            <th>item</th>
+                            <th>descricao</th>
+                            <th>und</th>
+                            <th>preco</th>
+                            <th>qtd</th>
+                            <th>total</th>
+                            
+                          
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for obj in item %}
+                        <tr>
+                                <td>{{ obj.valor__item_ref }}</td>
+                                <td>{{ obj.valor__descricao }}</td>
+                                <td>{{ obj.valor__und }}</td>
+                                <td>{{ obj.valor__preco_item }}</td>
+                                <td>{{ obj.qtd__sum }}</td>
+                                <td>{{ obj.total__sum }}</td>
+                                
+                        </tr>
+                        {% endfor %}
+                    </tbody>
                 
-              
-            </tr>
-        </thead>
-        <tbody>
-            {% for obj in item %}
-            <tr>
-                    <td>{{ obj.valor__item_ref }}</td>
-                    <td>{{ obj.valor__descricao }}</td>
-                    <td>{{ obj.valor__und }}</td>
-                    <td>{{ obj.valor__preco_item }}</td>
-                    <td>{{ obj.qtd__sum }}</td>
-                    <td>{{ obj.total__sum }}</td>
-                    
-            </tr>
-            {% endfor %}
-        </tbody>
-    
-    </table>
-
+                </table>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header" id="headingTwo">
+            <h5 class="mb-0">
+              <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                RDO's <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target=".bd-example-modal-lg"><i class="fa fa-plus"></i> </button>
+              </button>
+            </h5>
+          </div>
+          <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+            <div class="card-body p-0">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Nº RDO</th>
+                            <th>Data</th>
+                            <th>Área</th>
+                            <th>Solicitante</th>
+                            <th>Tipo</th>
+            
+                          
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for obj in object.bms.all %}
+                        <tr>
+                            <td><a href="{{ obj.get_absolute_url }}">{{ obj }}</a></td>
+                                <td>{{ obj.data_periodo }}</td>
+                                <td>{{ obj.unidade }}</td>
+                                <td>{{ obj.solicitante }}</td>
+                                <td>{{ obj.tipo }}</td>
+                                
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                
+                </table>
+            </div>
+          </div>
+        </div>
+   
+      </div>
 
 
 {% endblock content %} 

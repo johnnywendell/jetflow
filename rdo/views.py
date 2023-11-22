@@ -5,12 +5,12 @@ import xlwt
 from django.db.models import Sum
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, render, resolve_url, redirect
+from django.shortcuts import render, resolve_url, redirect,get_object_or_404
 from django.http import HttpResponseRedirect, JsonResponse, HttpResponse
 from django.views.generic import CreateView, UpdateView, ListView
 from django.db.models import Q, F
-from rdo.models import Contrato, RDO, ItemBm, QtdBM,Aprovador,BoletimMedicao,FRS
-from .forms import ContratoForm, RdoForm, ItemForm, QtdForm,AprovadorForm, BoletimForm
+from rdo.models import Contrato, RDO, ItemBm, QtdBM,Aprovador,BoletimMedicao,FRS, AssinaturaDigital
+from .forms import ContratoForm, RdoForm, ItemForm, QtdForm,AprovadorForm, BoletimForm, AssinaturadigitalForm
 from django.db.models import Sum, Count, Case, When
 from django.db import models
 from django.contrib.auth.models import User
@@ -18,6 +18,11 @@ from romaneio.models import Area, Solicitante
 from django.contrib.auth.decorators import login_required
 from usuarios.decorators import manager_required, superuser_required
 from rolepermissions.decorators import has_role_decorator
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.utils import timezone
+from django.views import View
+import base64
+from django.core.files.base import ContentFile
 
 # Create your views here.
 @login_required
@@ -163,6 +168,8 @@ def rdo_detail(request, slug):
     template_name = 'rdo_detail.html'
     obj = RDO.objects.get(slug=slug)
     qtdbm = QtdBM.objects.filter(bmf=obj.pk)
+    assinatura = AssinaturaDigital.objects.filter(rdo=obj).first()
+    assinatura_binario = base64.b64encode(assinatura.assinatura_digital).decode('utf-8') if assinatura else None
     if request.method == 'POST':
         form=QtdForm(request.POST)
         itembm = request.POST.get('id_itembm')
@@ -176,8 +183,7 @@ def rdo_detail(request, slug):
             return HttpResponseRedirect(url)       
     else:
         form=QtdForm()
-
-    context = {'object': obj,'form':form, 'qtdbm':qtdbm}
+    context = {'object': obj,'form':form, 'qtdbm':qtdbm,'assinatura_binario': assinatura_binario}
     return render(request, template_name, context)
 
 @login_required
@@ -186,6 +192,51 @@ def delete_item(request,id, ind):
     obj = RDO.objects.get(pk=ind)
     qtd.delete()
     return HttpResponseRedirect(resolve_url('rdo:rdo_detail',obj.slug))
+
+class AssinaturaRDOView(LoginRequiredMixin, View):
+    template_name = 'assinatura_rdo.html'
+
+    def get(self, request, pk):
+        rdo = get_object_or_404(RDO, pk=pk)
+        form = AssinaturadigitalForm()
+        context = {'rdo': rdo, 'form': form}
+        return render(request, self.template_name, context)
+
+    def post(self, request, pk):
+        rdo = get_object_or_404(RDO, pk=pk)
+        form = AssinaturadigitalForm(request.POST, request.FILES)
+        ass = request.POST.get('assinatura_digital')
+        if form.is_valid():
+            # Realize as verificações necessárias antes de aprovar o RDO
+            # Por exemplo, verifique se o usuário atual é autorizado a assinar
+            # ...
+
+            
+            # Registre quem assinou e quando
+            assinatura = form.save(commit=False)
+            assinatura.rdo = rdo
+            assinatura.usuario_assinatura = request.user
+
+            assinatura_base64 = ass.split(';base64,')[-1]
+
+            # Decodifique a assinatura base64 e salve-a no campo BinaryField
+            decoded_data = base64.b64decode(assinatura_base64)
+            assinatura.assinatura_digital = decoded_data
+
+            assinatura.data_hora_assinatura = timezone.now()
+            assinatura.save()
+
+            # Marque o RDO como aprovado
+            rdo.aprovado = True
+            rdo.save()
+
+            # Redirecione para o sucesso ou para a mesma página de detalhes do RDO
+            return HttpResponseRedirect(resolve_url('rdo:rdo_detail',rdo.slug))  # Substitua '#' pela URL desejada
+
+        context = {'rdo': rdo, 'form': form}
+        return render(request, self.template_name, context)
+
+
 
 class BoletimCreate(CreateView):
     model = BoletimMedicao

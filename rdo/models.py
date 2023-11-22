@@ -4,6 +4,7 @@ from core.models import TimeStampedModel
 from romaneio.models import Area, Solicitante
 from django.contrib.auth.models import User
 from django.db.models.signals import pre_save, post_save
+from django.utils import timezone
 
 class Contrato(models.Model):
     contrato = models.CharField(max_length=50, unique=True)
@@ -51,6 +52,7 @@ BM_STATUS = (  ('APROVADO','APROVADO'),
 
 class BoletimMedicao(TimeStampedModel):
     bm_n = models.AutoField(auto_created=True,unique=True,primary_key=True)
+    periodo = models.DateField(verbose_name='Periodo')
     d_numero = models.CharField('Dms',max_length=40)
     status = models.CharField(max_length=20,choices=BM_STATUS)
     data_aprov = models.DateField(verbose_name='Aprovação', blank=True, null=True)
@@ -109,7 +111,6 @@ class AS(TimeStampedModel):
     escopo = models.CharField('Escopo do serviço',max_length=120)
     local = models.CharField('Local do serviço',max_length=80)
     valor = models.DecimalField('Valor', max_digits=11, decimal_places=3, blank=True, null=True)
-    item_bm = models.ManyToManyField(ItemBm, blank=True)
     doc = models.FileField('documento',upload_to='as/', max_length=100, blank=True, null=True)
     slug = models.SlugField(default="", null=False)
 
@@ -143,9 +144,7 @@ class RDO(TimeStampedModel):
     local = models.CharField('Local do serviço',max_length=80)
     tipo = models.CharField('Tipo Serviço',max_length=20,choices=TIPO)
     clima = models.CharField('Clima',max_length=20,choices=CLIMA)
-    valor = models.DecimalField('Valor', max_digits=11, decimal_places=3, blank=True, null=True)
     bm = models.ForeignKey(BoletimMedicao, on_delete=models.CASCADE, blank=True, null=True, related_name='bms')
-    item_bm = models.ManyToManyField(ItemBm, blank=True)
     inicio = models.TimeField(verbose_name='Inicio',blank=True, null=True)
     termino = models.TimeField(verbose_name='Fim',blank=True, null=True)
     inicio_pt = models.TimeField(verbose_name='Inicio PT',blank=True, null=True)
@@ -153,7 +152,8 @@ class RDO(TimeStampedModel):
     doc = models.FileField('documento',upload_to='bmfs/', max_length=100, blank=True, null=True)
     slug = models.SlugField(default="", null=False)
     obs = models.TextField('Obs', blank=True, null=True)
-
+    aprovado = models.BooleanField(default=False)
+    
     class Meta:
         ordering = ('-created',)
     def __str__(self):
@@ -173,8 +173,17 @@ class QtdBM(models.Model):
 class QtdAS(models.Model):
     qtd = models.DecimalField('qtd', max_digits=12, decimal_places=3)
     total = models.DecimalField('total', max_digits=12, decimal_places=3)
-    a_s = models.ForeignKey(AS, on_delete=models.CASCADE)
+    a_s = models.ForeignKey(AS, on_delete=models.CASCADE, related_name='ass_s')
     valor = models.ForeignKey(ItemBm, on_delete=models.CASCADE)
+
+class AssinaturaDigital(models.Model):
+    rdo = models.OneToOneField('RDO', on_delete=models.CASCADE, related_name='assinatura_digital')
+    assinatura_digital = models.BinaryField(null=True, blank=True)
+    usuario_assinatura = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
+    data_hora_assinatura = models.DateTimeField(default=timezone.now)
+
+    def __str__(self):
+        return f"{self.usuario_assinatura} - {self.data_hora_assinatura}"
 
 ##############################################################################################
 import string, random

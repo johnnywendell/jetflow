@@ -1,5 +1,5 @@
 from django import forms
-from .models import Contrato, RDO, ItemBm, QtdBM,Aprovador,BoletimMedicao,FRS
+from .models import Contrato, RDO, ItemBm, QtdBM,Aprovador,BoletimMedicao,FRS, AssinaturaDigital
 
 
 class DateInput(forms.DateInput):
@@ -23,6 +23,12 @@ class ContratoForm(forms.ModelForm):
         model = Contrato
         fields = '__all__'
 
+class AssinaturadigitalForm(forms.ModelForm):
+    class Meta:
+        model = AssinaturaDigital
+        fields = ('data_hora_assinatura',)
+
+
 class ItemForm(forms.ModelForm):
     class Meta:
         model = ItemBm
@@ -44,3 +50,9 @@ class BoletimForm(forms.ModelForm):
     class Meta:
         model = BoletimMedicao
         fields = '__all__'
+        widgets = {
+            'periodo':  forms.DateInput(format='%Y-%m-%d', attrs={'type': 'date'}),
+            'data_aprov':  forms.DateInput(format='%Y-%m-%d', attrs={'type': 'date'}),
+   
+
+        }

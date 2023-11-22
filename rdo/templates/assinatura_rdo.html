@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>Assinatura para {{ rdo }}</h1>
+  <canvas id="canvas" width="400" height="200" style="border:1px solid #000;"></canvas>
+  <br>
+  <button class="my-2" onclick="limparAssinatura()">Limpar Assinatura</button>
+  <button class="my-2" onclick="salvarAssinatura()">Salvar Assinatura</button>
+
+  <form id="assinaturaForm" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="hidden" name="assinatura_digital" id="assinatura_digital" />
+    <button type="submit">Assinar</button>
+  </form>
+  {% endblock %}
+
+  {% block js %}
+  <script>
+    var canvas = document.getElementById('canvas');
+    var ctx = canvas.getContext('2d');
+    var isDesenhando = false;
+
+    canvas.addEventListener('mousedown', function(e) {
+      isDesenhando = true;
+      ctx.beginPath();
+      ctx.moveTo(e.clientX - canvas.getBoundingClientRect().left, e.clientY - canvas.getBoundingClientRect().top);
+    });
+
+    canvas.addEventListener('mousemove', function(e) {
+      if (isDesenhando) {
+        ctx.lineTo(e.clientX - canvas.getBoundingClientRect().left, e.clientY - canvas.getBoundingClientRect().top);
+        ctx.stroke();
+      }
+    });
+
+    canvas.addEventListener('mouseup', function() {
+      isDesenhando = false;
+    });
+    //touch movel
+    canvas.addEventListener('touchstart', function(e) {
+        e.preventDefault();
+        isDesenhando = true;
+        var touch = e.touches[0];
+        ctx.beginPath();
+        ctx.moveTo(touch.clientX - canvas.getBoundingClientRect().left, touch.clientY - canvas.getBoundingClientRect().top);
+        });
+    canvas.addEventListener('touchmove', function(e) {
+        e.preventDefault();
+        var touch = e.touches[0];
+        if (isDesenhando) {
+            ctx.lineTo(touch.clientX - canvas.getBoundingClientRect().left, touch.clientY - canvas.getBoundingClientRect().top);
+            ctx.stroke();
+        }
+        });
+
+    //limpeza
+    function limparAssinatura() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+    }
+
+    function salvarAssinatura() {
+      var assinaturaDataUrl = canvas.toDataURL(); // Obtem a representação em base64 da imagem
+
+      // Atualiza o valor do campo hidden no formulário com a assinatura em base64
+      document.getElementById('assinatura_digital').value = assinaturaDataUrl;
+      console.log("Assinatura Base64:", assinaturaDataUrl);
+    }
+  </script>
+
+{% endblock js %}
+

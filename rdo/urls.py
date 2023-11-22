@@ -19,4 +19,6 @@ urlpatterns =[
     path('bm/create/', manager_required(v.BoletimCreate.as_view()), name='bm_create'),
     path('bm/<int:pk>/', v.boletim_detail, name='bm_detail'),
     path('aprovador/', v.aprovador_add, name='aprovador_add'),
+    path('contrato/', v.contrato_add, name='contrato_add'),
+    path('rdo/<int:pk>/assinatura/', v.AssinaturaRDOView.as_view(), name='assinatura_rdo'),
  ]

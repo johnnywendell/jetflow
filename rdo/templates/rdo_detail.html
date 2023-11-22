@@ -64,8 +64,8 @@
                     <td>{{ object.tipo }}</td>
                 </tr>
                 <tr>
-                    <th class="text-left">Valor Total:</th>
-                    <td>R$ {{ object.valor }}</td>
+                    <th class="text-left">Assinatura</th>
+                    <td>{{ object.aprovado }}</td>
                 </tr>
                 <tr>
                     <th class="text-left">BM:</th>
@@ -91,7 +91,7 @@
         </table>
     </div>
 </div>
-<legend style="border-bottom: 1px solid #e5e5e5;">Serviços<button type="button" class="btn btn-sm btn-primary mx-2" data-toggle="modal" data-target=".bd-example-modal-lg"><i class="fa fa-plus"></i></button></legend>
+<legend>Serviços<button type="button" class="btn btn-sm btn-primary mx-2" data-toggle="modal" data-target=".bd-example-modal-lg"><i class="fa fa-plus"></i></button></legend>
 <form method="POST" novalidate enctype="multipart/form-data">
     {% csrf_token %}
 <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
@@ -201,41 +201,6 @@
             <th>Preço</th>
             <th>Quantidade</th>
             <th>Delete</th>
-        </tr>
-    </thead>
- 
-    <tbody>
-        {% for obj in object.item_bm.all %}
-        <tr>
-            <td>{{ obj.item_ref }}</td>
-            <td>{{ obj.disciplina }}</td>
-            <td>{{ obj.descricao }}</td>
-            <td>{{ obj.und}}</td>
-            <td>{{ obj.preco_item }}</td>
-            {% for item in qtdbm %}
-            {% if item.valor == obj %}
-                 <td>{{ item.qtd }}</td>
-                 <td><a href="#"><i class="fa fa-times-circle no"></i></a></td>
-    
-            {% endif %}
-              
-                 {% endfor %}
-        </tr>
-        {% endfor %}
-    </tbody>
-  
-</table>
-<legend style="border-bottom: 1px solid #e5e5e5;">teste</legend>
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th>Item</th>
-            <th>disciplina</th>
-            <th>Descrição</th>
-            <th>und</th>
-            <th>Preço</th>
-            <th>Quantidade</th>
-            <th>Delete</th>
             
         </tr>
     </thead>
@@ -255,6 +220,13 @@
     </tbody>
   
 </table>
+<h4> <a href="{% url 'rdo:assinatura_rdo' object.pk %}">Assinatura</a> </h4>
+{% if object.aprovado %}
+    <p>Assinado por: <strong>{{ object.assinatura_digital.usuario_assinatura }}</strong>  | Data/hora da assinatura: <strong>{{ object.assinatura_digital.data_hora_assinatura }}</strong></p>
+    {% if assinatura_binario %}
+    <img style="padding-bottom: 10px;" height="100px" src="data:image/png;base64,{{ assinatura_binario }}" alt="Assinatura Digital">
+    {% endif %}
+{% endif %}
 
 {% endblock content %} 
 
