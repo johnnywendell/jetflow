@@ -64,7 +64,7 @@ class BoletimMedicao(TimeStampedModel):
     def __str__(self):
         return 'BM Nº{}'.format(str(self.bm_n).zfill(5))
     def get_absolute_url(self):
-        return reverse_lazy('financeiro:dms_detail', kwargs={'pk': self.pk})
+        return reverse_lazy('rdo:bm_detail', kwargs={'pk': self.pk})
     
 DISCIP = (
     ('ANDAIME','ANDAIME'),
@@ -167,7 +167,7 @@ class QtdBM(models.Model):
     efetivo = models.IntegerField('Efetivo')
     qtd = models.DecimalField('qtd', max_digits=12, decimal_places=3)
     total = models.DecimalField('total', max_digits=12, decimal_places=3)
-    bmf = models.ForeignKey(RDO, on_delete=models.CASCADE)
+    bmf = models.ForeignKey(RDO, on_delete=models.CASCADE, related_name='rdos')
     valor = models.ForeignKey(ItemBm, on_delete=models.CASCADE)
 
 class QtdAS(models.Model):

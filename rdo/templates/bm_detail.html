@@ -1,0 +1,137 @@
+{% extends "base.html" %}
+{% block content %} 
+
+<a href="{% url 'rdo:bm_list'  %}">voltar</a>
+
+    <h1>DMS Nº {{ object }}
+        <span class="pull-right">
+            <a href="{% url 'rdo:bm_update' object.pk %}">
+                <button type="button" class="btn btn-success">
+                    <span class="fa fa-pencil"></span> Editar
+                </button>
+            </a>
+
+        </span>
+    </h1>
+<div class="row">
+    <div class="col-sm-6">
+        <table class="table table-user-information">
+            <tbody>
+                <tr>
+                    <th class="text-right">Data Aprovação</th>
+                    <td>{{ object.data_aprov }}</td>
+                </tr>
+                <tr>
+                    <th class="text-right">Aprovador</th>
+                    <td>{{ object.aprovador }}</td>
+                </tr>
+                <tr>
+                    <th class="text-right">Valor</th>
+                    <td>R$ {{ object.valor }}</td>
+                </tr>
+                <tr>
+                    <th class="text-right">Status</th>
+                    <td>{{ object.status }}</td>
+                </tr>
+                <tr>
+                    <th class="text-right">Obs</th>
+                    <td>{{ object.follow_up }}</td>
+                </tr>
+                <tr>
+                    <th class="text-right">Valor total</th>
+                    <td>{% for obj in bm_valor %}
+                        {{ obj.total__sum }}{% endfor %}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg"><i class="fa fa-plus"></i> Itens</button>
+
+<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Incluir RDO's</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form method="POST" novalidate>
+                {% csrf_token %}
+                <select name="rdo" class="valor form-control clSelect2">  
+                    {% for item in itens %}
+                    <option class="valor"  value="{{item.pk}}">{{ item }} - {{ item.unidade }} ({{ item.solicitante }}) {{ item.escopo }}</option>
+                    {% endfor %}
+                </select>    
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-primary float-right" style="margin: 6px;"><i class="fa fa-plus"></i>Adicionar</button>
+          </div>
+        </form> 
+    </div>
+  </div>
+</div>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Nº BM</th>
+                <th>Data</th>
+                <th>UND</th>
+                <th>Solicitante</th>
+                <th>Tipo</th>
+                <th>Valor</th>
+                <th class="text-center">Status</th>
+              
+            </tr>
+        </thead>
+        <tbody>
+            {% for obj in object.bms.all %}
+            <tr>
+                <td><a href="{{ obj.get_absolute_url }}">{{ obj }}</a></td>
+                    <td>{{ obj.data_periodo }}</td>
+                    <td>{{ obj.unidade }}</td>
+                    <td>{{ obj.solicitante }}</td>
+                    <td>{{ obj.tipo }}</td>
+                    <td>R$ {{ obj.valor }}</td>
+                    <td class="text-center">{{ obj.get_status }}</td>
+                    
+            </tr>
+            {% endfor %}
+        </tbody>
+    
+    </table>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>item</th>
+                <th>descricao</th>
+                <th>und</th>
+                <th>preco</th>
+                <th>qtd</th>
+                <th>total</th>
+                
+              
+            </tr>
+        </thead>
+        <tbody>
+            {% for obj in item %}
+            <tr>
+                    <td>{{ obj.valor__item_ref }}</td>
+                    <td>{{ obj.valor__descricao }}</td>
+                    <td>{{ obj.valor__und }}</td>
+                    <td>{{ obj.valor__preco_item }}</td>
+                    <td>{{ obj.qtd__sum }}</td>
+                    <td>{{ obj.total__sum }}</td>
+                    
+            </tr>
+            {% endfor %}
+        </tbody>
+    
+    </table>
+
+
+
+{% endblock content %} 

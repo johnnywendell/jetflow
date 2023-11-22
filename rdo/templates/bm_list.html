@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block content %} 
+
+    <div class="page-header">
+        <h2><i class="fa fa-user"></i> Medições
+            <span class="pull-right">
+                <div style="display: flex;">
+                <a href="{% url 'rdo:bm_create' %}">
+                    <button type="button" class="btn btn-primary">
+                        <span class="fa fa-plus"></span>Adicionar
+                    </button>                    
+                </a>
+                </div>
+            </span>
+        </h2>
+
+        {% if objects_list %}
+
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Nº BM</th>
+                    <th>Data Aprov.</th>
+                    <th>Aprovador</th>
+                    <th class="text-center">Status</th>
+                    <th>Valor</th>
+                    
+                </tr>
+            </thead>
+            <tbody>
+                {% for object in objects_list %}
+                <tr>
+                    <td><a href="{{ object.get_absolute_url }}">{{ object }}</a></td>
+                    <td>{{ object.data_aprov }}</td>
+                    <td>{{ object.aprovador }}</td>
+                    <td class="text-center">{{ object.status }}</td>
+                    <td>R$ {{ object.valor }}</td>
+                   
+                </tr>
+                 
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <p class="alert alert-warning">Sem Itens na Lista </p>
+        {% endif %}
+    </div>
+
+    {% include "includes/pagination.html" %}
+
+{% endblock content %} 

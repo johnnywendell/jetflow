@@ -200,8 +200,7 @@
             <th>und</th>
             <th>Preço</th>
             <th>Quantidade</th>
-            
-            
+            <th>Delete</th>
         </tr>
     </thead>
  
@@ -216,11 +215,41 @@
             {% for item in qtdbm %}
             {% if item.valor == obj %}
                  <td>{{ item.qtd }}</td>
-                 
+                 <td><a href="#"><i class="fa fa-times-circle no"></i></a></td>
     
             {% endif %}
               
                  {% endfor %}
+        </tr>
+        {% endfor %}
+    </tbody>
+  
+</table>
+<legend style="border-bottom: 1px solid #e5e5e5;">teste</legend>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Item</th>
+            <th>disciplina</th>
+            <th>Descrição</th>
+            <th>und</th>
+            <th>Preço</th>
+            <th>Quantidade</th>
+            <th>Delete</th>
+            
+        </tr>
+    </thead>
+ 
+    <tbody>
+        {% for obj in object.rdos.all %}
+        <tr>
+            <td>{{ obj.valor.item_ref }}</td>
+            <td>{{ obj.valor.disciplina }}</td>
+            <td>{{ obj.valor.descricao }}</td>
+            <td>{{ obj.valor.und }}</td>
+            <td>{{ obj.valor.preco_item }}</td>
+            <td>{{ obj.qtd }}</td>
+            <td><a href="{% url 'rdo:delete_item' obj.pk object.pk %}"><i class="fa fa-times-circle no"></i></a></td>
         </tr>
         {% endfor %}
     </tbody>

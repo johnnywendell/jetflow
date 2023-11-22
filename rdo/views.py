@@ -2,6 +2,7 @@ from datetime import datetime
 import csv
 import io
 import xlwt
+from django.db.models import Sum
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, render, resolve_url, redirect
@@ -9,7 +10,7 @@ from django.http import HttpResponseRedirect, JsonResponse, HttpResponse
 from django.views.generic import CreateView, UpdateView, ListView
 from django.db.models import Q, F
 from rdo.models import Contrato, RDO, ItemBm, QtdBM,Aprovador,BoletimMedicao,FRS
-from .forms import ContratoForm, RdoForm, ItemForm, QtdForm,AprovadorForm
+from .forms import ContratoForm, RdoForm, ItemForm, QtdForm,AprovadorForm, BoletimForm
 from django.db.models import Sum, Count, Case, When
 from django.db import models
 from django.contrib.auth.models import User
@@ -166,7 +167,6 @@ def rdo_detail(request, slug):
         form=QtdForm(request.POST)
         itembm = request.POST.get('id_itembm')
         if form.is_valid():
-            obj.item_bm.add(itembm)
             form=form.save(commit=False)
             form.bmf = obj
             item_bm = ItemBm.objects.get(pk=itembm)
@@ -180,6 +180,45 @@ def rdo_detail(request, slug):
     context = {'object': obj,'form':form, 'qtdbm':qtdbm}
     return render(request, template_name, context)
 
+@login_required
+def delete_item(request,id, ind):
+    qtd = QtdBM.objects.get(pk=id)
+    obj = RDO.objects.get(pk=ind)
+    qtd.delete()
+    return HttpResponseRedirect(resolve_url('rdo:rdo_detail',obj.slug))
+
+class BoletimCreate(CreateView):
+    model = BoletimMedicao
+    template_name = 'form.html'
+    form_class = BoletimForm
+ 
+class BoletimUpdate(UpdateView):
+    model = BoletimMedicao
+    template_name = 'form.html'
+    form_class = BoletimForm
+
+class BoletimList(ListView):
+    model = BoletimMedicao
+    template_name = 'bm_list.html'
+    paginate_by = 20
+    context_object_name = 'objects_list'
+
+@login_required
+@manager_required
+def boletim_detail(request, pk):    
+    template_name = 'bm_detail.html'
+    obj = BoletimMedicao.objects.get(pk=pk)
+    itens = RDO.objects.filter(bm=None)
+    item = QtdBM.objects.filter(bmf__bm=pk).values('valor__item_ref','valor__descricao','valor__und','valor__preco_item').annotate(Sum('total')).annotate(Sum('qtd'))
+    bm_valor = QtdBM.objects.filter(bmf__bm=pk).values('bmf__bm__bm_n').annotate(Sum('total'))
+    
+    if request.method == 'POST':
+        rdo = request.POST.get('rdo')
+        RDO.objects.filter(pk=rdo).update(bm=pk)
+        url='#'
+        return HttpResponseRedirect(url)
+    context = {'object': obj, 'itens':itens,'item':item,'bm_valor':bm_valor}
+    return render(request, template_name, context)
 
 ########### import csv ##############
 

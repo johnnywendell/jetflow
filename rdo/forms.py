@@ -39,3 +39,8 @@ class AprovadorForm(forms.ModelForm):
     class Meta:
         model = Aprovador
         fields = '__all__'
+
+class BoletimForm(forms.ModelForm):
+    class Meta:
+        model = BoletimMedicao
+        fields = '__all__'
