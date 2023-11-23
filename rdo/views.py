@@ -136,7 +136,7 @@ def rdo_edit(request, slug):
         objeto = RDO.objects.filter(slug=slug).first()
         if objeto is None:
             return redirect('rdo:rdo_list')
-        form = RdoForm(request.POST, instance=objeto)
+        form = RdoForm(request.POST, request.FILES, instance=objeto)
         if form.is_valid():
             modelo = form.save()
             modelo.save()

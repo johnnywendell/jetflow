@@ -17,6 +17,15 @@ class RdoForm(forms.ModelForm):
             'inicio_pt':  forms.TimeInput(attrs={'type': 'time'}),
             'termino_pt':  forms.TimeInput(attrs={'type': 'time'}),
         }
+    def clean_doc(self):
+        doc = self.cleaned_data.get('doc')
+        # Tamanho máximo permitido em bytes (2MB)
+        max_size = 2 * 1024 * 1024
+
+        if doc and doc.size > max_size:
+            raise forms.ValidationError('O tamanho máximo do arquivo deve ser de 2MB.')
+
+        return doc 
 
 class ContratoForm(forms.ModelForm):
     class Meta:

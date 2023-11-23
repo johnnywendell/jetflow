@@ -327,7 +327,7 @@ def import_csv(request):
     template_name = 'material_import.html'
     return render(request, template_name)
 
-### extra
+### extra afd
 
 def upload_arquivos(request):
     return render(request, 'upload.html')

@@ -234,14 +234,16 @@ class EtapaUpdate(UpdateView):
 @manager_required
 def photo_create(request, pk):
     template_name = 'photo_form.html'
-    form = PhotoForm(request.POST or None)
+
     if request.method == 'POST':
-        photo = request.FILES.get('photo')
+        form = PhotoForm(request.POST, request.FILES)
         if form.is_valid():
-            rip = form.save(commit=False)
-            Photo.objects.create(rip_numero=rip.rip_numero, photo=photo)
+            form.save()
             return redirect('qualidade:relatorios_list')
-    context ={'form':form, 'pk':pk}
+    else:
+        form = PhotoForm()
+
+    context = {'form': form, 'pk': pk}
     return render(request, template_name, context)
 
 @login_required
@@ -405,16 +407,18 @@ class EtapacheckUpdateEncarregado(UpdateView):
 
 @has_role_decorator('inspetor')
 @login_required
-def photo_create_check(request):
+def photo_create_check(request, pk):
     template_name = 'photo_form.html'
-    form = PhotoFormcheck(request.POST or None)
+
     if request.method == 'POST':
-        photo = request.FILES.get('photo')
+        form = PhotoFormcheck(request.POST, request.FILES)
         if form.is_valid():
-            rip = form.save(commit=False)
-            Photocheck.objects.create(rip_numero=rip.rip_numero, photo=photo)
+            form.save()
             return redirect('qualidade:check_list')
-    context ={'form':form}
+    else:
+        form = PhotoFormcheck()
+
+    context = {'form': form, 'pk': pk}
     return render(request, template_name, context)
 
 
