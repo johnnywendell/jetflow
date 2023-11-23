@@ -22,7 +22,7 @@
         </h2>
 
         {% if objects_list %}
-
+        <div class="table-responsive">
         <table class="table table-striped">
             <thead>
                 <tr>
@@ -50,6 +50,7 @@
                 {% endfor %}
             </tbody>
         </table>
+        </div>
         {% else %}
         <p class="alert alert-warning">Sem Itens na Lista </p>
         {% endif %}

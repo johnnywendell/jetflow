@@ -168,6 +168,7 @@ def rdo_detail(request, slug):
     template_name = 'rdo_detail.html'
     obj = RDO.objects.get(slug=slug)
     qtdbm = QtdBM.objects.filter(bmf=obj.pk)
+    total = QtdBM.objects.filter(bmf=obj.pk).aggregate(Sum("total"))['total__sum'] or 0
     assinatura = AssinaturaDigital.objects.filter(rdo=obj).first()
     assinatura_binario = base64.b64encode(assinatura.assinatura_digital).decode('utf-8') if assinatura else None
     if request.method == 'POST':
@@ -183,7 +184,7 @@ def rdo_detail(request, slug):
             return HttpResponseRedirect(url)       
     else:
         form=QtdForm()
-    context = {'object': obj,'form':form, 'qtdbm':qtdbm,'assinatura_binario': assinatura_binario}
+    context = {'object': obj,'form':form, 'qtdbm':qtdbm,'assinatura_binario': assinatura_binario,'total':total}
     return render(request, template_name, context)
 
 @login_required
@@ -261,7 +262,7 @@ def boletim_detail(request, pk):
     obj = BoletimMedicao.objects.get(pk=pk)
     itens = RDO.objects.filter(bm=None)
     item = QtdBM.objects.filter(bmf__bm=pk).values('valor__item_ref','valor__descricao','valor__und','valor__preco_item').annotate(Sum('total')).annotate(Sum('qtd'))
-    bm_valor = QtdBM.objects.filter(bmf__bm=pk).values('bmf__bm__bm_n').annotate(Sum('total'))
+    bm_valor = QtdBM.objects.filter(bmf__bm=pk).aggregate(Sum('total'))['total__sum'] or 0
     
     if request.method == 'POST':
         rdo = request.POST.get('rdo')

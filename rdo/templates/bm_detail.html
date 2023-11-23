@@ -3,7 +3,7 @@
 
 <a href="{% url 'rdo:bm_list'  %}">voltar</a>
 
-    <h1>DMS Nº {{ object }}
+    <h1>BM Nº {{ object }}
         <span class="pull-right">
             <a href="{% url 'rdo:bm_update' object.pk %}">
                 <button type="button" class="btn btn-success">
@@ -39,8 +39,7 @@
                 </tr>
                 <tr>
                     <th class="text-right">Valor total</th>
-                    <td>{% for obj in bm_valor %}
-                        {{ obj.total__sum }}{% endfor %}</td>
+                    <td>{{ bm_valor }}</td>
                 </tr>
             </tbody>
         </table>
@@ -80,13 +79,13 @@
         <div class="card ">
           <div class="card-header " id="headingOne">
             <h5 class="mb-0 ">
-              <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+              <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
                 Itens Boletim de Medição
               </button>
             </h5>
           </div>
       
-          <div id="collapseOne" class="collapse show"  aria-labelledby="headingOne" data-parent="#accordionExample">
+          <div id="collapseOne" class="collapse"  aria-labelledby="headingOne" data-parent="#accordionExample">
             <div class="card-body p-0">
                 <table class="table table-striped w-100">
                     <thead>
