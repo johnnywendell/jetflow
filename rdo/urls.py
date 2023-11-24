@@ -22,4 +22,5 @@ urlpatterns =[
     path('contrato/', v.contrato_add, name='contrato_add'),
     path('projeto_cod/', v.projeto_add, name='projeto_add'),
     path('rdo/<int:pk>/assinatura/', has_role_decorator('fiscal')(v.AssinaturaRDOView.as_view()), name='assinatura_rdo'),
+    path('export_csv/<int:pk>/', v.export_csv_view, name='export_csv'),
  ]

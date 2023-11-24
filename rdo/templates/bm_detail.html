@@ -11,6 +11,11 @@
                     <span class="fa fa-pencil"></span> Editar
                 </button>
             </a>
+            <a href="{% url 'rdo:export_csv' object.pk %}">
+              <button type="button" class="btn btn-success">
+                  <span class="fa fa-pencil"></span> export_csv
+              </button>
+          </a>
 
         </span>
     </h1>
@@ -192,8 +197,8 @@
                                 <td>{{ obj.valor__descricao }}</td>
                                 <td>{{ obj.valor__und }}</td>
                                 <td>{{ obj.valor__preco_item }}</td>
-                                <td>{{ obj.qtd__sum }}</td>
-                                <td>{{ obj.total__sum }}</td>
+                                <td>{{ obj.qtd__sum | floatformat:3 }}</td>
+                                <td>{{ obj.total__sum | floatformat:3 }}</td>
                                 
                         </tr>
                         {% endfor %}

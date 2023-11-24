@@ -303,6 +303,26 @@ def boletim_detail(request, pk):
     context = {'object': obj, 'itens':itens,'item':item,'bm_valor':bm_valor}
     return render(request, template_name, context)
 
+def export_csv_view(request,pk):
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="exported_data.csv"'
+
+    writer = csv.writer(response)
+    #writer.writerow(['Número Antes', 'Número Depois', 'Quantidade'])
+    #for _ in range(3):
+        #writer.writerow(['0000', '0000', '0000'])
+    # Agrupa os registros pelo campo 'valor' e calcula a soma da coluna 'qtd'
+    qtd_bm_objects = QtdBM.objects.filter(bmf__bm=pk).values('valor__item_ref', 'bmf__bm').annotate(total_qtd=Sum('qtd'))
+
+    for qtd_bm in qtd_bm_objects:
+        # Divida o campo 'item_ref' usando o caractere "-"
+        numero_antes, numero_depois = qtd_bm['valor__item_ref'].split('-')
+
+        total_qtd_formated = '{:.3f}'.format(qtd_bm['total_qtd'])
+        writer.writerow([numero_antes, numero_depois, total_qtd_formated])
+
+    return response
+
 ########### import csv ##############
 
 def save_data(data):
