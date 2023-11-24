@@ -328,7 +328,7 @@ def import_csv(request):
     return render(request, template_name)
 
 ### extra afd
-
+@login_required
 def upload_arquivos(request):
     return render(request, 'upload.html')
 

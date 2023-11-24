@@ -7,15 +7,23 @@ const getData = () => ({
   clienteSelecionado: {},
   searchMaterial: '',
   servicos: [],
+  itens: [],
+  rdos: [],
   servico: {},
   servicoSelecionado: {},
   searchServico: '',
+  searchItem: '',
+  searchUnidade: '',
+  searchSolicitante: '',
+  searchProjeto: '',
+  searchEscopo: '',
   ordemServico: {},
   ordemServicoItem: {},
   currentId: 1,
   ordemServicoItems: [],
   materiaisShow: false,
   servicosShow: false,
+  rdosShow: false,
 
   init() {
     // watch - monitora as ações
@@ -29,6 +37,36 @@ const getData = () => ({
       if (!newValue) this.servicos = []
       if (newValue.length >= 3) {
         this.getServicos(newValue)
+      }
+    })
+    this.$watch('searchItem', (newValue, oldValue) => {
+      if (!newValue) this.itens = []
+      if (newValue.length >= 5) {
+        this.getItens(newValue)
+      }
+    })
+    this.$watch('searchUnidade', (newValue, oldValue) => {
+      if (!newValue) this.itens = []
+      if (newValue.length >= 2) {
+        this.getRdo_unidade(newValue)
+      }
+    })
+    this.$watch('searchSolicitante', (newValue, oldValue) => {
+      if (!newValue) this.itens = []
+      if (newValue.length >= 3) {
+        this.getRdo_solicitante(newValue)
+      }
+    })
+    this.$watch('searchProjeto', (newValue, oldValue) => {
+      if (!newValue) this.itens = []
+      if (newValue.length >= 3) {
+        this.getRdo_projeto(newValue)
+      }
+    })
+    this.$watch('searchEscopo', (newValue, oldValue) => {
+      if (!newValue) this.itens = []
+      if (newValue.length >= 3) {
+        this.getRdo_escopo(newValue)
       }
     })
   },
@@ -72,6 +110,52 @@ const getData = () => ({
       .then(data => {
         this.servicos = data
         this.servicosShow = true
+      })
+  },
+  getItens(newValue) {
+    const search = newValue
+    fetch(`/api/v1/rdo/itembm-item/?search=${search}`)
+      .then(response => response.json())
+      .then(data => {
+        this.servicos = data
+        this.servicosShow = true
+      })
+  },
+
+  getRdo_solicitante(newValue) {
+    const search = newValue
+    fetch(`/api/v1/rdo/rdo-solicitante/?search=${search}`)
+      .then(response => response.json())
+      .then(data => {
+        this.rdos = data
+        this.rdosShow = true
+      })
+  },
+  getRdo_unidade(newValue) {
+    const search = newValue
+    fetch(`/api/v1/rdo/rdo-unidade/?search=${search}`)
+      .then(response => response.json())
+      .then(data => {
+        this.rdos = data
+        this.rdosShow = true
+      })
+  },
+  getRdo_projeto(newValue) {
+    const search = newValue
+    fetch(`/api/v1/rdo/rdo-projeto/?search=${search}`)
+      .then(response => response.json())
+      .then(data => {
+        this.rdos = data
+        this.rdosShow = true
+      })
+  },
+  getRdo_escopo(newValue) {
+    const search = newValue
+    fetch(`/api/v1/rdo/rdo-escopo/?search=${search}`)
+      .then(response => response.json())
+      .then(data => {
+        this.rdos = data
+        this.rdosShow = true
       })
   },
 

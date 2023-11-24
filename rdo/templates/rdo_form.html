@@ -21,16 +21,20 @@
         {% csrf_token %}
         <!-- 1º line -->
         <div class="form-row">
-        <div class="form-group col-sm-4">
+        <div class="form-group col-sm-3">
           {{ form.unidade|bootstrap }}
           <small class="form-text text-muted">Please fill your name</small>
         </div>
-        <div class="form-group col-sm-4">
+        <div class="form-group col-sm-3">
             {{ form.solicitante|bootstrap }}
             <small class="form-text text-muted">Please fill your name</small>
           </div>
-          <div class="form-group col-sm-4">
+          <div class="form-group col-sm-3">
             {{ form.contrato|bootstrap }}
+            <small class="form-text text-muted">Please fill your name</small>
+          </div>
+          <div class="form-group col-sm-3">
+            {{ form.projeto_cod|bootstrap }}
             <small class="form-text text-muted">Please fill your name</small>
           </div>
         </div>

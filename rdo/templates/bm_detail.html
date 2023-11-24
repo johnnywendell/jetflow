@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load static %}
 {% block content %} 
 
 <a href="{% url 'rdo:bm_list'  %}">voltar</a>
@@ -39,40 +40,124 @@
                 </tr>
                 <tr>
                     <th class="text-right">Valor total</th>
-                    <td>{{ bm_valor }}</td>
+                    <td>{{ bm_valor | floatformat:3}}</td>
                 </tr>
             </tbody>
         </table>
     </div>
 
 </div>
+<!--modal-->
+<form method="POST" novalidate>
+  {% csrf_token %}
+  <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Rdo's</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            
+            <div class="modal-body">
+                <div x-data="getData">
+                  
+                    <h2></h2>
+                
+                    <form @submit.prevent="saveData">
+                
+                    <!-- busca rdo -->
+                    <label for="">Filtros</label>
+                    <div class="form-group row autocomplete">
+                  
+                        <div class="col-sm-2">
+                          <input
+                            type="text"
+                            class="form-control"
+                            placeholder="Unidade"
+                            x-model="searchUnidade"
+                          >
+                        </div>
+                        <div class="col-sm-2">
+                          <input
+                            type="text"
+                            class="form-control"
+                            placeholder="Solicitante"
+                            x-model="searchSolicitante"
+                          >
+                        </div>
+                        <div class="col-sm-2">
+                          <input
+                            type="text"
+                            class="form-control"
+                            placeholder="Projeto"
+                            x-model="searchProjeto"
+                          >
+                        </div>
 
-
-<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-        <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Incluir RDO's</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <form method="POST" novalidate>
-                {% csrf_token %}
-                <select name="rdo" class="valor form-control clSelect2">  
-                    {% for item in itens %}
-                    <option class="valor"  value="{{item.pk}}">{{ item }} - {{ item.unidade }} ({{ item.solicitante }}) {{ item.escopo }}</option>
-                    {% endfor %}
-                </select>    
-          </div>
-          <div class="modal-footer">
-            <button type="submit" class="btn btn-primary float-right" style="margin: 6px;"><i class="fa fa-plus"></i>Adicionar</button>
-          </div>
-        </form> 
+                        <div class="col-sm-6">
+                          <input
+                            type="text"
+                            class="form-control"
+                            placeholder="Escopo"
+                            x-model="searchEscopo"
+                          >                        
+                        </div>
+                      
+                        <div class="col-sm-12">
+                            <table
+            
+                            x-show="rdosShow"
+                            class="table table-striped"
+                          >
+                          <thead>
+                            <tr>
+                                <th>Unidade</th>
+                                <th>solicitante</th>
+                                <th>Projeto</th>
+                                <th>Escopo</th>
+                                <th><i class="fa fa-check-circle"></i></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <template
+                              x-for="item in rdos"
+                              :key="item.rdo"
+                            >
+                              <tr>
+                              <td x-text="item.unidade.area"></td>
+                              <td x-text="item.solicitante.solicitante"></td>
+                              <td x-text="item.projeto_cod.projeto_nome"></td>
+                              <td x-text="item.escopo"></td>
+                              <td>
+                              <input type="checkbox" class="addclassitem" @click="item.isChecked = !item.isChecked" x-bind:value="item.isChecked ? item.rdo : 'null'" /> 
+                            </td>
+                                  
+                            </label>
+                          </li></td>
+                            </tr>
+                            </template>
+                        </tbody>
+                        </table>
+                        <input hidden name="valores" id="valores">
+                        </div>
+                      <!-- <p x-text="searchCliente"></p> -->
+                      </div>
+                    </div>    
+                     
+            </div>
+            <div class="modal-footer">
+    
+              <button type="submit" class="btn btn-primary float-right" style="margin: 6px;"><i class="fa fa-plus"></i>Adicionar</button>
+            </div>
+        
+      </div>
     </div>
   </div>
-</div>
+</form>
+<!-- end modal-->
+
     
     
     <div class="accordion " id="accordionExample">
@@ -162,3 +247,22 @@
 
 
 {% endblock content %} 
+
+{% block js %}
+<script
+    src="{% static 'js/servico.js' %}"
+    data-csrf="{{ csrf_token }}"
+  ></script>
+
+  <script>
+        $(document).on('change', '.addclassitem', function(){
+            var txt = "";
+            $('.addclassitem').each(function(){
+                txt += $(this).val()+"," ;
+                txt = txt.replace('.','')
+                 });
+            $('#valores').val(txt);
+        });
+
+  </script>
+{% endblock js %}

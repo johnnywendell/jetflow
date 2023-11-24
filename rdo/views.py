@@ -9,8 +9,8 @@ from django.shortcuts import render, resolve_url, redirect,get_object_or_404
 from django.http import HttpResponseRedirect, JsonResponse, HttpResponse
 from django.views.generic import CreateView, UpdateView, ListView
 from django.db.models import Q, F
-from rdo.models import Contrato, RDO, ItemBm, QtdBM,Aprovador,BoletimMedicao,FRS, AssinaturaDigital
-from .forms import ContratoForm, RdoForm, ItemForm, QtdForm,AprovadorForm, BoletimForm, AssinaturadigitalForm
+from rdo.models import Contrato, RDO, ItemBm, QtdBM,Aprovador,BoletimMedicao,FRS, AssinaturaDigital, ProjetoCodigo
+from .forms import ContratoForm, RdoForm, ItemForm, QtdForm,AprovadorForm, BoletimForm, AssinaturadigitalForm, ProjetoForm
 from django.db.models import Sum, Count, Case, When
 from django.db import models
 from django.contrib.auth.models import User
@@ -73,6 +73,29 @@ def aprovador_add(request):
 
 @login_required
 @manager_required
+def projeto_add(request):
+    template_name = 'projeto_codigo.html'
+    projeto_form = ProjetoCodigo()
+    objects = ProjetoCodigo.objects.all()
+    if request.method == 'POST' and request.POST.get('edit-form'):
+        pk = request.POST.get('edit-form')
+        projeto_nome = request.POST.get('main-projeto_nome')
+        ProjetoCodigo.objects.filter(pk=pk).update(projeto_nome=projeto_nome)
+        url = '#'
+        return HttpResponseRedirect(url)
+    elif request.method == 'POST':
+        form=ProjetoForm(request.POST, instance=projeto_form, prefix='main')
+        if form.is_valid():
+            form=form.save()
+            url='#'
+            return HttpResponseRedirect(url)
+    else:
+        form=ProjetoForm(instance=projeto_form, prefix='main')
+    context={'form':form,'objects_list': objects}
+    return render(request, template_name, context)
+
+@login_required
+@manager_required
 def itembm_add(request):
     template_name = 'itembm.html'
     item_form = ItemBm()
@@ -121,8 +144,8 @@ class RdoCreate(CreateView):
         self.object = obj      
         return HttpResponseRedirect(self.get_success_url())
 
+@has_role_decorator('rdo')
 @login_required
-@manager_required
 def rdo_edit(request, slug):
     template_name = 'rdo_form.html'
     if request.method == "GET":
@@ -162,7 +185,8 @@ class RdoList(ListView):
                 Q(status__icontains=search)
             )
         return queryset
-    
+
+@has_role_decorator('rdo')   
 @login_required
 def rdo_detail(request, slug):
     template_name = 'rdo_detail.html'
@@ -187,6 +211,7 @@ def rdo_detail(request, slug):
     context = {'object': obj,'form':form, 'qtdbm':qtdbm,'assinatura_binario': assinatura_binario,'total':total}
     return render(request, template_name, context)
 
+@has_role_decorator('rdo')
 @login_required
 def delete_item(request,id, ind):
     qtd = QtdBM.objects.get(pk=id)
@@ -263,12 +288,18 @@ def boletim_detail(request, pk):
     itens = RDO.objects.filter(bm=None)
     item = QtdBM.objects.filter(bmf__bm=pk).values('valor__item_ref','valor__descricao','valor__und','valor__preco_item').annotate(Sum('total')).annotate(Sum('qtd'))
     bm_valor = QtdBM.objects.filter(bmf__bm=pk).aggregate(Sum('total'))['total__sum'] or 0
-    
+
     if request.method == 'POST':
-        rdo = request.POST.get('rdo')
-        RDO.objects.filter(pk=rdo).update(bm=pk)
+        vi = request.POST.get('valores')
+        vi = str(vi)
+        present = vi.split(",")
+        present.pop()
+        for i in present:
+            if not i == "null":
+                RDO.objects.filter(pk=i).update(bm=pk)
         url='#'
         return HttpResponseRedirect(url)
+
     context = {'object': obj, 'itens':itens,'item':item,'bm_valor':bm_valor}
     return render(request, template_name, context)
 

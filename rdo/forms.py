@@ -1,5 +1,5 @@
 from django import forms
-from .models import Contrato, RDO, ItemBm, QtdBM,Aprovador,BoletimMedicao,FRS, AssinaturaDigital
+from .models import Contrato, RDO, ItemBm, QtdBM,Aprovador,BoletimMedicao,FRS, AssinaturaDigital,ProjetoCodigo
 
 
 class DateInput(forms.DateInput):
@@ -53,6 +53,11 @@ class QtdForm(forms.ModelForm):
 class AprovadorForm(forms.ModelForm):
     class Meta:
         model = Aprovador
+        fields = '__all__'
+
+class ProjetoForm(forms.ModelForm):
+    class Meta:
+        model = ProjetoCodigo
         fields = '__all__'
 
 class BoletimForm(forms.ModelForm):

@@ -20,3 +20,11 @@ class Planejador(AbstractUserRole):
 
 class Gerencia(AbstractUserRole):
     available_permissions = {'all_permissions':True}
+
+#################  view roles
+
+class Rdo(AbstractUserRole):
+    available_permissions = {'ass_rdo':True}
+
+class Bms(AbstractUserRole):
+    available_permissions = {'ass_bms':True}

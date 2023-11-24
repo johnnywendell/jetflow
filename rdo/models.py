@@ -26,6 +26,15 @@ FRS_STATUS = (  ('AGUARDANDO','AGUARDANDO'),
                 ('OM EXCEDIDADE','OM EXCEDIDADE'),
 )
 
+class ProjetoCodigo(models.Model):
+    projeto_nome = models.CharField(max_length=30, unique=True)
+    contrato = models.ForeignKey(Contrato, on_delete=models.CASCADE)
+    class Meta:
+        ordering = ('pk',)
+    def __str__(self):
+        return self.projeto_nome
+    
+
 class FRS(TimeStampedModel):
     frs_n = models.CharField(max_length=20,unique=True)
     status_frs = models.CharField(max_length=20,choices=FRS_STATUS)
@@ -143,6 +152,7 @@ class RDO(TimeStampedModel):
     escopo = models.CharField('Escopo do serviço',max_length=120)
     local = models.CharField('Local do serviço',max_length=80)
     tipo = models.CharField('Tipo Serviço',max_length=20,choices=TIPO)
+    projeto_cod = models.ForeignKey(ProjetoCodigo, on_delete=models.CASCADE, blank=True, null=True,verbose_name='Cód. Projetos')
     clima = models.CharField('Clima',max_length=20,choices=CLIMA)
     bm = models.ForeignKey(BoletimMedicao, on_delete=models.CASCADE, blank=True, null=True, related_name='bms')
     inicio = models.TimeField(verbose_name='Inicio',blank=True, null=True)
@@ -164,7 +174,7 @@ class RDO(TimeStampedModel):
         return reverse_lazy('rdo:rdo_detail', kwargs={'slug': self.slug})
 
 class QtdBM(models.Model):
-    efetivo = models.IntegerField('Efetivo')
+    efetivo = models.IntegerField('Efetivo', blank=True, null=True)
     qtd = models.DecimalField('qtd', max_digits=12, decimal_places=3)
     total = models.DecimalField('total', max_digits=12, decimal_places=3)
     bmf = models.ForeignKey(RDO, on_delete=models.CASCADE, related_name='rdos')
