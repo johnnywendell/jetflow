@@ -19,7 +19,7 @@ def converter_afd_para_csv(arquivos_afd, saida_csv):
 
                 # Itera sobre as linhas do AFD e converte para CSV
                 for linha in linhas_afd:
-                    if len(linha) == 35 and linha[0:9] == 3:
+                    if len(linha) == 35 and linha[9] == '3':
                         nsr = linha[0:9].strip()
                         tipo_registro = linha[9]
                         data_str = linha[10:18]

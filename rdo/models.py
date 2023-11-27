@@ -1,7 +1,6 @@
 from django.db import models
 from django.urls import reverse_lazy
 from core.models import TimeStampedModel
-from romaneio.models import Area, Solicitante
 from django.contrib.auth.models import User
 from django.db.models.signals import pre_save, post_save
 from django.utils import timezone
@@ -12,6 +11,23 @@ class Contrato(models.Model):
         ordering = ('contrato',)
     def __str__(self):
         return self.contrato
+    
+class Area(models.Model):
+    area = models.CharField(max_length=30, unique=True)
+    contrato = models.ForeignKey(Contrato, on_delete=models.CASCADE)
+    class Meta:
+        ordering = ('pk',)
+    def __str__(self):
+        return self.area
+
+class Solicitante(models.Model):
+    solicitante = models.CharField(max_length=30, unique=True)
+    contrato = models.ForeignKey(Contrato, on_delete=models.CASCADE)
+    class Meta:
+        ordering = ('pk',)
+    def __str__(self):
+        return self.solicitante
+
     
 class Aprovador(models.Model):
     aprovador = models.CharField(max_length=30, unique=True)
@@ -60,6 +76,7 @@ BM_STATUS = (  ('APROVADO','APROVADO'),
 ) 
 
 class BoletimMedicao(TimeStampedModel):
+    funcionario = models.ForeignKey(User, on_delete=models.CASCADE)
     bm_n = models.AutoField(auto_created=True,unique=True,primary_key=True)
     periodo = models.DateField(verbose_name='Periodo')
     d_numero = models.CharField('Dms',max_length=40)

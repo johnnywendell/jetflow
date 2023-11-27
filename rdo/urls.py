@@ -23,4 +23,6 @@ urlpatterns =[
     path('projeto_cod/', v.projeto_add, name='projeto_add'),
     path('rdo/<int:pk>/assinatura/', has_role_decorator('fiscal')(v.AssinaturaRDOView.as_view()), name='assinatura_rdo'),
     path('export_csv/<int:pk>/', v.export_csv_view, name='export_csv'),
+    path('area_rdo/', v.area_add, name='area_add'),
+    path('solicitante_rdo/', v.solicitante_add, name='solicitante_add'),
  ]

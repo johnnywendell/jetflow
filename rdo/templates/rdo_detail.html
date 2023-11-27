@@ -106,7 +106,8 @@
         </table>
     </div>
 </div>
-<legend>Serviços<button type="button" class="btn btn-sm btn-primary mx-2" data-toggle="modal" data-target=".bd-example-modal-lg"><i class="fa fa-plus"></i></button></legend>
+<legend>Serviços{% if object.aprovado %}
+    {% else %}<button type="button" class="btn btn-sm btn-primary mx-2" data-toggle="modal" data-target=".bd-example-modal-lg"><i class="fa fa-plus"></i></button>{% endif %}</legend>
 <form method="POST" novalidate enctype="multipart/form-data">
     {% csrf_token %}
 <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">

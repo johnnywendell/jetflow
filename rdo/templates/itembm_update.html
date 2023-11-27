@@ -1,0 +1,18 @@
+
+
+    <form method="post" action="{% url 'update_from_csv' %}" enctype="multipart/form-data">
+        {% csrf_token %}
+        <label for="csv_file">Selecione o arquivo CSV:</label>
+        <input type="file" name="csv_file" accept=".csv" required>
+        <button type="submit">Atualizar</button>
+    </form>
+
+<!--  item_ref,preco_item
+ABC123,25.50
+DEF456,30.00
+GHI789,15.75
+JKL012,40.20
+MNO345,18.90
+
+path('update_from_csv/', update_from_csv, name='update_from_csv'),
+-->

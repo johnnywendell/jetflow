@@ -9,12 +9,11 @@ from django.shortcuts import render, resolve_url, redirect,get_object_or_404
 from django.http import HttpResponseRedirect, JsonResponse, HttpResponse
 from django.views.generic import CreateView, UpdateView, ListView
 from django.db.models import Q, F
-from rdo.models import Contrato, RDO, ItemBm, QtdBM,Aprovador,BoletimMedicao,FRS, AssinaturaDigital, ProjetoCodigo
-from .forms import ContratoForm, RdoForm, ItemForm, QtdForm,AprovadorForm, BoletimForm, AssinaturadigitalForm, ProjetoForm
+from rdo.models import Contrato, RDO, ItemBm, QtdBM,Aprovador,BoletimMedicao,FRS, AssinaturaDigital, ProjetoCodigo, Area, Solicitante
+from .forms import ContratoForm, RdoForm, ItemForm, QtdForm,AprovadorForm, BoletimForm, AssinaturadigitalForm, ProjetoForm, AreaForm, SolicitanteForm
 from django.db.models import Sum, Count, Case, When
 from django.db import models
 from django.contrib.auth.models import User
-from romaneio.models import Area, Solicitante
 from django.contrib.auth.decorators import login_required
 from usuarios.decorators import manager_required, superuser_required
 from rolepermissions.decorators import has_role_decorator
@@ -25,6 +24,60 @@ import base64
 from django.core.files.base import ContentFile
 
 # Create your views here.
+@login_required
+@manager_required
+def area_add(request):
+    template_name = 'area_add.html'
+    area_form = Area()
+    objects = Area.objects.all()
+    if request.method == 'POST' and request.POST.get('edit-form'):
+        pk = request.POST.get('edit-form')
+        area = request.POST.get('main-area')
+        Area.objects.filter(pk=pk).update(area=area)
+        url = '#'
+        return HttpResponseRedirect(url)
+    elif request.method == 'POST':
+        form=AreaForm(request.POST, instance=area_form, prefix='main')
+        if form.is_valid():
+            form=form.save()
+            url='#'
+            return HttpResponseRedirect(url)
+    else:
+        form=AreaForm(instance=area_form, prefix='main')
+    context={'form':form,'objects_list': objects}
+    return render(request, template_name, context)
+
+@login_required
+@manager_required
+def delete_area(request,pk):
+    area = Area.objects.get(pk=pk)
+    area.delete()
+    url = '#'
+    return HttpResponseRedirect(url)
+
+@login_required
+@manager_required
+def solicitante_add(request):
+    template_name = 'solicitante_add.html'
+    solicitante_form = Solicitante()
+    objects = Solicitante.objects.all()
+    if request.method == 'POST' and request.POST.get('edit-form'):
+        pk = request.POST.get('edit-form')
+        solicitante = request.POST.get('main-solicitante')
+        Solicitante.objects.filter(pk=pk).update(solicitante=solicitante)
+        url = '#'
+        return HttpResponseRedirect(url)
+    elif request.method == 'POST':
+        form=SolicitanteForm(request.POST, instance=solicitante_form, prefix='main')
+        if form.is_valid():
+            form=form.save()
+            url='#'
+            return HttpResponseRedirect(url)
+    else:
+        form=SolicitanteForm(instance=solicitante_form, prefix='main')
+    context={'form':form,'objects_list': objects}
+    return render(request, template_name, context)
+
 @login_required
 @manager_required
 def contrato_add(request):
@@ -268,6 +321,12 @@ class BoletimCreate(CreateView):
     model = BoletimMedicao
     template_name = 'form.html'
     form_class = BoletimForm
+    def form_valid(self, form):
+        obj = form.save(commit=False)
+        obj.funcionario = self.request.user
+        obj.save()  
+        self.object = obj      
+        return HttpResponseRedirect(self.get_success_url())
  
 class BoletimUpdate(UpdateView):
     model = BoletimMedicao
@@ -363,3 +422,28 @@ def import_csv_itembm(request):
 
     template_name = 'model_import.html'
     return render(request, template_name)
+
+
+
+##############extras
+def update_from_csv_itembm(request):
+    if 'csv_file' in request.FILES:
+        csv_file = request.FILES['csv_file']
+        decoded_file = csv_file.read().decode('utf-8').splitlines()
+        reader = csv.DictReader(decoded_file)
+
+        for row in reader:
+            item_ref = row['item_ref']
+            preco_item = row['preco_item']
+
+            try:
+                item = ItemBm.objects.get(item_ref=item_ref)
+                item.preco_item = preco_item
+                item.save()
+            except ItemBm.DoesNotExist:
+                # Tratar o caso em que o item_ref não existe no banco de dados
+                pass
+
+        return HttpResponse("Atualização concluída com sucesso!")
+
+    return HttpResponse("Falha na atualização. Certifique-se de fornecer um arquivo CSV.")
