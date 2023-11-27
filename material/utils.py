@@ -19,7 +19,7 @@ def converter_afd_para_csv(arquivos_afd, saida_csv):
 
                 # Itera sobre as linhas do AFD e converte para CSV
                 for linha in linhas_afd:
-                    if len(linha) == 35:
+                    if len(linha) == 35 and linha[0:9] == 3:
                         nsr = linha[0:9].strip()
                         tipo_registro = linha[9]
                         data_str = linha[10:18]
@@ -35,6 +35,4 @@ def converter_afd_para_csv(arquivos_afd, saida_csv):
 
                         # Escreve a linha no arquivo CSV com o nome do arquivo
                         escritor_csv.writerow([nome_arquivo, nsr, tipo_registro, data, hora_minuto, pis])
-                    else:
-                        # Imprime '**' se o tamanho da linha for diferente de 34
-                        print(f"** Linha pulada no arquivo {nome_arquivo} - Tamanho incorreto:", len(linha), " - Conteúdo:", linha.strip())
+                    
