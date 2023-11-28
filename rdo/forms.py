@@ -81,3 +81,13 @@ class SolicitanteForm(forms.ModelForm):
     class Meta:
         model = Solicitante
         fields = '__all__'
+
+class FrsForm(forms.ModelForm):
+    class Meta:
+        model = FRS
+        fields = '__all__'
+        exclude = ('valor',)
+        widgets = {
+            'data_aprov':  DateInput(),
+            'data_emissão':  DateInput()
+        }

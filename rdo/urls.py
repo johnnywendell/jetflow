@@ -25,4 +25,9 @@ urlpatterns =[
     path('export_csv/<int:pk>/', v.export_csv_view, name='export_csv'),
     path('area_rdo/', v.area_add, name='area_add'),
     path('solicitante_rdo/', v.solicitante_add, name='solicitante_add'),
+    path('frs/', manager_required(v.FrsList.as_view()), name='frs_list'),
+    path('frs/<int:pk>/edit/', manager_required(v.FRSUpdate.as_view()), name='frs_update'),
+    path('frs/create/', manager_required(v.FRSCreate.as_view()), name='frs_create'),
+    path('frs/<int:pk>/', v.frs_detail, name='frs_detail'),
+    path('frs/deleteitem/<int:pk>/<int:id>/', v.frsitem_delete, name='delete_itemfrs'),
  ]

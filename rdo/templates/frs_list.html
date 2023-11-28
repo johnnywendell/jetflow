@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block content %} 
+
+    <div class="page-header">
+        <h2><i class="fa fa-user"></i> FRS
+            <span class="pull-right">
+                <div style="display: flex;">
+                <a href="{% url 'rdo:frs_create' %}">
+                    <button type="button" class="btn btn-primary">
+                        <span class="fa fa-plus"></span>Adicionar
+                    </button>                    
+                </a>
+                </div>
+            </span>
+        </h2>
+
+        {% if objects_list %}
+
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Nº FRS</th>
+                    <th>Status FRS</th>
+                    <th>Data Aprov.</th>
+                    <th>Nf</th>
+                    <th>Data emissão</th>
+                    <th>Valor</th>
+                    <th class="text-center">Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for object in objects_list %}
+                <tr>
+                    <td><a href="{{ object.get_absolute_url }}">{{ object }}</a></td>
+                    <td>{{ object.status_frs }}</td>
+                    <td>{{ object.data_aprov }}</td>
+                    <td>{{ object.nf }}</td>
+                    <td>{{ object.data_emissão }}</td>
+                    <td>R$ {{ object.valor }}</td>
+                    <td class="text-center">{% if object.status_nf %}
+                        <i class="fa fa-check-circle ok"></i>
+                      {% else %}
+                        <i class="fa fa-minus-circle no"></i>
+                      {% endif %}</td>
+                </tr>
+                 
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <p class="alert alert-warning">Sem Itens na Lista </p>
+        {% endif %}
+    </div>
+
+    {% include "includes/pagination.html" %}
+
+{% endblock content %} 

@@ -66,7 +66,7 @@ class FRS(TimeStampedModel):
     def __str__(self):
         return self.frs_n
     def get_absolute_url(self):
-        return reverse_lazy('financeiro:frs_detail', kwargs={'pk': self.pk})
+        return reverse_lazy('rdo:frs_detail', kwargs={'pk': self.pk})
     
 BM_STATUS = (  ('APROVADO','APROVADO'),
                 ('AGUARDANDO OM','AGUARDANDO OM'),
@@ -80,6 +80,7 @@ class BoletimMedicao(TimeStampedModel):
     bm_n = models.AutoField(auto_created=True,unique=True,primary_key=True)
     periodo = models.DateField(verbose_name='Periodo')
     d_numero = models.CharField('Dms',max_length=40)
+    b_numero = models.CharField('Bms',max_length=40)
     status = models.CharField(max_length=20,choices=BM_STATUS)
     data_aprov = models.DateField(verbose_name='Aprovação', blank=True, null=True)
     aprovador = models.ForeignKey(Aprovador, on_delete=models.CASCADE)

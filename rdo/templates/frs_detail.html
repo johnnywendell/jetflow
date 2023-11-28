@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+{% block content %} 
+
+<a href="{% url 'rdo:frs_list'  %}">voltar</a>
+
+    <h1>FRS Nº {{ object }}
+        <span class="pull-right">
+            <a href="{% url 'rdo:frs_update' object.pk %}">
+                <button type="button" class="btn btn-success">
+                    <span class="fa fa-pencil"></span> Editar
+                </button>
+            </a>
+
+        </span>
+    </h1>
+<div class="row">
+    <div class="col-sm-6">
+        <table class="table table-user-information">
+            <tbody>
+                <tr>
+                    <th class="text-right">FRS status</th>
+                    <td>{{ object.status_frs }}</td>
+                </tr>
+                <tr>
+                    <th class="text-right">Data Aprovação</th>
+                    <td>R$ {{ object.data_aprov }}</td>
+                </tr>
+                <tr>
+                    <th class="text-right">Nota Fiscal</th>
+                    <td>{{ object.nf }}</td>
+                </tr>
+                <tr>
+                    <th class="text-right">Data Emissão</th>
+                    <td>{{ object.data_emissão }}</td>
+                </tr>
+                <tr>
+                    <th class="text-right">Valor</th>
+                    <td>R$ {{ object.valor }}</td>
+                </tr>
+                <tr>
+                    <th class="text-right">Status NF</th>
+                    <td>{% if object.status_nf %}
+                        <i class="fa fa-check-circle ok"></i>
+                      {% else %}
+                        <i class="fa fa-minus-circle no"></i>
+                      {% endif %}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg"><i class="fa fa-plus"></i> Itens</button>
+
+<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Incluir BM's</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form method="POST" novalidate>
+                {% csrf_token %}
+                <select name="bms" class="valor form-control clSelect2">  
+                    {% for item in itens %}
+                    <option class="valor"  value="{{item.pk}}">{{ item }} - {{ item.aprovador }} | R$ {{ item.valor }}</option>
+                    {% endfor %}
+                </select>    
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-primary float-right" style="margin: 6px;"><i class="fa fa-plus"></i>Adicionar</button>
+          </div>
+        </form> 
+    </div>
+  </div>
+</div>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Nº BMS</th>
+                <th>Aprovador</th>
+                <th>Valor</th>
+                <th class="text-center">Status</th>
+                <th class="text-center">Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for obj in object.frs.all %}
+            <tr>
+                <td><a href="{{ obj.get_absolute_url }}"">{{ obj }}</a></td>
+                <td>{{ obj.aprovador }}</td>
+                <td>R$ {{ obj.valor }}</td>
+                <td class="text-center">{{ obj.status }}</td>
+                <td class="text-center"><a href="{% url 'rdo:delete_itemfrs' obj.pk object.pk %}"><i class="fa fa-times-circle no"></i></a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    
+    </table>
+
+{% endblock content %} 

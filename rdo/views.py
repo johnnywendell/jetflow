@@ -10,7 +10,7 @@ from django.http import HttpResponseRedirect, JsonResponse, HttpResponse
 from django.views.generic import CreateView, UpdateView, ListView
 from django.db.models import Q, F
 from rdo.models import Contrato, RDO, ItemBm, QtdBM,Aprovador,BoletimMedicao,FRS, AssinaturaDigital, ProjetoCodigo, Area, Solicitante
-from .forms import ContratoForm, RdoForm, ItemForm, QtdForm,AprovadorForm, BoletimForm, AssinaturadigitalForm, ProjetoForm, AreaForm, SolicitanteForm
+from .forms import ContratoForm, RdoForm, ItemForm, QtdForm,AprovadorForm, BoletimForm, AssinaturadigitalForm, ProjetoForm, AreaForm, SolicitanteForm, FrsForm
 from django.db.models import Sum, Count, Case, When
 from django.db import models
 from django.contrib.auth.models import User
@@ -382,6 +382,50 @@ def export_csv_view(request,pk):
         writer.writerow(['0', '0000000000',numero_antes, numero_depois, total_qtd_formated])
 
     return response
+
+class FrsList(ListView):
+    model = FRS
+    template_name = 'frs_list.html'
+    paginate_by = 20
+    context_object_name = 'objects_list'
+
+class FRSCreate(CreateView):
+    model = FRS
+    template_name = 'form.html'
+    form_class = FrsForm
+ 
+class FRSUpdate(UpdateView):
+    model = FRS
+    template_name = 'form.html'
+    form_class = FrsForm
+
+@login_required
+@manager_required
+def frs_detail(request, pk):    
+    template_name = 'frs_detail.html'
+    obj = FRS.objects.get(pk=pk)
+    itens = BoletimMedicao.objects.filter(frs=None)
+    if request.method == 'POST':
+        bms = request.POST.get('bms')
+        BoletimMedicao.objects.filter(pk=bms).update(frs=pk)
+        valor_total = QtdBM.objects.filter(bmf__bm__frs=pk).aggregate(Sum('total'))['total__sum'] or 0
+        FRS.objects.filter(pk=pk).update(valor=valor_total)
+        url='#'
+        return HttpResponseRedirect(url)
+    context = {'object': obj, 'itens':itens}
+    return render(request, template_name, context)
+
+@login_required
+@manager_required
+def frsitem_delete(request, pk, id):
+    BoletimMedicao.objects.filter(pk=pk).update(frs=None)
+    
+    valor_total = QtdBM.objects.filter(bmf__bm__frs=id).aggregate(Sum('total'))['total__sum'] or 0
+
+    FRS.objects.filter(pk=id).update(valor=valor_total)
+    return HttpResponseRedirect(resolve_url('financeiro:frs_detail',id))
+
+
 
 ########### import csv ##############
 
