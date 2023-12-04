@@ -148,7 +148,7 @@ class AS(TimeStampedModel):
     def get_data(self):
         return self.data_periodo.strftime('%d/%m/%Y')
     def get_absolute_url(self):
-        return reverse_lazy('financeiro:as_detail', kwargs={'slug': self.slug})
+        return reverse_lazy('rdo:as_detail', kwargs={'slug': self.slug})
 
 
 CLIMA = (

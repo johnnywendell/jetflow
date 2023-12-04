@@ -18,6 +18,7 @@ urlpatterns =[
     path('bm/<int:pk>/edit/', has_role_decorator('bms')(v.BoletimUpdate.as_view()), name='bm_update'),
     path('bm/create/', has_role_decorator('bms')(v.BoletimCreate.as_view()), name='bm_create'),
     path('bm/<int:pk>/', v.boletim_detail, name='bm_detail'),
+    path('bm/<int:pk>/<int:id>/', v.bm_delete, name='bm_delete'),
     path('aprovador/', v.aprovador_add, name='aprovador_add'),
     path('contrato/', v.contrato_add, name='contrato_add'),
     path('projeto_cod/', v.projeto_add, name='projeto_add'),
@@ -30,4 +31,6 @@ urlpatterns =[
     path('frs/create/', manager_required(v.FRSCreate.as_view()), name='frs_create'),
     path('frs/<int:pk>/', v.frs_detail, name='frs_detail'),
     path('frs/deleteitem/<int:pk>/<int:id>/', v.frsitem_delete, name='delete_itemfrs'),
+############
+
  ]

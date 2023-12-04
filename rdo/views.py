@@ -2,15 +2,16 @@ from datetime import datetime
 import csv
 import io
 import xlwt
+from django.contrib.auth import get_user_model
 from django.db.models import Sum
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, resolve_url, redirect,get_object_or_404
 from django.http import HttpResponseRedirect, JsonResponse, HttpResponse
 from django.views.generic import CreateView, UpdateView, ListView
 from django.db.models import Q, F
-from rdo.models import Contrato, RDO, ItemBm, QtdBM,Aprovador,BoletimMedicao,FRS, AssinaturaDigital, ProjetoCodigo, Area, Solicitante
-from .forms import ContratoForm, RdoForm, ItemForm, QtdForm,AprovadorForm, BoletimForm, AssinaturadigitalForm, ProjetoForm, AreaForm, SolicitanteForm, FrsForm
+from rdo.models import Contrato, RDO, ItemBm, QtdBM,Aprovador,BoletimMedicao,FRS, AssinaturaDigital, ProjetoCodigo, Area, Solicitante, AS
+from .forms import ContratoForm, RdoForm, ItemForm, QtdForm,AprovadorForm, BoletimForm, AssinaturadigitalForm, ProjetoForm, AreaForm, SolicitanteForm, FrsForm,AsForm
 from django.db.models import Sum, Count, Case, When
 from django.db import models
 from django.contrib.auth.models import User
@@ -346,7 +347,7 @@ def boletim_detail(request, pk):
     obj = BoletimMedicao.objects.get(pk=pk)
     itens = RDO.objects.filter(bm=None)
     item = QtdBM.objects.filter(bmf__bm=pk).values('valor__item_ref','valor__descricao','valor__und','valor__preco_item').annotate(Sum('total')).annotate(Sum('qtd'))
-    bm_valor = QtdBM.objects.filter(bmf__bm=pk).aggregate(Sum('total'))['total__sum'] or 0
+    
 
     if request.method == 'POST':
         vi = request.POST.get('valores')
@@ -356,11 +357,21 @@ def boletim_detail(request, pk):
         for i in present:
             if not i == "null":
                 RDO.objects.filter(pk=i).update(bm=pk)
+        bm_valor = QtdBM.objects.filter(bmf__bm=pk).aggregate(Sum('total'))['total__sum'] or 0
+        BoletimMedicao.objects.filter(pk=pk).update(valor=bm_valor)
         url='#'
         return HttpResponseRedirect(url)
 
-    context = {'object': obj, 'itens':itens,'item':item,'bm_valor':bm_valor}
+    context = {'object': obj, 'itens':itens,'item':item}
     return render(request, template_name, context)
+
+@login_required
+@manager_required
+def bm_delete(request, pk, id):
+    RDO.objects.filter(pk=id).update(bm=None)
+    bm_valor = QtdBM.objects.filter(bmf__bm=pk).aggregate(Sum('total'))['total__sum'] or 0
+    BoletimMedicao.objects.filter(pk=pk).update(valor=bm_valor)
+    return HttpResponseRedirect(resolve_url('rdo:bm_detail',pk))
 
 def export_csv_view(request,pk):
     response = HttpResponse(content_type='text/csv')
@@ -423,7 +434,7 @@ def frsitem_delete(request, pk, id):
     valor_total = QtdBM.objects.filter(bmf__bm__frs=id).aggregate(Sum('total'))['total__sum'] or 0
 
     FRS.objects.filter(pk=id).update(valor=valor_total)
-    return HttpResponseRedirect(resolve_url('financeiro:frs_detail',id))
+    return HttpResponseRedirect(resolve_url('rdo:frs_detail',id))
 
 
 

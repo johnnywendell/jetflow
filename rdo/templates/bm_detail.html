@@ -4,21 +4,22 @@
 
 <a href="{% url 'rdo:bm_list'  %}">voltar</a>
 
-    <h1>BM Nº {{ object }}
+    <h1>{{ object }}
         <span class="pull-right">
+          <div style="display: flex;">
             <a href="{% url 'rdo:bm_update' object.pk %}">
-                <button type="button" class="btn btn-success">
+                <button type="button" class="btn btn-primary">
                     <span class="fa fa-pencil"></span> Editar
                 </button>
             </a>
             <a href="{% url 'rdo:export_csv' object.pk %}">
               <button type="button" class="btn btn-success">
-                  <span class="fa fa-pencil"></span> export_csv
+                   export_csv
               </button>
-          </a>
-
-        </span>
-    </h1>
+            </a>
+          </div>
+          </span>
+        </h1>
 <div class="row">
     <div class="col-sm-6">
         <table class="table table-user-information">
@@ -45,7 +46,7 @@
                 </tr>
                 <tr>
                     <th class="text-right">Valor total</th>
-                    <td>{{ bm_valor | floatformat:3}}</td>
+                    <td>{{ object.valor | floatformat:3}}</td>
                 </tr>
             </tbody>
         </table>
@@ -118,6 +119,7 @@
                           >
                           <thead>
                             <tr>
+                                <th>Nº</th>
                                 <th>Unidade</th>
                                 <th>solicitante</th>
                                 <th>Projeto</th>
@@ -131,6 +133,7 @@
                               :key="item.rdo"
                             >
                               <tr>
+                              <td x-text="item.rdo"></td>
                               <td x-text="item.unidade.area"></td>
                               <td x-text="item.solicitante.solicitante"></td>
                               <td x-text="item.projeto_cod.projeto_nome"></td>
@@ -177,6 +180,7 @@
       
           <div id="collapseOne" class="collapse"  aria-labelledby="headingOne" data-parent="#accordionExample">
             <div class="card-body p-0">
+              <div class="table-responsive">
                 <table class="table table-striped w-100">
                     <thead>
                         <tr>
@@ -205,6 +209,7 @@
                     </tbody>
                 
                 </table>
+              </div>
             </div>
           </div>
         </div>
@@ -218,6 +223,7 @@
           </div>
           <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
             <div class="card-body p-0">
+              <div class="table-responsive">
                 <table class="table table-striped">
                     <thead>
                         <tr>
@@ -226,8 +232,7 @@
                             <th>Área</th>
                             <th>Solicitante</th>
                             <th>Tipo</th>
-            
-                          
+                            <th>Remover</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -238,12 +243,13 @@
                                 <td>{{ obj.unidade }}</td>
                                 <td>{{ obj.solicitante }}</td>
                                 <td>{{ obj.tipo }}</td>
-                                
+                                <td><a href="{% url 'rdo:bm_delete' object.pk obj.pk %}"><i class="fa fa-times-circle no"></i></a></td>
                         </tr>
                         {% endfor %}
                     </tbody>
                 
                 </table>
+              </div>
             </div>
           </div>
         </div>

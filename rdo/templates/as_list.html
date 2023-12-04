@@ -6,7 +6,7 @@
         <h2><i class="fa fa-user"></i> Medições
             <span class="pull-right">
                 <div style="display: flex;">
-                <a href="{% url 'rdo:bm_create' %}">
+                <a href="{% url 'rdo:as_create' %}">
                     <button type="button" class="btn btn-primary">
                         <span class="fa fa-plus"></span>Adicionar
                     </button>                    
@@ -16,14 +16,14 @@
         </h2>
 
         {% if objects_list %}
-        <div class="table-responsive">
+
         <table class="table table-striped">
             <thead>
                 <tr>
-                    <th>Nº BM</th>
-                    <th>Data Aprov.</th>
-                    <th>Aprovador</th>
-                    <th class="text-center">Status</th>
+                    <th>Nº AS</th>
+                    <th>Unidade</th>
+                    <th>Solicitante</th>
+                    <th class="text-center">Valor</th>
                     
                     
                 </tr>
@@ -32,9 +32,9 @@
                 {% for object in objects_list %}
                 <tr>
                     <td><a href="{{ object.get_absolute_url }}">{{ object }}</a></td>
-                    <td>{{ object.data_aprov }}</td>
-                    <td>{{ object.aprovador }}</td>
-                    <td class="text-center">{{ object.status }}</td>
+                    <td>{{ object.unidade }}</td>
+                    <td>{{ object.solicitante }}</td>
+                    <td class="text-center">{{ object.valor }}</td>
                     
                    
                 </tr>
@@ -42,7 +42,6 @@
                 {% endfor %}
             </tbody>
         </table>
-    </div>
         {% else %}
         <p class="alert alert-warning">Sem Itens na Lista </p>
         {% endif %}

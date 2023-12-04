@@ -1,5 +1,5 @@
 from django import forms
-from .models import Contrato, RDO, ItemBm, QtdBM,Aprovador,BoletimMedicao,FRS, AssinaturaDigital,ProjetoCodigo, Area,Solicitante
+from .models import Contrato, RDO, ItemBm, QtdBM,Aprovador,BoletimMedicao,FRS, AssinaturaDigital,ProjetoCodigo, Area,Solicitante, AS
 
 
 class DateInput(forms.DateInput):
@@ -91,3 +91,9 @@ class FrsForm(forms.ModelForm):
             'data_aprov':  DateInput(),
             'data_emissão':  DateInput()
         }
+
+class AsForm(forms.ModelForm):
+    class Meta:
+        model = AS
+        exclude = ('valor','funcionario','slug')
+        fields = '__all__'
