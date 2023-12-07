@@ -4,7 +4,7 @@
 
 
     <div class="page-header">
-        <h2><i class="fa fa-user"></i> BMF
+        <h2><i class="fa fa-user"></i> RDO's
             <span class="pull-right">
                 <div style="display: flex;">
                 <a href="{% url 'rdo:rdo_create' %}">
@@ -26,20 +26,21 @@
                     <th>UND</th>
                     <th>Solicitante</th>
                     <th>Tipo</th>
-                    
                     <th class="text-center">Disciplina</th>
+                    <th class="text-center">BM</th>
                 </tr>
             </thead>
             <tbody>
                 {% for object in objects_list %}
                 <tr>
                     <td><a href="{{ object.get_absolute_url }}">{{ object }}</a></td>
-                    <td>{{ object.data_periodo }}</td>
+                    <td>{{ object.get_data }}</td>
                     <td>{{ object.unidade }}</td>
                     <td>{{ object.solicitante }}</td>
                     <td>{{ object.tipo }}</td>
                     <!--<td>R$ {{ object.valor | floatformat:3 }}</td>-->
                     <td class="text-center">{{ object.disciplina }}</td>
+                    <td class="text-center">{{ object.bm }}</td>
                 </tr>
                  
                 {% endfor %}

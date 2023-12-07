@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% block content %} 
+{% load static %}
 
 <a href="{% url 'rdo:frs_list'  %}">voltar</a>
 
@@ -50,38 +51,100 @@
     </div>
 </div>
 <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg"><i class="fa fa-plus"></i> Itens</button>
-
-<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-        <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Incluir BM's</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <form method="POST" novalidate>
-                {% csrf_token %}
-                <select name="bms" class="valor form-control clSelect2">  
-                    {% for item in itens %}
-                    <option class="valor"  value="{{item.pk}}">{{ item }} - {{ item.aprovador }} | R$ {{ item.valor }}</option>
-                    {% endfor %}
-                </select>    
-          </div>
-          <div class="modal-footer">
-            <button type="submit" class="btn btn-primary float-right" style="margin: 6px;"><i class="fa fa-plus"></i>Adicionar</button>
-          </div>
-        </form> 
+<!--modal-->
+<form method="POST" novalidate>
+    {% csrf_token %}
+    <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Rdo's</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              
+              <div class="modal-body">
+                  <div x-data="getData">
+                    
+                      <h2></h2>
+                  
+                      <form @submit.prevent="saveData">
+                  
+                      <!-- busca rdo -->
+                      <label for="">Filtros</label>
+                      <div class="form-group row autocomplete">
+                    
+                          <div class="col-sm-6">
+                            <input
+                              type="text"
+                              class="form-control"
+                              placeholder="Nº Dms ou Bms"
+                              x-model="searchBms"
+                            >
+                          </div>    
+                          <div class="col-sm-12">
+                              <table
+                              x-show="bmsShow"
+                              class="table table-striped"
+                            >
+                            <thead>
+                              <tr>
+                                  <th>Nº</th>
+                                  <th>DMS</th>
+                                  <th>BMS</th>
+                                  <th>Valor</th>
+                                  <th>Aprovador</th>
+                                  <th><i class="fa fa-check-circle"></i></th>
+                              </tr>
+                              </thead>
+                              <tbody>
+                              <template
+                                x-for="item in bms"
+                                :key="item.bm_n"
+                              >
+                                <tr>
+                                <td x-text="item.bm_n"></td>
+                                <td x-text="item.d_numero"></td>
+                                <td x-text="item.b_numero"></td>
+                                <td x-text="item.valor"></td>
+                                <td x-text="item.aprovador.aprovador"></td>
+                                <td>
+                                <input type="checkbox" class="addclassitem" @click="item.isChecked = !item.isChecked" x-bind:value="item.isChecked ? item.bm_n : 'null'" /> 
+                              </td>
+                                    
+                              </label>
+                            </li></td>
+                              </tr>
+                              </template>
+                          </tbody>
+                          </table>
+                          <input hidden name="valores" id="valores">
+                          </div>
+                        <!-- <p x-text="searchCliente"></p> -->
+                        </div>
+                      </div>    
+                       
+              </div>
+              <div class="modal-footer">
+      
+                <button type="submit" class="btn btn-primary float-right" style="margin: 6px;"><i class="fa fa-plus"></i>Adicionar</button>
+              </div>
+          
+        </div>
+      </div>
     </div>
-  </div>
-</div>
+  </form>
+  <!-- end modal-->
+
     <table class="table table-striped">
         <thead>
             <tr>
-                <th>Nº BMS</th>
+                <th>Nº BM</th>
                 <th>Aprovador</th>
                 <th>Valor</th>
+                <th class="text-center">Bms</th>
+                <th class="text-center">Dms</th>
                 <th class="text-center">Status</th>
                 <th class="text-center">Delete</th>
             </tr>
@@ -89,9 +152,11 @@
         <tbody>
             {% for obj in object.frs.all %}
             <tr>
-                <td><a href="{{ obj.get_absolute_url }}"">{{ obj }}</a></td>
+                <td><a href="{{ obj.get_absolute_url }}">{{ obj }}</a></td>
                 <td>{{ obj.aprovador }}</td>
                 <td>R$ {{ obj.valor }}</td>
+                <td class="text-center">{{ obj.b_numero }}</td>
+                <td class="text-center">{{ obj.d_numero }}</td>
                 <td class="text-center">{{ obj.status }}</td>
                 <td class="text-center"><a href="{% url 'rdo:delete_itemfrs' obj.pk object.pk %}"><i class="fa fa-times-circle no"></i></a></td>
             </tr>
@@ -101,3 +166,22 @@
     </table>
 
 {% endblock content %} 
+
+{% block js %}
+<script
+    src="{% static 'js/servico.js' %}"
+    data-csrf="{{ csrf_token }}"
+  ></script>
+
+  <script>
+    $(document).on('change', '.addclassitem', function(){
+        var txt = "";
+        $('.addclassitem').each(function(){
+            txt += $(this).val()+"," ;
+            txt = txt.replace('.','')
+             });
+        $('#valores').val(txt);
+    });
+
+</script>
+{% endblock js %}

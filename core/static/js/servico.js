@@ -9,6 +9,7 @@ const getData = () => ({
   servicos: [],
   itens: [],
   rdos: [],
+  bms: [],
   servico: {},
   servicoSelecionado: {},
   searchServico: '',
@@ -17,6 +18,7 @@ const getData = () => ({
   searchSolicitante: '',
   searchProjeto: '',
   searchEscopo: '',
+  searchBms: '',
   ordemServico: {},
   ordemServicoItem: {},
   currentId: 1,
@@ -24,6 +26,7 @@ const getData = () => ({
   materiaisShow: false,
   servicosShow: false,
   rdosShow: false,
+  bmsShow: false,
 
   init() {
     // watch - monitora as ações
@@ -67,6 +70,12 @@ const getData = () => ({
       if (!newValue) this.itens = []
       if (newValue.length >= 3) {
         this.getRdo_escopo(newValue)
+      }
+    })
+    this.$watch('searchBms', (newValue, oldValue) => {
+      if (!newValue) this.itens = []
+      if (newValue.length >= 5) {
+        this.getBm_list(newValue)
       }
     })
   },
@@ -156,6 +165,15 @@ const getData = () => ({
       .then(data => {
         this.rdos = data
         this.rdosShow = true
+      })
+  },
+  getBm_list(newValue) {
+    const search = newValue
+    fetch(`/api/v1/rdo/boletimmedicao/?search=${search}`)
+      .then(response => response.json())
+      .then(data => {
+        this.bms = data
+        this.bmsShow = true
       })
   },
 

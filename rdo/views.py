@@ -417,10 +417,15 @@ def frs_detail(request, pk):
     obj = FRS.objects.get(pk=pk)
     itens = BoletimMedicao.objects.filter(frs=None)
     if request.method == 'POST':
-        bms = request.POST.get('bms')
-        BoletimMedicao.objects.filter(pk=bms).update(frs=pk)
-        valor_total = QtdBM.objects.filter(bmf__bm__frs=pk).aggregate(Sum('total'))['total__sum'] or 0
-        FRS.objects.filter(pk=pk).update(valor=valor_total)
+        vi = request.POST.get('valores')
+        vi = str(vi)
+        present = vi.split(",")
+        present.pop()
+        for i in present:
+            if not i == "null":
+                BoletimMedicao.objects.filter(pk=i).update(frs=pk)
+        bm_valor = BoletimMedicao.objects.filter(frs=pk).aggregate(Sum('valor'))['valor__sum'] or 0
+        FRS.objects.filter(pk=pk).update(valor=bm_valor)
         url='#'
         return HttpResponseRedirect(url)
     context = {'object': obj, 'itens':itens}
@@ -431,7 +436,7 @@ def frs_detail(request, pk):
 def frsitem_delete(request, pk, id):
     BoletimMedicao.objects.filter(pk=pk).update(frs=None)
     
-    valor_total = QtdBM.objects.filter(bmf__bm__frs=id).aggregate(Sum('total'))['total__sum'] or 0
+    valor_total = BoletimMedicao.objects.filter(frs=id).aggregate(Sum('valor'))['valor__sum'] or 0
 
     FRS.objects.filter(pk=id).update(valor=valor_total)
     return HttpResponseRedirect(resolve_url('rdo:frs_detail',id))

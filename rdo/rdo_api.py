@@ -8,7 +8,7 @@ from django.shortcuts import get_object_or_404
 from ninja import Router, Schema
 from ninja.orm import create_schema
 
-from .models import ItemBm, RDO
+from .models import ItemBm, RDO, BoletimMedicao
 
 router = Router()
 
@@ -28,6 +28,13 @@ RdoSchema = create_schema(RDO, depth=1,fields=(
     'solicitante',
     'projeto_cod',
     'escopo',
+))
+BMSchema = create_schema(BoletimMedicao, depth=1,fields=(
+    'bm_n',
+    'd_numero',
+    'b_numero',
+    'valor',
+    'aprovador',
 ))
 
 @router.get('itembm/', response=List[MaterialSchema])
@@ -66,3 +73,9 @@ def list_material(request, search=None):
     if search:
         return RDO.objects.filter(bm=None,aprovado=True,escopo__icontains=search)
     return RDO.objects.all(bm=None,aprovado=True,)
+
+@router.get('boletimmedicao/', response=List[BMSchema])
+def list_bm(request, search=None):
+    if search:
+        return BoletimMedicao.objects.filter(frs=None).filter(Q(b_numero__icontains=search) | Q(d_numero__icontains=search))
+    return BoletimMedicao.objects.all()

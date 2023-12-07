@@ -25,6 +25,10 @@
         <table class="table table-user-information">
             <tbody>
                 <tr>
+                  <th class="text-right">Período</th>
+                  <td>{{ object.periodo }}</td>
+                </tr>
+                <tr>
                     <th class="text-right">Data Aprovação</th>
                     <td>{{ object.data_aprov }}</td>
                 </tr>
@@ -41,13 +45,26 @@
                     <td>{{ object.status }}</td>
                 </tr>
                 <tr>
+                  <th class="text-right">Valor total</th>
+                  <td>{{ object.valor | floatformat:3}}</td>
+                </tr>
+                <tr>
+                  <th class="text-right">DMS</th>
+                  <td>{{ object.d_numero }}</td>
+                </tr>
+                <tr>
+                  <th class="text-right">BMS</th>
+                  <td>{{ object.b_numero }}</td>
+                </tr>
+                <tr>
+                  <th class="text-right">FRS</th>
+                  <td>{{ object.frs }}</td>
+                </tr>
+                <tr>
                     <th class="text-right">Obs</th>
                     <td>{{ object.follow_up }}</td>
                 </tr>
-                <tr>
-                    <th class="text-right">Valor total</th>
-                    <td>{{ object.valor | floatformat:3}}</td>
-                </tr>
+                
             </tbody>
         </table>
     </div>
