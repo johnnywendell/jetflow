@@ -31,6 +31,8 @@ urlpatterns =[
     path('frs/create/', manager_required(v.FRSCreate.as_view()), name='frs_create'),
     path('frs/<int:pk>/', v.frs_detail, name='frs_detail'),
     path('frs/deleteitem/<int:pk>/<int:id>/', v.frsitem_delete, name='delete_itemfrs'),
+    path('bmf/export/xlsx/', v.export_xlsx_func_bmf, name='export_xlsx_func_bmf'),
+    path('pdfbms/<int:pk>/', v.render_pdf_view, name='render_pdf_view'),
 ############
 
  ]

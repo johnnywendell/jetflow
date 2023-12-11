@@ -23,6 +23,9 @@ from django.utils import timezone
 from django.views import View
 import base64
 from django.core.files.base import ContentFile
+from django.template.loader import get_template
+from xhtml2pdf import pisa
+from django.contrib.staticfiles import finders
 
 # Create your views here.
 @login_required
@@ -317,10 +320,9 @@ class AssinaturaRDOView(LoginRequiredMixin, View):
         return render(request, self.template_name, context)
 
 
-
 class BoletimCreate(CreateView):
     model = BoletimMedicao
-    template_name = 'form.html'
+    template_name = 'bm_form.html'
     form_class = BoletimForm
     def form_valid(self, form):
         obj = form.save(commit=False)
@@ -331,7 +333,7 @@ class BoletimCreate(CreateView):
  
 class BoletimUpdate(UpdateView):
     model = BoletimMedicao
-    template_name = 'form.html'
+    template_name = 'bm_form.html'
     form_class = BoletimForm
 
 class BoletimList(ListView):
@@ -345,7 +347,6 @@ class BoletimList(ListView):
 def boletim_detail(request, pk):    
     template_name = 'bm_detail.html'
     obj = BoletimMedicao.objects.get(pk=pk)
-    itens = RDO.objects.filter(bm=None)
     item = QtdBM.objects.filter(bmf__bm=pk).values('valor__item_ref','valor__descricao','valor__und','valor__preco_item').annotate(Sum('total')).annotate(Sum('qtd'))
     
 
@@ -362,7 +363,7 @@ def boletim_detail(request, pk):
         url='#'
         return HttpResponseRedirect(url)
 
-    context = {'object': obj, 'itens':itens,'item':item}
+    context = {'object': obj,'item':item}
     return render(request, template_name, context)
 
 @login_required
@@ -507,3 +508,73 @@ def update_from_csv_itembm(request):
         return HttpResponse("Atualização concluída com sucesso!")
 
     return HttpResponse("Falha na atualização. Certifique-se de fornecer um arquivo CSV.")
+
+
+########## xls excel export ###################
+def export_xlsx(model, filename, queryset, columns):
+    response = HttpResponse(content_type='application/ms-excel')
+    response['Content-Disposition'] = 'attachment; filename="%s"' % filename
+
+    wb = xlwt.Workbook(encoding='utf-8')
+    ws = wb.add_sheet(model)
+
+    row_num = 0
+
+    font_style = xlwt.XFStyle()
+    font_style.font.bold = True
+
+    for col_num in range(len(columns)):
+        ws.write(row_num, col_num, columns[col_num], font_style)
+
+    default_style = xlwt.XFStyle()
+
+    rows = queryset
+    for row, rowdata in enumerate(rows):
+        row_num += 1
+        for col, val in enumerate(rowdata):
+            ws.write(row_num, col, val, default_style)
+
+    wb.save(response)
+    return response
+
+@login_required
+def export_xlsx_func_bmf(request):
+    MDATA = datetime.now().strftime('%Y-%m-%d')
+    model = 'BoletimMedicao'
+    filename = 'bmf_exportados.xls'
+    _filename = filename.split('.')
+    filename_final = f'{_filename[0]}_{MDATA}.{_filename[1]}'
+    queryset = BoletimMedicao.objects.all().values_list('bm_n','funcionario__username','periodo','d_numero','b_numero','status',
+                                             'data_aprov','aprovador','frs__frs','valor','follow_up','rev',
+                                              'bms__unidade__area')
+
+    columns = ('bm_n','Planejador','periodo','DMS','BMS','status',
+                                             'data_aprov','aprovador','frs__frs','valor','OBS','rev','unidade')
+    response = export_xlsx(model, filename_final, queryset, columns)
+    return response
+
+##########pdf bm########
+@login_required
+def render_pdf_view(request, pk):
+    object = get_object_or_404(BoletimMedicao, pk=pk)
+    template_path = 'bm.html'
+    item = QtdBM.objects.filter(bmf__bm=pk).values('valor__item_ref','valor__descricao','valor__und','valor__preco_item').annotate(Sum('total')).annotate(Sum('qtd'))
+    
+    context = {'object': object,'item':item }
+   
+    # Create a Django response object, and specify content_type as pdf
+    response = HttpResponse(content_type='application/pdf')
+
+    #if download
+    #response['Content-Disposition'] = 'attachment; filename="report.pdf"'
+    # find the template and render it.
+    template = get_template(template_path)
+    html = template.render(context)
+
+    # create a pdf
+    pisa_status = pisa.CreatePDF(
+       html, dest=response)
+    # if error then show some funny view
+    if pisa_status.err:
+       return HttpResponse('We had some errors <pre>' + html + '</pre>')
+    return response

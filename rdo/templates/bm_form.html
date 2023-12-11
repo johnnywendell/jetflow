@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+
+{% load widget_tweaks %}
+{% load bootstrap %}
+{% block content %}
+
+ <!-- Start Header form -->
+ <div class="text-center" ">
+  <img src="/media/logo.png" alt="network-logo" width="300" height="30" />
+  <h2 style="margin-top: 10px;">BOLETIM DE MEDIÇÃO</h2>
+  
+   
+  
+  </div>
+  <!-- End Header form -->
+
+  <!-- Start Card -->
+  <div class="card">
+    <!-- Start Card Body -->
+    <div class="card-body">
+      <!-- Start Form -->
+      <form method="POST" novalidate enctype="multipart/form-data">
+        {% csrf_token %}
+        <!-- 1º line -->
+        <div class="form-row">
+        <div class="form-group col-sm-3">
+          {{ form.periodo|bootstrap }}
+          <small class="form-text text-muted">Please fill your name</small>
+        </div>
+        <div class="form-group col-sm-3">
+            {{ form.d_numero|bootstrap }}
+            <small class="form-text text-muted">Please fill your name</small>
+          </div>
+          <div class="form-group col-sm-3">
+            {{ form.b_numero|bootstrap }}
+            <small class="form-text text-muted">Please fill your name</small>
+          </div>
+          <div class="form-group col-sm-3">
+            {{ form.status|bootstrap }}
+            <small class="form-text text-muted">Please fill your name</small>
+          </div>
+        </div>
+        <!-- End  -->
+        <!-- 2º line -->
+        <div class="form-row">
+            <div class="form-group col-sm-6">
+              {{ form.data_aprov|bootstrap }}
+              <small class="form-text text-muted">Please fill your name</small>
+            </div>
+            <div class="form-group col-sm-6">
+                {{ form.aprovador|bootstrap }}
+                <small class="form-text text-muted">Please fill your name</small>
+              </div>
+            </div>
+        <!-- End  -->
+
+        <!-- 3º line -->
+        <div class="form-group">
+            {{ form.follow_up|bootstrap }}
+          <small class="form-text text-muted">Observação follow-up</small>
+        </div>
+        <div class="form-group">
+            {{ form.rev|bootstrap }}
+          <small class="form-text text-muted">Observação follow-up</small>
+        </div>
+        <!-- End -->
+        <hr />
+        <!-- Start Submit Button -->
+        <button type="submit" class="btn btn-success">Salvar</button>
+        
+        <!-- End Submit Button -->
+      </form>
+      <!-- End Form -->
+    </div>
+    <!-- End Card Body -->
+  </div>
+
+{% endblock content %}
+

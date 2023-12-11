@@ -1,0 +1,106 @@
+
+<html>
+    <head>
+        <style>
+            @page {
+                size: A4 landscape;
+                @frame header_frame {           /* Static frame */
+                    -pdf-frame-content: header_content;
+                    left: 10pt; width: 815pt; top: 10pt; height: 200pt;
+                }
+                @frame col1_frame {             /* Content frame 1 */
+                    left: 10pt; width: 815pt; top: 170pt; height: 200pt;
+                }
+                @frame footer_frame {           /* Static frame */
+                    -pdf-frame-content: footer_content;
+                    left: 10pt; width: 815pt; top: 500pt; height: 200pt;
+                }                     
+            }
+
+        </style>
+    </head>
+
+   <body>
+    
+    <div id="header_content">
+ 
+     <table border="0.5"  style="padding-top: 1.8px;"">
+            <td><img src="media/logo.png" alt="blah"></td>
+            
+            <th><h1>BM - Boletim de Medição</h1></th>
+            
+            <th>{{ object }}<br>Unidade - {{ object.bms.first.unidade }}<br>REV - {{ object.rev }}<br>Emissão - {{ object.created }}</th>
+        </table>
+   
+       <table border="0.5" style="margin-top: 10px;text-align:center;padding-top: 1.8px;">
+                 <tr>
+                    <th class="text-right">Contrato</th>       
+                    <th class="text-right">Valor Total R$</th>       
+                    <th class="text-right">Condição de execução</th>
+                </tr>       
+                <tr>
+                    <td class="text-right">{{ object.bms.first.contrato  }}</td>       
+                    <td class="text-right">{{ object.valor }}</td>       
+                    <td class="text-right">1.( ) Normal</td>       
+                </tr>
+                <tr>
+                    <th class="text-right">Empresa</th>       
+                    <th class="text-right">Periodo</th>       
+                    <td class="text-right">2.( ) Emergência</td>       
+                </tr>
+                <tr>
+                    <td class="text-right"> MONSERTEC ENGENHARIA LTDA</td>       
+                    <td class="text-right">{{ object.periodo }}</td>       
+                    <td class="text-right">2.( ) Emergência</td>  
+                </tr>     
+        </table>
+            
+                <table style="text-align:center;margin-top: 10px;">
+                    <thead><th class="text-right">ESCOPO DO SERVIÇO / LOCAL DE EXECUÇÃO (CENTRO DE PRODUÇÃO):</th></thead>
+                    
+                    <tbody><td>{{ object.bms.first.escopo  }}</td></tbody> 
+                </table>    
+</div>   
+
+
+
+
+        
+        <h3 style="text-align:center;margin-bottom: 0px;margin: 0%;">Itens</h3>
+            <table border="0.1" style="padding-top: 1.8px;">
+                <th style="width:60px">Item</th>
+                <th style="width:500px">Descrição</th>
+                <th style="width:50px">UND</th>
+                <th>P. Unitário</th>
+                <th>QTD</th>
+                <th>Total (R$)</th>
+            </table>
+            {% for obj in item %}
+            {% cycle '#eee' '#C0C0C0' as rowcolors silent %}
+            <table style="text-align:center; background-color:{{rowcolors}};">
+                <td style="padding-top: 3px; width:60px">{{  obj.valor__item_ref }}</td>
+                <td style="padding-top: 3px;width:500px">{{ obj.valor__descricao }}</td>
+                <td style="padding-top: 3px;width:50px">{{ obj.valor__und  }}</td>
+                <td style="padding-top: 3px";>{{ obj.valor__preco_item }}</td>
+                <td style="padding-top: 3px";>{{ obj.qtd__sum | floatformat:3 }}</td>
+                <td style="padding-top: 3px";>{{ obj.total__sum | floatformat:3 }}</td>
+            </table>
+            {% endfor %}
+
+        <div id="footer_content">
+        <table border="0.5" style="padding-top: 1.8px;text-align:center;" >
+                <tr>
+                    <th class="text-left">Valor Total R$:</th>
+                    <td style="padding-top: 3px;padding-left: 2px;"> {{ object.valor }} </td>
+                </tr>
+        </table>
+        <table style="margin-bottom: 0px;padding-bottom: 0px;margin-top: 10px;">
+        <th>Braskem</th>
+        <th>Contratada</th>
+        <th>Aprovado em:</th>
+        </table>
+        </div>
+    
+</body>
+    </html>
+  
