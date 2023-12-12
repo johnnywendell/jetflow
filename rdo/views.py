@@ -246,7 +246,7 @@ class RdoList(ListView):
 @has_role_decorator('rdo')   
 @login_required
 def rdo_detail(request, slug):
-    template_name = 'rdo_detail.html'
+    template_name = 'rdo_detail2.html'
     obj = RDO.objects.get(slug=slug)
     qtdbm = QtdBM.objects.filter(bmf=obj.pk)
     total = QtdBM.objects.filter(bmf=obj.pk).aggregate(Sum("total"))['total__sum'] or 0
@@ -260,6 +260,8 @@ def rdo_detail(request, slug):
             form.bmf = obj
             item_bm = ItemBm.objects.get(pk=itembm)
             form.valor = item_bm
+            if form.montagem == 'DESMONTAGEM':
+                form.qtd = form.qtd * -1
             form.save()
             url='#'
             return HttpResponseRedirect(url)       

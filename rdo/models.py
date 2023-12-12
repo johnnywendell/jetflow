@@ -191,12 +191,20 @@ class RDO(TimeStampedModel):
     def get_absolute_url(self):
         return reverse_lazy('rdo:rdo_detail', kwargs={'slug': self.slug})
 
+MONTAGEM = (
+    ('MONTAGEM','MONTAGEM'),
+    ('DESMONTAGEM','DESMONTAGEM'),
+)
+
+
 class QtdBM(models.Model):
     efetivo = models.IntegerField('Efetivo', blank=True, null=True)
     qtd = models.DecimalField('qtd', max_digits=12, decimal_places=3)
-    total = models.DecimalField('total', max_digits=12, decimal_places=3)
+    total = models.DecimalField('total', max_digits=12, decimal_places=3, blank=True, null=True)
     bmf = models.ForeignKey(RDO, on_delete=models.CASCADE, related_name='rdos')
-    valor = models.ForeignKey(ItemBm, on_delete=models.CASCADE)
+    valor = models.ForeignKey(ItemBm, on_delete=models.CASCADE, blank=True, null=True)
+    montagem = models.CharField('Tipo',max_length=20,choices=MONTAGEM, blank=True, null=True)
+    placa = models.CharField('Placa',max_length=30, blank=True, null=True)
 
 class QtdAS(models.Model):
     qtd = models.DecimalField('qtd', max_digits=12, decimal_places=3)

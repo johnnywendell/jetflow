@@ -1,0 +1,621 @@
+{% extends "base.html" %}
+{% block content %} 
+{% load static %}
+{% load widget_tweaks %}
+
+
+
+
+<a href="{% url 'rdo:rdo_list'  %}">voltar</a>
+
+    <h1>{{ object }}
+        {% if object.aprovado %}
+        {% else %}
+        <span class="pull-right">
+            <a href="{% url 'rdo:rdo_edit' object.slug %}">
+                <button type="button" class="btn btn-success">
+                    <span class="fa fa-pencil"></span> Editar
+                </button>
+            </a>
+        </span>
+        {% endif %}
+    </h1>
+<div class="row">
+    <div class="col-sm-12">
+        <table class="table table-user-information">
+            <tbody>
+                <tr>
+                    <th class="text-left">Contrato</th>
+                    <td>{{ object.contrato }}</td>
+                </tr>
+                <tr>
+                    <th class="text-left">Responsável Monsertec</th>
+                    <td> {{ object.funcionario }}</td>
+                </tr>
+                <tr>
+                    <th class="text-left">Data:</th>
+                    <td>
+                        {{ object.data_periodo }}
+                    </td>
+                </tr>
+                <tr>
+                    <th class="text-left">Unidade/Planta</th>
+                    <td>{{ object.unidade }}</td>
+                </tr>
+                <tr>
+                    <th class="text-left">Fiscal/Solicitante</th>
+                    <td>{{ object.solicitante }}</td>
+                </tr>
+                <tr>
+                    <th class="text-left">Cód. Projeto</th>
+                    <td>{{ object.projeto_cod }}</td>
+                </tr>
+                <tr>
+                    <th class="text-left">AS/ASE</th>
+                    <td>{{ object.auth_serv }}</td>
+                </tr>
+                <tr>
+                    <th class="text-left">Escopo do serviço:</th>
+                    <td>{{ object.escopo }}</td>
+                </tr>
+                <tr>
+                    <th class="text-left">Local do serviço:</th>
+                    <td>{{ object.local }}</td>
+                </tr>
+                <tr>
+                    <th class="text-left">Clima</th>
+                    <td>{{ object.clima }}</td>
+                </tr>
+                <tr>
+                    <th class="text-left">Tipo do serviço:</th>
+                    <td>{{ object.tipo }}</td>
+                </tr>
+                <tr>
+                    <th class="text-left">Assinatura</th>
+                    <td>{% if object.aprovado %}
+                        <i class="fa fa-check-circle ok"></i>
+                      {% else %}
+                        <i class="fa fa-minus-circle no"></i>
+                      {% endif %}</td>
+                </tr>
+                <tr>
+                    <th class="text-left">BM:</th>
+                    <td>{{ object.bm }}</td>
+                </tr>
+                <tr>
+                    <th class="text-left">Hora atividade</th>
+                    <td>início: {{ object.inicio }}  |  término {{ object.termino }}</td>
+                </tr>
+                <tr>
+                    <th class="text-left">Arquivo:</th>
+                    <td> {% if object.doc %} 
+                        <a class="btn btn-sm btn-info"  href="{{ object.doc.url }}" download="{{ object.doc }}">Download</a>
+                        {% else %}
+                        {% endif %}</td>
+                </tr>
+                <tr>
+                    <th class="text-left">OBS:</th>
+                    <td>{{ object.obs }}</td>
+                </tr>
+                <tr>
+                    <th class="text-left">Total:</th>
+                    <td> R${{ total | floatformat:3 }}</td>
+                </tr>
+                
+            </tbody>
+        </table>
+    </div>
+</div>
+<legend>Serviços{% if object.aprovado %}
+    {% else %}<button type="button" class="btn btn-sm btn-primary mx-2" data-toggle="modal" data-target=".bd-example-modal-lg"><i class="fa fa-calculator"></i></button>{% endif %}</legend>
+
+<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Calculadora</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            
+            <div class="modal-body">
+                
+                
+                
+            </div>
+            <div class="modal-footer">
+    
+              <button type="submit" class="btn btn-primary float-right" style="margin: 6px;"><i class="fa fa-plus"></i>Adicionar</button>
+            
+            </div>
+        
+      </div>
+    </div>
+  </div>
+</form>
+
+<!--    ########################################################################-->
+  
+  <ul class="nav nav-tabs" id="myTab" role="tablist">
+    <li class="nav-item">
+      <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">ITENS HH</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">ANDAIME -MONTAGEM/DESMONTAGEM - PU</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">PINTURA - PU</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" id="contact1-tab" data-toggle="tab" href="#contact1" role="tab" aria-controls="contact1" aria-selected="false">ISOLAMENTO - PU</a>
+    </li>
+  </ul>
+  <div class="tab-content" id="myTabContent">
+    <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+        <form method="POST" novalidate enctype="multipart/form-data">
+            {% csrf_token %}
+            <div x-data="getData">
+              
+                <h2></h2>
+            
+                <form @submit.prevent="saveData">
+            
+                <!-- busca material -->
+                  <div class="form-group row autocomplete">
+                    
+                    <div class="col-sm-2">
+                        <input
+                        type="text"
+                        class="form-control"
+                        placeholder="Item"
+                        x-model="searchItem"
+                      ></div>
+                    
+                    <div class="col-sm-10">
+                    <!-- manual -->
+                      <input
+                        type="text"
+                        class="form-control"
+                        placeholder="Servico"
+                        x-model="searchServico"
+                      >
+                      <ul
+                            id="id_ul"
+                            x-show="servicosShow"
+                        >
+                            <template
+                            x-for="servico in servicos"
+                            :key="servico.id"
+                            >
+                            <li
+                                x-text="servico.item_ref + ' : ' + servico.descricao"
+                                @click="getServico(servico)"
+                            ></li>
+                            </template>
+                      
+                    </div>
+                    
+                  <!-- <p x-text="searchCliente"></p> -->
+                  </div>
+                 
+                    
+                  <p>◉ <span x-text="servicoSelecionado.descricao"></span></p>  
+                
+                  <input type="number" x-model="servicoSelecionado.id" name="id_itembm" id="id_itembm" class="form-control" hidden />  
+                  <div class="form-row">
+                    <div class="form-group col-sm-4">
+                        <label for="inputName">item</label>
+                        <input type="text" x-model="servicoSelecionado.item_ref" class="form-control" />
+                    </div>
+                    <div class="form-group col-sm-4">
+                        <label for="inputName">unidade</label>
+                        <input type="text" x-model="servicoSelecionado.und"class="form-control" >  
+                      </div>
+                      <div class="form-group col-sm-4">
+                        <label for="inputName">preço</label>
+                        <input type="number" x-model="servicoSelecionado.preco_item"  step="0.001" id="inputvalor" class="form-control" >
+                      </div>
+                    </div>
+                
+                    <div class="form-row">
+                        <div class="form-group col-sm-4">
+                            <label for="inputName">efetivo</label>
+                            {% render_field form.efetivo class="form-control clEfetivo" %}
+                        </div>
+                        <div class="form-group col-sm-4">
+                            <label for="inputName">Qtd.</label>
+                            {% render_field form.qtd class="form-control clQuantidade" %}
+                          </div>
+                          <div class="form-group col-sm-4">
+                            <label for="inputName">Total</label>
+                            {% render_field form.total class="form-control" %}
+                          </div>
+                        </div>
+                </div>    
+                <button type="submit" class="btn btn-primary float-right" style="margin: 6px;"><i class="fa fa-plus"></i>Adicionar</button>
+            </form>
+    </div>
+    <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+        <form method="POST" novalidate enctype="multipart/form-data">
+            {% csrf_token %}
+            <div x-data="getData">
+              
+                <h2></h2>
+            
+                <form @submit.prevent="saveData">
+            
+                <!-- busca material -->
+                  <div class="form-group row autocomplete">
+                    
+                    <div class="col-sm-2">
+                        {% render_field form.montagem class="form-control" %}
+                     </div>
+                    
+                    <div class="col-sm-10">
+                    <!-- manual -->
+                      <input
+                        type="text"
+                        class="form-control"
+                        placeholder="Servico"
+                        x-model="searchServico"
+                      >
+                      <ul
+                            id="id_ul"
+                            x-show="servicosShow"
+                        >
+                            <template
+                            x-for="servico in servicos"
+                            :key="servico.id"
+                            >
+                            <li
+                                x-text="servico.item_ref + ' : ' + servico.descricao"
+                                @click="getServico(servico)"
+                            ></li>
+                            </template>
+                      
+                    </div>
+                    
+                  <!-- <p x-text="searchCliente"></p> -->
+                  </div>
+                 
+                    
+                  <p>◉ <span x-text="servicoSelecionado.descricao"></span></p>  
+                
+                  <input type="number" x-model="servicoSelecionado.id" name="id_itembm" id="id_itembm" class="form-control" hidden />  
+                  <div class="form-row">
+                    <div class="form-group col-sm-3">
+                        <label for="inputName">Placa</label>
+                        <input autocomplete="off" type="text" placeholder="Placa" name="placa" id="id_placa" x-model="searchPlaca" class="form-control" />
+                        <ul
+                            id="id_ul"
+                            x-show="placasShow"
+                        >
+                            <template
+                            x-for="item in placas"
+                            :key="item.placa"
+                            >
+                            <li
+                                x-text="item.placa"
+                                @click="getPlaca(item)"
+                            ></li>
+                            </template>
+                    </div>
+                    <div class="form-group col-sm-3">
+                        <label for="inputName">Qtd.</label>
+                        {% render_field form.qtd class="form-control clQuantidadeand" id="id_qtdand" %}
+                      </div>
+                      <div class="form-group col-sm-3">
+                        <label for="inputName">Total</label>
+                        {% render_field form.total class="form-control" id="id_totaland" %}
+                      </div>
+                      <div class="form-group col-sm-3">
+                        <label for="inputName">Saldo</label>
+                        <span class="form-control" x-text="placaSelecionada.qtd" style="background-color: lightgreen;"></span>
+                      </div>
+                    </div>
+
+                  <div class="form-row">
+                    <div class="form-group col-sm-4">
+                        <label for="inputName">item</label>
+                        <input type="text" x-model="servicoSelecionado.item_ref" class="form-control" />
+                    </div>
+                    <div class="form-group col-sm-4">
+                        <label for="inputName">unidade</label>
+                        <input type="text" x-model="servicoSelecionado.und"class="form-control" >  
+                      </div>
+                      <div class="form-group col-sm-4">
+                        <label for="inputName">preço</label>
+                        <input type="number" x-model="servicoSelecionado.preco_item"  step="0.001" id="inputvalorand" class="form-control" >
+                      </div>
+                    </div>
+                
+                    
+                </div>    
+                <button type="submit" class="btn btn-primary float-right" style="margin: 6px;"><i class="fa fa-plus"></i>Adicionar</button>
+            </form>
+    </div>
+    <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+        <form method="POST" novalidate enctype="multipart/form-data">
+            {% csrf_token %}
+            <div x-data="getData">
+              
+                <h2></h2>
+            
+                <form @submit.prevent="saveData">
+            
+                <!-- busca material -->
+                  <div class="form-group row autocomplete">
+                    
+                    <div class="col-sm-2">
+                        <input
+                        type="text"
+                        class="form-control"
+                        placeholder="Item"
+                        x-model="searchItem"
+                      ></div>
+                    
+                    <div class="col-sm-10">
+                    <!-- manual -->
+                      <input
+                        type="text"
+                        class="form-control"
+                        placeholder="Servico"
+                        x-model="searchServico"
+                      >
+                      <ul
+                            id="id_ul"
+                            x-show="servicosShow"
+                        >
+                            <template
+                            x-for="servico in servicos"
+                            :key="servico.id"
+                            >
+                            <li
+                                x-text="servico.item_ref + ' : ' + servico.descricao"
+                                @click="getServico(servico)"
+                            ></li>
+                            </template>
+                      
+                    </div>
+                    
+                  <!-- <p x-text="searchCliente"></p> -->
+                  </div>
+                 
+                    
+                  <p>◉ <span x-text="servicoSelecionado.descricao"></span></p>  
+                
+                  <input type="number" x-model="servicoSelecionado.id" name="id_itembm" id="id_itembm" class="form-control" hidden />  
+                  <div class="form-row">
+                    <div class="form-group col-sm-4">
+                        <label for="inputName">item</label>
+                        <input type="text" x-model="servicoSelecionado.item_ref" class="form-control" />
+                    </div>
+                    <div class="form-group col-sm-4">
+                        <label for="inputName">unidade</label>
+                        <input type="text" x-model="servicoSelecionado.und"class="form-control" >  
+                      </div>
+                      <div class="form-group col-sm-4">
+                        <label for="inputName">preço</label>
+                        <input type="number" x-model="servicoSelecionado.preco_item"  step="0.001" id="inputvalorpin" class="form-control" >
+                      </div>
+                    </div>
+                
+                    <div class="form-row">
+                        <div class="form-group col-sm-4">
+                            <label for="inputName">Qtd.</label>
+                            {% render_field form.qtd class="form-control clQuantidadepin" %}
+                          </div>
+                          <div class="form-group col-sm-4">
+                            <label for="inputName">Total</label>
+                            {% render_field form.total class="form-control" id="id_totalpin" %}
+                          </div>
+                          
+                        </div>
+                </div>    
+                <button type="submit" class="btn btn-primary float-right" style="margin: 6px;"><i class="fa fa-plus"></i>Adicionar</button>
+            </form>
+    </div>
+    <div class="tab-pane fade" id="contact1" role="tabpanel" aria-labelledby="contact-tab">
+        <form method="POST" novalidate enctype="multipart/form-data">
+            {% csrf_token %}
+            <div x-data="getData">
+              
+                <h2></h2>
+            
+                <form @submit.prevent="saveData">
+            
+                <!-- busca material -->
+                  <div class="form-group row autocomplete">
+                    
+                    <div class="col-sm-2">
+                        <input
+                        type="text"
+                        class="form-control"
+                        placeholder="Item"
+                        x-model="searchItem"
+                      ></div>
+                    
+                    <div class="col-sm-10">
+                    <!-- manual -->
+                      <input
+                        type="text"
+                        class="form-control"
+                        placeholder="Servico"
+                        x-model="searchServico"
+                      >
+                      <ul
+                            id="id_ul"
+                            x-show="servicosShow"
+                        >
+                            <template
+                            x-for="servico in servicos"
+                            :key="servico.id"
+                            >
+                            <li
+                                x-text="servico.item_ref + ' : ' + servico.descricao"
+                                @click="getServico(servico)"
+                            ></li>
+                            </template>
+                      
+                    </div>
+                    
+                  <!-- <p x-text="searchCliente"></p> -->
+                  </div>
+                 
+                    
+                  <p>◉ <span x-text="servicoSelecionado.descricao"></span></p>  
+                
+                  <input type="number" x-model="servicoSelecionado.id" name="id_itembm" id="id_itembm" class="form-control" hidden />  
+                  <div class="form-row">
+                    <div class="form-group col-sm-4">
+                        <label for="inputName">item</label>
+                        <input type="text" x-model="servicoSelecionado.item_ref" class="form-control" />
+                    </div>
+                    <div class="form-group col-sm-4">
+                        <label for="inputName">unidade</label>
+                        <input type="text" x-model="servicoSelecionado.und"class="form-control" >  
+                      </div>
+                      <div class="form-group col-sm-4">
+                        <label for="inputName">preço</label>
+                        <input type="number" x-model="servicoSelecionado.preco_item"  step="0.001" id="inputvaloriso" class="form-control" >
+                      </div>
+                    </div>
+                
+                    <div class="form-row">
+                        <div class="form-group col-sm-4">
+                            <label for="inputName">Qtd.</label>
+                            {% render_field form.qtd class="form-control clQuantidadeiso" %}
+                          </div>
+                          <div class="form-group col-sm-4">
+                            <label for="inputName">Total</label>
+                            {% render_field form.total class="form-control" id="id_totaliso" %}
+                          </div>
+                          
+                        </div>
+                </div>    
+                <button type="submit" class="btn btn-primary float-right" style="margin: 6px;"><i class="fa fa-plus"></i>Adicionar</button>
+            </form>
+    </div>
+  </div>
+
+<!--    ########################################################################-->
+<div class="table-responsive">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Item</th>
+                <th>disciplina</th>
+                <th>Descrição</th>
+                <th>und</th>
+                <th>Preço</th>
+                <th>Efetivo</th>
+                <th>Qtd. Item</th>
+                <th>Total</th>
+                {% if object.aprovado %}
+                {% else %}
+                <th>Delete</th>
+                {% endif %}
+                
+            </tr>
+        </thead>
+     
+        <tbody>
+            {% for obj in object.rdos.all %}
+            <tr>
+                <td>{{ obj.valor.item_ref }}</td>
+                <td>{{ obj.valor.disciplina }}</td>
+                <td>{{ obj.valor.descricao }}</td>
+                <td>{{ obj.valor.und }}</td>
+                <td>{{ obj.valor.preco_item }}</td>
+                {% if obj.efetivo %}
+                <td>{{ obj.efetivo }}</td>
+                {% else %}
+                <td>PU</td>
+                {% endif %}
+                <td>{{ obj.qtd }}</td>
+                <td>{{ obj.total }}</td>
+                {% if object.aprovado %}
+                {% else %}
+                <td><a href="{% url 'rdo:delete_item' obj.pk object.pk %}"><i class="fa fa-times-circle no"></i></a></td>
+                {% endif %}
+            </tr>
+            {% endfor %}
+        </tbody>
+      
+    </table>
+    </div>
+<hr>
+<h4> <a href="{% url 'rdo:assinatura_rdo' object.pk %}">Assinatura</a> </h4>
+{% if object.aprovado %}
+    <p>Assinado por: <strong>{{ object.assinatura_digital.usuario_assinatura }}</strong>  | Data/hora da assinatura: <strong>{{ object.assinatura_digital.data_hora_assinatura }}</strong></p>
+    {% if assinatura_binario %}
+    <img style="padding-bottom: 10px;" height="100px" src="data:image/png;base64,{{ assinatura_binario }}" alt="Assinatura Digital">
+    {% endif %}
+{% endif %}
+
+{% endblock content %} 
+
+{% block js %}
+<script>
+    function validarQuantidade() {
+    var quantidade = parseFloat(document.getElementById("id_qtdand").value);
+    var maxQuantidade = parseFloat(document.getElementById("id_qtdand").max);
+
+    // Verifica se a quantidade é maior que o máximo permitido
+    if (quantidade > maxQuantidade) {
+      alert("A quantidade não pode ser maior que " + maxQuantidade);
+      document.getElementById("id_qtdand").value = maxQuantidade;  // Define o valor máximo
+    }
+  }
+</script>
+<script
+    src="{% static 'js/servico2.js' %}"
+    data-csrf="{{ csrf_token }}"
+  ></script>
+  <script>
+   
+    $(document).on('change', '.clQuantidade', function(){ 
+        quantidade = $(this).val()
+        valor = $("#inputvalor").val()
+        resultado = valor * quantidade
+        resultado_fixed = resultado.toFixed(3)
+        //id_resultado = $(this).attr('id').replace('qtd','total')
+        $('#id_total').val(resultado_fixed)
+    });
+    $(document).on('change', '.clQuantidadepin', function(){ 
+        quantidade = $(this).val()
+        valor = $("#inputvalorpin").val()
+        resultado = valor * quantidade
+        resultado_fixed = resultado.toFixed(3)
+        //id_resultado = $(this).attr('id').replace('qtd','total')
+        $('#id_totalpin').val(resultado_fixed)
+    });
+    $(document).on('change', '.clQuantidadeiso', function(){ 
+        quantidade = $(this).val()
+        valor = $("#inputvaloriso").val()
+        resultado = valor * quantidade
+        resultado_fixed = resultado.toFixed(3)
+        //id_resultado = $(this).attr('id').replace('qtd','total')
+        $('#id_totaliso').val(resultado_fixed)
+    });
+    $(document).on('change', '.clQuantidadeand', function(){ 
+        quantidade = $(this).val()
+        valor = $("#inputvalorand").val()
+        resultado = valor * quantidade
+        resultado_fixed = resultado.toFixed(3)
+        //id_resultado = $(this).attr('id').replace('qtd','total')
+        $('#id_totaland').val(resultado_fixed)
+    });
+    $(document).on('change', '.clEfetivo', function(){ 
+        quantidade = $(this).val()
+        resultado = 9.22 * quantidade
+        resultado_fixed = resultado.toFixed(3)
+        //id_resultado = $(this).attr('id').replace('qtd','total')
+        $('#id_qtd').val(resultado_fixed)
+    });
+
+  </script>
+
+{% endblock js %}
+
