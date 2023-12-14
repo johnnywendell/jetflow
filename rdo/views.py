@@ -242,8 +242,26 @@ class RdoList(ListView):
                 Q(status__icontains=search)
             )
         return queryset
+    
+class RdoListFiscal(ListView):
+    model = RDO
+    template_name = 'rdo_list.html'
+    paginate_by = 20
+    context_object_name = 'objects_list'
+    def get_queryset(self):
+        queryset = super(RdoListFiscal, self).get_queryset()
+        search = self.request.GET.get('search')
+        logged_in_user_first_name = self.request.user.first_name
+        if search:
+            queryset = queryset.filter(
+                Q(bmf__icontains=search) |
+                Q(solicitante__solicitante__icontains=search) |
+                Q(unidade__area__icontains=search)|
+                Q(status__icontains=search)
+            )
+        return queryset.filter(solicitante__solicitante=logged_in_user_first_name)
 
-@has_role_decorator('rdo')   
+@has_role_decorator('rdodetail')   
 @login_required
 def rdo_detail(request, slug):
     template_name = 'rdo_detail2.html'
@@ -258,8 +276,9 @@ def rdo_detail(request, slug):
         if form.is_valid():
             form=form.save(commit=False)
             form.bmf = obj
-            item_bm = ItemBm.objects.get(pk=itembm)
-            form.valor = item_bm
+            if itembm != '':
+                item_bm = ItemBm.objects.get(pk=itembm)
+                form.valor = item_bm
             if form.montagem == 'DESMONTAGEM':
                 form.qtd = form.qtd * -1
             form.save()
@@ -267,8 +286,17 @@ def rdo_detail(request, slug):
             return HttpResponseRedirect(url)       
     else:
         form=QtdForm()
-    context = {'object': obj,'form':form, 'qtdbm':qtdbm,'assinatura_binario': assinatura_binario,'total':total}
+    context = {'object': obj,'form':form, 'qtdbm':qtdbm,'assinatura_binario': assinatura_binario,'total':total, 'assinatura':assinatura}
     return render(request, template_name, context)
+
+@has_role_decorator('fiscal')
+@login_required
+def delete_assinatura(request,pk, id):
+    ass = AssinaturaDigital.objects.get(pk=pk)
+    obj = RDO.objects.get(pk=id)
+    RDO.objects.filter(pk=id).update(aprovado=False)
+    ass.delete()
+    return HttpResponseRedirect(resolve_url('rdo:rdo_detail',obj.slug))
 
 @has_role_decorator('rdo')
 @login_required
@@ -522,18 +550,26 @@ def export_xlsx(model, filename, queryset, columns):
 
     row_num = 0
 
-    font_style = xlwt.XFStyle()
-    font_style.font.bold = True
+    header_style = xlwt.easyxf('pattern: pattern solid, fore_color dark_blue; font: color white, bold True;')
+
+    
 
     for col_num in range(len(columns)):
-        ws.write(row_num, col_num, columns[col_num], font_style)
+        ws.write(row_num, col_num, columns[col_num], header_style)
 
     default_style = xlwt.XFStyle()
+
+    # Definindo um estilo para data (DD/MM/YYYY)
+    date_style = xlwt.easyxf(num_format_str='DD/MM/YYYY')
 
     rows = queryset
     for row, rowdata in enumerate(rows):
         row_num += 1
         for col, val in enumerate(rowdata):
+            if 'data' in columns[col].lower():
+                default_style = date_style
+            else:
+                default_style = xlwt.XFStyle()  # Reseta o estilo para não afetar outras colunas
             ws.write(row_num, col, val, default_style)
 
     wb.save(response)
@@ -552,6 +588,22 @@ def export_xlsx_func_bmf(request):
 
     columns = ('bm_n','Planejador','periodo','DMS','BMS','status',
                                              'data_aprov','aprovador','frs__frs','valor','OBS','rev','unidade')
+    response = export_xlsx(model, filename_final, queryset, columns)
+    return response
+
+@login_required
+def export_movimentacao(request):
+    MDATA = datetime.now().strftime('%Y-%m-%d')
+    model = 'QtdBM'
+    filename = 'movimentação.xls'
+    _filename = filename.split('.')
+    filename_final = f'{_filename[0]}_{MDATA}.{_filename[1]}'
+    queryset = QtdBM.objects.filter(placa__isnull=False,bmf__solicitante__solicitante=request.user.first_name).values_list('placa','montagem','bmf__data_periodo','bmf__unidade__area'
+                                                                     ,'bmf__solicitante__solicitante','qtd',)
+                                             
+
+    columns = ('placa','montagem','bmf__data_periodo','bmf__unidade','bmf__solicitante','qtd',)
+                                                                     
     response = export_xlsx(model, filename_final, queryset, columns)
     return response
 

@@ -69,6 +69,14 @@
                   <!-- Main Menu -->
                   <div class="side-menu-container" style="width: 100%;">
                       <ul class="nav navbar-nav">
+
+                        <!-- FISCAL-->
+                        {% load permission_tags %}
+                        {% if user|has_role:'fiscal' %}
+                        
+                        <li><a href="{% url 'rdo:rdo_list_fiscal' %}"><i class="fa fa-sign-out"></i>RDO'S</a></li>
+
+                        {% else %}
                         <!-- Dropdown-->
                         <li  id="dropdown0">
                             <a data-toggle="collapse" href="#dropdown-lvl0">
@@ -189,6 +197,7 @@
                             </div>
                         </li>
                         <!-- ENDropdown -->
+                        {% endif %}
                         <li><a href="/auth/update/"><i class="fa fa-key"></i>Alterar senha</a></li>
                         <li><a href="{% url 'logout' %}"><i class="fa fa-sign-out"></i>Sair</a></li>
                       </ul>

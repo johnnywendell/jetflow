@@ -26,5 +26,8 @@ class Gerencia(AbstractUserRole):
 class Rdo(AbstractUserRole):
     available_permissions = {'ass_rdo':True}
 
+class Rdodetail(AbstractUserRole):
+    available_permissions = {'ass_rdodetail':True}
+
 class Bms(AbstractUserRole):
     available_permissions = {'ass_bms':True}

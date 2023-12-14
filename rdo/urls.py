@@ -10,6 +10,7 @@ urlpatterns =[
     path('rdo/create/', has_role_decorator('rdo')(v.RdoCreate.as_view()), name='rdo_create'),
     path('rdo/<slug:slug>/', v.rdo_detail, name='rdo_detail'),
     path('rdo/', has_role_decorator('rdo')(v.RdoList.as_view()), name='rdo_list'),
+    path('rdo_fiscal/', has_role_decorator('fiscal')(v.RdoListFiscal.as_view()), name='rdo_list_fiscal'),
     path('rdo/edit/<slug:slug>/', v.rdo_edit, name='rdo_edit'),
     path('itembm/', v.itembm_add, name='itembm_add'),
     path('import/csvitembm/', v.import_csv_itembm, name='import_csv_itembm'),
@@ -32,7 +33,9 @@ urlpatterns =[
     path('frs/<int:pk>/', v.frs_detail, name='frs_detail'),
     path('frs/deleteitem/<int:pk>/<int:id>/', v.frsitem_delete, name='delete_itemfrs'),
     path('bmf/export/xlsx/', v.export_xlsx_func_bmf, name='export_xlsx_func_bmf'),
+    path('bmf/exportmov/xlsx/', v.export_movimentacao, name='export_movimentacao'),
     path('pdfbms/<int:pk>/', v.render_pdf_view, name='render_pdf_view'),
+    path('rdo/deleteass/<int:pk>/<int:id>/', v.delete_assinatura, name='delete_assinatura'),
 ############
 
  ]
