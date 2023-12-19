@@ -18,7 +18,7 @@
               </button>
             </a>
             <a href="{% url 'rdo:render_pdf_view' object.pk %}">
-              <button type="button" class="btn btn-success">
+              <button type="button" class="btn btn-info">
                   <span class="fa fa-pencil"></span> gerar PDF
               </button>
           </a>
@@ -26,29 +26,30 @@
           </span>
         </h1>
 <div class="row">
-    <div class="col-sm-6">
+    <div class="col-sm-8">
         <table class="table table-user-information">
             <tbody>
               <tr>
                 <th class="text-right">Responsável Monsertec</th>
                 <td>{{ object.funcionario }}</td>
               </tr>
+              <tr>
+                <th class="text-right">Unidade</th>
+                <td>{{ object.unidade }}</td>
+              </tr>
                 <tr>
                   <th class="text-right">Período</th>
-                  <td>{{ object.periodo }}</td>
+                  <td>{{ object.get_inicio }} á {{ object.get_fim }}</td>
                 </tr>
                 <tr>
-                    <th class="text-right">Data Aprovação</th>
-                    <td>{{ object.data_aprov }}</td>
+                    <th class="text-right">Status Pagamento</th>
+                    <td>{{ object.status_pgt }}</td>
                 </tr>
                 <tr>
-                    <th class="text-right">Aprovador</th>
-                    <td>{{ object.aprovador }}</td>
+                    <th class="text-right">Status Medição</th>
+                    <td>{{ object.status_med }}</td>
                 </tr>
-                <tr>
-                    <th class="text-right">Status</th>
-                    <td>{{ object.status }}</td>
-                </tr>
+                
                 <tr>
                   <th class="text-right">Valor total</th>
                   <td>{{ object.valor | floatformat:3}}</td>
@@ -58,13 +59,33 @@
                   <td>{{ object.d_numero }}</td>
                 </tr>
                 <tr>
+                  <th class="text-right">DMS Aprovador</th>
+                  <td>{{ object.d_aprovador }}</td>
+                </tr>
+                <tr>
+                  <th class="text-right">DMS Status</th>
+                  <td>{{ object.d_status }}</td>
+                </tr>
+                <tr>
                   <th class="text-right">BMS</th>
                   <td>{{ object.b_numero }}</td>
+                </tr>
+                <tr>
+                  <th class="text-right">BMS Aprovador</th>
+                  <td>{{ object.b_aprovador }}</td>
+                </tr>
+                <tr>
+                  <th class="text-right">BMS Status</th>
+                  <td>{{ object.b_status }}</td>
                 </tr>
                 <tr>
                   <th class="text-right">FRS</th>
                   <td>{{ object.frs }}</td>
                 </tr>
+                <tr>
+                  <th class="text-right">Descrição do Serviço</th>
+                  <td>{{ object.descricao }}</td>
+              </tr>
                 <tr>
                     <th class="text-right">Obs</th>
                     <td>{{ object.follow_up }}</td>

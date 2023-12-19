@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Contrato, RDO, ItemBm, QtdBM,Aprovador,BoletimMedicao,FRS
+from .models import Contrato, RDO, ItemBm, QtdBM,AprovadorDMS,BoletimMedicao,FRS
 
 
 @admin.register(RDO)
@@ -21,7 +21,7 @@ class ContratoBmAdmin(admin.ModelAdmin):
         '__str__',
     )
 
-@admin.register(Aprovador)
+@admin.register(AprovadorDMS)
 class ContratoBmAdmin(admin.ModelAdmin):
     list_display = (
         '__str__',

@@ -10,8 +10,8 @@ from django.shortcuts import render, resolve_url, redirect,get_object_or_404
 from django.http import HttpResponseRedirect, JsonResponse, HttpResponse
 from django.views.generic import CreateView, UpdateView, ListView
 from django.db.models import Q, F
-from rdo.models import Contrato, RDO, ItemBm, QtdBM,Aprovador,BoletimMedicao,FRS, AssinaturaDigital, ProjetoCodigo, Area, Solicitante, AS
-from .forms import ContratoForm, RdoForm, ItemForm, QtdForm,AprovadorForm, BoletimForm, AssinaturadigitalForm, ProjetoForm, AreaForm, SolicitanteForm, FrsForm,AsForm
+from rdo.models import Contrato, RDO, ItemBm, QtdBM,AprovadorDMS,AprovadorBMS,BoletimMedicao,FRS, AssinaturaDigital, ProjetoCodigo, Area, Solicitante, AS
+from .forms import ContratoForm, RdoForm, ItemForm, QtdForm,AprovadorDMSForm,AprovadorBMSForm, BoletimForm, AssinaturadigitalForm, ProjetoForm, AreaForm, SolicitanteForm, FrsForm,AsForm
 from django.db.models import Sum, Count, Case, When
 from django.db import models
 from django.contrib.auth.models import User
@@ -107,24 +107,47 @@ def contrato_add(request):
 
 @login_required
 @manager_required
-def aprovador_add(request):
+def aprovadordms_add(request):
     template_name = 'aprovador.html'
-    aprovador_form = Aprovador()
-    objects = Aprovador.objects.all()
+    aprovador_form = AprovadorDMS()
+    objects = AprovadorDMS.objects.all()
     if request.method == 'POST' and request.POST.get('edit-form'):
         pk = request.POST.get('edit-form')
         aprovador = request.POST.get('main-aprovador')
-        Aprovador.objects.filter(pk=pk).update(aprovador=aprovador)
+        AprovadorDMS.objects.filter(pk=pk).update(aprovador=aprovador)
         url = '#'
         return HttpResponseRedirect(url)
     elif request.method == 'POST':
-        form=AprovadorForm(request.POST, instance=aprovador_form, prefix='main')
+        form=AprovadorDMSForm(request.POST, instance=aprovador_form, prefix='main')
         if form.is_valid():
             form=form.save()
             url='#'
             return HttpResponseRedirect(url)
     else:
-        form=AprovadorForm(instance=aprovador_form, prefix='main')
+        form=AprovadorDMSForm(instance=aprovador_form, prefix='main')
+    context={'form':form,'objects_list': objects}
+    return render(request, template_name, context)
+
+@login_required
+@manager_required
+def aprovadorbms_add(request):
+    template_name = 'aprovador.html'
+    aprovador_form = AprovadorBMS()
+    objects = AprovadorBMS.objects.all()
+    if request.method == 'POST' and request.POST.get('edit-form'):
+        pk = request.POST.get('edit-form')
+        aprovador = request.POST.get('main-aprovador')
+        AprovadorBMS.objects.filter(pk=pk).update(aprovador=aprovador)
+        url = '#'
+        return HttpResponseRedirect(url)
+    elif request.method == 'POST':
+        form=AprovadorBMSForm(request.POST, instance=aprovador_form, prefix='main')
+        if form.is_valid():
+            form=form.save()
+            url='#'
+            return HttpResponseRedirect(url)
+    else:
+        form=AprovadorBMSForm(instance=aprovador_form, prefix='main')
     context={'form':form,'objects_list': objects}
     return render(request, template_name, context)
 
@@ -280,7 +303,10 @@ def rdo_detail(request, slug):
                 item_bm = ItemBm.objects.get(pk=itembm)
                 form.valor = item_bm
             if form.montagem == 'DESMONTAGEM':
-                form.qtd = form.qtd * -1
+                form.qtd_t = form.qtd_t * -1 if form.qtd_t != None else 0
+                form.qtd_e = form.qtd_e * -1 if form.qtd_e != None else 0
+                form.qtd_pranchao = form.qtd_pranchao * -1 if form.qtd_pranchao != None else 0
+                form.qtd_piso = form.qtd_piso * -1 if form.qtd_piso != None else 0
             form.save()
             url='#'
             return HttpResponseRedirect(url)       

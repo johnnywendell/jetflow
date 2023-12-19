@@ -29,7 +29,15 @@ class Solicitante(models.Model):
         return self.solicitante
 
     
-class Aprovador(models.Model):
+class AprovadorDMS(models.Model):
+    aprovador = models.CharField(max_length=30, unique=True)
+    contrato = models.ForeignKey(Contrato, on_delete=models.CASCADE)
+    class Meta:
+        ordering = ('pk',)
+    def __str__(self):
+        return self.aprovador
+    
+class AprovadorBMS(models.Model):
     aprovador = models.CharField(max_length=30, unique=True)
     contrato = models.ForeignKey(Contrato, on_delete=models.CASCADE)
     class Meta:
@@ -39,7 +47,7 @@ class Aprovador(models.Model):
     
 FRS_STATUS = (  ('AGUARDANDO','AGUARDANDO'),
                 ('GERADA','GERADA'),
-                ('OM EXCEDIDADE','OM EXCEDIDADE'),
+                ('OM EXCEDIDA','OM EXCEDIDA'),
 )
 
 class ProjetoCodigo(models.Model):
@@ -74,24 +82,46 @@ BM_STATUS = (  ('APROVADO','APROVADO'),
                 ('NÃO APROVADO','NÃO APROVADO'),
                 ('REPROVADO','REPROVADO'),
 ) 
+PGT_STATUS = (  ('EMITIR NF','EMITIR NF'),
+                ('ABAT REAJUSTE','ABAT REAJUSTE'),
+) 
+MED_STATUS = (  ('NORMAL','NORMAL'),
+                ('ANTECIPAÇÃO','ANTECIPAÇÃO'),
+                ('PROJEÇÃO','PROJEÇÃO'),
+                ('PREST DE CONTAS','PRESTAÇÃO DE CONTAS'),
+) 
 
 class BoletimMedicao(TimeStampedModel):
     funcionario = models.ForeignKey(User, on_delete=models.CASCADE)
     bm_n = models.AutoField(auto_created=True,unique=True,primary_key=True)
-    periodo = models.DateField(verbose_name='Periodo')
-    d_numero = models.CharField('Dms',max_length=40)
-    b_numero = models.CharField('Bms',max_length=40)
-    status = models.CharField(max_length=20,choices=BM_STATUS)
-    data_aprov = models.DateField(verbose_name='Aprovação', blank=True, null=True)
-    aprovador = models.ForeignKey(Aprovador, on_delete=models.CASCADE)
+    unidade = models.ForeignKey(Area, on_delete=models.CASCADE)
+    periodo_inicio = models.DateField(verbose_name='Período início')
+    periodo_fim = models.DateField(verbose_name='Período fim')
+    status_pgt = models.CharField(max_length=20,choices=PGT_STATUS, blank=True, null=True)
+    status_med = models.CharField(max_length=20,choices=MED_STATUS, blank=True, null=True)
+
+    d_numero = models.CharField('Dms',max_length=40, blank=True, null=True)
+    d_data = models.DateField(verbose_name='DMS data', blank=True, null=True)
+    d_aprovador = models.ForeignKey(AprovadorDMS, on_delete=models.CASCADE, blank=True, null=True,verbose_name='Aprovador DMS')
+    d_status = models.CharField('Status DMS',max_length=20,choices=BM_STATUS, blank=True, null=True)
+    b_numero = models.CharField('Bms',max_length=40, blank=True, null=True)
+    b_data = models.DateField(verbose_name='BMS data ', blank=True, null=True)
+    b_aprovador = models.ForeignKey(AprovadorBMS, on_delete=models.CASCADE, blank=True, null=True,verbose_name='Aprovador BMS')
+    b_status = models.CharField('Status BMS',max_length=20,choices=BM_STATUS, blank=True, null=True)
+    
+    descricao = models.CharField('Descricao do serviço',max_length=120)
     frs = models.ForeignKey(FRS, on_delete=models.CASCADE, blank=True, null=True, related_name='frs')
     valor = models.DecimalField('Valor', max_digits=11, decimal_places=3, blank=True, null=True)
     follow_up = models.TextField('Obs/followup', blank=True, null=True)
-    rev = models.IntegerField('Revisão',default=0)
+    rev = models.IntegerField('Revisão',default=0, blank=True, null=True)
     class Meta:
         ordering = ('-created',)
     def __str__(self):
         return 'BM Nº{}'.format(str(self.bm_n).zfill(5))
+    def get_inicio(self):
+        return self.periodo_inicio.strftime('%d/%m/%Y')
+    def get_fim(self):
+        return self.periodo_fim.strftime('%d/%m/%Y')
     def get_absolute_url(self):
         return reverse_lazy('rdo:bm_detail', kwargs={'pk': self.pk})
     
@@ -170,6 +200,7 @@ class RDO(TimeStampedModel):
     escopo = models.CharField('Escopo do serviço',max_length=120)
     local = models.CharField('Local do serviço',max_length=80)
     tipo = models.CharField('Tipo Serviço',max_length=20,choices=TIPO)
+    encarregado = models.CharField('Encarregado',max_length=40)
     projeto_cod = models.ForeignKey(ProjetoCodigo, on_delete=models.CASCADE, blank=True, null=True,verbose_name='Cód. Projetos')
     clima = models.CharField('Clima',max_length=20,choices=CLIMA)
     bm = models.ForeignKey(BoletimMedicao, on_delete=models.CASCADE, blank=True, null=True, related_name='bms')
@@ -200,6 +231,10 @@ MONTAGEM = (
 class QtdBM(models.Model):
     efetivo = models.IntegerField('Efetivo', blank=True, null=True)
     qtd = models.DecimalField('qtd', max_digits=12, decimal_places=3)
+    qtd_t = models.DecimalField('Tubo', max_digits=12, decimal_places=3, blank=True, null=True)
+    qtd_e = models.DecimalField('Encaixe', max_digits=12, decimal_places=3, blank=True, null=True)
+    qtd_pranchao = models.DecimalField('Pranchão', max_digits=12, decimal_places=3, blank=True, null=True)
+    qtd_piso = models.DecimalField('Piso', max_digits=12, decimal_places=3, blank=True, null=True)
     total = models.DecimalField('total', max_digits=12, decimal_places=3, blank=True, null=True)
     bmf = models.ForeignKey(RDO, on_delete=models.CASCADE, related_name='rdos')
     valor = models.ForeignKey(ItemBm, on_delete=models.CASCADE, blank=True, null=True)

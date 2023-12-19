@@ -69,9 +69,15 @@
         </div>
         <!-- End -->
         <!-- 4º line -->
-        <div class="form-group">
+        <div class="form-row">
+          <div class="form-group col-sm-9">
             {{ form.local|bootstrap }}
-          <small class="form-text text-muted">Local detalhado do serviço</small>
+            <small class="form-text text-muted">Local do serviço</small>
+          </div>
+          <div class="form-group col-sm-3">
+            {{ form.encarregado|bootstrap }}
+            <small class="form-text text-muted">Encarregado</small>
+          </div>
         </div>
         <!-- End -->
 

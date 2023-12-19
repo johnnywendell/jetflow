@@ -86,15 +86,58 @@ const getData = () => ({
     this.placasShow = false
 
     document.getElementById("id_placa").value = item.placa;
-    document.getElementById("id_qtdand").max = item.qtd;
+
+    document.getElementById("id_qtdandtub").removeEventListener("input", function () {
+        validarQuantidade("id_qtdandtub", item.qtd_t);
+    });
+    document.getElementById("id_qtdandtub").max = item.qtd_t;
 
     // Adiciona a lógica para habilitar ou desabilitar a validação com base no valor de "id_montagem"
     if (document.getElementById("id_montagem").value === "DESMONTAGEM") {
-      document.getElementById("id_qtdand").addEventListener("input", validarQuantidade);
-    } else {
-      document.getElementById("id_qtdand").removeEventListener("input", validarQuantidade);
+      document.getElementById("id_qtdandtub").addEventListener("input", function () {
+          validarQuantidade("id_qtdandtub", item.qtd_t);
+      });
+  } else {
+      document.getElementById("id_qtdandtub").removeEventListener("input", function () {
+          validarQuantidade("id_qtdandtub", item.qtd_t);
+      });
+  }
 
-  }},
+    document.getElementById("id_qtdandenc").max = item.qtd_e;
+
+    if (document.getElementById("id_montagem").value === "DESMONTAGEM") {
+      document.getElementById("id_qtdandenc").addEventListener("input", function () {
+          validarQuantidade("id_qtdandenc", item.qtd_e);
+      });
+  } else {
+      document.getElementById("id_qtdandenc").removeEventListener("input", function () {
+          validarQuantidade("id_qtdandenc", item.qtd_e);
+      });
+  }
+
+  document.getElementById("id_qtdpra").max = item.qtd_pranchao;
+    
+  if (document.getElementById("id_montagem").value === "DESMONTAGEM") {
+    document.getElementById("id_qtdpra").addEventListener("input", function () {
+        validarQuantidade("id_qtdpra", item.qtd_pranchao);
+    });
+} else {
+    document.getElementById("id_qtdpra").removeEventListener("input", function () {
+        validarQuantidade("id_qtdpra", item.qtd_pranchao);
+    });
+}
+document.getElementById("id_qtdpis").max = item.qtd_piso;
+    
+  if (document.getElementById("id_montagem").value === "DESMONTAGEM") {
+    document.getElementById("id_qtdpis").addEventListener("input", function () {
+        validarQuantidade("id_qtdpis", item.qtd_piso);
+    });
+} else {
+    document.getElementById("id_qtdpis").removeEventListener("input", function () {
+        validarQuantidade("id_qtdpis", item.qtd_piso);
+    });
+}
+},
  
   
 

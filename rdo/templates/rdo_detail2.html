@@ -198,11 +198,7 @@
               </div>
                 
             </div>
-            <div class="modal-footer">
-    
-              <button type="submit" class="btn btn-primary float-right" style="margin: 6px;"><i class="fa fa-plus"></i>Adicionar</button>
             
-            </div>
         
       </div>
     </div>
@@ -310,105 +306,7 @@
                 <button type="submit" class="btn btn-primary float-right" style="margin: 6px;"><i class="fa fa-plus"></i>Adicionar</button>
             </form>
     </div>
-    <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-        <form method="POST" novalidate enctype="multipart/form-data">
-            {% csrf_token %}
-            <div x-data="getData">
-              
-                <h2></h2>
-            
-                <form @submit.prevent="saveData">
-            
-                <!-- busca material -->
-                  <div class="form-group row autocomplete">
-                    
-                    <div class="col-sm-2">
-                        {% render_field form.montagem class="form-control" %}
-                     </div>
-                    
-                    <div class="col-sm-10">
-                    <!-- manual -->
-                      <input
-                        type="text"
-                        class="form-control"
-                        placeholder="Servico"
-                        x-model="searchServico"
-                      >
-                      <ul
-                            id="id_ul"
-                            x-show="servicosShow"
-                        >
-                            <template
-                            x-for="servico in servicos"
-                            :key="servico.id"
-                            >
-                            <li
-                                x-text="servico.item_ref + ' : ' + servico.descricao"
-                                @click="getServico(servico)"
-                            ></li>
-                            </template>
-                      
-                    </div>
-                    
-                  <!-- <p x-text="searchCliente"></p> -->
-                  </div>
-                 
-                    
-                  <p>◉ <span x-text="servicoSelecionado.descricao"></span></p>  
-                
-                  <input type="number" x-model="servicoSelecionado.id" name="id_itembm" id="id_itembm" class="form-control" hidden />  
-                  <div class="form-row">
-                    <div class="form-group col-sm-3">
-                        <label for="inputName">Placa</label>
-                        <input autocomplete="off" type="text" placeholder="Placa" name="placa" id="id_placa" x-model="searchPlaca" class="form-control" />
-                        <ul
-                            id="id_ul"
-                            x-show="placasShow"
-                        >
-                            <template
-                            x-for="item in placas"
-                            :key="item.placa"
-                            >
-                            <li
-                                x-text="item.placa"
-                                @click="getPlaca(item)"
-                            ></li>
-                            </template>
-                    </div>
-                    <div class="form-group col-sm-3">
-                        <label for="inputName">Qtd.</label>
-                        {% render_field form.qtd class="form-control clQuantidadeand" id="id_qtdand" %}
-                      </div>
-                      <div class="form-group col-sm-3">
-                        <label for="inputName">Total</label>
-                        {% render_field form.total class="form-control" id="id_totaland" %}
-                      </div>
-                      <div class="form-group col-sm-3">
-                        <label for="inputName">Saldo</label>
-                        <span class="form-control" x-text="placaSelecionada.qtd" style="background-color: lightgreen;"></span>
-                      </div>
-                    </div>
-
-                  <div class="form-row">
-                    <div class="form-group col-sm-4">
-                        <label for="inputName">item</label>
-                        <input type="text" x-model="servicoSelecionado.item_ref" class="form-control" />
-                    </div>
-                    <div class="form-group col-sm-4">
-                        <label for="inputName">unidade</label>
-                        <input type="text" x-model="servicoSelecionado.und"class="form-control" >  
-                      </div>
-                      <div class="form-group col-sm-4">
-                        <label for="inputName">preço</label>
-                        <input type="number" x-model="servicoSelecionado.preco_item"  step="0.001" id="inputvalorand" class="form-control" >
-                      </div>
-                    </div>
-                
-                    
-                </div>    
-                <button type="submit" class="btn btn-primary float-right" style="margin: 6px;"><i class="fa fa-plus"></i>Adicionar</button>
-            </form>
-    </div>
+    
     <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
         <form method="POST" novalidate enctype="multipart/form-data">
             {% csrf_token %}
@@ -478,12 +376,13 @@
                     <div class="form-row">
                         <div class="form-group col-sm-4">
                             <label for="inputName">Qtd.</label>
-                            {% render_field form.qtd class="form-control clQuantidadepin" %}
+                            {% render_field form.qtd class="form-control clQuantidadepin" id="qtd_pin"%}
                           </div>
                           <div class="form-group col-sm-4">
                             <label for="inputName">Total</label>
                             {% render_field form.total class="form-control" id="id_totalpin" %}
                           </div>
+                          
                           
                         </div>
                 </div>    
@@ -571,6 +470,138 @@
                 <button type="submit" class="btn btn-primary float-right" style="margin: 6px;"><i class="fa fa-plus"></i>Adicionar</button>
             </form>
     </div>
+    <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+      <form method="POST" novalidate enctype="multipart/form-data">
+          {% csrf_token %}
+          <div x-data="getData">
+            
+              <h2></h2>
+          
+              <form @submit.prevent="saveData">
+          
+              <!-- busca material -->
+                <div class="form-group row autocomplete">
+                  
+                  <div class="col-sm-2">
+                      {% render_field form.montagem class="form-control" %}
+                   </div>
+                  
+                  <div class="col-sm-10">
+                  <!-- manual -->
+                    <input
+                      type="text"
+                      class="form-control"
+                      placeholder="Servico"
+                      x-model="searchServico"
+                    >
+                    <ul
+                          id="id_ul"
+                          x-show="servicosShow"
+                      >
+                          <template
+                          x-for="servico in servicos"
+                          :key="servico.id"
+                          >
+                          <li
+                              x-text="servico.item_ref + ' : ' + servico.descricao"
+                              @click="getServico(servico)"
+                          ></li>
+                          </template>
+                    
+                  </div>
+                  
+                <!-- <p x-text="searchCliente"></p> -->
+                </div>
+               
+                  
+                <p>◉ <span x-text="servicoSelecionado.descricao"></span></p>  
+              
+                <input type="number" x-model="servicoSelecionado.id" name="id_itembm" id="id_itembm" class="form-control" hidden />  
+                <div class="form-row">
+                  <div class="form-group col-sm-4">
+                      <label for="inputName">Placa</label>
+                      <input autocomplete="off" type="text" placeholder="Placa" name="placa" id="id_placa" x-model="searchPlaca" class="form-control" />
+                      <ul
+                          id="id_ul"
+                          x-show="placasShow"
+                      >
+                          <template
+                          x-for="item in placas"
+                          :key="item.placa"
+                          >
+                          <li
+                              x-text="item.placa"
+                              @click="getPlaca(item)"
+                          ></li>
+                          </template>
+                  </div>
+                    <div class="form-group col-sm-2">
+                      <label for="inputName">Saldo Tubo</label>
+                      <span class="form-control" x-text="placaSelecionada.qtd_t" style="background-color: lightgreen;"></span>
+                    </div>
+                    <div class="form-group col-sm-2">
+                      <label for="inputName">Saldo Encaixe</label>
+                      <span class="form-control" x-text="placaSelecionada.qtd_e" style="background-color: lightgreen;"></span>
+                    </div>
+                    <div class="form-group col-sm-2">
+                      <label for="inputName">Saldo Pranchão</label>
+                      <span class="form-control" x-text="placaSelecionada.qtd_pranchao" style="background-color: lightgreen;"></span>
+                    </div>
+                    <div class="form-group col-sm-2">
+                      <label for="inputName">Saldo Piso</label>
+                      <span class="form-control" x-text="placaSelecionada.qtd_piso" style="background-color: lightgreen;"></span>
+                    </div>
+                  </div>
+
+                  <div class="form-row">
+                    <div class="form-group col-sm-2">
+                      <label for="inputName">Efetivo</label>
+                      {% render_field form.efetivo class="form-control"%}
+                    </div>
+                    <div class="form-group col-sm-2">
+                      <label for="inputName">Total R$</label>
+                      {% render_field form.total class="form-control" id="id_totaland" %}
+                      {% render_field form.qtd type="hidden" id="id_qtdtotaland" %}
+                    </div>
+                    <div class="form-group col-sm-2">
+                      <label for="inputName">Qtd Tubo</label>
+                      {% render_field form.qtd_t class="form-control clQuantidadeand" id="id_qtdandtub" %}
+                    </div>
+                    <div class="form-group col-sm-2">
+                      <label for="inputName">Qtd encaixe</label>
+                      {% render_field form.qtd_e class="form-control clQuantidadeand" id="id_qtdandenc" %}
+                    </div>
+                    <div class="form-group col-sm-2">
+                      <label for="inputName">Qtd Pranchão</label>
+                      {% render_field form.qtd_pranchao class="form-control" id="id_qtdpra" %}
+                    </div>
+                    <div class="form-group col-sm-2">
+                      <label for="inputName">Qtd piso</label>
+                      {% render_field form.qtd_piso class="form-control" id="id_qtdpis" %}
+                    </div>
+                   
+                  </div>
+
+                <div class="form-row">
+                  <div class="form-group col-sm-4">
+                      <label for="inputName">item</label>
+                      <input type="text" x-model="servicoSelecionado.item_ref" class="form-control" />
+                  </div>
+                  <div class="form-group col-sm-4">
+                      <label for="inputName">unidade</label>
+                      <input type="text" x-model="servicoSelecionado.und"class="form-control" >  
+                    </div>
+                    <div class="form-group col-sm-4">
+                      <label for="inputName">preço</label>
+                      <input type="number" x-model="servicoSelecionado.preco_item"  step="0.001" id="inputvalorand" class="form-control" >
+                    </div>
+                  </div>
+              
+                  
+              </div>    
+              <button type="submit" class="btn btn-primary float-right" style="margin: 6px;"><i class="fa fa-plus"></i>Adicionar</button>
+          </form>
+  </div>
   </div>
   {% endif %}
 <!--    ########################################################################-->
@@ -625,7 +656,7 @@
     <p>Assinado por: <strong>{{ object.assinatura_digital.usuario_assinatura }}</strong>  | Data/hora da assinatura: <strong>{{ object.assinatura_digital.data_hora_assinatura }}</strong></p>
     {% if assinatura_binario %}
     <a href="{% url 'rdo:delete_assinatura' assinatura.pk object.pk %}"><i class="fa fa-times-circle no"></i></a>
-    <img style="padding-bottom: 10px;" height="100px" src="data:image/png;base64,{{ assinatura_binario }}" alt="Assinatura Digital">
+    <img style="padding-bottom: 10px;" height="160px" src="data:image/png;base64,{{ assinatura_binario }}" alt="Assinatura Digital">
     {% endif %}
 {% endif %}
 
@@ -633,16 +664,16 @@
 
 {% block js %}
 <script>
-    function validarQuantidade() {
-    var quantidade = parseFloat(document.getElementById("id_qtdand").value);
-    var maxQuantidade = parseFloat(document.getElementById("id_qtdand").max);
+    function validarQuantidade(campo, valorMaximo) {
+    var quantidade = parseFloat(document.getElementById(campo).value);
+    var maxQuantidade = parseFloat(valorMaximo);
 
     // Verifica se a quantidade é maior que o máximo permitido
     if (quantidade > maxQuantidade) {
-      alert("A quantidade não pode ser maior que " + maxQuantidade);
-      document.getElementById("id_qtdand").value = maxQuantidade;  // Define o valor máximo
+        alert("A quantidade não pode ser maior que " + maxQuantidade);
+        document.getElementById(campo).value = maxQuantidade;  // Define o valor máximo
     }
-  }
+}
 </script>
 <script
     src="{% static 'js/servico2.js' %}"
@@ -675,13 +706,18 @@
         $('#id_totaliso').val(resultado_fixed)
     });
     $(document).on('change', '.clQuantidadeand', function(){ 
-        quantidade = $(this).val()
+        qtd_tub = $("#id_qtdandtub").val()
+        qtd_enc = $("#id_qtdandenc").val()        
         valor = $("#inputvalorand").val()
-        resultado = valor * quantidade
+        resultado1 = qtd_enc * valor
+        resultado2 = qtd_tub * valor
+        resultado = resultado1 + resultado2
         resultado_fixed = resultado.toFixed(3)
-        //id_resultado = $(this).attr('id').replace('qtd','total')
+  
         $('#id_totaland').val(resultado_fixed)
+        $('#id_qtdtotaland').val(qtd_tub * 1 + qtd_enc * 1)
     });
+   
     $(document).on('change', '.clEfetivo', function(){ 
         quantidade = $(this).val()
         resultado = 9.22 * quantidade

@@ -26,9 +26,9 @@
             <thead>
                 <tr>
                     <th>Nº BM</th>
-                    <th>Data Aprov.</th>
+                    <th>Unidade</th>
                     <th>Aprovador</th>
-                    <th class="text-center">Status</th>
+                    <th class="text-center">Valor</th>
                     
                     
                 </tr>
@@ -37,9 +37,9 @@
                 {% for object in objects_list %}
                 <tr>
                     <td><a href="{{ object.get_absolute_url }}">{{ object }}</a></td>
-                    <td>{{ object.data_aprov }}</td>
-                    <td>{{ object.aprovador }}</td>
-                    <td class="text-center">{{ object.status }}</td>
+                    <td>{{ object.unidade }}</td>
+                    <td>{{ object.d_aprovador }}</td>
+                    <td class="text-center">{{ object.valor }}</td>
                     
                    
                 </tr>

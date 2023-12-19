@@ -23,44 +23,79 @@
         {% csrf_token %}
         <!-- 1º line -->
         <div class="form-row">
-        <div class="form-group col-sm-3">
-          {{ form.periodo|bootstrap }}
+        <div class="form-group col-sm-2">
+          {{ form.unidade|bootstrap }}
           <small class="form-text text-muted">Please fill your name</small>
         </div>
         <div class="form-group col-sm-3">
-            {{ form.d_numero|bootstrap }}
+          {{ form.status_pgt|bootstrap }}
+          <small class="form-text text-muted">Please fill your name</small>
+        </div>
+        <div class="form-group col-sm-3">
+          {{ form.status_med|bootstrap }}
+          <small class="form-text text-muted">Please fill your name</small>
+        </div>
+        <div class="form-group col-sm-2">
+            {{ form.periodo_inicio|bootstrap }}
             <small class="form-text text-muted">Please fill your name</small>
           </div>
+          <div class="form-group col-sm-2">
+            {{ form.periodo_fim|bootstrap }}
+            <small class="form-text text-muted">Please fill your name</small>
+          </div>
+          
+        </div>
+        <!-- End  -->
+        <hr>
+        <!-- 2º line -->
+        <div class="form-row">
+            <div class="form-group col-sm-3">
+              {{ form.d_numero|bootstrap }}
+              <small class="form-text text-muted">Please fill your name</small>
+            </div>
+            <div class="form-group col-sm-3">
+              {{ form.d_data|bootstrap }}
+              <small class="form-text text-muted">Please fill your name</small>
+            </div>
+            <div class="form-group col-sm-3">
+                {{ form.d_aprovador|bootstrap }}
+                <small class="form-text text-muted">Please fill your name</small>
+              </div>
+              <div class="form-group col-sm-3">
+                {{ form.d_status|bootstrap }}
+                <small class="form-text text-muted">Please fill your name</small>
+              </div>
+            </div>
+        <!-- End  -->
+        <hr>
+         <!-- 3º line -->
+         <div class="form-row">
           <div class="form-group col-sm-3">
             {{ form.b_numero|bootstrap }}
             <small class="form-text text-muted">Please fill your name</small>
           </div>
           <div class="form-group col-sm-3">
-            {{ form.status|bootstrap }}
+            {{ form.b_data|bootstrap }}
             <small class="form-text text-muted">Please fill your name</small>
           </div>
-        </div>
-        <!-- End  -->
-        <!-- 2º line -->
-        <div class="form-row">
-            <div class="form-group col-sm-6">
-              {{ form.data_aprov|bootstrap }}
+          <div class="form-group col-sm-3">
+              {{ form.b_aprovador|bootstrap }}
               <small class="form-text text-muted">Please fill your name</small>
             </div>
-            <div class="form-group col-sm-6">
-                {{ form.aprovador|bootstrap }}
-                <small class="form-text text-muted">Please fill your name</small>
-              </div>
+            <div class="form-group col-sm-3">
+              {{ form.b_status|bootstrap }}
+              <small class="form-text text-muted">Please fill your name</small>
             </div>
-        <!-- End  -->
+          </div>
+      <!-- End  -->
 
-        <!-- 3º line -->
+        <!-- 4º line -->
         <div class="form-group">
-            {{ form.follow_up|bootstrap }}
+            {{ form.descricao|bootstrap }}
           <small class="form-text text-muted">Observação follow-up</small>
         </div>
         <div class="form-group">
-            {{ form.rev|bootstrap }}
+            {{ form.follow_up|bootstrap }}
           <small class="form-text text-muted">Observação follow-up</small>
         </div>
         <!-- End -->

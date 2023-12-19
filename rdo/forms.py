@@ -1,5 +1,5 @@
 from django import forms
-from .models import Contrato, RDO, ItemBm, QtdBM,Aprovador,BoletimMedicao,FRS, AssinaturaDigital,ProjetoCodigo, Area,Solicitante, AS
+from .models import Contrato, RDO, ItemBm, QtdBM,AprovadorDMS,AprovadorBMS,BoletimMedicao,FRS, AssinaturaDigital,ProjetoCodigo, Area,Solicitante, AS
 
 
 class DateInput(forms.DateInput):
@@ -50,9 +50,13 @@ class QtdForm(forms.ModelForm):
         fields = '__all__'
         exclude = ('bmf','valor')
 
-class AprovadorForm(forms.ModelForm):
+class AprovadorDMSForm(forms.ModelForm):
     class Meta:
-        model = Aprovador
+        model = AprovadorDMS
+        fields = '__all__'
+class AprovadorBMSForm(forms.ModelForm):
+    class Meta:
+        model = AprovadorBMS
         fields = '__all__'
 
 class ProjetoForm(forms.ModelForm):
@@ -66,7 +70,10 @@ class BoletimForm(forms.ModelForm):
         fields = '__all__'
         exclude = ('valor', 'funcionario',)
         widgets = {
-            'periodo':  forms.DateInput(format='%Y-%m-%d', attrs={'type': 'date'}),
+            'periodo_inicio':  forms.DateInput(format='%Y-%m-%d', attrs={'type': 'date'}),
+            'periodo_fim':  forms.DateInput(format='%Y-%m-%d', attrs={'type': 'date'}),
+            'd_data':  forms.DateInput(format='%Y-%m-%d', attrs={'type': 'date'}),
+            'b_data':  forms.DateInput(format='%Y-%m-%d', attrs={'type': 'date'}),
             'data_aprov':  forms.DateInput(format='%Y-%m-%d', attrs={'type': 'date'}),
    
 

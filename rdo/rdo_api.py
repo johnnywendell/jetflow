@@ -35,22 +35,25 @@ BMSchema = create_schema(BoletimMedicao, depth=1,fields=(
     'd_numero',
     'b_numero',
     'valor',
-    'aprovador',
+    'd_aprovador',
 ))
 class PlacaSchema(Schema):
     placa: str
-    qtd: float
+    qtd_t: float
+    qtd_e: float
+    qtd_pranchao: float
+    qtd_piso: float
 
-PlacaSchemas = create_schema(QtdBM, fields=(
-    'placa',
-    'montagem',
-    'qtd',
-    
-))
 
 @router.get('placa/', response=List[PlacaSchema])
 def list_material(request, search: str = Query(None)):
-    queryset = QtdBM.objects.values('placa').annotate(total_qtd=Sum('qtd'))
+    queryset = (
+        QtdBM.objects.values('placa')
+        .annotate(total_qtd_t=Sum('qtd_t'))
+        .annotate(total_qtd_e=Sum('qtd_e'))
+        .annotate(total_qtd_pranchao=Sum('qtd_pranchao'))
+        .annotate(total_qtd_piso=Sum('qtd_piso'))
+    )
 
     if search:
         # Filtra os resultados para a pesquisa fornecida
@@ -58,19 +61,15 @@ def list_material(request, search: str = Query(None)):
 
     results = []
     for item in queryset:
-        results.append({
-            "placa": item['placa'] or "",  # Lida com valores nulos
-            "qtd": item['total_qtd']
-        })
+        results.append(PlacaSchema(
+            placa=item['placa'] or "",
+            qtd_t=item['total_qtd_t'] or 0.0,
+            qtd_e=item['total_qtd_e'] or 0.0,
+            qtd_pranchao=item['total_qtd_pranchao'] or 0.0,
+            qtd_piso=item['total_qtd_piso'] or 0.0,
+        ))
 
     return results
-
-
-@router.get('placas/', response=List[PlacaSchema])
-def list_materials(request, search=None):
-    if search:
-        return QtdBM.objects.filter(placa__icontains=search)
-    return QtdBM.objects.all()
 
 @router.get('itembm/', response=List[MaterialSchema])
 def list_material(request, search=None):

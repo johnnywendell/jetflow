@@ -29,7 +29,7 @@
             
             <th><h1>BM - Boletim de Medição</h1></th>
             
-            <th>{{ object }}<br>Unidade - {{ object.bms.first.unidade }}<br>REV - {{ object.rev }}<br>Emissão - {{ object.created }}</th>
+            <th>{{ object }}<br>Unidade - {{ object.unidade }}<br>REV - {{ object.rev }}<br>Emissão - {{ object.created }}</th>
         </table>
    
        <table border="0.5" style="margin-top: 10px;text-align:center;padding-top: 1.8px;">
@@ -50,7 +50,7 @@
                 </tr>
                 <tr>
                     <td class="text-right"> MONSERTEC ENGENHARIA LTDA</td>       
-                    <td class="text-right">{{ object.periodo }}</td>       
+                    <td class="text-right">{{ object.get_inicio }} á {{ object.get_fim }}</td>       
                     <td class="text-right">2.( ) Emergência</td>  
                 </tr>     
         </table>
@@ -58,7 +58,7 @@
                 <table style="text-align:center;margin-top: 10px;">
                     <thead><th class="text-right">ESCOPO DO SERVIÇO / LOCAL DE EXECUÇÃO (CENTRO DE PRODUÇÃO):</th></thead>
                     
-                    <tbody><td>{{ object.bms.first.escopo  }}</td></tbody> 
+                    <tbody><td>{{ object.descricao  }}</td></tbody> 
                 </table>    
 </div>   
 
