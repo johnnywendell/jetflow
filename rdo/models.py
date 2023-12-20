@@ -100,11 +100,11 @@ class BoletimMedicao(TimeStampedModel):
     status_pgt = models.CharField(max_length=20,choices=PGT_STATUS, blank=True, null=True)
     status_med = models.CharField(max_length=20,choices=MED_STATUS, blank=True, null=True)
 
-    d_numero = models.CharField('Dms',max_length=40, blank=True, null=True)
+    d_numero = models.CharField('DMS',max_length=40, blank=True, null=True)
     d_data = models.DateField(verbose_name='DMS data', blank=True, null=True)
     d_aprovador = models.ForeignKey(AprovadorDMS, on_delete=models.CASCADE, blank=True, null=True,verbose_name='Aprovador DMS')
     d_status = models.CharField('Status DMS',max_length=20,choices=BM_STATUS, blank=True, null=True)
-    b_numero = models.CharField('Bms',max_length=40, blank=True, null=True)
+    b_numero = models.CharField('BMS',max_length=40, blank=True, null=True)
     b_data = models.DateField(verbose_name='BMS data ', blank=True, null=True)
     b_aprovador = models.ForeignKey(AprovadorBMS, on_delete=models.CASCADE, blank=True, null=True,verbose_name='Aprovador BMS')
     b_status = models.CharField('Status BMS',max_length=20,choices=BM_STATUS, blank=True, null=True)

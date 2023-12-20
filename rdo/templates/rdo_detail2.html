@@ -29,6 +29,10 @@
                     <td> {{ object.funcionario }}</td>
                 </tr>
                 <tr>
+                  <th class="text-left">Encarregado</th>
+                  <td> {{ object.encarregado }}</td>
+              </tr>
+                <tr>
                     <th class="text-left">Data:</th>
                     <td>
                         {{ object.data_periodo }}
@@ -664,14 +668,15 @@
 
 {% block js %}
 <script>
-    function validarQuantidade(campo, valorMaximo) {
-    var quantidade = parseFloat(document.getElementById(campo).value);
-    var maxQuantidade = parseFloat(valorMaximo);
+   function validarQuantidade() {
+    var campo = this;  // O campo agora é referenciado diretamente pelo ouvinte de eventos
+    var quantidade = parseFloat(campo.value);
+    var maxQuantidade = parseFloat(campo.max);
 
     // Verifica se a quantidade é maior que o máximo permitido
     if (quantidade > maxQuantidade) {
         alert("A quantidade não pode ser maior que " + maxQuantidade);
-        document.getElementById(campo).value = maxQuantidade;  // Define o valor máximo
+        campo.value = maxQuantidade;  // Define o valor máximo
     }
 }
 </script>

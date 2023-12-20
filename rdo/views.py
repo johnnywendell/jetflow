@@ -256,7 +256,7 @@ class RdoList(ListView):
     context_object_name = 'objects_list'
     def get_queryset(self):
         queryset = super(RdoList, self).get_queryset()
-        search = self.request.GET.get('search')
+        search = self.request.GET.get('q')
         if search:
             queryset = queryset.filter(
                 Q(bmf__icontains=search) |
@@ -273,7 +273,7 @@ class RdoListFiscal(ListView):
     context_object_name = 'objects_list'
     def get_queryset(self):
         queryset = super(RdoListFiscal, self).get_queryset()
-        search = self.request.GET.get('search')
+        search = self.request.GET.get('q')
         logged_in_user_first_name = self.request.user.first_name
         if search:
             queryset = queryset.filter(
@@ -397,13 +397,27 @@ class BoletimList(ListView):
     template_name = 'bm_list.html'
     paginate_by = 20
     context_object_name = 'objects_list'
+    def get_queryset(self):
+        queryset = super(BoletimList, self).get_queryset()
+        search = self.request.GET.get('q')
+        dms_null = self.request.GET.get('dms_null')
+        if search:
+            queryset = queryset.filter(
+                Q(bm_n__icontains=search) |
+                Q(d_aprovador__aprovador__icontains=search) |
+                Q(unidade__area__icontains=search)|
+                Q(d_numero__icontains=search)
+            )
+        if dms_null:
+            queryset = queryset.filter(d_numero=None)
+        return queryset
 
 @login_required
 @manager_required
 def boletim_detail(request, pk):    
     template_name = 'bm_detail.html'
     obj = BoletimMedicao.objects.get(pk=pk)
-    item = QtdBM.objects.filter(bmf__bm=pk).values('valor__item_ref','valor__descricao','valor__und','valor__preco_item').annotate(Sum('total')).annotate(Sum('qtd'))
+    item = QtdBM.objects.filter(bmf__bm=pk,valor__isnull=False).values('valor__item_ref','valor__descricao','valor__und','valor__preco_item').annotate(Sum('total')).annotate(Sum('qtd'))
     
 
     if request.method == 'POST':
@@ -440,7 +454,7 @@ def export_csv_view(request,pk):
         #writer.writerow(['0000', '0000', '0000'])
     # Agrupa os registros pelo campo 'valor' e calcula a soma da coluna 'qtd'
     writer.writerow(['0', '0000000000', '0','10','10','0,00'])
-    qtd_bm_objects = QtdBM.objects.filter(bmf__bm=pk).values('valor__item_ref', 'bmf__bm').annotate(total_qtd=Sum('qtd'))
+    qtd_bm_objects = QtdBM.objects.filter(bmf__bm=pk,valor__isnull=False).values('valor__item_ref', 'bmf__bm').annotate(total_qtd=Sum('qtd'))
 
     for qtd_bm in qtd_bm_objects:
         # Divida o campo 'item_ref' usando o caractere "-"
@@ -601,6 +615,7 @@ def export_xlsx(model, filename, queryset, columns):
     wb.save(response)
     return response
 
+
 @login_required
 def export_xlsx_func_bmf(request):
     MDATA = datetime.now().strftime('%Y-%m-%d')
@@ -617,6 +632,7 @@ def export_xlsx_func_bmf(request):
     response = export_xlsx(model, filename_final, queryset, columns)
     return response
 
+@has_role_decorator('fiscal')
 @login_required
 def export_movimentacao(request):
     MDATA = datetime.now().strftime('%Y-%m-%d')
@@ -625,10 +641,31 @@ def export_movimentacao(request):
     _filename = filename.split('.')
     filename_final = f'{_filename[0]}_{MDATA}.{_filename[1]}'
     queryset = QtdBM.objects.filter(placa__isnull=False,bmf__solicitante__solicitante=request.user.first_name).values_list('placa','montagem','bmf__data_periodo','bmf__unidade__area'
-                                                                     ,'bmf__solicitante__solicitante','qtd',)
+                                                                     ,'bmf__solicitante__solicitante','qtd','qtd_t','qtd_e',
+                                                                     'qtd_pranchao','qtd_piso')
                                              
 
-    columns = ('placa','montagem','bmf__data_periodo','bmf__unidade','bmf__solicitante','qtd',)
+    columns = ('placa','montagem','bmf__data_periodo','bmf__unidade','bmf__solicitante','qtd_módulo','qtd_tubo','qtd_encaixe','qtd_pranchao',
+               'qtd_piso')
+                                                                     
+    response = export_xlsx(model, filename_final, queryset, columns)
+    return response
+
+@has_role_decorator('rdo')
+@login_required
+def export_movimentacao_completa(request):
+    MDATA = datetime.now().strftime('%Y-%m-%d')
+    model = 'QtdBM'
+    filename = 'movimentação.xls'
+    _filename = filename.split('.')
+    filename_final = f'{_filename[0]}_{MDATA}.{_filename[1]}'
+    queryset = QtdBM.objects.filter(placa__isnull=False).values_list('placa','montagem','bmf__data_periodo','bmf__unidade__area'
+                                                                     ,'bmf__solicitante__solicitante','qtd','qtd_t','qtd_e',
+                                                                     'qtd_pranchao','qtd_piso')
+                                             
+
+    columns = ('placa','montagem','bmf__data_periodo','bmf__unidade','bmf__solicitante','qtd_módulo','qtd_tubo','qtd_encaixe','qtd_pranchao',
+               'qtd_piso')
                                                                      
     response = export_xlsx(model, filename_final, queryset, columns)
     return response
@@ -638,7 +675,7 @@ def export_movimentacao(request):
 def render_pdf_view(request, pk):
     object = get_object_or_404(BoletimMedicao, pk=pk)
     template_path = 'bm.html'
-    item = QtdBM.objects.filter(bmf__bm=pk).values('valor__item_ref','valor__descricao','valor__und','valor__preco_item').annotate(Sum('total')).annotate(Sum('qtd'))
+    item = QtdBM.objects.filter(bmf__bm=pk,valor__isnull=False).values('valor__item_ref','valor__descricao','valor__und','valor__preco_item').annotate(Sum('total')).annotate(Sum('qtd'))
     
     context = {'object': object,'item':item }
    

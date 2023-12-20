@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load l10n %}
 {% block content %} 
-
+{% load permission_tags %}
 
     <div class="page-header">
         <h2><i class="fa fa-user"></i> RDO's
@@ -12,11 +12,19 @@
                         <span class="fa fa-plus"></span>Adicionar
                     </button>                    
                 </a>
+                {% if user|has_role:'fiscal' %}
                 <a href="{% url 'rdo:export_movimentacao' %}">
                     <button type="button" class="btn btn-info">
                         <span class="fa fa-plus"></span>Exportar movimentação
                     </button>
                 </a>
+                {% else %}
+                <a href="{% url 'rdo:export_movimentacao_completa' %}">
+                    <button type="button" class="btn btn-info">
+                        <span class="fa fa-plus"></span>Exportar movimentação
+                    </button>
+                </a>
+                {% endif %}
                 </div>
             </span>
         </h2>
@@ -33,6 +41,7 @@
                     <th>Tipo</th>
                     <th class="text-center">Disciplina</th>
                     <th class="text-center">BM</th>
+                    <th class="text-center">Ass.</th>
                 </tr>
             </thead>
             <tbody>
@@ -46,6 +55,11 @@
                     <!--<td>R$ {{ object.valor | floatformat:3 }}</td>-->
                     <td class="text-center">{{ object.disciplina }}</td>
                     <td class="text-center">{{ object.bm }}</td>
+                    <td class="text-center">{% if object.aprovado %}
+                        <i class="fa fa-check-circle ok"></i>
+                      {% else %}
+                        <i class="fa fa-minus-circle no"></i>
+                      {% endif %}</td>
                 </tr>
                  
                 {% endfor %}

@@ -35,6 +35,7 @@ urlpatterns =[
     path('frs/deleteitem/<int:pk>/<int:id>/', v.frsitem_delete, name='delete_itemfrs'),
     path('bmf/export/xlsx/', v.export_xlsx_func_bmf, name='export_xlsx_func_bmf'),
     path('bmf/exportmov/xlsx/', v.export_movimentacao, name='export_movimentacao'),
+    path('bmf/exportmovall/xlsx/', v.export_movimentacao_completa, name='export_movimentacao_completa'),
     path('pdfbms/<int:pk>/', v.render_pdf_view, name='render_pdf_view'),
     path('rdo/deleteass/<int:pk>/<int:id>/', v.delete_assinatura, name='delete_assinatura'),
 ############

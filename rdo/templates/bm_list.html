@@ -1,8 +1,17 @@
 {% extends "base.html" %}
 
 {% block content %} 
+            <div class="btn-group btn-group-toggle" style="margin-bottom: 10px;">
+            <form action="." method="GET" >
+                <input hidden type="text" id="dms_null" name="dms_null" value="dms_null">
+              <input type="submit" value="Sem DMS" class="btn btn-secondary">
+            </form>
+            <form action="." method="GET" >
+                <input hidden type="text" id="bms_null" name="bms_null" value="bms_null">
+              <input type="submit" value="Sem filtros" class="btn btn-secondary">
+            </form>
+            </div>
 
-    <div class="page-header">
         <h2><i class="fa fa-user"></i> Medições
             <span class="pull-right">
                 <div style="display: flex;">
@@ -28,6 +37,7 @@
                     <th>Nº BM</th>
                     <th>Unidade</th>
                     <th>Aprovador</th>
+                    <th>DMS</th>
                     <th class="text-center">Valor</th>
                     
                     
@@ -39,6 +49,7 @@
                     <td><a href="{{ object.get_absolute_url }}">{{ object }}</a></td>
                     <td>{{ object.unidade }}</td>
                     <td>{{ object.d_aprovador }}</td>
+                    <td>{{ object.d_numero }}</td>
                     <td class="text-center">{{ object.valor }}</td>
                     
                    

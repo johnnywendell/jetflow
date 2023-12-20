@@ -87,56 +87,51 @@ const getData = () => ({
 
     document.getElementById("id_placa").value = item.placa;
 
-    document.getElementById("id_qtdandtub").removeEventListener("input", function () {
-        validarQuantidade("id_qtdandtub", item.qtd_t);
-    });
-    document.getElementById("id_qtdandtub").max = item.qtd_t;
+    //-------------------------------------------------------------------
+    var qtdandtubInput = document.getElementById("id_qtdandtub");
+    qtdandtubInput.removeEventListener("input", validarQuantidade);
 
-    // Adiciona a lógica para habilitar ou desabilitar a validação com base no valor de "id_montagem"
+    // Configurar limite para id_qtdandtub
+    qtdandtubInput.max = item.qtd_t;
+
+    // Adicionar lógica de validação para id_qtdandtub se a montagem for DESMONTAGEM
     if (document.getElementById("id_montagem").value === "DESMONTAGEM") {
-      document.getElementById("id_qtdandtub").addEventListener("input", function () {
-          validarQuantidade("id_qtdandtub", item.qtd_t);
-      });
-  } else {
-      document.getElementById("id_qtdandtub").removeEventListener("input", function () {
-          validarQuantidade("id_qtdandtub", item.qtd_t);
-      });
-  }
+        qtdandtubInput.addEventListener("input", validarQuantidade);
+    }
+    //-------------------------------------------------------------------
+    var qtdandencInput = document.getElementById("id_qtdandenc");
+    qtdandencInput.removeEventListener("input", validarQuantidade);
 
-    document.getElementById("id_qtdandenc").max = item.qtd_e;
+    // Configurar limite para id_qtdandtub
+    qtdandencInput.max = item.qtd_e;
 
+    // Adicionar lógica de validação para id_qtdandtub se a montagem for DESMONTAGEM
     if (document.getElementById("id_montagem").value === "DESMONTAGEM") {
-      document.getElementById("id_qtdandenc").addEventListener("input", function () {
-          validarQuantidade("id_qtdandenc", item.qtd_e);
-      });
-  } else {
-      document.getElementById("id_qtdandenc").removeEventListener("input", function () {
-          validarQuantidade("id_qtdandenc", item.qtd_e);
-      });
-  }
+      qtdandencInput.addEventListener("input", validarQuantidade);
+    }
+    //-------------------------------------------------------------------
+    var qtdandpraInput = document.getElementById("id_qtdpra");
+    qtdandpraInput.removeEventListener("input", validarQuantidade);
 
-  document.getElementById("id_qtdpra").max = item.qtd_pranchao;
-    
-  if (document.getElementById("id_montagem").value === "DESMONTAGEM") {
-    document.getElementById("id_qtdpra").addEventListener("input", function () {
-        validarQuantidade("id_qtdpra", item.qtd_pranchao);
-    });
-} else {
-    document.getElementById("id_qtdpra").removeEventListener("input", function () {
-        validarQuantidade("id_qtdpra", item.qtd_pranchao);
-    });
-}
-document.getElementById("id_qtdpis").max = item.qtd_piso;
-    
-  if (document.getElementById("id_montagem").value === "DESMONTAGEM") {
-    document.getElementById("id_qtdpis").addEventListener("input", function () {
-        validarQuantidade("id_qtdpis", item.qtd_piso);
-    });
-} else {
-    document.getElementById("id_qtdpis").removeEventListener("input", function () {
-        validarQuantidade("id_qtdpis", item.qtd_piso);
-    });
-}
+    // Configurar limite para id_qtdandtub
+    qtdandpraInput.max = item.qtd_pranchao;
+
+    // Adicionar lógica de validação para id_qtdandtub se a montagem for DESMONTAGEM
+    if (document.getElementById("id_montagem").value === "DESMONTAGEM") {
+      qtdandpraInput.addEventListener("input", validarQuantidade);
+    }
+    //-------------------------------------------------------------------
+    var qtdandpisInput = document.getElementById("id_qtdpis");
+    qtdandpisInput.removeEventListener("input", validarQuantidade);
+
+    // Configurar limite para id_qtdandtub
+    qtdandpisInput.max = item.qtd_piso;
+
+    // Adicionar lógica de validação para id_qtdandtub se a montagem for DESMONTAGEM
+    if (document.getElementById("id_montagem").value === "DESMONTAGEM") {
+      qtdandpisInput.addEventListener("input", validarQuantidade);
+    }
+    //-------------------------------------------------------------------
 },
  
   
