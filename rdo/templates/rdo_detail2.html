@@ -210,7 +210,9 @@
 </form>
 
 <!--    ########################################################################-->
-  
+{% load permission_tags %}
+{% if user|has_role:'fiscal' %}
+{% else %}
   <ul class="nav nav-tabs" id="myTab" role="tablist">
     <li class="nav-item">
       <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">ITENS HH</a>
@@ -303,7 +305,7 @@
                           </div>
                           <div class="form-group col-sm-4">
                             <label for="inputName">Total</label>
-                            {% render_field form.total class="form-control" %}
+                            {% render_field form.total|attr:"required" class="form-control" %}
                           </div>
                         </div>
                 </div>    
@@ -466,7 +468,7 @@
                           </div>
                           <div class="form-group col-sm-4">
                             <label for="inputName">Total</label>
-                            {% render_field form.total class="form-control" id="id_totaliso" %}
+                            {% render_field form.total|attr:"required" class="form-control" id="id_totaliso" %}
                           </div>
                           
                         </div>
@@ -487,7 +489,7 @@
                 <div class="form-group row autocomplete">
                   
                   <div class="col-sm-2">
-                      {% render_field form.montagem class="form-control" %}
+                      {% render_field form.montagem|attr:"required" class="form-control" %}
                    </div>
                   
                   <div class="col-sm-10">
@@ -608,6 +610,7 @@
   </div>
   </div>
   {% endif %}
+  {% endif %}
 <!--    ########################################################################-->
 <div class="table-responsive">
     <table class="table table-striped">
@@ -621,9 +624,12 @@
                 <th>Efetivo</th>
                 <th>Qtd. Item</th>
                 <th>Total</th>
-                {% if object.aprovado %}
+                {% if user|has_role:'fiscal' %}
                 {% else %}
+                {% if object.aprovado %}
+                {% else %}               
                 <th>Delete</th>
+                {% endif %}
                 {% endif %}
                 
             </tr>
@@ -632,9 +638,10 @@
         <tbody>
             {% for obj in object.rdos.all %}
             <tr>
+              
                 <td>{{ obj.valor.item_ref }}</td>
-                <td>{{ obj.valor.disciplina }}</td>
-                <td>{{ obj.valor.descricao }}</td>
+                <td>{{ obj.valor.disciplina }} </td>
+                <td>{% if obj.valor %} {{ obj.valor.descricao }} {% else %} MTG/DTG EM APOIO/HH {% endif %}</td>
                 <td>{{ obj.valor.und }}</td>
                 <td>{{ obj.valor.preco_item }}</td>
                 {% if obj.efetivo %}
@@ -642,11 +649,18 @@
                 {% else %}
                 <td>PU</td>
                 {% endif %}
-                <td>{{ obj.qtd }}</td>
+                <td>{% if obj.montagem == 'MONTAGEM' %}<i class="fa fa-arrow-up ok"></i> 
+                  {% endif %}
+                  {% if obj.montagem == 'DESMONTAGEM' %}<i class="fa fa-arrow-down no"></i> 
+                  {% endif %}
+                  {{ obj.qtd }}</td>
                 <td>{{ obj.total }}</td>
+                {% if user|has_role:'fiscal' %}
+                {% else %}
                 {% if object.aprovado %}
                 {% else %}
                 <td><a href="{% url 'rdo:delete_item' obj.pk object.pk %}"><i class="fa fa-times-circle no"></i></a></td>
+                {% endif %}
                 {% endif %}
             </tr>
             {% endfor %}

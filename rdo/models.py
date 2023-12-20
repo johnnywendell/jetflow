@@ -235,7 +235,7 @@ class QtdBM(models.Model):
     qtd_e = models.DecimalField('Encaixe', max_digits=12, decimal_places=3, blank=True, null=True)
     qtd_pranchao = models.DecimalField('Pranchão', max_digits=12, decimal_places=3, blank=True, null=True)
     qtd_piso = models.DecimalField('Piso', max_digits=12, decimal_places=3, blank=True, null=True)
-    total = models.DecimalField('total', max_digits=12, decimal_places=3, blank=True, null=True)
+    total = models.DecimalField('total', max_digits=12, decimal_places=3)
     bmf = models.ForeignKey(RDO, on_delete=models.CASCADE, related_name='rdos')
     valor = models.ForeignKey(ItemBm, on_delete=models.CASCADE, blank=True, null=True)
     montagem = models.CharField('Tipo',max_length=20,choices=MONTAGEM, blank=True, null=True)
