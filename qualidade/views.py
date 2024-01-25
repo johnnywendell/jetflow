@@ -15,8 +15,10 @@ from django.views.generic import ListView
 from django.contrib.auth.decorators import login_required
 from usuarios.decorators import manager_required
 from rolepermissions.decorators import has_role_decorator
-
-
+from PIL import Image
+from io import BytesIO
+import requests
+import base64
 
 @login_required
 def render_pdf_view(request, pk):

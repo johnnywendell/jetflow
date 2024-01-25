@@ -5,6 +5,7 @@ from django.contrib.auth import authenticate
 from django.contrib.auth import login as login_django
 from django.contrib.auth.decorators import login_required
 from .decorators import manager_required
+from django.views.decorators.csrf import csrf_exempt
 
 @login_required
 @manager_required
@@ -22,6 +23,8 @@ def cadastro(request):
         user.save()
         return HttpResponse('Cadastrado com Sucesso!')
 
+
+@csrf_exempt
 def login(request):
     if request.method == "GET":
         return render(request, 'login.html')
@@ -40,7 +43,7 @@ def login_update(request):
         return render(request, 'cadastro.html')
     else:
         user = request.user
-        new_password = request.POST.get('password')
+        new_password = request.POST.get('senha1')
         user.set_password(new_password)
         user.save()
         return HttpResponseRedirect('/')

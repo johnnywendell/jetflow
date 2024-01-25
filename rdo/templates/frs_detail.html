@@ -24,7 +24,7 @@
                 </tr>
                 <tr>
                     <th class="text-right">Data Aprovação</th>
-                    <td>R$ {{ object.data_aprov }}</td>
+                    <td>{{ object.data_aprov }}</td>
                 </tr>
                 <tr>
                     <th class="text-right">Nota Fiscal</th>
@@ -50,7 +50,7 @@
         </table>
     </div>
 </div>
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg"><i class="fa fa-plus"></i> Itens</button>
+<button type="button" class="btn btn-primary my-2" data-toggle="modal" data-target=".bd-example-modal-lg"><i class="fa fa-plus"></i> Itens</button>
 <!--modal-->
 <form method="POST" novalidate>
     {% csrf_token %}

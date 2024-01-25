@@ -1,6 +1,8 @@
 from django import forms
 from .models import Contrato, RDO, ItemBm, QtdBM,AprovadorDMS,AprovadorBMS,BoletimMedicao,FRS, AssinaturaDigital,ProjetoCodigo, Area,Solicitante, AS
-
+from django.core.exceptions import ValidationError
+from django.utils.translation import gettext_lazy as _
+from django.forms import ClearableFileInput
 
 class DateInput(forms.DateInput):
     input_type = 'date'
@@ -9,23 +11,31 @@ class RdoForm(forms.ModelForm):
     class Meta:
         model = RDO
         fields = '__all__'
-        exclude = ('item_bm','valor','d_numero', 'funcionario','slug')
+        exclude = ('item_bm', 'valor', 'd_numero', 'funcionario', 'slug')
         widgets = {
-            'data_periodo':  forms.DateInput(format='%Y-%m-%d', attrs={'type': 'date'}),
-            'inicio':  forms.TimeInput(attrs={'type': 'time'}),
-            'termino':  forms.TimeInput(attrs={'type': 'time'}),
-            'inicio_pt':  forms.TimeInput(attrs={'type': 'time'}),
-            'termino_pt':  forms.TimeInput(attrs={'type': 'time'}),
+            'data_periodo': forms.DateInput(format='%Y-%m-%d', attrs={'type': 'date'}),
+            'inicio': forms.TimeInput(attrs={'type': 'time'}),
+            'termino': forms.TimeInput(attrs={'type': 'time'}),
+            'inicio_pt': forms.TimeInput(attrs={'type': 'time'}),
+            'termino_pt': forms.TimeInput(attrs={'type': 'time'}),
+            
         }
+
     def clean_doc(self):
         doc = self.cleaned_data.get('doc')
-        # Tamanho máximo permitido em bytes (2MB)
-        max_size = 2 * 1024 * 1024
 
-        if doc and doc.size > max_size:
-            raise forms.ValidationError('O tamanho máximo do arquivo deve ser de 2MB.')
+        if doc:
+            # Verifica se a extensão do arquivo é .pdf
+            if not doc.name.lower().endswith('.pdf'):
+                raise ValidationError(_('Por favor, selecione um arquivo PDF válido.'), code='invalid_pdf')
 
-        return doc 
+            # Tamanho máximo permitido em bytes (2MB)
+            max_size = 2 * 1024 * 1024
+
+            if doc.size > max_size:
+                raise forms.ValidationError(_('O tamanho máximo do arquivo deve ser de 2MB.'))
+
+        return doc
 
 class ContratoForm(forms.ModelForm):
     class Meta:

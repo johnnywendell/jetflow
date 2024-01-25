@@ -21,11 +21,15 @@
 {% block content %} 
 {% load static %}
 {% load widget_tweaks %}
-
+{% load permission_tags %}
 
     <h1>{{ object }}
         {% if object.aprovado %}
         {% else %}
+       
+        {% if user|has_role:'fiscal' %}
+        {% else %}
+
         <span class="pull-right">
             <a href="{% url 'rdo:rdo_edit' object.slug %}">
                 <button type="button" class="btn btn-success">
@@ -33,6 +37,7 @@
                 </button>
             </a>
         </span>
+        {% endif %}
         {% endif %}
     </h1>
 <div class="row">
@@ -108,10 +113,11 @@
                 <tr>
                     <th class="text-left">Arquivo:</th>
                     <td> {% if object.doc %} 
-                        <a class="btn btn-sm btn-info"  href="{{ object.doc.url }}" download="{{ object.doc }}">Download</a>
+                      <a href="{{ object.doc.url }}">Visualizar  <span class="fa fa-search-plus"></span></a>
                         {% else %}
                         {% endif %}</td>
                 </tr>
+             
                 <tr>
                     <th class="text-left">OBS:</th>
                     <td>{{ object.obs }}</td>
@@ -182,7 +188,7 @@
                         <td><input type="number" step="0.01" class="qtd-input" oninput="calculateResult(this)"></td>
                         <td class="result">0.00</td>
                       </tr>
-                      <tr style="background-color: lightgreen;" id="total-row">
+                      <tr  id="total-row">
                         <td><strong>Total</strong></td>
                         <td></td>
                         <td id="total-result">0.00</td>
@@ -271,23 +277,27 @@
 </form>
 
 <!--    ########################################################################-->
-{% load permission_tags %}
+
 {% if user|has_role:'fiscal' %}
 {% else %}
-  <ul class="nav nav-tabs" id="myTab" role="tablist">
+
+    <div class="text-light" style="background-color: #343a40;padding: 15px;border-radius: 15px;">
+  <div style="border-radius: 5px;">
+  <ul class="nav nav-tabs" id="myTab" role="tablist" style="border: none;">
     <li class="nav-item">
-      <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">ITENS HH</a>
+      <a  class="nav-link active text-light" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">ITENS HH</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">ANDAIME -MONTAGEM/DESMONTAGEM - PU</a>
+      <a class="nav-link text-light" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">ANDAIME -MONTAGEM/DESMONTAGEM - PU</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">PINTURA - PU</a>
+      <a class="nav-link text-light" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">PINTURA - PU</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" id="contact1-tab" data-toggle="tab" href="#contact1" role="tab" aria-controls="contact1" aria-selected="false">ISOLAMENTO - PU</a>
+        <a class="nav-link text-light" id="contact1-tab" data-toggle="tab" href="#contact1" role="tab" aria-controls="contact1" aria-selected="false">ISOLAMENTO - PU</a>
     </li>
   </ul>
+  </div>
   <div class="tab-content" id="myTabContent">
     <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
         <form method="POST" novalidate enctype="multipart/form-data">
@@ -325,7 +335,7 @@
                             x-for="servico in servicos"
                             :key="servico.id"
                             >
-                            <li
+                            <li style="color: #131047;"
                                 x-text="servico.item_ref + ' : ' + servico.descricao"
                                 @click="getServico(servico)"
                             ></li>
@@ -342,22 +352,22 @@
                   <input type="number" x-model="servicoSelecionado.id" name="id_itembm" id="id_itembm" class="form-control" hidden />  
                   <div class="form-row">
                     <div class="form-group col-sm-4">
-                        <label for="inputName">item</label>
+                        <label for="inputName">Item</label>
                         <input type="text" x-model="servicoSelecionado.item_ref" class="form-control" />
                     </div>
                     <div class="form-group col-sm-4">
-                        <label for="inputName">unidade</label>
+                        <label for="inputName">Unidade</label>
                         <input type="text" x-model="servicoSelecionado.und"class="form-control" >  
                       </div>
                       <div class="form-group col-sm-4">
-                        <label for="inputName">preço</label>
+                        <label for="inputName">Preço</label>
                         <input type="number" x-model="servicoSelecionado.preco_item"  step="0.001" id="inputvalor" class="form-control" >
                       </div>
                     </div>
                 
                     <div class="form-row">
                         <div class="form-group col-sm-4">
-                            <label for="inputName">efetivo</label>
+                            <label for="inputName">Efetivo</label>
                             {% render_field form.efetivo class="form-control clEfetivo" %}
                         </div>
                         <div class="form-group col-sm-4">
@@ -370,7 +380,7 @@
                           </div>
                         </div>
                 </div>    
-                <button type="submit" class="btn btn-primary float-right" style="margin: 6px;"><i class="fa fa-plus"></i>Adicionar</button>
+                <button type="submit" class="btn btn-primary " ><i class="fa fa-plus"></i>Adicionar</button>
             </form>
     </div>
     
@@ -410,7 +420,7 @@
                             x-for="servico in servicos"
                             :key="servico.id"
                             >
-                            <li
+                            <li style="color: #131047;"
                                 x-text="servico.item_ref + ' : ' + servico.descricao"
                                 @click="getServico(servico)"
                             ></li>
@@ -427,15 +437,15 @@
                   <input type="number" x-model="servicoSelecionado.id" name="id_itembm" id="id_itembm" class="form-control" hidden />  
                   <div class="form-row">
                     <div class="form-group col-sm-4">
-                        <label for="inputName">item</label>
+                        <label for="inputName">Item</label>
                         <input type="text" x-model="servicoSelecionado.item_ref" class="form-control" />
                     </div>
                     <div class="form-group col-sm-4">
-                        <label for="inputName">unidade</label>
+                        <label for="inputName">Unidade</label>
                         <input type="text" x-model="servicoSelecionado.und"class="form-control" >  
                       </div>
                       <div class="form-group col-sm-4">
-                        <label for="inputName">preço</label>
+                        <label for="inputName">Preço</label>
                         <input type="number" x-model="servicoSelecionado.preco_item"  step="0.001" id="inputvalorpin" class="form-control" >
                       </div>
                     </div>
@@ -453,7 +463,7 @@
                           
                         </div>
                 </div>    
-                <button type="submit" class="btn btn-primary float-right" style="margin: 6px;"><i class="fa fa-plus"></i>Adicionar</button>
+                <button type="submit" class="btn btn-primary"><i class="fa fa-plus"></i>Adicionar</button>
             </form>
     </div>
     <div class="tab-pane fade" id="contact1" role="tabpanel" aria-labelledby="contact-tab">
@@ -492,7 +502,7 @@
                             x-for="servico in servicos"
                             :key="servico.id"
                             >
-                            <li
+                            <li style="color: #131047;"
                                 x-text="servico.item_ref + ' : ' + servico.descricao"
                                 @click="getServico(servico)"
                             ></li>
@@ -509,15 +519,15 @@
                   <input type="number" x-model="servicoSelecionado.id" name="id_itembm" id="id_itembm" class="form-control" hidden />  
                   <div class="form-row">
                     <div class="form-group col-sm-4">
-                        <label for="inputName">item</label>
+                        <label for="inputName">Item</label>
                         <input type="text" x-model="servicoSelecionado.item_ref" class="form-control" />
                     </div>
                     <div class="form-group col-sm-4">
-                        <label for="inputName">unidade</label>
+                        <label for="inputName">Unidade</label>
                         <input type="text" x-model="servicoSelecionado.und"class="form-control" >  
                       </div>
                       <div class="form-group col-sm-4">
-                        <label for="inputName">preço</label>
+                        <label for="inputName">Preço</label>
                         <input type="number" x-model="servicoSelecionado.preco_item"  step="0.001" id="inputvaloriso" class="form-control" >
                       </div>
                     </div>
@@ -534,7 +544,7 @@
                           
                         </div>
                 </div>    
-                <button type="submit" class="btn btn-primary float-right" style="margin: 6px;"><i class="fa fa-plus"></i>Adicionar</button>
+                <button type="submit" class="btn btn-primary"><i class="fa fa-plus"></i>Adicionar</button>
             </form>
     </div>
     <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
@@ -569,7 +579,7 @@
                           x-for="servico in servicos"
                           :key="servico.id"
                           >
-                          <li
+                          <li style="color: #131047;"
                               x-text="servico.item_ref + ' : ' + servico.descricao"
                               @click="getServico(servico)"
                           ></li>
@@ -596,7 +606,7 @@
                           x-for="item in placas"
                           :key="item.placa"
                           >
-                          <li
+                          <li style="color: #131047;"
                               x-text="item.placa"
                               @click="getPlaca(item)"
                           ></li>
@@ -604,19 +614,19 @@
                   </div>
                     <div class="form-group col-sm-2">
                       <label for="inputName">Saldo Tubo</label>
-                      <span class="form-control" x-text="placaSelecionada.qtd_t" style="background-color: lightgreen;"></span>
+                      <span class="form-control text-light" x-text="placaSelecionada.qtd_t" style="background-color: #131047;"></span>
                     </div>
                     <div class="form-group col-sm-2">
                       <label for="inputName">Saldo Encaixe</label>
-                      <span class="form-control" x-text="placaSelecionada.qtd_e" style="background-color: lightgreen;"></span>
+                      <span class="form-control text-light" x-text="placaSelecionada.qtd_e" style="background-color: #131047;"></span>
                     </div>
                     <div class="form-group col-sm-2">
                       <label for="inputName">Saldo Pranchão</label>
-                      <span class="form-control" x-text="placaSelecionada.qtd_pranchao" style="background-color: lightgreen;"></span>
+                      <span class="form-control text-light" x-text="placaSelecionada.qtd_pranchao" style="background-color: #131047;"></span>
                     </div>
                     <div class="form-group col-sm-2">
                       <label for="inputName">Saldo Piso</label>
-                      <span class="form-control" x-text="placaSelecionada.qtd_piso" style="background-color: lightgreen;"></span>
+                      <span class="form-control text-light" x-text="placaSelecionada.qtd_piso" style="background-color: #131047;"></span>
                     </div>
                   </div>
 
@@ -651,29 +661,30 @@
 
                 <div class="form-row">
                   <div class="form-group col-sm-4">
-                      <label for="inputName">item</label>
+                      <label for="inputName">Item</label>
                       <input type="text" x-model="servicoSelecionado.item_ref" class="form-control" />
                   </div>
                   <div class="form-group col-sm-4">
-                      <label for="inputName">unidade</label>
+                      <label for="inputName">Unidade</label>
                       <input type="text" x-model="servicoSelecionado.und"class="form-control" >  
                     </div>
                     <div class="form-group col-sm-4">
-                      <label for="inputName">preço</label>
+                      <label for="inputName">Preço</label>
                       <input type="number" x-model="servicoSelecionado.preco_item"  step="0.001" id="inputvalorand" class="form-control" >
                     </div>
                   </div>
               
                   
               </div>    
-              <button type="submit" class="btn btn-primary float-right" style="margin: 6px;"><i class="fa fa-plus"></i>Adicionar</button>
+              <button type="submit" class="btn btn-primary"><i class="fa fa-plus"></i>Adicionar</button>
           </form>
   </div>
   </div>
+</div>
   {% endif %}
   {% endif %}
 <!--    ########################################################################-->
-<div class="table-responsive">
+<div class="table-responsive my-2">
     <table class="table table-striped">
         <thead>
             <tr>

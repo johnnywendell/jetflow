@@ -22,6 +22,12 @@ span.required:after {
       
 }
 
+.nav-link.active {
+  background-color:  #0d6efd !important; 
+  border: none;
+  font:bolder;
+}
+
 .navbar-default {
   background-color: #FFF;
   margin-left: 200px;

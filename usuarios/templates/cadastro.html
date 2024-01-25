@@ -2,19 +2,36 @@
 
 {% block content %}  
 {% include "includes/nav_login.html" %} 
-    <div class="row text-light">
+    <div class="row">
         <div class="col-md-4 offset-md-4">
-            <h2 class="text-center" style="margin:30px;">Atualizar Senha</h2>
-            <form method="post" action="#">
+           
+            <form method="post" action="#" onsubmit="return validarSenhas()">
                 {% csrf_token %} 
-                <!-- Password input -->
-                <div class="form-outline mb-4">
-                  <input type="password"  class="form-control" name="password" />
-                  <label class="form-label" for="form2Example2">Senha</label>
+                <div class="card card-outline-secondary">
+                    <div class="card-header">
+                        <h3 class="mb-0">Alterar Senha</h3>
+                    </div>
+                    <div class="card-body">
+                            <div class="form-group">
+                                <label for="inputPasswordNew">Nova Senha</label>
+                                <input type="password" class="form-control" id="senha1" name="senha1" required="">
+                                <span class="form-text small text-muted">
+                                        Digitar nova senha
+                                    </span>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputPasswordNewVerify">Verificação</label>
+                                <input type="password" class="form-control" id="senha2" required="">
+                                <span class="form-text small text-muted">
+                                        para confirmar, digitar novamente a senha.
+                                    </span>
+                            </div>
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-success float-right">Salvar</button>
+                            </div>
+                      
+                    </div>
                 </div>
-
-                <!-- Submit button -->
-                <button type="submit" class="btn btn-primary btn-block mb-4">Atualizar</button>
               
               </form>
         </div>
@@ -22,8 +39,17 @@
 {% endblock content %}
 {% block js %}   
 <script>
-$(document).ready(function(){
-    $('body').addClass('fundo')
-});
+function validarSenhas() {
+            var senha1 = document.getElementById('senha1').value;
+            var senha2 = document.getElementById('senha2').value;
+
+            if (senha1 !== senha2) {
+                alert('As senhas não coincidem. Por favor, insira senhas iguais.');
+                return false;
+            }
+
+            return true;
+        }
+
 </script>
 {% endblock js %}

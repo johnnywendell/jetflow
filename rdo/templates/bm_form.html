@@ -5,17 +5,15 @@
 {% block content %}
 
  <!-- Start Header form -->
- <div class="text-center" ">
-  <img src="/media/logo.png" alt="network-logo" width="300" height="30" />
-  <h2 style="margin-top: 10px;">BOLETIM DE MEDIÇÃO</h2>
-  
-   
-  
-  </div>
+ 
   <!-- End Header form -->
 
   <!-- Start Card -->
-  <div class="card">
+  <div class="card" style="background-color: rgb(247, 247, 247); box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);">
+    <div class="text-center" >
+      <img style="margin-top:10px ;" src="/media/logo.png" alt="network-logo" width="300" height="30" />
+      <h2 style="margin-top: 10px;">BOLETIM DE MEDIÇÃO</h2>
+      </div>
     <!-- Start Card Body -->
     <div class="card-body">
       <!-- Start Form -->
@@ -25,23 +23,23 @@
         <div class="form-row">
         <div class="form-group col-sm-2">
           {{ form.unidade|bootstrap }}
-          <small class="form-text text-muted">Please fill your name</small>
+          <small class="form-text text-muted">Unidade/Área</small>
         </div>
         <div class="form-group col-sm-3">
           {{ form.status_pgt|bootstrap }}
-          <small class="form-text text-muted">Please fill your name</small>
+          <small class="form-text text-muted">Status Pagamento</small>
         </div>
         <div class="form-group col-sm-3">
           {{ form.status_med|bootstrap }}
-          <small class="form-text text-muted">Please fill your name</small>
+          <small class="form-text text-muted">Status medição</small>
         </div>
         <div class="form-group col-sm-2">
             {{ form.periodo_inicio|bootstrap }}
-            <small class="form-text text-muted">Please fill your name</small>
+            <small class="form-text text-muted">Início</small>
           </div>
           <div class="form-group col-sm-2">
             {{ form.periodo_fim|bootstrap }}
-            <small class="form-text text-muted">Please fill your name</small>
+            <small class="form-text text-muted">Fim</small>
           </div>
           
         </div>
@@ -51,19 +49,19 @@
         <div class="form-row">
             <div class="form-group col-sm-3">
               {{ form.d_numero|bootstrap }}
-              <small class="form-text text-muted">Please fill your name</small>
+              <small class="form-text text-muted">Nº DMS</small>
             </div>
             <div class="form-group col-sm-3">
               {{ form.d_data|bootstrap }}
-              <small class="form-text text-muted">Please fill your name</small>
+              <small class="form-text text-muted">Data Aprovação DMS</small>
             </div>
             <div class="form-group col-sm-3">
                 {{ form.d_aprovador|bootstrap }}
-                <small class="form-text text-muted">Please fill your name</small>
+                <small class="form-text text-muted">Aprovador DMS</small>
               </div>
               <div class="form-group col-sm-3">
                 {{ form.d_status|bootstrap }}
-                <small class="form-text text-muted">Please fill your name</small>
+                <small class="form-text text-muted">Status DMS</small>
               </div>
             </div>
         <!-- End  -->
@@ -72,19 +70,19 @@
          <div class="form-row">
           <div class="form-group col-sm-3">
             {{ form.b_numero|bootstrap }}
-            <small class="form-text text-muted">Please fill your name</small>
+            <small class="form-text text-muted">Nº BMS</small>
           </div>
           <div class="form-group col-sm-3">
             {{ form.b_data|bootstrap }}
-            <small class="form-text text-muted">Please fill your name</small>
+            <small class="form-text text-muted">Aprovação BMS</small>
           </div>
           <div class="form-group col-sm-3">
               {{ form.b_aprovador|bootstrap }}
-              <small class="form-text text-muted">Please fill your name</small>
+              <small class="form-text text-muted">Aprovador BMS</small>
             </div>
             <div class="form-group col-sm-3">
               {{ form.b_status|bootstrap }}
-              <small class="form-text text-muted">Please fill your name</small>
+              <small class="form-text text-muted">Status BMS</small>
             </div>
           </div>
       <!-- End  -->
@@ -92,7 +90,7 @@
         <!-- 4º line -->
         <div class="form-group">
             {{ form.descricao|bootstrap }}
-          <small class="form-text text-muted">Observação follow-up</small>
+          <small class="form-text text-muted">Descrição detalhada do serviço</small>
         </div>
         <div class="form-group">
             {{ form.follow_up|bootstrap }}

@@ -149,7 +149,7 @@ class ItemBm(models.Model):
     class Meta:
         ordering = ('pk',)
     def __str__(self):
-        return self.item_ref
+        return self.descricao
 
 TIPO = (
     ('PARADA','PARADA'),

@@ -208,97 +208,81 @@
   </div>
 </form>
 <!-- end modal-->
-
-    
-    
-    <div class="accordion " id="accordionExample">
-        <div class="card ">
-          <div class="card-header " id="headingOne">
-            <h5 class="mb-0 ">
-              <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
-                Itens Boletim de Medição
-              </button>
-            </h5>
-          </div>
-      
-          <div id="collapseOne" class="collapse"  aria-labelledby="headingOne" data-parent="#accordionExample">
-            <div class="card-body p-0">
-              <div class="table-responsive">
-                <table class="table table-striped w-100">
-                    <thead>
-                        <tr>
-                            <th>item</th>
-                            <th>descricao</th>
-                            <th>und</th>
-                            <th>preco</th>
-                            <th>qtd</th>
-                            <th>total</th>
-                            
-                          
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for obj in item %}
-                        <tr>
-                                <td>{{ obj.valor__item_ref }}</td>
-                                <td>{{ obj.valor__descricao }}</td>
-                                <td>{{ obj.valor__und }}</td>
-                                <td>{{ obj.valor__preco_item }}</td>
-                                <td>{{ obj.qtd__sum | floatformat:3 }}</td>
-                                <td>{{ obj.total__sum | floatformat:3 }}</td>
-                                
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                
-                </table>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="card">
-          <div class="card-header" id="headingTwo">
-            <h5 class="mb-0">
-              <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                RDO's <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target=".bd-example-modal-lg"><i class="fa fa-plus"></i> </button>
-              </button>
-            </h5>
-          </div>
-          <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
-            <div class="card-body p-0">
-              <div class="table-responsive">
-                <table class="table table-striped">
-                    <thead>
-                        <tr>
-                            <th>Nº RDO</th>
-                            <th>Data</th>
-                            <th>Área</th>
-                            <th>Solicitante</th>
-                            <th>Tipo</th>
-                            <th>Remover</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for obj in object.bms.all %}
-                        <tr>
-                            <td><a href="{{ obj.get_absolute_url }}">{{ obj }}</a></td>
-                                <td>{{ obj.data_periodo }}</td>
-                                <td>{{ obj.unidade }}</td>
-                                <td>{{ obj.solicitante }}</td>
-                                <td>{{ obj.tipo }}</td>
-                                <td><a href="{% url 'rdo:bm_delete' object.pk obj.pk %}"><i class="fa fa-times-circle no"></i></a></td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                
-                </table>
-              </div>
-            </div>
-          </div>
-        </div>
-   
+<div class="text-light" style="background-color: #343a40;padding: 15px;border-radius: 15px;">
+  <div style="border-radius: 5px;">
+  <ul class="nav nav-tabs" id="myTab" role="tablist" style="border: none;">
+    <li class="nav-item">
+      <a  class="nav-link text-light" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="true">RDO's<button style="padding: 0px 5px;margin: 0px;" type="button" class="btn btn-primary btn-sm mx-2" data-toggle="modal" data-target=".bd-example-modal-lg"><i class="fa fa-plus"></i> </button></a>
+    </li>
+    <li class="nav-item">
+      <a style="height: 100%;" class="nav-link active text-light" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="false">Itens BM</a>
+    </li>
+  </ul>
+  </div>
+  <div class="tab-content" id="myTabContent">
+    <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+      <div class="table-responsive">
+        <table class="table table-striped w-100">
+            <thead>
+                <tr>
+                    <th>item</th>
+                    <th>descricao</th>
+                    <th>und</th>
+                    <th>preco</th>
+                    <th>qtd</th>
+                    <th>total</th>
+                    
+                  
+                </tr>
+            </thead>
+            <tbody>
+                {% for obj in item %}
+                <tr>
+                        <td>{{ obj.valor__item_ref }}</td>
+                        <td>{{ obj.valor__descricao }}</td>
+                        <td>{{ obj.valor__und }}</td>
+                        <td>{{ obj.valor__preco_item }}</td>
+                        <td>{{ obj.qtd__sum | floatformat:3 }}</td>
+                        <td>{{ obj.total__sum | floatformat:3 }}</td>
+                        
+                </tr>
+                {% endfor %}
+            </tbody>
+        
+        </table>
       </div>
-
+    </div>
+    <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+      <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Nº RDO</th>
+                    <th>Data</th>
+                    <th>Área</th>
+                    <th>Solicitante</th>
+                    <th>Tipo</th>
+                    <th>Remover</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for obj in object.bms.all %}
+                <tr>
+                    <td><a href="{{ obj.get_absolute_url }}">{{ obj }}</a></td>
+                        <td>{{ obj.data_periodo }}</td>
+                        <td>{{ obj.unidade }}</td>
+                        <td>{{ obj.solicitante }}</td>
+                        <td>{{ obj.tipo }}</td>
+                        <td><a href="{% url 'rdo:bm_delete' object.pk obj.pk %}"><i class="fa fa-times-circle no"></i></a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        
+        </table>
+      </div>
+    </div>
+  </div> 
+</div>
 
 {% endblock content %} 
 

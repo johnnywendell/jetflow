@@ -14,6 +14,7 @@ urlpatterns =[
     path('rdo/edit/<slug:slug>/', v.rdo_edit, name='rdo_edit'),
     path('itembm/', v.itembm_add, name='itembm_add'),
     path('C', v.import_csv_itembm, name='import_csv_itembm'),
+    path('rdoC/', v.import_csv_rdo, name='import_csv_rdo'),
     path('rdo/deleteitem/<int:id>/<int:ind>/', v.delete_item, name='delete_item'),
     path('bm/', has_role_decorator('bms')(v.BoletimList.as_view()), name='bm_list'),
     path('bm/<int:pk>/edit/', has_role_decorator('bms')(v.BoletimUpdate.as_view()), name='bm_update'),

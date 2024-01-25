@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+
+{% load widget_tweaks %}
+{% load bootstrap %}
+{% block content %}
+
+ <!-- Start Header form -->
+ 
+  <!-- End Header form -->
+
+  <!-- Start Card -->
+  <div class="card" style="background-color: rgb(247, 247, 247); box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);">
+    <div class="text-center" >
+      <img style="margin-top:10px ;" src="/media/logo.png" alt="network-logo" width="300" height="30" />
+      <h2 style="margin-top: 10px;">FRS"s</h2>
+      </div>
+    <!-- Start Card Body -->
+    <div class="card-body">
+      <!-- Start Form -->
+      <form method="POST" novalidate enctype="multipart/form-data">
+        {% csrf_token %}
+        <!-- 1º line -->
+        <div class="form-row">
+        <div class="form-group col-sm-4">
+          {{ form.frs_n|bootstrap }}
+          <small class="form-text text-muted">Nº da FRS</small>
+        </div>
+        <div class="form-group col-sm-4">
+          {{ form.status_frs|bootstrap }}
+          <small class="form-text text-muted">Status FRS</small>
+        </div>
+        <div class="form-group col-sm-4">
+          {{ form.data_aprov|bootstrap }}
+          <small class="form-text text-muted">Data Aprovação</small>
+        </div>
+          
+        </div>
+        <!-- End  -->
+        <hr>
+        <!-- 2º line -->
+        <div class="form-row">
+            <div class="form-group col-sm-4">
+              {{ form.nf|bootstrap }}
+              <small class="form-text text-muted">Nº da NF</small>
+            </div>
+            <div class="form-group col-sm-4">
+              {{ form.data_emissão|bootstrap }}
+              <small class="form-text text-muted">Data de emissão</small>
+            </div>
+            <div class="form-group col-sm-4">
+                {{ form.status_nf|bootstrap }}
+                <small class="form-text text-muted">Status NF</small>
+              </div>
+          
+            </div>
+        <div class="form-group">
+          {{ form.follow_up|bootstrap }}
+        <small class="form-text text-muted">Observação follow-up</small>
+      </div>
+        <!-- End -->
+        <hr>
+        <!-- Start Submit Button -->
+        <button type="submit" class="btn btn-success">Salvar</button>
+        
+        <!-- End Submit Button -->
+      </form>
+      <!-- End Form -->
+    </div>
+    <!-- End Card Body -->
+  </div>
+
+{% endblock content %}
+

@@ -2,6 +2,7 @@ from django.db import models
 from django.urls import reverse_lazy
 from core.models import TimeStampedModel
 from romaneio.models import Romaneio
+from rdo.models import ItemBm
 
 class Tratamento(models.Model):
     tratamento = models.CharField(max_length=30, unique=True)
@@ -53,10 +54,10 @@ MATERIAIS = (
 class Material(TimeStampedModel):
     concluido =  models.BooleanField(default=False)
     n_romaneio = models.ForeignKey(Romaneio, on_delete=models.CASCADE, related_name='romaneios')
-    jato = models.ForeignKey(Tratamento, on_delete=models.CASCADE, blank=True, null=True)
-    tf = models.ForeignKey(TintaFundo, on_delete=models.CASCADE, blank=True, null=True)
-    ti = models.ForeignKey(TintaIntermediaria, on_delete=models.CASCADE, blank=True, null=True)
-    ta = models.ForeignKey(TintaAcabamento, on_delete=models.CASCADE, blank=True, null=True)
+    jato = models.ForeignKey(ItemBm, on_delete=models.CASCADE, blank=True, null=True, related_name='itemjato')
+    tf = models.ForeignKey(ItemBm, on_delete=models.CASCADE, blank=True, null=True, related_name='itemtf')
+    ti = models.ForeignKey(ItemBm, on_delete=models.CASCADE, blank=True, null=True, related_name='itemti')
+    ta = models.ForeignKey(ItemBm, on_delete=models.CASCADE, blank=True, null=True, related_name='itemta')
     cor = models.CharField(max_length=15, blank=True, null=True)
     material = models.CharField(max_length=15, choices=MATERIAIS)
     descricao = models.CharField('Descrição',max_length=30, blank=True, null=True)

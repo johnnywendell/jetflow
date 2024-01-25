@@ -16,6 +16,7 @@ from django.db.models import Sum, Count, Case, When
 from django.db import models
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
 from usuarios.decorators import manager_required, superuser_required
 from rolepermissions.decorators import has_role_decorator
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -252,17 +253,17 @@ def rdo_edit(request, slug):
 class RdoList(ListView):
     model = RDO
     template_name = 'rdo_list.html'
-    paginate_by = 20
+    paginate_by = 15
     context_object_name = 'objects_list'
     def get_queryset(self):
         queryset = super(RdoList, self).get_queryset()
         search = self.request.GET.get('q')
         if search:
             queryset = queryset.filter(
-                Q(bmf__icontains=search) |
+                Q(disciplina__icontains=search) |
+                Q(rdo__icontains=search) |
                 Q(solicitante__solicitante__icontains=search) |
-                Q(unidade__area__icontains=search)|
-                Q(status__icontains=search)
+                Q(unidade__area__icontains=search)
             )
         return queryset
     
@@ -332,6 +333,9 @@ def delete_item(request,id, ind):
     qtd.delete()
     return HttpResponseRedirect(resolve_url('rdo:rdo_detail',obj.slug))
 
+from django.views.decorators.csrf import csrf_exempt
+
+@method_decorator(csrf_exempt, name='dispatch')
 class AssinaturaRDOView(LoginRequiredMixin, View):
     template_name = 'assinatura_rdo.html'
 
@@ -340,7 +344,7 @@ class AssinaturaRDOView(LoginRequiredMixin, View):
         form = AssinaturadigitalForm()
         context = {'rdo': rdo, 'form': form}
         return render(request, self.template_name, context)
-
+    
     def post(self, request, pk):
         rdo = get_object_or_404(RDO, pk=pk)
         form = AssinaturadigitalForm(request.POST, request.FILES)
@@ -473,12 +477,12 @@ class FrsList(ListView):
 
 class FRSCreate(CreateView):
     model = FRS
-    template_name = 'form.html'
+    template_name = 'frs_form.html'
     form_class = FrsForm
  
 class FRSUpdate(UpdateView):
     model = FRS
-    template_name = 'form.html'
+    template_name = 'frs_form.html'
     form_class = FrsForm
 
 @login_required
@@ -539,7 +543,7 @@ def save_data(data):
         aux.append(obj)
     ItemBm.objects.bulk_create(aux)
 
-@superuser_required
+@manager_required
 def import_csv_itembm(request):
     if request.method == 'POST' and request.FILES['myfile']:
         myfile = request.FILES['myfile']
@@ -554,7 +558,60 @@ def import_csv_itembm(request):
     template_name = 'model_import.html'
     return render(request, template_name)
 
+def save_data_rdo(data):
+    aux = []
+    for item in data:
+        funcionario = 2
+        data_periodo = item.get('data_periodo')
+        disciplina = item.get('disciplina')
+        unidade = int(item.get('unidade'))
+        solicitante = item.get('solicitante')
+        contrato = item.get('contrato')
+        tipo = item.get('tipo')
+        escopo = item.get('escopo')
+        local = item.get('local')
+        projeto_cod = item.get('projeto_cod')
+        clima = item.get('clima')
+        inicio = item.get('inicio')
+        termino = item.get('termino')
+        inicio_pt = item.get('inicio_pt')
+        termino_pt = item.get('termino_pt')
+        #valor = float(item.get('valor'))
+        #status = True if item.get('status') == 'True' else False
+        obj = RDO(
+                funcionario = User.objects.get(pk=funcionario),
+                data_periodo = datetime.strptime(data_periodo, '%d/%m/%Y').date(),
+                disciplina = disciplina,
+                unidade = Area.objects.get(pk=unidade),
+                solicitante = Solicitante.objects.get(pk=solicitante),
+                contrato = Contrato.objects.get(pk=contrato),
+                escopo = escopo,
+                local = local,
+                tipo = tipo,
+                projeto_cod = ProjetoCodigo.objects.get(pk=projeto_cod),
+                clima = clima,
+                inicio = inicio,
+                termino = termino,
+                inicio_pt = inicio_pt,
+                termino_pt = termino_pt,
+        )
+        aux.append(obj)
+    RDO.objects.bulk_create(aux)
 
+@manager_required
+def import_csv_rdo(request):
+    if request.method == 'POST' and request.FILES['myfile']:
+        myfile = request.FILES['myfile']
+        # Lendo arquivo InMemoryUploadedFile
+        file = myfile.read().decode('utf-8')
+        reader = csv.DictReader(io.StringIO(file))
+        # Gerando uma list comprehension
+        data = [line for line in reader]
+        save_data_rdo(data)
+        return HttpResponseRedirect(reverse('rdo:rdo_list'))
+
+    template_name = 'model_import.html'
+    return render(request, template_name)
 
 ##############extras
 def update_from_csv_itembm(request):
@@ -581,6 +638,7 @@ def update_from_csv_itembm(request):
 
 
 ########## xls excel export ###################
+
 def export_xlsx(model, filename, queryset, columns):
     response = HttpResponse(content_type='application/ms-excel')
     response['Content-Disposition'] = 'attachment; filename="%s"' % filename
@@ -591,8 +649,6 @@ def export_xlsx(model, filename, queryset, columns):
     row_num = 0
 
     header_style = xlwt.easyxf('pattern: pattern solid, fore_color dark_blue; font: color white, bold True;')
-
-    
 
     for col_num in range(len(columns)):
         ws.write(row_num, col_num, columns[col_num], header_style)
@@ -623,12 +679,12 @@ def export_xlsx_func_bmf(request):
     filename = 'bmf_exportados.xls'
     _filename = filename.split('.')
     filename_final = f'{_filename[0]}_{MDATA}.{_filename[1]}'
-    queryset = BoletimMedicao.objects.all().values_list('bm_n','funcionario__username','periodo','d_numero','b_numero','status',
-                                             'data_aprov','aprovador','frs__frs','valor','follow_up','rev',
-                                              'bms__unidade__area')
+    queryset = BoletimMedicao.objects.all().values_list('bm_n','funcionario__username','periodo_inicio','d_numero','b_numero','d_status',
+                                             'd_data','d_aprovador','frs__frs','valor','follow_up','rev',
+                                              'unidade__area')
 
-    columns = ('bm_n','Planejador','periodo','DMS','BMS','status',
-                                             'data_aprov','aprovador','frs__frs','valor','OBS','rev','unidade')
+    columns = ('bm_n','Planejador','data','DMS','BMS','status',
+                                             'data DMS','aprovador','frs__frs','valor','OBS','rev','unidade')
     response = export_xlsx(model, filename_final, queryset, columns)
     return response
 
@@ -695,3 +751,4 @@ def render_pdf_view(request, pk):
     if pisa_status.err:
        return HttpResponse('We had some errors <pre>' + html + '</pre>')
     return response
+

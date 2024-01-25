@@ -190,6 +190,7 @@
                                         <li><a href="{% url 'romaneio:import_csv' %}"><i class="fa fa-chevron-right"></i>Romaneio</a></li>
                                         <li><a href="{% url 'material:import_csv_material' %}"><i class="fa fa-chevron-right"></i>Materiais</a></li>
                                         <li><a href="{% url 'rdo:import_csv_itembm' %}"><i class="fa fa-chevron-right"></i>Item BM</a></li>
+                                        <li><a href="{% url 'rdo:import_csv_rdo' %}"><i class="fa fa-chevron-right"></i>rdo</a></li>
                                         <li><a href="/upload"><i class="fa fa-chevron-right"></i>Arquivo AFD(Relógio de ponto)</a></li>
                                     </ul>
                                 </div>
@@ -202,7 +203,10 @@
                         <li><a href="{% url 'rdo:rdo_list_fiscal' %}"><i class="fa fa-sign-out"></i>RDO'S</a></li>
                         <!--{% endif %}-->
                         <li><a href="/auth/update/"><i class="fa fa-key"></i>Alterar senha</a></li>
-                        <li><a href="{% url 'logout' %}"><i class="fa fa-sign-out"></i>Sair</a></li>
+                        <li style="padding: 0px;"><form action="{% url 'logout' %}" method="post">
+                            {% csrf_token %}
+                            <button style="margin: 4px 9px;" type="submit" class="btn btn-sm btn-dark"><i class="fa fa-sign-out"></i> Sair</button>
+                        </form></li>
 
                       </ul>
                   </div><!-- /.navbar-collapse -->

@@ -1,5 +1,6 @@
 from django import forms
 from .models import Material, Tratamento, TintaFundo, TintaIntermediaria, TintaAcabamento
+from rdo.models import ItemBm
 from django.core.mail import EmailMessage
   
 
@@ -11,6 +12,14 @@ class MaterialForm(forms.ModelForm):
         widgets = {
             'concluido': forms.CheckboxInput(attrs={'class': 'special'}),
         }
+    def __init__(self, *args, **kwargs):
+        super(MaterialForm, self).__init__(*args, **kwargs)
+        self.fields['jato'].queryset = ItemBm.objects.filter(disciplina='PINTURA',und="M2")
+        self.fields['ti'].queryset = ItemBm.objects.filter(disciplina='PINTURA',und="M2")
+        self.fields['ta'].queryset = ItemBm.objects.filter(disciplina='PINTURA',und="M2")
+        self.fields['tf'].queryset = ItemBm.objects.filter(disciplina='PINTURA',und="M2")
+            
+
 class TratamentoForm(forms.ModelForm):
     class Meta:
         model = Tratamento
