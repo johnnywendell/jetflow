@@ -31,3 +31,6 @@ class Rdodetail(AbstractUserRole):
 
 class Bms(AbstractUserRole):
     available_permissions = {'ass_bms':True}
+
+class As(AbstractUserRole):
+    available_permissions = {'ass_as':True}

@@ -1,0 +1,214 @@
+{% extends "base.html" %}
+{% block content %} 
+{% load static %}
+{% load widget_tweaks %}
+
+<a href="{% url 'rdo:as_list'  %}">voltar</a>
+
+    <h1>{{ object }}
+        <span class="pull-right">
+            <a href="{% url 'rdo:rdo_edit' object.slug %}">
+                <button type="button" class="btn btn-success">
+                    <span class="fa fa-pencil"></span> Editar
+                </button>
+            </a>
+        </span>
+   
+    </h1>
+<div class="row">
+    <div class="col-sm-12">
+        <table class="table table-user-information">
+            <tbody>
+                <tr>
+                    <th class="text-left">Contrato</th>
+                    <td>{{ object.contrato }}</td>
+                </tr>
+                <tr>
+                    <th class="text-left">Responsável Monsertec</th>
+                    <td> {{ object.funcionario }}</td>
+                </tr>
+                <tr>
+                    <th class="text-left">Data:</th>
+                    <td>
+                        {{ object.data_periodo }}
+                    </td>
+                </tr>
+                <tr>
+                    <th class="text-left">Unidade/Planta</th>
+                    <td>{{ object.unidade }}</td>
+                </tr>
+                <tr>
+                    <th class="text-left">Fiscal/Solicitante</th>
+                    <td>{{ object.solicitante }}</td>
+                </tr>
+                <tr>
+                    <th class="text-left">Escopo do serviço:</th>
+                    <td>{{ object.escopo }}</td>
+                </tr>
+                <tr>
+                    <th class="text-left">Local do serviço:</th>
+                    <td>{{ object.local }}</td>
+                </tr>
+                <tr>
+                    <th class="text-left">Arquivo:</th>
+                    <td> {% if object.doc %} 
+                        <a class="btn btn-sm btn-info"  href="{{ object.doc.url }}" download="{{ object.doc }}">Download</a>
+                        {% else %}
+                        {% endif %}</td>
+                </tr>
+                <tr>
+                    <th class="text-left">Valor:</th>
+                    <td> R${{ total | floatformat:3 }}</td>
+                </tr>
+                
+            </tbody>
+        </table>
+    </div>
+</div>
+<legend>Itens</legend>
+
+<div class="text-light" style="background-color: #343a40;padding: 15px;border-radius: 15px;">
+<div style="border-radius: 5px;">
+    <ul class="nav nav-tabs" id="myTab" role="tablist" style="border: none;">
+      <li class="nav-item">
+        <a  class="nav-link active text-light" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">AS Itens </a>
+      </li>
+    </ul>
+    </div>
+    <div class="tab-content" id="myTabContent">
+        <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+        <form method="POST" novalidate enctype="multipart/form-data">
+            {% csrf_token %}
+            <div x-data="getData">
+                <h2></h2>
+                <form @submit.prevent="saveData">
+            
+                <!-- busca material -->
+                  <div class="form-group row autocomplete">
+                    
+                    <div class="col-sm-2">
+                        <input
+                        type="text"
+                        class="form-control"
+                        placeholder="Item"
+                        x-model="searchItem"
+                      ></div>
+                    
+                    <div class="col-sm-10">
+                    <!-- manual -->
+                      <input
+                        type="text"
+                        class="form-control"
+                        placeholder="Servico"
+                        x-model="searchServico"
+                      >
+                      <ul
+                            id="id_ul"
+                            x-show="servicosShow"
+                        >
+                            <template
+                            x-for="servico in servicos"
+                            :key="servico.id"
+                            >
+                            <li style="color: #131047;"
+                                x-text="servico.item_ref + ' : ' + servico.descricao"
+                                @click="getServico(servico)"
+                            ></li>
+                            </template>
+                      
+                    </div> 
+                  </div> 
+                  <p>◉ <span x-text="servicoSelecionado.item_ref + ' : ' + servicoSelecionado.descricao"></span></p>  
+                
+                  <input type="number" x-model="servicoSelecionado.id" name="id_itembm" id="id_itembm" class="form-control" hidden />  
+                  <div class="form-row">
+                    <div class="form-group col-sm-4">
+                        <label for="inputName">Item</label>
+                        <input type="text" x-model="servicoSelecionado.item_ref" class="form-control" />
+                    </div>
+                    <div class="form-group col-sm-4">
+                        <label for="inputName">Unidade</label>
+                        <input type="text" x-model="servicoSelecionado.und"class="form-control" >  
+                      </div>
+                      <div class="form-group col-sm-4">
+                        <label for="inputName">Preço</label>
+                        <input type="number" x-model="servicoSelecionado.preco_item"  step="0.001" id="inputvalor" class="form-control" >
+                      </div>
+                    </div>   
+                    <div class="form-row">
+                        <div class="form-group col-sm-4">
+                            <label for="inputName">Qtd.</label>
+                            {% render_field form.qtd class="form-control clQuantidade" id="qtd"%}
+                          </div>
+                          <div class="form-group col-sm-4">
+                            <label for="inputName">Total</label>
+                            {% render_field form.total class="form-control" id="id_total" %}
+                          </div>
+                        </div>
+                </div>    
+                <button type="submit" class="btn btn-primary"><i class="fa fa-plus"></i>Adicionar</button>
+            </form>
+    </div>
+</div>
+</div>
+
+<div class="table-responsive">
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Item</th>
+            <th>disciplina</th>
+            <th>Descrição</th>
+            <th>und</th>
+            <th>Preço</th>
+          
+            <th>Qtd. Item</th>
+            <th>Total</th>
+            <th>Delete</th>
+        
+            
+        </tr>
+    </thead>
+ 
+    <tbody>
+        {% for obj in object.ass_s.all %}
+        <tr>
+            <td>{{ obj.valor.item_ref }}</td>
+            <td>{{ obj.valor.disciplina }}</td>
+            <td>{{ obj.valor.descricao }}</td>
+            <td>{{ obj.valor.und }}</td>
+            <td>{{ obj.valor.preco_item }}</td>
+            <td>{{ obj.qtd }}</td>
+            <td>{{ obj.total }}</td>
+            
+            <td><a href="{% url 'rdo:delete_item_as' obj.pk object.pk %}"><i class="fa fa-times-circle no"></i></a></td>
+            
+        </tr>
+        {% endfor %}
+    </tbody>
+  
+</table>
+</div>
+
+{% endblock content %} 
+
+{% block js %}
+<script
+    src="{% static 'js/servico.js' %}"
+    data-csrf="{{ csrf_token }}"
+  ></script>
+<script>
+$(document).on('change', '.clQuantidade', function(){ 
+        quantidade = $(this).val()
+        valor = $("#inputvalor").val()
+        resultado = valor * quantidade
+        resultado_fixed = resultado.toFixed(3)
+        //id_resultado = $(this).attr('id').replace('qtd','total')
+        $('#id_total').val(resultado_fixed)
+    });
+
+</script>
+  
+
+{% endblock js %}
+

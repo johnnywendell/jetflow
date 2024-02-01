@@ -245,7 +245,7 @@ class QtdAS(models.Model):
     qtd = models.DecimalField('qtd', max_digits=12, decimal_places=3)
     total = models.DecimalField('total', max_digits=12, decimal_places=3)
     a_s = models.ForeignKey(AS, on_delete=models.CASCADE, related_name='ass_s')
-    valor = models.ForeignKey(ItemBm, on_delete=models.CASCADE)
+    valor = models.ForeignKey(ItemBm, on_delete=models.CASCADE, related_name='as_itens')
 
 class AssinaturaDigital(models.Model):
     rdo = models.OneToOneField('RDO', on_delete=models.CASCADE, related_name='assinatura_digital')

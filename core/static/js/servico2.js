@@ -21,6 +21,7 @@ const getData = () => ({
   searchProjeto: '',
   searchEscopo: '',
   searchPlaca: '',
+  searchAS: '',
   ordemServico: {},
   ordemServicoItem: {},
   currentId: 1,
@@ -50,6 +51,13 @@ const getData = () => ({
       if (!newValue) this.itens = []
       if (newValue.length >= 5) {
         this.getItens(newValue)
+      }
+    })
+    this.$watch('searchAS', (newValue, oldValue) => {
+      if (!newValue) this.itens = []
+      if (newValue.length >= 1) {
+        const authServPk = this.$refs.authServDiv.innerText;
+        this.getItensAS(newValue, authServPk)
       }
     })
   },
@@ -153,6 +161,16 @@ const getData = () => ({
   getItens(newValue) {
     const search = newValue
     fetch(`/api/v1/rdo/itembm-item/?search=${search}`)
+      .then(response => response.json())
+      .then(data => {
+        this.servicos = data
+        this.servicosShow = true
+      })
+  },
+  getItensAS(newValue, authServPk) {
+    const search = newValue
+    const encodedAuthServPk = encodeURIComponent(authServPk);
+    fetch(`/api/v1/rdo/itembm-as/?search=${search}&authServPk=${encodedAuthServPk}`)
       .then(response => response.json())
       .then(data => {
         this.servicos = data

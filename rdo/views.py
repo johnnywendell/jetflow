@@ -10,8 +10,8 @@ from django.shortcuts import render, resolve_url, redirect,get_object_or_404
 from django.http import HttpResponseRedirect, JsonResponse, HttpResponse
 from django.views.generic import CreateView, UpdateView, ListView
 from django.db.models import Q, F
-from rdo.models import Contrato, RDO, ItemBm, QtdBM,AprovadorDMS,AprovadorBMS,BoletimMedicao,FRS, AssinaturaDigital, ProjetoCodigo, Area, Solicitante, AS
-from .forms import ContratoForm, RdoForm, ItemForm, QtdForm,AprovadorDMSForm,AprovadorBMSForm, BoletimForm, AssinaturadigitalForm, ProjetoForm, AreaForm, SolicitanteForm, FrsForm,AsForm
+from rdo.models import Contrato, RDO, ItemBm, QtdBM, QtdAS,AprovadorDMS,AprovadorBMS,BoletimMedicao,FRS, AssinaturaDigital, ProjetoCodigo, Area, Solicitante, AS
+from .forms import ContratoForm, RdoForm, ItemForm, QtdForm, QtdASForm, AprovadorDMSForm,AprovadorBMSForm, BoletimForm, AssinaturadigitalForm, ProjetoForm, AreaForm, SolicitanteForm, FrsForm,AsForm
 from django.db.models import Sum, Count, Case, When
 from django.db import models
 from django.contrib.auth.models import User
@@ -288,7 +288,7 @@ class RdoListFiscal(ListView):
 @has_role_decorator('rdodetail')   
 @login_required
 def rdo_detail(request, slug):
-    template_name = 'rdo_detail2.html'
+    template_name = 'rdo_detail.html'
     obj = RDO.objects.get(slug=slug)
     qtdbm = QtdBM.objects.filter(bmf=obj.pk)
     total = QtdBM.objects.filter(bmf=obj.pk).aggregate(Sum("total"))['total__sum'] or 0
@@ -516,7 +516,86 @@ def frsitem_delete(request, pk, id):
     FRS.objects.filter(pk=id).update(valor=valor_total)
     return HttpResponseRedirect(resolve_url('rdo:frs_detail',id))
 
+class ASCreate(CreateView):
+    model = AS
+    template_name = 'as_form.html'
+    form_class = AsForm
+    def form_valid(self, form):
+        obj = form.save(commit=False)
+        obj.funcionario = self.request.user
+        obj.save()  
+        self.object = obj      
+        return HttpResponseRedirect(self.get_success_url())
 
+@has_role_decorator('as')
+@login_required
+def as_edit(request, slug):
+    template_name = 'as_form.html'
+    if request.method == "GET":
+        objeto = AS.objects.filter(slug=slug).first()
+        if objeto is None:
+            return redirect('rdo:as_list')
+        form = AsForm(instance=objeto)
+        context={'form':form}
+        return render(request, template_name, context)
+    if request.method == "POST":
+        objeto = AS.objects.filter(slug=slug).first()
+        if objeto is None:
+            return redirect('rdo:as_list')
+        form = AsForm(request.POST, request.FILES, instance=objeto)
+        if form.is_valid():
+            modelo = form.save()
+            modelo.save()
+            url='rdo:as_detail'
+            return HttpResponseRedirect(resolve_url(url,modelo.slug))
+        else:
+            context={'form':form}
+            return render(request, template_name, context)
+
+class ASList(ListView):
+    model = AS
+    template_name = 'as_list.html'
+    paginate_by = 15
+    context_object_name = 'objects_list'
+    def get_queryset(self):
+        queryset = super(ASList, self).get_queryset()
+        search = self.request.GET.get('q')
+        if search:
+            queryset = queryset.filter(
+                Q(a_s__icontains=search) |
+                Q(solicitante__solicitante__icontains=search)
+            )
+        return queryset
+
+@has_role_decorator('as')   
+@login_required
+def as_detail(request, slug):
+    template_name = 'as_detail.html'
+    obj = AS.objects.get(slug=slug)
+    total = QtdAS.objects.filter(a_s=obj.pk).aggregate(Sum("total"))['total__sum'] or 0
+    if request.method == 'POST':
+        form=QtdASForm(request.POST)
+        itembm = request.POST.get('id_itembm')
+        if form.is_valid():
+            form=form.save(commit=False)
+            form.a_s = obj
+            item_bm = ItemBm.objects.get(pk=itembm)
+            form.valor = item_bm
+            form.save()
+            url='#'
+            return HttpResponseRedirect(url)       
+    else:
+        form=QtdASForm()
+    context = {'object': obj,'form':form,'total':total}
+    return render(request, template_name, context)
+
+@has_role_decorator('as')
+@login_required
+def delete_item_as(request,id, ind):
+    qtd = QtdAS.objects.get(pk=id)
+    obj = AS.objects.get(pk=ind)
+    qtd.delete()
+    return HttpResponseRedirect(resolve_url('rdo:as_detail',obj.slug))
 
 ########### import csv ##############
 

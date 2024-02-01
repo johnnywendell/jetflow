@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+
+{% load widget_tweaks %}
+{% load bootstrap %}
+{% block content %}
+
+ <!-- Start Header form -->
+
+  <!-- End Header form -->
+
+  <!-- Start Card -->
+  <div class="card" style="background-color: rgb(247, 247, 247); box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);">
+    <div class="text-center">
+      <img style="margin-top:10px ;" src="/media/logo.png" alt="network-logo" width="300" height="30" />
+      <h2 style="margin-top: 10px;">AUTORIZAÇÃO DE SERVIÇO</h2>
+     
+      </div>
+    <!-- Start Card Body -->
+    <div class="card-body">
+      <!-- Start Form -->
+      <form method="POST" novalidate enctype="multipart/form-data">
+        {% csrf_token %}
+        <!-- 1º line -->
+        <div class="form-row">
+        <div class="form-group col-sm-3">
+          {{ form.unidade|bootstrap }}
+          <small class="form-text text-muted">Unidade do serviço</small>
+        </div>
+        <div class="form-group col-sm-3">
+            {{ form.solicitante|bootstrap }}
+            <small class="form-text text-muted">Solicitante do serviço</small>
+          </div>
+          <div class="form-group col-sm-3">
+            {{ form.contrato|bootstrap }}
+            <small class="form-text text-muted">Nº contrato</small>
+          </div>
+          <div class="form-group col-sm-3">
+            {{ form.data_periodo|bootstrap }}
+            <small class="form-text text-muted">Código do projeto</small>
+          </div>
+        </div>
+        <!-- End  -->
+        
+
+        <!-- 3º line -->
+        <div class="form-group">
+            {{ form.escopo|bootstrap }}
+          <small class="form-text text-muted">Escopo do serviço.</small>
+        </div>
+        <!-- End -->
+        <!-- 4º line -->
+    
+          <div class="form-group">
+            {{ form.local|bootstrap }}
+            <small class="form-text text-muted">Local do serviço</small>
+          </div>
+       
+        <!-- End -->
+
+        <div class="form-group">
+          {{ form.doc|bootstrap }}
+        <small class="form-text text-muted">Papeleta/RDC/RDO evidências em PDF</small>
+        </div>
+        <hr/>
+
+        <!-- Start Submit Button -->
+        <button type="submit" class="btn btn-success">Salvar</button>
+        
+        <!-- End Submit Button -->
+      </form>
+      <!-- End Form -->
+    </div>
+    <!-- End Card Body -->
+  </div>
+
+{% endblock content %}
+

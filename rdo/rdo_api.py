@@ -8,12 +8,12 @@ from django.shortcuts import get_object_or_404
 from ninja import Router, Schema, Query
 from ninja.orm import create_schema
 
-from .models import ItemBm, RDO, BoletimMedicao, QtdBM
+from .models import ItemBm, RDO, BoletimMedicao, QtdBM,QtdAS
 from django.db.models import Sum
 
 router = Router()
 
-MaterialSchema = create_schema(ItemBm, fields=(
+ItemSchema = create_schema(ItemBm, fields=(
     'id',
     'contrato',
     'item_ref',
@@ -71,7 +71,7 @@ def list_material(request, search: str = Query(None)):
 
     return results
 
-@router.get('itembm/', response=List[MaterialSchema])
+@router.get('itembm/', response=List[ItemSchema])
 def list_material(request, search=None):
     if search:
         return ItemBm.objects.filter(descricao__icontains=search)
@@ -79,10 +79,16 @@ def list_material(request, search=None):
         #return ItemBm.objects.select_related('contrato').filter(descricao=search)
     #return ItemBm.objects.select_related('contrato').filter()
 
-@router.get('itembm-item/', response=List[MaterialSchema])
+@router.get('itembm-item/', response=List[ItemSchema])
 def list_material(request, search=None):
     if search:
         return ItemBm.objects.filter(item_ref__icontains=search)
+    return ItemBm.objects.all()
+
+@router.get('itembm-as/', response=List[ItemSchema])
+def list_material(request, search=None, authServPk=None):
+    if authServPk:
+        return ItemBm.objects.filter(as_itens__a_s=authServPk,descricao__icontains=search)
     return ItemBm.objects.all()
 
 @router.get('rdo-solicitante/', response=List[RdoSchema])

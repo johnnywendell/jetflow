@@ -44,7 +44,7 @@ const getData = () => ({
     })
     this.$watch('searchItem', (newValue, oldValue) => {
       if (!newValue) this.itens = []
-      if (newValue.length >= 5) {
+      if (newValue.length >= 3) {
         this.getItens(newValue)
       }
     })

@@ -1,5 +1,5 @@
 from django import forms
-from .models import Contrato, RDO, ItemBm, QtdBM,AprovadorDMS,AprovadorBMS,BoletimMedicao,FRS, AssinaturaDigital,ProjetoCodigo, Area,Solicitante, AS
+from .models import Contrato, RDO, ItemBm, QtdBM,AprovadorDMS,AprovadorBMS,BoletimMedicao,FRS, AssinaturaDigital,ProjetoCodigo, Area,Solicitante, AS,QtdAS
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
 from django.forms import ClearableFileInput
@@ -60,6 +60,12 @@ class QtdForm(forms.ModelForm):
         fields = '__all__'
         exclude = ('bmf','valor')
 
+class QtdASForm(forms.ModelForm):
+    class Meta:
+        model = QtdAS
+        fields = '__all__'
+        exclude = ('a_s','valor')
+
 class AprovadorDMSForm(forms.ModelForm):
     class Meta:
         model = AprovadorDMS
@@ -105,8 +111,8 @@ class FrsForm(forms.ModelForm):
         fields = '__all__'
         exclude = ('valor',)
         widgets = {
-            'data_aprov':  DateInput(),
-            'data_emissão':  DateInput()
+            'data_aprov':  forms.DateInput(format='%Y-%m-%d', attrs={'type': 'date'}),
+            'data_emissão':  forms.DateInput(format='%Y-%m-%d', attrs={'type': 'date'}),
         }
 
 class AsForm(forms.ModelForm):
@@ -114,3 +120,6 @@ class AsForm(forms.ModelForm):
         model = AS
         exclude = ('valor','funcionario','slug')
         fields = '__all__'
+        widgets = {
+            'data_periodo':  forms.DateInput(format='%Y-%m-%d', attrs={'type': 'date'}),
+        }

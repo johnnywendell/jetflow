@@ -433,17 +433,6 @@
     </div>
   </div>
 </form> 
-
-
-
-
-
-
-
-
- 
-        
-        
         
   <!---->     
         <div class="row">
@@ -528,35 +517,3 @@
 
   </script>
 {% endblock js %}
-
-
-<!--
-    <script >
-        
-
-        $(document).ready(function(){
-            // Select2
-                $('.clSelect2').select2()
-                $('#add-item').click(function(ev){
-                ev.preventDefault();
-                var count = $('#materiais').children().length;
-                var tmplMarkup = $('#item-material').html();
-                var compiledTmpl = tmplMarkup.replace(/__prefix__/g, count);
-                $('div#materiais').append(compiledTmpl);
-                $('.clSelect2').select2()
-            });
-
-        });
-
-        $(document).on('change', '.clSelect2', function(){
-            var txt = "";
-            $('.clSelect2').each(function(){
-                txt += $(this).val()+"," ;
-                txt = txt.replace('.','')
-                 });
-            $('#valores').val(txt);
-        });
-    </script>
-  
-
--->
