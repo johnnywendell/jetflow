@@ -44,6 +44,15 @@ class PlacaSchema(Schema):
     qtd_pranchao: float
     qtd_piso: float
 
+ASSchema = create_schema(QtdAS, depth=1,fields=(
+    'id',
+    'qtd',
+    'total',
+    'a_s',
+    'valor',
+    'qtd_consumida',
+))
+
 
 @router.get('placa/', response=List[PlacaSchema])
 def list_material(request, search: str = Query(None)):
@@ -85,11 +94,11 @@ def list_material(request, search=None):
         return ItemBm.objects.filter(item_ref__icontains=search)
     return ItemBm.objects.all()
 
-@router.get('itembm-as/', response=List[ItemSchema])
+@router.get('itembm-as/', response=List[ASSchema])
 def list_material(request, search=None, authServPk=None):
     if authServPk:
-        return ItemBm.objects.filter(as_itens__a_s=authServPk,descricao__icontains=search)
-    return ItemBm.objects.all()
+        return QtdAS.objects.filter(a_s=authServPk,valor__descricao__icontains=search)
+    return QtdAS.objects.all()
 
 @router.get('rdo-solicitante/', response=List[RdoSchema])
 def list_material(request, search=None):

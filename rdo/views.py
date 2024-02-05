@@ -297,9 +297,17 @@ def rdo_detail(request, slug):
     if request.method == 'POST':
         form=QtdForm(request.POST)
         itembm = request.POST.get('id_itembm')
+        id_qtdas = request.POST.get('id_qtdas')
         if form.is_valid():
             form=form.save(commit=False)
             form.bmf = obj
+            if id_qtdas != '':
+                qtdas = QtdAS.objects.get(pk=id_qtdas)
+                saldo = qtdas.qtd_consumida if qtdas.qtd_consumida is not None else 0
+                novo_saldo = saldo + form.qtd
+                QtdAS.objects.filter(pk=id_qtdas).update(qtd_consumida=novo_saldo)
+                
+                
             if itembm != '':
                 item_bm = ItemBm.objects.get(pk=itembm)
                 form.valor = item_bm

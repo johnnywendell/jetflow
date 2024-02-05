@@ -2,6 +2,18 @@
 {% block content %} 
 {% load static %}
 {% load widget_tweaks %}
+<style>
+    #porcentagemOverlay {
+        position: absolute;
+        top: 50%;
+        left: 45%;
+        transform: translate(-50%, -50%);
+        font-size: 40px;
+        color: #4caf50;  /* Cor verde */
+        font-weight: bold;
+        pointer-events: none;  /* Permite interação com o gráfico por baixo */
+    }
+</style>
 
 <a href="{% url 'rdo:as_list'  %}">voltar</a>
 
@@ -16,7 +28,7 @@
    
     </h1>
 <div class="row">
-    <div class="col-sm-12">
+    <div class="col-sm-7">
         <table class="table table-user-information">
             <tbody>
                 <tr>
@@ -63,6 +75,10 @@
                 
             </tbody>
         </table>
+    </div>
+    <div class="col-sm-5">
+        <canvas id="porcentagemChart" width="400" height="400"></canvas>
+        <div id="porcentagemOverlay">%</div>
     </div>
 </div>
 <legend>Itens</legend>
@@ -163,6 +179,7 @@
             <th>Preço</th>
           
             <th>Qtd. Item</th>
+            <th>Qtd. Consumida</th>
             <th>Total</th>
             <th>Delete</th>
         
@@ -179,6 +196,7 @@
             <td>{{ obj.valor.und }}</td>
             <td>{{ obj.valor.preco_item }}</td>
             <td>{{ obj.qtd }}</td>
+            <td>{{ obj.qtd_consumida }}</td>
             <td>{{ obj.total }}</td>
             
             <td><a href="{% url 'rdo:delete_item_as' obj.pk object.pk %}"><i class="fa fa-times-circle no"></i></a></td>
@@ -209,6 +227,59 @@ $(document).on('change', '.clQuantidade', function(){
 
 </script>
   
+<!--chart.js-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var qtdTotal = 0;
+        var qtdConsumidaTotal = 0;
 
+        // Percorre todas as linhas da tabela
+        document.querySelectorAll('tbody tr').forEach(function (row) {
+            // Verifica se os elementos de quantidade e quantidade consumida existem
+            var qtdElement = row.querySelector('td:nth-child(6)');
+            var qtdConsumidaElement = row.querySelector('td:nth-child(7)');
+
+            if (qtdElement && qtdConsumidaElement) {
+                // Obtém os valores da quantidade e quantidade consumida
+                var qtd = parseFloat(qtdElement.textContent.replace(',', '.')) || 0;
+                var qtdConsumida = parseFloat(qtdConsumidaElement.textContent.replace(',', '.')) || 0;
+
+                // Soma os valores
+                qtdTotal += qtd;
+                qtdConsumidaTotal += qtdConsumida;
+            }
+        });
+
+        // Calcula a porcentagem
+        var porcentagem = (qtdConsumidaTotal / qtdTotal) * 100 || 0;
+
+        // Atualiza o valor da porcentagem no gráfico
+        var ctx = document.getElementById('porcentagemChart').getContext('2d');
+        var dados = [porcentagem, 100 - porcentagem];
+
+        // Crie o gráfico de rosca
+        var chart = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Concluído', 'Restante'],
+                datasets: [{
+                    data: dados,
+                    backgroundColor: ['#4caf50', '#e8e8e8'],  // Substitua a cor azul pelo verde (#4caf50)
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                cutoutPercentage: 80,  // Ajuste conforme necessário
+                responsive: false,
+                maintainAspectRatio: false
+            }
+        });
+        var porcentagemOverlay = document.getElementById('porcentagemOverlay');
+        if (porcentagemOverlay) {
+            porcentagemOverlay.textContent = porcentagem.toFixed(2) + '%';
+        }
+    });
+</script>
 {% endblock js %}
 

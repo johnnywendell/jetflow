@@ -712,7 +712,7 @@
                         :key="servico.id"
                         >
                         <li style="color: #131047;"
-                            x-text="servico.item_ref + ' : ' + servico.descricao"
+                            x-text="servico.valor.item_ref + ' : ' + servico.valor.descricao "
                             @click="getServico(servico)"
                         ></li>
                         </template>
@@ -723,25 +723,26 @@
               </div>
              
                 
-              <p>◉ <span x-text="servicoSelecionado.descricao"></span></p>  
+              <p>◉ <span x-text="servicoSelecionado.valor.descricao"></span></p>  
             
-              <input type="number" x-model="servicoSelecionado.id" name="id_itembm" id="id_itembm" class="form-control" hidden />  
+              <input type="number" x-model="servicoSelecionado.valor.id" name="id_itembm" id="id_itembm" hidden />  
+              <input type="number" x-model="servicoSelecionado.id" name="id_qtdas" id="id_qtdas"   /> 
               <div class="form-row">
                 <div class="form-group col-sm-3">
                     <label for="inputName">Item</label>
-                    <input type="text" x-model="servicoSelecionado.item_ref" class="form-control" />
+                    <input type="text" x-model="servicoSelecionado.valor.item_ref" class="form-control"/>
                 </div>
                 <div class="form-group col-sm-3">
                     <label for="inputName">Unidade</label>
-                    <input type="text" x-model="servicoSelecionado.und"class="form-control" >  
+                    <input type="text" x-model="servicoSelecionado.valor.und"class="form-control" >  
                   </div>
                   <div class="form-group col-sm-3">
                     <label for="inputName">Preço</label>
-                    <input type="number" x-model="servicoSelecionado.preco_item"  step="0.001" id="inputvalorAS" class="form-control" >
+                    <input type="number" x-model="servicoSelecionado.valor.preco_item"  step="0.001" id="inputvalorAS" class="form-control" >
                   </div>
                   <div class="form-group col-sm-3">
                     <label for="inputName">Saldo AS</label>
-                    <span class="form-control text-light" x-text="placaSelecionada.qtd_t" style="background-color: #131047;"></span>
+                    <span class="form-control text-light" x-text="servicoSelecionado.qtd - servicoSelecionado.qtd_consumida" style="background-color: #131047;"></span>
                   </div>
                 </div>
             

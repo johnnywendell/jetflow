@@ -55,7 +55,7 @@ const getData = () => ({
     })
     this.$watch('searchAS', (newValue, oldValue) => {
       if (!newValue) this.itens = []
-      if (newValue.length >= 1) {
+      if (newValue.length >= 3) {
         const authServPk = this.$refs.authServDiv.innerText;
         this.getItensAS(newValue, authServPk)
       }
