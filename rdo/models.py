@@ -63,9 +63,9 @@ class FRS(TimeStampedModel):
     frs_n = models.CharField(max_length=20,unique=True)
     status_frs = models.CharField(max_length=20,choices=FRS_STATUS)
     data_aprov = models.DateField(verbose_name='Aprovação', blank=True, null=True)
-    nf = models.CharField(max_length=30,unique=True)
+    nf = models.CharField(max_length=30,unique=True, blank=True, null=True)
     data_emissão = models.DateField(verbose_name='Emissão nota', blank=True, null=True)
-    status_nf = models.CharField(max_length=20,choices=FRS_STATUS)
+    status_nf = models.CharField(max_length=20,choices=FRS_STATUS, blank=True, null=True)
     valor = models.DecimalField('Valor', max_digits=12, decimal_places=3, blank=True, null=True)
     follow_up = models.TextField('Obs/followup', blank=True, null=True)
     class Meta:

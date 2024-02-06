@@ -301,7 +301,7 @@ def rdo_detail(request, slug):
         if form.is_valid():
             form=form.save(commit=False)
             form.bmf = obj
-            if id_qtdas != '':
+            if id_qtdas:
                 qtdas = QtdAS.objects.get(pk=id_qtdas)
                 saldo = qtdas.qtd_consumida if qtdas.qtd_consumida is not None else 0
                 novo_saldo = saldo + form.qtd
