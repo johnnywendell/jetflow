@@ -145,5 +145,68 @@
     "fields": {
         "area": "UA2"
     }
+},
+{
+    "model": "romaneio.area",
+    "pk": 22,
+    "fields": {
+        "area": "CLORO SOLDA"
+    }
+},
+{
+    "model": "romaneio.area",
+    "pk": 23,
+    "fields": {
+        "area": "PARADA"
+    }
+},
+{
+    "model": "romaneio.area",
+    "pk": 24,
+    "fields": {
+        "area": "PARADA PGM"
+    }
+},
+{
+    "model": "romaneio.area",
+    "pk": 25,
+    "fields": {
+        "area": "PARADA PAREX"
+    }
+},
+{
+    "model": "romaneio.area",
+    "pk": 26,
+    "fields": {
+        "area": "CIVIL"
+    }
+},
+{
+    "model": "romaneio.area",
+    "pk": 27,
+    "fields": {
+        "area": "OFICINA"
+    }
+},
+{
+    "model": "romaneio.area",
+    "pk": 28,
+    "fields": {
+        "area": "FORNO"
+    }
+},
+{
+    "model": "romaneio.area",
+    "pk": 29,
+    "fields": {
+        "area": "PTE"
+    }
+},
+{
+    "model": "romaneio.area",
+    "pk": 30,
+    "fields": {
+        "area": "HIDROSTEC"
+    }
 }
 ]

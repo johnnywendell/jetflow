@@ -75,5 +75,19 @@
     "fields": {
         "tinta_intermediaria": "PISTOLA CONV. AR PARCEIRA"
     }
+},
+{
+    "model": "material.tintaintermediaria",
+    "pk": 12,
+    "fields": {
+        "tinta_intermediaria": "ZINGA"
+    }
+},
+{
+    "model": "material.tintaintermediaria",
+    "pk": 13,
+    "fields": {
+        "tinta_intermediaria": "JOTATEMP 250"
+    }
 }
 ]

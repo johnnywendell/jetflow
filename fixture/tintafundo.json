@@ -87,7 +87,35 @@
     "model": "material.tintafundo",
     "pk": 13,
     "fields": {
-        "tinta_fundo": "PISTOLA CONV. AR"
+        "tinta_fundo": "PISTOLA CONV. AR PARCEIRA"
+    }
+},
+{
+    "model": "material.tintafundo",
+    "pk": 14,
+    "fields": {
+        "tinta_fundo": "ZINGA"
+    }
+},
+{
+    "model": "material.tintafundo",
+    "pk": 15,
+    "fields": {
+        "tinta_fundo": "JOTATEMP 250"
+    }
+},
+{
+    "model": "material.tintafundo",
+    "pk": 16,
+    "fields": {
+        "tinta_fundo": "PISTOLA (INVÁLIDA)"
+    }
+},
+{
+    "model": "material.tintafundo",
+    "pk": 17,
+    "fields": {
+        "tinta_fundo": "N-2231"
     }
 }
 ]

@@ -37,6 +37,15 @@ class PhotoForm(forms.ModelForm):
             field.widget.attrs['class'] = 'form-control'
         self.fields['photo'].widget.attrs['class'] = None
 
+    def clean_photo(self):
+        photo = self.cleaned_data.get('photo')
+        # Tamanho máximo permitido em bytes (2MB)
+        max_size = 2 * 1024 * 1024
+
+        if photo and photo.size > max_size:
+            raise forms.ValidationError('O tamanho máximo da imagem deve ser de 2MB.')
+
+        return photo
 ############### checklist ###################
 
 class ChecklistForm(forms.ModelForm):
@@ -88,4 +97,12 @@ class PhotoFormcheck(forms.ModelForm):
         for field_name, field in self.fields.items():
             field.widget.attrs['class'] = 'form-control'
         self.fields['photo'].widget.attrs['class'] = None
+    def clean_photo(self):
+        photo = self.cleaned_data.get('photo')
+        # Tamanho máximo permitido em bytes (2MB)
+        max_size = 2 * 1024 * 1024
 
+        if photo and photo.size > max_size:
+            raise forms.ValidationError('O tamanho máximo da imagem deve ser de 2MB.')
+
+        return photo

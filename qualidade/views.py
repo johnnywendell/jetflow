@@ -73,7 +73,11 @@ def render_pdf_view_simple(request, pk):
             link = item.photo.url
             link = link[1:]
             links.append(link)
-    context = {'object': checklist, 'links':links, 'cor':cor, 'espessura_total':espessura_total, 'aderencia':aderencia,'ambiente':ambiente,'ass':ass}
+    material_relatorio = Material.objects.filter(relatorio=checklist.rip)
+    metro = 0
+    for item in material_relatorio:
+        metro += item.m2
+    context = {'object': checklist, 'links':links, 'cor':cor, 'espessura_total':espessura_total, 'aderencia':aderencia,'ambiente':ambiente,'ass':ass, 'metro':metro}
    
     # Create a Django response object, and specify content_type as pdf
     response = HttpResponse(content_type='application/pdf')
@@ -216,14 +220,16 @@ class EtapaUpdate(UpdateView):
 @manager_required
 def photo_create(request, pk):
     template_name = 'photo_form.html'
-    form = PhotoForm(request.POST or None)
+
     if request.method == 'POST':
-        photo = request.FILES.get('photo')
+        form = PhotoForm(request.POST, request.FILES)
         if form.is_valid():
-            rip = form.save(commit=False)
-            Photo.objects.create(rip_numero=rip.rip_numero, photo=photo)
+            form.save()
             return redirect('qualidade:relatorios_list')
-    context ={'form':form , 'pk':pk}
+    else:
+        form = PhotoForm()
+
+    context = {'form': form, 'pk': pk}
     return render(request, template_name, context)
 
 @login_required
@@ -383,16 +389,17 @@ def delete_checklist(request, pk):
 @login_required
 def photo_create_check(request, pk):
     template_name = 'photo_form.html'
-    form = PhotoFormcheck(request.POST or None)
-    if request.method == 'POST':
-        photo = request.FILES.get('photo')
-        if form.is_valid():
-            rip = form.save(commit=False)
-            Photocheck.objects.create(rip_numero=rip.rip_numero, photo=photo)
-            return redirect('qualidade:check_list')
-    context ={'form':form,'pk':pk}
-    return render(request, template_name, context)
 
+    if request.method == 'POST':
+        form = PhotoFormcheck(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('qualidade:check_list')
+    else:
+        form = PhotoFormcheck()
+
+    context = {'form': form, 'pk': pk}
+    return render(request, template_name, context)
 
 @has_role_decorator('inspetor')
 @login_required

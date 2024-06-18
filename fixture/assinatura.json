@@ -1,2 +1,3582 @@
 [
+{
+    "model": "qualidade.assinatura",
+    "pk": 1,
+    "fields": {
+        "rip_numero": 387,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 2,
+    "fields": {
+        "rip_numero": 382,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 3,
+    "fields": {
+        "rip_numero": 401,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 4,
+    "fields": {
+        "rip_numero": 405,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 5,
+    "fields": {
+        "rip_numero": 234,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 6,
+    "fields": {
+        "rip_numero": 466,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 7,
+    "fields": {
+        "rip_numero": 483,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 8,
+    "fields": {
+        "rip_numero": 484,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 9,
+    "fields": {
+        "rip_numero": 495,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 10,
+    "fields": {
+        "rip_numero": 496,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 11,
+    "fields": {
+        "rip_numero": 497,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 12,
+    "fields": {
+        "rip_numero": 498,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 13,
+    "fields": {
+        "rip_numero": 499,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 14,
+    "fields": {
+        "rip_numero": 500,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 15,
+    "fields": {
+        "rip_numero": 557,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 16,
+    "fields": {
+        "rip_numero": 559,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 17,
+    "fields": {
+        "rip_numero": 563,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 18,
+    "fields": {
+        "rip_numero": 562,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 19,
+    "fields": {
+        "rip_numero": 560,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 20,
+    "fields": {
+        "rip_numero": 561,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 21,
+    "fields": {
+        "rip_numero": 558,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 22,
+    "fields": {
+        "rip_numero": 556,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 23,
+    "fields": {
+        "rip_numero": 544,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 24,
+    "fields": {
+        "rip_numero": 545,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 25,
+    "fields": {
+        "rip_numero": 546,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 26,
+    "fields": {
+        "rip_numero": 547,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 27,
+    "fields": {
+        "rip_numero": 543,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 28,
+    "fields": {
+        "rip_numero": 507,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 29,
+    "fields": {
+        "rip_numero": 508,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 30,
+    "fields": {
+        "rip_numero": 555,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 31,
+    "fields": {
+        "rip_numero": 548,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 32,
+    "fields": {
+        "rip_numero": 549,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 33,
+    "fields": {
+        "rip_numero": 571,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 34,
+    "fields": {
+        "rip_numero": 572,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 35,
+    "fields": {
+        "rip_numero": 573,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 36,
+    "fields": {
+        "rip_numero": 574,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 37,
+    "fields": {
+        "rip_numero": 575,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 38,
+    "fields": {
+        "rip_numero": 576,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 39,
+    "fields": {
+        "rip_numero": 577,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 40,
+    "fields": {
+        "rip_numero": 578,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 41,
+    "fields": {
+        "rip_numero": 659,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 42,
+    "fields": {
+        "rip_numero": 660,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 43,
+    "fields": {
+        "rip_numero": 539,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 44,
+    "fields": {
+        "rip_numero": 687,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 45,
+    "fields": {
+        "rip_numero": 648,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 46,
+    "fields": {
+        "rip_numero": 683,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 47,
+    "fields": {
+        "rip_numero": 649,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 48,
+    "fields": {
+        "rip_numero": 565,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 49,
+    "fields": {
+        "rip_numero": 686,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 50,
+    "fields": {
+        "rip_numero": 685,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 51,
+    "fields": {
+        "rip_numero": 689,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 52,
+    "fields": {
+        "rip_numero": 690,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 53,
+    "fields": {
+        "rip_numero": 586,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 54,
+    "fields": {
+        "rip_numero": 587,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 55,
+    "fields": {
+        "rip_numero": 590,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 56,
+    "fields": {
+        "rip_numero": 591,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 57,
+    "fields": {
+        "rip_numero": 618,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 58,
+    "fields": {
+        "rip_numero": 621,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 59,
+    "fields": {
+        "rip_numero": 626,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 60,
+    "fields": {
+        "rip_numero": 637,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 61,
+    "fields": {
+        "rip_numero": 617,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 62,
+    "fields": {
+        "rip_numero": 620,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 63,
+    "fields": {
+        "rip_numero": 641,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 64,
+    "fields": {
+        "rip_numero": 642,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 65,
+    "fields": {
+        "rip_numero": 643,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 66,
+    "fields": {
+        "rip_numero": 644,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 67,
+    "fields": {
+        "rip_numero": 646,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 68,
+    "fields": {
+        "rip_numero": 651,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 69,
+    "fields": {
+        "rip_numero": 625,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 70,
+    "fields": {
+        "rip_numero": 624,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 71,
+    "fields": {
+        "rip_numero": 647,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 72,
+    "fields": {
+        "rip_numero": 680,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 73,
+    "fields": {
+        "rip_numero": 593,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 74,
+    "fields": {
+        "rip_numero": 594,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 75,
+    "fields": {
+        "rip_numero": 595,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 76,
+    "fields": {
+        "rip_numero": 596,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 77,
+    "fields": {
+        "rip_numero": 566,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 78,
+    "fields": {
+        "rip_numero": 592,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 79,
+    "fields": {
+        "rip_numero": 568,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 80,
+    "fields": {
+        "rip_numero": 598,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 81,
+    "fields": {
+        "rip_numero": 599,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 82,
+    "fields": {
+        "rip_numero": 569,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 83,
+    "fields": {
+        "rip_numero": 634,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 84,
+    "fields": {
+        "rip_numero": 635,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 85,
+    "fields": {
+        "rip_numero": 622,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 86,
+    "fields": {
+        "rip_numero": 636,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 87,
+    "fields": {
+        "rip_numero": 632,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 88,
+    "fields": {
+        "rip_numero": 633,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 89,
+    "fields": {
+        "rip_numero": 658,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 90,
+    "fields": {
+        "rip_numero": 640,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 91,
+    "fields": {
+        "rip_numero": 645,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 92,
+    "fields": {
+        "rip_numero": 650,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 93,
+    "fields": {
+        "rip_numero": 627,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 94,
+    "fields": {
+        "rip_numero": 861,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 95,
+    "fields": {
+        "rip_numero": 904,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 96,
+    "fields": {
+        "rip_numero": 905,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 97,
+    "fields": {
+        "rip_numero": 898,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 98,
+    "fields": {
+        "rip_numero": 899,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 99,
+    "fields": {
+        "rip_numero": 901,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 100,
+    "fields": {
+        "rip_numero": 908,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 101,
+    "fields": {
+        "rip_numero": 902,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 102,
+    "fields": {
+        "rip_numero": 903,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 103,
+    "fields": {
+        "rip_numero": 906,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 104,
+    "fields": {
+        "rip_numero": 907,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 105,
+    "fields": {
+        "rip_numero": 909,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 106,
+    "fields": {
+        "rip_numero": 910,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 107,
+    "fields": {
+        "rip_numero": 911,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 108,
+    "fields": {
+        "rip_numero": 912,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 109,
+    "fields": {
+        "rip_numero": 913,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 110,
+    "fields": {
+        "rip_numero": 914,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 111,
+    "fields": {
+        "rip_numero": 916,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 112,
+    "fields": {
+        "rip_numero": 917,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 113,
+    "fields": {
+        "rip_numero": 918,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 114,
+    "fields": {
+        "rip_numero": 919,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 115,
+    "fields": {
+        "rip_numero": 915,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 116,
+    "fields": {
+        "rip_numero": 926,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 117,
+    "fields": {
+        "rip_numero": 927,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 118,
+    "fields": {
+        "rip_numero": 928,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 119,
+    "fields": {
+        "rip_numero": 929,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 120,
+    "fields": {
+        "rip_numero": 930,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 121,
+    "fields": {
+        "rip_numero": 931,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 122,
+    "fields": {
+        "rip_numero": 932,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 123,
+    "fields": {
+        "rip_numero": 933,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 124,
+    "fields": {
+        "rip_numero": 934,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 125,
+    "fields": {
+        "rip_numero": 935,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 126,
+    "fields": {
+        "rip_numero": 936,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 127,
+    "fields": {
+        "rip_numero": 937,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 128,
+    "fields": {
+        "rip_numero": 920,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 129,
+    "fields": {
+        "rip_numero": 921,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 130,
+    "fields": {
+        "rip_numero": 922,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 131,
+    "fields": {
+        "rip_numero": 923,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 132,
+    "fields": {
+        "rip_numero": 924,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 133,
+    "fields": {
+        "rip_numero": 925,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 134,
+    "fields": {
+        "rip_numero": 938,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 135,
+    "fields": {
+        "rip_numero": 939,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 136,
+    "fields": {
+        "rip_numero": 940,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 137,
+    "fields": {
+        "rip_numero": 940,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 138,
+    "fields": {
+        "rip_numero": 940,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 139,
+    "fields": {
+        "rip_numero": 941,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 140,
+    "fields": {
+        "rip_numero": 942,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 141,
+    "fields": {
+        "rip_numero": 943,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 142,
+    "fields": {
+        "rip_numero": 944,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 143,
+    "fields": {
+        "rip_numero": 945,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 144,
+    "fields": {
+        "rip_numero": 946,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 145,
+    "fields": {
+        "rip_numero": 947,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 146,
+    "fields": {
+        "rip_numero": 948,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 147,
+    "fields": {
+        "rip_numero": 949,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 148,
+    "fields": {
+        "rip_numero": 950,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 149,
+    "fields": {
+        "rip_numero": 951,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 150,
+    "fields": {
+        "rip_numero": 952,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 151,
+    "fields": {
+        "rip_numero": 953,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 152,
+    "fields": {
+        "rip_numero": 954,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 153,
+    "fields": {
+        "rip_numero": 955,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 154,
+    "fields": {
+        "rip_numero": 956,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 155,
+    "fields": {
+        "rip_numero": 957,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 156,
+    "fields": {
+        "rip_numero": 958,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 157,
+    "fields": {
+        "rip_numero": 959,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 158,
+    "fields": {
+        "rip_numero": 960,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 159,
+    "fields": {
+        "rip_numero": 961,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 160,
+    "fields": {
+        "rip_numero": 963,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 161,
+    "fields": {
+        "rip_numero": 964,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 162,
+    "fields": {
+        "rip_numero": 965,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 163,
+    "fields": {
+        "rip_numero": 966,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 164,
+    "fields": {
+        "rip_numero": 967,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 165,
+    "fields": {
+        "rip_numero": 968,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 166,
+    "fields": {
+        "rip_numero": 969,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 167,
+    "fields": {
+        "rip_numero": 970,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 168,
+    "fields": {
+        "rip_numero": 962,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 169,
+    "fields": {
+        "rip_numero": 971,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 170,
+    "fields": {
+        "rip_numero": 972,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 171,
+    "fields": {
+        "rip_numero": 973,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 172,
+    "fields": {
+        "rip_numero": 974,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 173,
+    "fields": {
+        "rip_numero": 975,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 174,
+    "fields": {
+        "rip_numero": 976,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 175,
+    "fields": {
+        "rip_numero": 977,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 176,
+    "fields": {
+        "rip_numero": 978,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 177,
+    "fields": {
+        "rip_numero": 979,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 178,
+    "fields": {
+        "rip_numero": 980,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 179,
+    "fields": {
+        "rip_numero": 981,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 180,
+    "fields": {
+        "rip_numero": 982,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 181,
+    "fields": {
+        "rip_numero": 983,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 182,
+    "fields": {
+        "rip_numero": 984,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 183,
+    "fields": {
+        "rip_numero": 985,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 184,
+    "fields": {
+        "rip_numero": 986,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 185,
+    "fields": {
+        "rip_numero": 987,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 186,
+    "fields": {
+        "rip_numero": 988,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 187,
+    "fields": {
+        "rip_numero": 989,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 188,
+    "fields": {
+        "rip_numero": 990,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 189,
+    "fields": {
+        "rip_numero": 991,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 190,
+    "fields": {
+        "rip_numero": 992,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 191,
+    "fields": {
+        "rip_numero": 993,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 192,
+    "fields": {
+        "rip_numero": 994,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 193,
+    "fields": {
+        "rip_numero": 995,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 194,
+    "fields": {
+        "rip_numero": 996,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 195,
+    "fields": {
+        "rip_numero": 997,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 196,
+    "fields": {
+        "rip_numero": 998,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 197,
+    "fields": {
+        "rip_numero": 999,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 198,
+    "fields": {
+        "rip_numero": 1000,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 199,
+    "fields": {
+        "rip_numero": 1001,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 200,
+    "fields": {
+        "rip_numero": 1002,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 201,
+    "fields": {
+        "rip_numero": 1003,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 202,
+    "fields": {
+        "rip_numero": 1004,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 203,
+    "fields": {
+        "rip_numero": 1005,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 204,
+    "fields": {
+        "rip_numero": 1006,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 205,
+    "fields": {
+        "rip_numero": 1007,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 206,
+    "fields": {
+        "rip_numero": 1008,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 207,
+    "fields": {
+        "rip_numero": 1009,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 208,
+    "fields": {
+        "rip_numero": 1010,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 209,
+    "fields": {
+        "rip_numero": 1011,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 210,
+    "fields": {
+        "rip_numero": 1012,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 211,
+    "fields": {
+        "rip_numero": 458,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 212,
+    "fields": {
+        "rip_numero": 408,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 213,
+    "fields": {
+        "rip_numero": 1013,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 214,
+    "fields": {
+        "rip_numero": 1014,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 215,
+    "fields": {
+        "rip_numero": 1015,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 216,
+    "fields": {
+        "rip_numero": 1016,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 217,
+    "fields": {
+        "rip_numero": 1017,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 218,
+    "fields": {
+        "rip_numero": 1018,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 219,
+    "fields": {
+        "rip_numero": 1019,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 220,
+    "fields": {
+        "rip_numero": 1020,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 221,
+    "fields": {
+        "rip_numero": 1021,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 222,
+    "fields": {
+        "rip_numero": 1022,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 223,
+    "fields": {
+        "rip_numero": 1023,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 224,
+    "fields": {
+        "rip_numero": 1024,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 225,
+    "fields": {
+        "rip_numero": 1025,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 226,
+    "fields": {
+        "rip_numero": 1026,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 227,
+    "fields": {
+        "rip_numero": 1027,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 228,
+    "fields": {
+        "rip_numero": 1028,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 229,
+    "fields": {
+        "rip_numero": 1029,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 230,
+    "fields": {
+        "rip_numero": 1030,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 231,
+    "fields": {
+        "rip_numero": 1031,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 232,
+    "fields": {
+        "rip_numero": 1032,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 233,
+    "fields": {
+        "rip_numero": 1033,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 234,
+    "fields": {
+        "rip_numero": 1034,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 235,
+    "fields": {
+        "rip_numero": 1035,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 236,
+    "fields": {
+        "rip_numero": 1036,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 237,
+    "fields": {
+        "rip_numero": 1037,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 238,
+    "fields": {
+        "rip_numero": 1038,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 239,
+    "fields": {
+        "rip_numero": 1039,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 240,
+    "fields": {
+        "rip_numero": 1040,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 241,
+    "fields": {
+        "rip_numero": 1041,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 242,
+    "fields": {
+        "rip_numero": 1042,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 243,
+    "fields": {
+        "rip_numero": 1043,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 244,
+    "fields": {
+        "rip_numero": 1044,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 245,
+    "fields": {
+        "rip_numero": 1045,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 246,
+    "fields": {
+        "rip_numero": 1046,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 247,
+    "fields": {
+        "rip_numero": 1047,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 248,
+    "fields": {
+        "rip_numero": 1048,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 249,
+    "fields": {
+        "rip_numero": 1049,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 250,
+    "fields": {
+        "rip_numero": 1050,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 251,
+    "fields": {
+        "rip_numero": 1051,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 252,
+    "fields": {
+        "rip_numero": 1052,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 253,
+    "fields": {
+        "rip_numero": 1053,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 254,
+    "fields": {
+        "rip_numero": 1054,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 255,
+    "fields": {
+        "rip_numero": 1055,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 256,
+    "fields": {
+        "rip_numero": 1056,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 257,
+    "fields": {
+        "rip_numero": 1058,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 258,
+    "fields": {
+        "rip_numero": 1059,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 259,
+    "fields": {
+        "rip_numero": 1060,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 260,
+    "fields": {
+        "rip_numero": 1061,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 261,
+    "fields": {
+        "rip_numero": 1062,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 262,
+    "fields": {
+        "rip_numero": 1063,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 263,
+    "fields": {
+        "rip_numero": 1064,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 264,
+    "fields": {
+        "rip_numero": 1065,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 265,
+    "fields": {
+        "rip_numero": 1066,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 266,
+    "fields": {
+        "rip_numero": 1067,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 267,
+    "fields": {
+        "rip_numero": 1068,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 268,
+    "fields": {
+        "rip_numero": 1069,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 269,
+    "fields": {
+        "rip_numero": 1070,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 270,
+    "fields": {
+        "rip_numero": 1070,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 271,
+    "fields": {
+        "rip_numero": 1071,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 272,
+    "fields": {
+        "rip_numero": 1072,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 273,
+    "fields": {
+        "rip_numero": 1073,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 274,
+    "fields": {
+        "rip_numero": 1074,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 275,
+    "fields": {
+        "rip_numero": 1075,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 276,
+    "fields": {
+        "rip_numero": 1076,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 277,
+    "fields": {
+        "rip_numero": 1077,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 278,
+    "fields": {
+        "rip_numero": 1078,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 279,
+    "fields": {
+        "rip_numero": 1079,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 280,
+    "fields": {
+        "rip_numero": 1080,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 281,
+    "fields": {
+        "rip_numero": 1081,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 282,
+    "fields": {
+        "rip_numero": 1082,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 283,
+    "fields": {
+        "rip_numero": 1083,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 284,
+    "fields": {
+        "rip_numero": 1084,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 285,
+    "fields": {
+        "rip_numero": 1085,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 286,
+    "fields": {
+        "rip_numero": 1086,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 287,
+    "fields": {
+        "rip_numero": 1087,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 288,
+    "fields": {
+        "rip_numero": 1088,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 289,
+    "fields": {
+        "rip_numero": 1089,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 290,
+    "fields": {
+        "rip_numero": 1090,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 291,
+    "fields": {
+        "rip_numero": 1090,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 292,
+    "fields": {
+        "rip_numero": 1091,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 293,
+    "fields": {
+        "rip_numero": 1092,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 294,
+    "fields": {
+        "rip_numero": 1093,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 295,
+    "fields": {
+        "rip_numero": 1094,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 296,
+    "fields": {
+        "rip_numero": 1095,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 297,
+    "fields": {
+        "rip_numero": 1096,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 298,
+    "fields": {
+        "rip_numero": 1097,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 299,
+    "fields": {
+        "rip_numero": 1098,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 300,
+    "fields": {
+        "rip_numero": 1099,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 301,
+    "fields": {
+        "rip_numero": 1099,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 302,
+    "fields": {
+        "rip_numero": 1100,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 303,
+    "fields": {
+        "rip_numero": 1100,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 304,
+    "fields": {
+        "rip_numero": 1101,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 305,
+    "fields": {
+        "rip_numero": 1102,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 306,
+    "fields": {
+        "rip_numero": 1103,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 307,
+    "fields": {
+        "rip_numero": 1103,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 308,
+    "fields": {
+        "rip_numero": 1104,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 309,
+    "fields": {
+        "rip_numero": 1105,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 310,
+    "fields": {
+        "rip_numero": 1106,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 311,
+    "fields": {
+        "rip_numero": 1106,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 312,
+    "fields": {
+        "rip_numero": 1107,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 313,
+    "fields": {
+        "rip_numero": 1108,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 314,
+    "fields": {
+        "rip_numero": 1109,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 315,
+    "fields": {
+        "rip_numero": 1110,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 316,
+    "fields": {
+        "rip_numero": 1111,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 317,
+    "fields": {
+        "rip_numero": 1112,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 318,
+    "fields": {
+        "rip_numero": 1113,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 319,
+    "fields": {
+        "rip_numero": 1114,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 320,
+    "fields": {
+        "rip_numero": 1115,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 321,
+    "fields": {
+        "rip_numero": 1116,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 322,
+    "fields": {
+        "rip_numero": 1117,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 323,
+    "fields": {
+        "rip_numero": 1118,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 324,
+    "fields": {
+        "rip_numero": 1119,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 325,
+    "fields": {
+        "rip_numero": 1120,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 326,
+    "fields": {
+        "rip_numero": 1121,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 327,
+    "fields": {
+        "rip_numero": 1122,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 328,
+    "fields": {
+        "rip_numero": 1123,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 329,
+    "fields": {
+        "rip_numero": 1124,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 330,
+    "fields": {
+        "rip_numero": 1125,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 331,
+    "fields": {
+        "rip_numero": 1126,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 332,
+    "fields": {
+        "rip_numero": 1127,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 333,
+    "fields": {
+        "rip_numero": 1128,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 334,
+    "fields": {
+        "rip_numero": 1129,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 335,
+    "fields": {
+        "rip_numero": 1130,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 336,
+    "fields": {
+        "rip_numero": 1131,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 337,
+    "fields": {
+        "rip_numero": 1132,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 338,
+    "fields": {
+        "rip_numero": 1133,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 339,
+    "fields": {
+        "rip_numero": 1134,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 340,
+    "fields": {
+        "rip_numero": 1135,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 341,
+    "fields": {
+        "rip_numero": 1136,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 342,
+    "fields": {
+        "rip_numero": 1137,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 343,
+    "fields": {
+        "rip_numero": 1138,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 344,
+    "fields": {
+        "rip_numero": 1139,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 345,
+    "fields": {
+        "rip_numero": 1140,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 346,
+    "fields": {
+        "rip_numero": 1141,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 347,
+    "fields": {
+        "rip_numero": 1142,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 348,
+    "fields": {
+        "rip_numero": 1143,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 349,
+    "fields": {
+        "rip_numero": 1144,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 350,
+    "fields": {
+        "rip_numero": 1145,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 351,
+    "fields": {
+        "rip_numero": 1146,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 352,
+    "fields": {
+        "rip_numero": 1147,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 353,
+    "fields": {
+        "rip_numero": 1148,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 354,
+    "fields": {
+        "rip_numero": 1149,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 355,
+    "fields": {
+        "rip_numero": 1150,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 356,
+    "fields": {
+        "rip_numero": 1151,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 357,
+    "fields": {
+        "rip_numero": 1152,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+},
+{
+    "model": "qualidade.assinatura",
+    "pk": 358,
+    "fields": {
+        "rip_numero": 1153,
+        "ass_insp": "media/jeferson.cruz_ass.png",
+        "ass_coord": null,
+        "ass_fiscal": null
+    }
+}
 ]

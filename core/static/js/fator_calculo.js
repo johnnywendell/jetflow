@@ -92,7 +92,7 @@ $(document).on('change', '.clLados', function(){
     let raio = $('#'+($(this).attr('id').replace('lados','raio'))).val()
     let material = $('#'+($(this).attr('id').replace('lados','material'))).val()
     const PI = 3.14156;
-    let geratriz = Math.sqrt(raio**2+altura**2)
+    let geratriz = altura > 0 ? Math.sqrt(raio**2 + altura**2) : 0;
     let retorno
     
 
@@ -116,6 +116,7 @@ $(document).on('change', '.clLados', function(){
         $('#'+campo2).text(retorno.toFixed(3))
     } else if (material == "cone") {
         retorno = PI*raio**2+PI*raio*geratriz;
+	retorno = retorno * lado;
         campo = $(this).attr('id').replace('lados','m2')
         $('#'+campo).val(retorno.toFixed(3))
         campo2 = $(this).attr('id').replace('lados', 'm2-span')

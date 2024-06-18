@@ -32,6 +32,7 @@
                     <th>Tipo Mat.</th>
                     <th>M²</th>
                     <th>Descrição/Tag</th>
+	            <th> RIP</th>
                     <th><i class="fa fa-check-circle"></i></th>
                 </tr>
             </thead>
@@ -47,6 +48,7 @@
                     <td><a href="{{ object.get_absolute_url }}">{{ object.material }}</a></td>
                     <td>{{ object.m2 }}</td>
                     <td>{{ object.descricao }}</td>
+		    <td>{{ object.relatorio }}</td>
                     <td>{% if object.concluido %}
                         <i class="fa fa-check-circle ok"></i>
                       {% else %}

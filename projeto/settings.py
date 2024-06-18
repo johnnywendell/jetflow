@@ -25,7 +25,7 @@ SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', default=False, cast=bool)
 
-ALLOWED_HOSTS = ['35.247.196.71', 'localhost', 'monsertec.singularcode.net']
+ALLOWED_HOSTS = ['localhost', 'monsertec.singularcode.net']
 
 # Application definition
 
@@ -144,7 +144,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGIN_URL = '/auth/login'
 LOGOUT_REDIRECT_URL = '/auth/login'
 
-SESSION_COOKIE_AGE = 1800
+SESSION_COOKIE_AGE = 5400
 SESSION_SAVE_EVERY_REQUEST = True
 
 ROLEPERMISSIONS_MODULE = 'projeto.roles'
